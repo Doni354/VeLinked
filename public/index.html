@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selamat Datang</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  
+  <style>
+    /* CSS untuk membuat halaman vertikal dan horizontal ditengah */
+    body {
+      background-color: #343a40; /* Ubah warna background agar lebih terang */
+      color: white; /* Ubah warna teks agar lebih kontras */
+      height: 100vh; /* Buat halaman memenuhi tinggi viewport */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .button-container {
+      margin-top: 20px; /* Beri sedikit jarak atas dari tombol */
+      text-align: center; /* Atur agar tombol berada di tengah */
+    }
+    button {
+      border: none;
+      display: block;
+      position: relative;
+      padding: 0.7em 2.4em;
+      font-size: 18px;
+      background: transparent;
+      cursor: pointer;
+      user-select: none;
+      overflow: hidden;
+      color: royalblue;
+      z-index: 1;
+      font-family: inherit;
+      font-weight: 500;
+      margin: auto; /* Agar tombol berada di tengah */
+    }
+    button span {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      z-index: -1;
+      border: 4px solid royalblue;
+    }
+    button span::before {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 8%;
+      height: 500%;
+      background: var(--lightgray);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-60deg);
+      transition: all 0.3s;
+    }
+    button:hover span::before {
+      transform: translate(-50%, -50%) rotate(-90deg);
+      width: 100%;
+      background: royalblue;
+    }
+    button:hover {
+      color: white;
+    }
+    button:active span::before {
+      background: #2751cd;
+    }
+  </style>
+</head>
+<body>
+  <div class="container text-center">
+    <h1>Selamat Datang</h1>
+    <p>Silakan login untuk melanjutkan.</p>
+    <div class="button-container">
+      <button onclick="window.location.href='login.html'">Login<span></span></button>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

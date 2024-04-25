@@ -1,0 +1,473 @@
+.dashboard-ve-link.root {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  overflow: hidden;
+}
+.dashboard-ve-link .header {
+  position: absolute;
+  top: 55px;
+  left: 321px;
+  display: flex;
+  justify-content: space-between;
+  gap: 0px 10px;
+  width: 1053px;
+  height: 70px;
+}
+.dashboard-ve-link .col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px 0px;
+  width: 273px;
+}
+.dashboard-ve-link .header__title {
+  font: 700 28px/1.5 "Manrope", Helvetica, Arial, serif;
+  color: black;
+}
+.dashboard-ve-link .header__highlight {
+  width: 100%;
+  font: 400 16px/1.5 "Manrope", Helvetica, Arial, serif;
+  color: #7c8db5;
+}
+.dashboard-ve-link .row {
+  display: flex;
+  align-items: center;
+  gap: 0px 15px;
+  margin: 0px 0px 39px;
+  width: 258px;
+}
+@media (max-width: 1399px) {
+  .dashboard-ve-link .row {
+    margin: 0px 150px 39px 0px;
+  }
+}
+@media (max-width: 1199px) {
+  .dashboard-ve-link .row {
+    margin: 0px 400px 39px 0px;
+  }
+}
+.dashboard-ve-link .row1 {
+  display: flex;
+  align-items: center;
+  gap: 0px 15px;
+  width: 110px;
+}
+.dashboard-ve-link .header__icon {
+  width: 63px;
+  height: 24px;
+}
+.dashboard-ve-link .header__icon1 {
+  width: 32px;
+  height: 31px;
+}
+.dashboard-ve-link .row2 {
+  display: flex;
+  align-items: center;
+  gap: 0px 14px;
+  width: 133px;
+}
+.dashboard-ve-link .header__highlight1 {
+  font: 400 16px/1.5 "Poppins", Helvetica, Arial, serif;
+  color: black;
+}
+.dashboard-ve-link .header__icon2 {
+  width: 12px;
+  height: 6px;
+}
+.dashboard-ve-link .content {
+  position: absolute;
+  top: 208px;
+  left: 303px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 19px 0px;
+  width: 1072px;
+  height: 181px;
+}
+.dashboard-ve-link .vehicleListHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0px 10px;
+  width: 98.23%;
+}
+.dashboard-ve-link .title {
+  font: 500 20px/1.5 "Poppins", Helvetica, Arial, serif;
+  color: black;
+}
+.dashboard-ve-link .vehicleCard {
+  display: flex;
+  align-items: center;
+  gap: 0px 5px;
+  width: 107px;
+  background-color: #3080ad;
+  border-radius: 6px 6px 6px 6px;
+  padding: 4px 7px 4px 7px;
+}
+@media (max-width: 1399px) {
+  .dashboard-ve-link .vehicleCard {
+    margin: 0px 150px 0px 0px;
+  }
+}
+@media (max-width: 1199px) {
+  .dashboard-ve-link .vehicleCard {
+    margin: 0px 400px 0px 0px;
+  }
+}
+.dashboard-ve-link .vehicleImage {
+  width: 13px;
+  height: 13px;
+}
+.dashboard-ve-link .vehicleNameLabel {
+  font: 500 12px/1.5 "Poppins", Helvetica, Arial, serif;
+  color: white;
+}
+.dashboard-ve-link .vehicleDetailsRow {
+  display: flex;
+  align-items: center;
+  gap: 0px 27px;
+  width: 100%;
+}
+.dashboard-ve-link .vehicleBox {
+  display: flex;
+  flex-direction: column;
+  width: 253px;
+  background-color: white;
+  border-radius: 12px 12px 12px 12px;
+  outline: 1px solid #e6edff;
+  outline-offset: -1px;
+}
+.dashboard-ve-link .vehicleColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px 0px;
+  margin: 20px 27px 20px 28px;
+}
+.dashboard-ve-link .vehicleRow {
+  display: flex;
+  gap: 0px 8px;
+  width: 100%;
+}
+.dashboard-ve-link .vehicleInfoColumn {
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+}
+.dashboard-ve-link .vehicleTitle {
+  font: 700 23px/1.5 "Manrope", Helvetica, Arial, serif;
+  color: black;
+  letter-spacing: -0.31px;
+}
+.dashboard-ve-link .usersTotalLabel {
+  font: 400 16px/1.5 "Poppins", Helvetica, Arial, serif;
+  color: black;
+}
+.dashboard-ve-link .vehicleThumbnail {
+  margin: 0px 0px 22px;
+  width: 40px;
+  height: 37px;
+  border-radius: 12px 12px 12px 12px;
+}
+.dashboard-ve-link .statusRow {
+  display: flex;
+  align-items: center;
+  gap: 0px 3px;
+  width: 100%;
+}
+.dashboard-ve-link .statusIcon {
+  width: 21px;
+  height: 21px;
+}
+.dashboard-ve-link .statusLabel {
+  font: 400 14px/1.5 "Poppins", Helvetica, Arial, serif;
+  color: #7c8db5;
+}
+.dashboard-ve-link .secondaryVehicleBox {
+  display: flex;
+  flex-direction: column;
+  width: 253px;
+  background-color: white;
+  border-radius: 12px 12px 12px 12px;
+  outline: 1px solid #e6edff;
+  outline-offset: -1px;
+}
+.dashboard-ve-link .secondaryVehicleColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px 0px;
+  margin: 20px 27px 20px 28px;
+}
+.dashboard-ve-link .secondaryVehicleRow {
+  display: flex;
+  gap: 0px 16px;
+  width: 100%;
+}
+.dashboard-ve-link .secondaryVehicleInfoColumn {
+  display: flex;
+  flex-direction: column;
+  width: 138px;
+}
+.dashboard-ve-link .secondaryVehicleTitle {
+  font: 700 23px/1.5 "Manrope", Helvetica, Arial, serif;
+  color: black;
+}
+.dashboard-ve-link .secondaryUsersTotalLabel {
+  font: 400 16px/1.5 "Poppins", Helvetica, Arial, serif;
+  color: black;
+}
+.dashboard-ve-link .secondaryVehicleThumbnail {
+  margin: 0px 0px 15px;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px 12px 12px 12px;
+}
+.dashboard-ve-link .secondaryStatusRow {
+  display: flex;
+  align-items: center;
+  gap: 0px 3px;
+  width: 100%;
+}
+.dashboard-ve-link .secondaryStatusIcon {
+  width: 21px;
+  height: 21px;
+}
+.dashboard-ve-link .secondaryStatusLabel {
+  font: 400 14px/1.5 "Poppins", Helvetica, Arial, serif;
+  color: #7c8db5;
+}
+.dashboard-ve-link .mainContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px 0px;
+  margin: 60px 0px 40px 3.89%;
+  width: 230px;
+}
+.dashboard-ve-link .mainLogo {
+  width: 73.48%;
+}
+@media (max-width: 991px) {
+  .dashboard-ve-link .mainLogo {
+    padding: 0px;
+    -o-object-fit: cover;
+    object-fit: cover;
+  }
+}
+.dashboard-ve-link .navigationBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0px 10px;
+}
+.dashboard-ve-link .leftColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 307px 0px;
+  width: 190px;
+}
+.dashboard-ve-link .dashboardContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px 0px;
+}
+.dashboard-ve-link .dashboardItem {
+  display: flex;
+  align-items: center;
+  gap: 0px 12px;
+  width: 100%;
+}
+.dashboard-ve-link .dashboardIcon {
+  width: 24px;
+  height: 24px;
+}
+.dashboard-ve-link .dashboardLabel {
+  font: 500 16px/1.5 "Poppins", Helvetica, Arial, serif;
+  color: #347ae2;
+}
+.dashboard-ve-link .mapsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px 0px;
+  width: 100%;
+}
+.dashboard-ve-link .mapsItem {
+  display: flex;
+  justify-content: space-between;
+  gap: 0px 10px;
+  width: 98.42%;
+}
+.dashboard-ve-link .mapItem {
+  display: flex;
+  align-items: center;
+  gap: 0px 12px;
+  width: 81px;
+}
+.dashboard-ve-link .mapIcon {
+  width: 24px;
+  height: 24px;
+}
+.dashboard-ve-link .mapLabel {
+  font: 500 16px/1.5 "Poppins", Helvetica, Arial, serif;
+  color: #7c8db5;
+}
+.dashboard-ve-link .mapsImage {
+  margin: 9px 0px 8px;
+  width: 12px;
+  height: 7px;
+}
+.dashboard-ve-link .cameraContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 0px 10px;
+  width: 98.42%;
+}
+.dashboard-ve-link .cameraItem {
+  display: flex;
+  align-items: center;
+  gap: 0px 12px;
+  width: 103px;
+}
+.dashboard-ve-link .cameraIcon {
+  width: 24px;
+  height: 24px;
+}
+.dashboard-ve-link .cameraLabel {
+  font: 500 16px/1.5 "Poppins", Helvetica, Arial, serif;
+  color: #7c8db5;
+}
+.dashboard-ve-link .cameraImage {
+  margin: 9px 0px 8px;
+  width: 12px;
+  height: 7px;
+}
+.dashboard-ve-link .checkoutContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0px 10px;
+  width: 98.42%;
+}
+.dashboard-ve-link .checkoutItem {
+  display: flex;
+  align-items: center;
+  gap: 0px 15px;
+  width: 111px;
+}
+.dashboard-ve-link .checkoutIcon {
+  width: 18px;
+  height: 19px;
+}
+.dashboard-ve-link .checkoutLabel {
+  font: 500 16px/1.5 "Poppins", Helvetica, Arial, serif;
+  color: #7c8db5;
+}
+.dashboard-ve-link .notificationBox {
+  display: flex;
+  flex-direction: column;
+  width: 18px;
+  background-color: #ff3b30;
+  border-radius: 9px 9px 9px 9px;
+}
+.dashboard-ve-link .notificationNumber {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 5px 0px 6px;
+  font: 500 12px/1.5 "Poppins", Helvetica, Arial, serif;
+  color: white;
+  text-align: center;
+}
+.dashboard-ve-link .settingContainer {
+  display: flex;
+  align-items: center;
+  gap: 0px 14px;
+  width: 97.89%;
+}
+.dashboard-ve-link .settingIcon {
+  width: 20px;
+  height: 21px;
+}
+.dashboard-ve-link .settingLabel {
+  font: 500 16px/1.5 "Poppins", Helvetica, Arial, serif;
+  color: #7c8db5;
+}
+.dashboard-ve-link .rightColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px 0px;
+  margin: 0px 0px 0px 2px;
+  width: 129px;
+}
+.dashboard-ve-link .helpCentreContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px 0px;
+  width: 100%;
+}
+.dashboard-ve-link .helpCentreItem {
+  display: flex;
+  align-items: center;
+  gap: 0px 14px;
+  width: 100%;
+}
+.dashboard-ve-link .helpIcon {
+  width: 20px;
+  height: 20px;
+}
+.dashboard-ve-link .helpLabel {
+  font: 500 16px/1.5 "Poppins", Helvetica, Arial, serif;
+  color: #7c8db5;
+}
+.dashboard-ve-link .contactUsItem {
+  display: flex;
+  align-items: center;
+  gap: 0px 14px;
+  width: 100%;
+}
+.dashboard-ve-link .contactIcon {
+  width: 20px;
+  height: 20px;
+}
+.dashboard-ve-link .contactLabel {
+  font: 500 16px/1.5 "Poppins", Helvetica, Arial, serif;
+  color: #7c8db5;
+}
+.dashboard-ve-link .logoutItem {
+  display: flex;
+  align-items: center;
+  gap: 0px 14px;
+  width: 100%;
+}
+.dashboard-ve-link .logoutIcon {
+  width: 20px;
+  height: 20px;
+}
+.dashboard-ve-link .logoutLabel {
+  font: 500 16px/1.5 "Poppins", Helvetica, Arial, serif;
+  color: #ff3b30;
+}
+.dashboard-ve-link .bottomBar {
+  display: flex;
+  width: 5px;
+}
+.dashboard-ve-link .bottomHighlight {
+  margin: 61px 0px 675px;
+  width: 4px;
+  min-height: 24px;
+  background-color: #347ae2;
+  border-radius: 2px 0px 0px 2px;
+}
+.dashboard-ve-link .bottomBackground {
+  width: 1px;
+  min-height: 760px;
+  background-color: #e6edff;
+}

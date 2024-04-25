@@ -1,0 +1,196 @@
+.landing-page.root {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+.landing-page .group {
+  display: flex;
+  flex-direction: column;
+  height: 1004px;
+  left: -66px;
+  position: absolute;
+  top: -6px;
+  width: 1506px;
+}
+.landing-page .group1 {
+  display: flex;
+  flex-direction: column;
+  height: 1004px;
+  left: 0px;
+  position: absolute;
+  top: 0px;
+  width: 1506px;
+}
+.landing-page .decorator {
+  height: 1004px;
+  left: 0px;
+  position: absolute;
+  top: 0px;
+  width: 1506px;
+}
+.landing-page .flex_col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px 0px;
+  height: 204px;
+  left: 216px;
+  position: absolute;
+  top: 263px;
+  width: 697px;
+}
+.landing-page .hero_title {
+  color: white;
+  font: 700 48px/1.37 "Manrope", Helvetica, Arial, serif;
+}
+.landing-page .highlight {
+  color: whitesmoke;
+  font: 400 16px/1.62 "DM Sans", Helvetica, Arial, serif;
+  width: 419px;
+}
+.landing-page .group2 {
+  display: flex;
+  flex-direction: column;
+  height: 157px;
+  left: -40px;
+  position: absolute;
+  top: 0px;
+  width: 1497px;
+}
+.landing-page .group3 {
+  display: flex;
+  flex-direction: column;
+  height: 157px;
+  left: 0px;
+  position: absolute;
+  top: 0px;
+  width: 1497px;
+}
+.landing-page .rect1 {
+  background-color: rgba(255, 255, 255, 0);
+  height: 157px;
+  left: 0px;
+  position: absolute;
+  top: 0px;
+  width: 1497px;
+}
+.landing-page .flex_row {
+  align-items: center;
+  display: flex;
+  gap: 0px 23px;
+  height: 14px;
+  left: 688px;
+  position: absolute;
+  top: 74px;
+  width: 481px;
+}
+.landing-page .text {
+  color: white;
+  font: 700 14px/1 "Manrope", Helvetica, Arial, serif;
+  letter-spacing: 0.28px;
+}
+.landing-page .flex_row1 {
+  align-items: center;
+  display: flex;
+  gap: 0px 26px;
+  height: 44px;
+  position: absolute;
+  right: 31px;
+  top: 56px;
+  width: 275px;
+}
+.landing-page .content_box1 {
+  background-color: rgba(255, 255, 255, 0.098);
+  border-radius: 22px 22px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  width: 124px;
+}
+.landing-page .text1 {
+  align-items: center;
+  color: white;
+  display: flex;
+  font: 500 14px/1.42 "Ubuntu", Helvetica, Arial, serif;
+  justify-content: center;
+  letter-spacing: 0.4px;
+  margin: 12px auto;
+  text-align: center;
+}
+.landing-page .content_box {
+  background-color: #479cff;
+  border-radius: 22px 22px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  width: 125px;
+}
+.landing-page .text11 {
+  align-items: center;
+  color: white;
+  display: flex;
+  font: 500 14px/1.42 "Ubuntu", Helvetica, Arial, serif;
+  justify-content: center;
+  letter-spacing: 0.4px;
+  margin: 12px 37px;
+  text-align: center;
+}
+.landing-page .hero_title1_box {
+  height: 40px;
+  left: 218px;
+  position: absolute;
+  top: 64px;
+  width: 181px;
+}
+.landing-page .hero_title1 {
+  color: black;
+  font: 400 40px/1 "Manrope", Helvetica, Arial, serif;
+  letter-spacing: 0.8px;
+}
+.landing-page .hero_title1_span0 {
+  color: white;
+  font: 1em/1 "Manrope", Helvetica, Arial, serif;
+}
+.landing-page .hero_title1_span1 {
+  color: #469bff;
+  font: 1em/1 "Manrope", Helvetica, Arial, serif;
+}
+.landing-page .hero_title1_span2 {
+  color: white;
+  font: 1em/1 "Manrope", Helvetica, Arial, serif;
+}
+.landing-page .hero_title1_span3 {
+  color: #469bff;
+  font: 1em/1 "Manrope", Helvetica, Arial, serif;
+}
+.landing-page .hero_title1_span4 {
+  color: white;
+  font: 1em/1 "Manrope", Helvetica, Arial, serif;
+}
+.landing-page .flex_row2 {
+  align-items: center;
+  display: flex;
+  gap: 0px 30px;
+  margin: 625px auto 120px;
+  position: relative;
+  width: 78.57%;
+}
+.landing-page .flex_col1 {
+  display: flex;
+  flex-direction: column;
+  gap: 4px 0px;
+  width: 120px;
+}
+.landing-page .hero_title2 {
+  color: white;
+  font: 700 48px/1.37 "Manrope", Helvetica, Arial, serif;
+  margin: 0px 33px 0px 0px;
+}
+.landing-page .desc {
+  color: whitesmoke;
+  font: 400 12px/1.33 "DM Sans", Helvetica, Arial, serif;
+}
+.landing-page .hero_title3 {
+  color: white;
+  font: 700 48px/1.37 "Manrope", Helvetica, Arial, serif;
+  margin: 0px 32px 0px 0px;
+}
