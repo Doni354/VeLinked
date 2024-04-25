@@ -49,12 +49,12 @@ function displayVehicleCard(vehicleData) {
     // Buat elemen img untuk ikon status
     const statusIcon = document.createElement("img");
     statusIcon.classList.add("statusIcon");
-    statusIcon.src = `assets/images/${vehicleData.status ? 'offline' : 'online'}.svg`;
+    statusIcon.src = `assets/images/${vehicleData.status ? 'online' : 'offline'}.svg`;
 
     // Buat elemen div untuk label status
     const statusLabel = document.createElement("div");
     statusLabel.classList.add("statusLabel");
-    statusLabel.textContent = vehicleData.status ? 'Offline' : 'Online';
+    statusLabel.textContent = vehicleData.status ? 'Online' : 'Offline';
 
     // Tambahkan ikon status dan label status ke dalam baris status
     statusRow.appendChild(statusIcon);
@@ -71,8 +71,8 @@ function displayVehicleCard(vehicleData) {
     vehicleDetailsRow.appendChild(vehicleCard);
 }
 
-// Fungsi untuk memuat data kendaraan dari Firestore dan menampilkan kartu kendaraan
-async function loadAndDisplayVehicles() {
+// Fungsi untuk memuat dan menampilkan data kendaraan dari Firestore
+function loadAndDisplayVehicles() {
     // Dapatkan pengguna yang sedang login
     const user = firebase.auth().currentUser;
 
@@ -86,30 +86,33 @@ async function loadAndDisplayVehicles() {
     // Dapatkan referensi ke koleksi kendaraan di Firestore
     const vehiclesRef = firebase.firestore().collection("Vehicle").where("user_id", "==", user.uid);
 
-    // Ambil data kendaraan dari Firestore
-    try {
-        const querySnapshot = await vehiclesRef.get();
+    // Dapatkan elemen container untuk menempatkan kartu kendaraan
+    const vehicleDetailsRow = document.querySelector(".vehicleDetailsRow");
+
+    // Mendengarkan perubahan pada koleksi kendaraan
+    vehiclesRef.onSnapshot(snapshot => {
+        // Kosongkan elemen container sebelum menampilkan data baru
+        vehicleDetailsRow.innerHTML = "";
+
         // Iterasi setiap dokumen untuk menampilkan kartu kendaraan
-        querySnapshot.forEach(doc => {
+        snapshot.forEach(doc => {
             const vehicleData = doc.data();
             displayVehicleCard(vehicleData);
         });
-    } catch (error) {
+    }, error => {
         console.error("Error fetching vehicles:", error);
-    }
+    });
 }
 
 // Event listener untuk memuat dan menampilkan data kendaraan saat konten dimuat
 document.addEventListener("DOMContentLoaded", event => {
-
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
             // If user is logged in, display user information
             loadAndDisplayVehicles();
-
         } else {
             // If user is not logged in, redirect to login page
             window.location.href = "login.html";
         }
     });
-})
+});
