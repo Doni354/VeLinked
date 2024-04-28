@@ -26,7 +26,7 @@ And you can start demo via `https://localhost:5000`
 firebase deploy
 ```
 
-And you can start demo via https://velink-test.web.app/
+And you can start demo via https://velinked-web.web.app/
 
 
 
