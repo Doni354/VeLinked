@@ -35,8 +35,8 @@
 <div id="alertContainer">
     <script src="js/d-aveh.js"></script>
 </div>
-</header>
-    <div id="app">
+<!--</header>-->
+    <div id="app" style="height: 100vh; display: flex;">
         <div id="sidebar" class='active'>
             <div class="sidebar-wrapper active">
     <div class="sidebar-header">
@@ -61,9 +61,9 @@
     <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
 </div>
         </div>
-        <div id="main">
+        <div id="main" style="flex: 1; background-color: #F5F4FF;">
             <!--   HEADER  -->
-            <nav class="navbar navbar-header navbar-expand navbar-light">
+            <nav class="navbar navbar-header navbar-expand navbar-light" style="background-color: white;">
                 <a class="sidebar-toggler" href="#"><span class="navbar-toggler-icon"></span></a>
                 <button class="btn navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,66 +89,65 @@
                     </ul>
                 </div>
             </nav>
-            
-<div class="main-content container-fluid">
-    <div class="page-title">
-        <h2 id="welcome-message" >Welcome Back, </h2>
-        <p class="text-subtitle text-muted">Your Vehicle in your Hand</p>
-    </div>
-    <br>
-    <div class="DashHead">
-        <h4 class="title">Vehicle List</h4>
-        <button class="AddVeh" onclick="toggleForm()">
-            <img class="vehicleImage" src="VL/assets/Add-Buton.png" alt="Add Vehicle" />
-            <div class="vehicleNameLabel">Add Vehicle</div>
-        </button>
-        
-        <div id="overlay" onclick="toggleForm()"></div>
-        <script>
-            function toggleForm() {
-                var overlay = document.getElementById("overlay");
-                var formContainer = document.getElementById("formContainer");
-
-                overlay.style.display = (overlay.style.display === "block") ? "none" : "block";
-                formContainer.style.display = (formContainer.style.display === "block") ? "none" : "block";
-            }
-
-        </script>
-        <div id="formContainer">
-            <div class="container">
-                
-                <div class="heading">Add Vehicle</div>
-                <form class="form" id="vehicleForm">
-                    <input required class="input" type="text" name="name" id="name" placeholder="Vehicle Name">
-                    <select class="input" name="type" id="type">
-                        <option value="car">Car</option>
-                        <option value="bus">Bus</option>
-                        <option value="truck">Truck</option>
-                    </select>
-                    <input class="login-button" type="submit" id="addVeh" value="Add Vehicle">
-                </form>
-                
+            <div style="background-color: white; padding: 20px;">
+                <h2 id="welcome-message">Welcome Back,</h2>
+                <p class="text-subtitle text-muted">Your Vehicle in your Hand</p>
             </div>
-              
-        </div>
-    
+            <div class="main-content container-fluid">
+                <br>
+                <div class="DashHead">
+                    <h4 class="title">Vehicle List</h4>
+                    <button class="AddVeh" onclick="toggleForm()">
+                        <img class="vehicleImage" src="VL/assets/Add-Buton.png" alt="Add Vehicle" />
+                        <div class="vehicleNameLabel">Add Vehicle</div>
+                    </button>
+                    
+                    <div id="overlay" onclick="toggleForm()"></div>
+                    <script>
+                        function toggleForm() {
+                            var overlay = document.getElementById("overlay");
+                            var formContainer = document.getElementById("formContainer");
 
-          
-    </div>
-    
-    <br>
+                            overlay.style.display = (overlay.style.display === "block") ? "none" : "block";
+                            formContainer.style.display = (formContainer.style.display === "block") ? "none" : "block";
+                        }
 
-    <div class="vehicleDetailsRow">
-        <!-- Daftar kendaraan akan dimasukkan oleh JavaScript -->
-    </div>
-    
-    <section class="section">
-        
-       
-    </section>
-</div>
+                    </script>
+                    <div id="formContainer">
+                        <div class="container">
+                            
+                            <div class="heading">Add Vehicle</div>
+                            <form class="form" id="vehicleForm">
+                                <input required class="input" type="text" name="name" id="name" placeholder="Vehicle Name">
+                                <select class="input" name="type" id="type">
+                                    <option value="car">Car</option>
+                                    <option value="bus">Bus</option>
+                                    <option value="truck">Truck</option>
+                                </select>
+                                <input class="login-button" type="submit" id="addVeh" value="Add Vehicle">
+                            </form>
+                            
+                        </div>
+                          
+                    </div>
+                
 
-            <footer>
+                      
+                </div>
+                
+                <br>
+
+                <div class="vehicleDetailsRow">
+                    <!-- Daftar kendaraan akan dimasukkan oleh JavaScript -->
+                </div>
+                
+                <section class="section">
+                    
+                   
+                </section>
+            </div>
+
+            <footer style="margin-top: auto;">
                 <div class="footer clearfix mb-0 text-muted">
                     <div class="float-left">
                         <p>2024 &copy; VeLinked</p>

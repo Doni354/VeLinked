@@ -72,6 +72,10 @@
 
 
 
+ .main-content {
+  background-color: #F5F4FF;
+}
+
  #overlay {
   position: fixed;
   top: 0;
@@ -168,10 +172,6 @@
   z-index: 9999; /* Tingkatkan z-index agar muncul di atas elemen lain */
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Tambahkan bayangan untuk efek dim */
 }
-
-
-
-
 
 /** Velinked AddVeh **/
 .DashHead {
@@ -283,7 +283,6 @@
       flex: 1 1 calc(100% - 20px); /* Menyesuaikan untuk menampung 1 kartu per baris */
   }
 }
-
 
 
 
