@@ -21,3 +21,18 @@ function logout() {
         console.error("Error while logging out:", error);
     });
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelector('.sign').addEventListener('click', function () {
+        
+    });
+
+    document.querySelector('.lbtn').addEventListener('click', function () {
+        // Lakukan sesuatu saat .lbtn ditekan
+    });
+
+    document.querySelector('.sbtn').addEventListener('click', function () {
+        // Lakukan sesuatu saat .sbtn ditekan
+    });
+});
+

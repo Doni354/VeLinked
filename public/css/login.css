@@ -1,0 +1,242 @@
+      @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            font-family: Arial, sans-serif;
+            color: black; /* Ubah warna tulisan input menjadi hitam */
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: #ffffff;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            max-width: 200px;
+            height: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links a,
+        .nav-links button {
+            margin-right: 10px;
+            min-width: fit-content;
+            white-space: nowrap;
+        }
+
+        .form-container {
+            max-width: 320px;
+            width: 90%;
+            margin: 100px auto;
+            border-radius: 0.75rem;
+            background-color: white;
+            padding: 2rem;
+            color: black;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: black;
+            transition: color 0.3s ease;
+            margin-right: 10px;
+        }
+
+        .nav-links a:hover {
+            color: #555555;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 1.5rem;
+            line-height: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .form {
+            margin-top: 1.5rem;
+        }
+
+        .input-group {
+            margin-top: 0.25rem;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            border-radius: 1rem;
+            outline: 0;
+            background-color: #EAF0F7;
+            padding: 0.75rem 1rem;
+            color: black;
+            margin-bottom: 1rem;
+            border: none;
+        }
+
+        .input-group input[type="password"] {
+            border-radius: 1rem; /* Bulatkan sudut */
+        }
+
+        * {
+            font-family: "Manrope";
+         }
+        .forgot {
+            display: flex;
+            justify-content: flex-end;
+            font-size: 0.5rem;
+            line-height: 1rem;
+            color: black;
+            margin: 8px 0 14px 0;
+        }
+
+        .forgot a,
+        .signup a {
+            color: #C7C7C7;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .forgot a:hover,
+        .signup a:hover {
+            text-decoration: underline rgba(167, 139, 250, 1);
+        }
+
+        
+
+        .social-message {
+            display: flex;
+            align-items: center;
+            padding-top: 1rem;
+        }
+
+        .line {
+            height: 1px;
+            flex: 1 1 0%;
+            background-color: rgba(55, 65, 81, 1);
+        }
+
+        .social-message .message {
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            color: rgba(156, 163, 175, 1);
+        }
+        .sign,
+.lbtn,
+.sbtn {
+    max-width: 320px;
+    width: 100%;
+    padding: 0.5rem 1.4rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+
+    cursor: pointer;
+    transition: all .6s ease;
+    border: none;
+}
+
+.sign {
+    border-radius: 10px;
+    font-family: "Manrope";
+    display: block;
+    width: 100%;
+    background-color: #4461F2;
+    padding: 0.75rem;
+    text-align: center;
+    color: white;
+}
+
+.lbtn {
+    border-radius: 40px;
+    color: black;
+    background-color: rgba(81, 74, 74, 0.1);
+}
+
+.sbtn {
+    border-radius: 40px;
+    color: white;
+    background-color: #5243E6;
+}
+
+/* Efek hover */
+.sign:hover,
+.lbtn:hover,
+.sbtn:hover {
+    opacity: 0.8;
+}
+
+
+
+        .button svg {
+            height: 24px;
+        }
+
+        .button:hover {
+            transform: scale(1.02);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+        }
+
+        .social-icons .icon {
+            border-radius: 0.125rem;
+            padding: 0.75rem;
+            border: none;
+            background-color: transparent;
+            margin-left: 8px;
+        }
+
+        .social-icons .icon svg {
+            height: 1.25rem;
+            width: 1.25rem;
+            fill: #fff;
+        }
+
+        .signup {
+            text-align: center;
+            font-size: 0.75rem;
+            line-height: 1rem;
+            color: rgba(156, 163, 175, 1);
+        }
+
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .form-container {
+                width: 80%;
+            }
+
+            .logo {
+                max-width: 150px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
