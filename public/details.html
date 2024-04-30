@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Details</title>
+    
+    <script defer src="/__/firebase/10.9.0/firebase-app-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-auth-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-database-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-firestore-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-functions-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-messaging-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-storage-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-analytics-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-remote-config-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-performance-compat.js"></script>
+        
+        <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <button class="btn btn-primary" onclick="window.location.href = 'dashboard.html'"><-- Back</button>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+                   
+    <div class="vehicle-details-container">
+        <h1>Vehicle Details</h1>
+        <div class="vehicle-details"></div>
+    </div>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-analytics.js";
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
+
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            const firebaseConfig = {
+            apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
+            authDomain: "velinked-web.firebaseapp.com",
+            projectId: "velinked-web",
+            storageBucket: "velinked-web.appspot.com",
+            messagingSenderId: "844821073092",
+            appId: "1:844821073092:web:f243c25668079240ec0d91",
+            measurementId: "G-CLGQ4RWWTX"
+            };
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+
+
+        // Fungsi untuk mendapatkan parameter dari URL
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        // Mendapatkan nilai docId dari parameter URL
+        const docId = getParameterByName('docId');
+
+        // Dapatkan referensi dokumen kendaraan dari Firestore berdasarkan docId
+        const vehicleDocRef = firebase.firestore().collection("Vehicle").doc(docId);
+
+        // Ambil data kendaraan
+        vehicleDocRef.get().then(doc => {
+            if (doc.exists) {
+                const vehicleData = doc.data();
+                // Tampilkan data kendaraan di halaman
+                displayVehicleDetails(vehicleData);
+            } else {
+                console.log("No such document!");
+            }
+        }).catch(error => {
+            console.error("Error getting document:", error);
+        });
+
+        // Fungsi untuk menampilkan detail kendaraan
+        function displayVehicleDetails(vehicleData) {
+            const vehicleDetailsContainer = document.querySelector(".vehicle-details");
+            const detailsHTML = `
+                <div>
+                    <h2>${vehicleData.name}</h2>
+                    <p>Type: ${vehicleData.type}</p>
+                    <p>Status: ${vehicleData.status ? 'Online' : 'Offline'}</p>
+                    <!-- Tambahkan lebih banyak informasi kendaraan sesuai kebutuhan -->
+                </div>
+            `;
+            vehicleDetailsContainer.innerHTML = detailsHTML;
+        }
+    </script>
+</body>
+</html>

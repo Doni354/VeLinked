@@ -1,5 +1,5 @@
 // Fungsi untuk menampilkan data kendaraan
-function displayVehicleCard(vehicleData) {
+function displayVehicleCard(vehicleData, docId) {
     // Dapatkan elemen container untuk menempatkan kartu kendaraan
     const vehicleDetailsRow = document.querySelector(".vehicleDetailsRow");
 
@@ -67,6 +67,12 @@ function displayVehicleCard(vehicleData) {
     // Tambahkan konten kartu kendaraan ke dalam kartu kendaraan
     vehicleCard.appendChild(vehicleCardContent);
 
+    // Tambahkan event listener untuk menangani klik pada kartu kendaraan
+    vehicleCard.addEventListener("click", () => {
+        // Redirect pengguna ke halaman details.html dengan mengirim nama dokumen (doc) sebagai parameter URL
+        window.location.href = `details.html?docId=${encodeURIComponent(docId)}`;
+    });
+
     // Tambahkan kartu kendaraan ke dalam container kendaraan
     vehicleDetailsRow.appendChild(vehicleCard);
 }
@@ -97,7 +103,8 @@ function loadAndDisplayVehicles() {
         // Iterasi setiap dokumen untuk menampilkan kartu kendaraan
         snapshot.forEach(doc => {
             const vehicleData = doc.data();
-            displayVehicleCard(vehicleData);
+            const docId = doc.id; // Dapatkan ID dokumen (doc)
+            displayVehicleCard(vehicleData, docId);
         });
     }, error => {
         console.error("Error fetching vehicles:", error);
@@ -108,10 +115,10 @@ function loadAndDisplayVehicles() {
 document.addEventListener("DOMContentLoaded", event => {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
-            // If user is logged in, display user information
+            // Jika pengguna sudah login, tampilkan kendaraan
             loadAndDisplayVehicles();
         } else {
-            // If user is not logged in, redirect to login page
+            // Jika pengguna belum login, redirect ke halaman login
             window.location.href = "login.html";
         }
     });
