@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - VeLinked</title>
+    <title>[ADMIN] Dashboard - VeLinked</title>
     <!-- Di dalam elemen <head> -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     
     <link rel="stylesheet" href="assets/vendors/chartjs/Chart.min.css">
@@ -52,8 +53,10 @@
                 <li class="sidebar-item active ">
                     <a href="dashboard.html" class='sidebar-link'>
                         <i data-feather="home" width="20"></i> 
-                        <span>Dashboard</span> 
+                        <span>Dashboard</span>
+                        
                     </a>
+                    
                 </li>
                         
                
@@ -98,40 +101,10 @@
             <div class="main-content container-fluid">
                 <br>
                 <div class="DashHead">
-                    <h4 class="title">Vehicle List</h4>
-                    <button class="AddVeh" onclick="toggleForm()">
-                        <img class="vehicleImage" src="VL/assets/Add-Buton.png" alt="Add Vehicle" />
-                        <div class="vehicleNameLabel">Add Vehicle</div>
-                    </button>
+                    <h4 class="title">User List</h4>
                     
-                    <div id="overlay" onclick="toggleForm()"></div>
-                    <script>
-                        function toggleForm() {
-                            var overlay = document.getElementById("overlay");
-                            var formContainer = document.getElementById("formContainer");
-
-                            overlay.style.display = (overlay.style.display === "block") ? "none" : "block";
-                            formContainer.style.display = (formContainer.style.display === "block") ? "none" : "block";
-                        }
-
-                    </script>
-                    <div id="formContainer">
-                        <div class="container">
                             
-                            <div class="heading">Add Vehicle</div>
-                            <form class="form" id="vehicleForm">
-                                <input required class="input" type="text" name="name" id="name" placeholder="Vehicle Name">
-                                <select class="input" name="type" id="type">
-                                    <option value="car">Car</option>
-                                    <option value="bus">Bus</option>
-                                    <option value="truck">Truck</option>
-                                </select>
-                                <input class="login-button" type="submit" id="addVeh" value="Add Vehicle">
-                            </form>
-                            
-                        </div>
-                          
-                    </div>
+                      
                 
 
                       
@@ -139,13 +112,23 @@
                 
                 <br>
 
-                <div class="vehicleDetailsRow">
-                    <!-- Daftar kendaraan akan dimasukkan oleh JavaScript -->
-                </div>
+                <table id="userDataTable" class="display">
+                    <thead>
+                        <tr>
+                            <th>Profile Photo</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>User ID</th>
+                            <th>Login Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data akan dimasukkan melalui JavaScript -->
+                    </tbody>
+                </table>
                 
                 <section class="section">
                     
-                   
                 </section>
             </div>
 
@@ -164,8 +147,41 @@
         </div>
     </div>
 
+     <!-- jQuery -->
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <!-- JavaScript Data Tables -->
+     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+     <script>
+        document.addEventListener("DOMContentLoaded", event => {
+            // Inisialisasi Data Tables
+            $('#userDataTable').DataTable();
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            // Mendapatkan data akun pengguna yang pernah login
+            firebase.auth().onAuthStateChanged(function(user) {
+                if (user) {
+                    // User is signed in
+                    const profilePhoto = user.photoURL;
+                    const username = user.displayName;
+                    const email = user.email;
+                    const userId = user.uid;
+                    const loginTime = new Date(); // You can customize how you obtain the login time
+
+                    // Menambahkan baris baru ke dalam tabel
+                    $('#userDataTable').DataTable().row.add([
+                        `<img src="${profilePhoto}" width="50" height="50">`,
+                        username,
+                        email,
+                        userId,
+                        loginTime.toLocaleString() // Format login time as needed
+                    ]).draw();
+                } else {
+                    // User is signed out
+                    console.log("No user signed in.");
+                }
+            });
+        });
+    </script>
+
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="assets/js/feather-icons/feather.min.js"></script>
     <script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
@@ -176,7 +192,7 @@
     <script src="assets/js/pages/dashboard.js"></script>
 
     <script src="assets/js/main.js"></script>
-    
+    <script src="js/admin.js"></script>
     <script src="js/a-auth.js"></script>
     <script src="js/a-pp.js"></script>
 
