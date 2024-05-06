@@ -163,7 +163,67 @@
             </footer>
         </div>
     </div>
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Mendeteksi perubahan status autentikasi saat halaman dimuat
+            firebase.auth().onAuthStateChanged(function(user) {
+                if (user) {
+                    // Pengguna sudah login
+                    const userId = user.uid;
+        
+                    // Check if the user data already exists in the database
+                    firebase.firestore().collection("users").doc(userId).get()
+                        .then(doc => {
+                            if (doc.exists) {
+                                // Jika data sudah ada, lakukan update status atau informasi lainnya di sini
+                                console.log("User data exists, updating...");
+                                // Misalnya, update status login terakhir
+                                firebase.firestore().collection("users").doc(userId).update({
+                                    lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+                                })
+                                .then(() => {
+                                    console.log("User data updated successfully");
+                                })
+                                .catch(error => {
+                                    console.error("Error updating user data: ", error);
+                                });
+                            } else {
+                                // Jika data belum ada, buat data baru untuk pengguna
+                                console.log("User data doesn't exist, creating...");
+                                const userData = {
+                                    uid: userId,
+                                    displayName: user.displayName,
+                                    email: user.email,
+                                    photoURL: user.photoURL,
+                                    // Misalnya, tambahkan status login terakhir
+                                    lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+                                };
+                                // Simpan data pengguna di Firestore
+                                firebase.firestore().collection("users").doc(userId).set(userData)
+                                    .then(() => {
+                                        console.log("User data created successfully");
+                                    })
+                                    .catch(error => {
+                                        console.error("Error creating user data: ", error);
+                                        // Beri respons kepada pengguna
+                                        alert("Error creating user data. Please try again later.");
+                                    });
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error getting user data: ", error);
+                            // Beri respons kepada pengguna
+                            alert("Error getting user data. Please try again later.");
+                        });
+                } else {
+                    // Pengguna belum login, arahkan kembali ke halaman login
+                    window.location.href = "login.html";
+                }
+            });
+        });
+        </script>
+        
+        
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
