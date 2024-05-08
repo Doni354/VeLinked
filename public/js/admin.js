@@ -31,30 +31,42 @@ document.addEventListener("DOMContentLoaded", event => {
     $('#userDataTable').DataTable();
 
     // Mendapatkan data semua pengguna yang pernah login
-    firebase.firestore().collection("users").get()
-        .then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-                const userData = doc.data();
-                const profilePhoto = userData.photoURL;
-                const username = userData.displayName;
-                const email = userData.email;
-                const userId = userData.uid;
-                const loginTime = userData.lastLogin ? userData.lastLogin.toDate().toLocaleString() : 'N/A'; // Convert lastLogin to date format or 'N/A' if not available
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            // User is signed in, maka ambil data pengguna dari Firestore
+            firebase.firestore().collection("users").get()
+                .then(querySnapshot => {
+                    querySnapshot.forEach(doc => {
+                        const userData = doc.data();
+                        // Cek apakah ID pengguna sama dengan ID pengguna yang sedang login
+                        if (userData.uid !== user.uid) {
+                            const profilePhoto = userData.photoURL;
+                            const username = userData.displayName;
+                            const email = userData.email;
+                            const userId = userData.uid;
+                            const loginTime = userData.lastLogin ? userData.lastLogin.toDate().toLocaleString() : 'N/A';
 
-                // Menambahkan baris baru ke dalam tabel
-                $('#userDataTable').DataTable().row.add([
-                    `<img src="${profilePhoto}" width="50" height="50">`,
-                    username,
-                    email,
-                    userId,
-                    loginTime
-                ]).draw();
-            });
-        })
-        .catch(error => {
-            console.error("Error getting user data: ", error);
-            // Beri respons kepada pengguna jika terjadi kesalahan
-            alert("Error getting user data. Please try again later.");
-        });
+                            // Menambahkan baris baru ke dalam tabel
+                            $('#userDataTable').DataTable().row.add([
+                                `<img src="${profilePhoto}" width="50" height="50">`,
+                                username,
+                                email,
+                                userId,
+                                loginTime
+                            ]).draw();
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error("Error getting user data: ", error);
+                    // Beri respons kepada pengguna jika terjadi kesalahan
+                    alert("Error getting user data. Please try again later.");
+                });
+        } else {
+            // User is signed out
+            console.log("No user signed in.");
+        }
+    });
 });
+
 
