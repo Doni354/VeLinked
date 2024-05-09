@@ -46,14 +46,14 @@ document.addEventListener("DOMContentLoaded", event => {
                             const userId = userData.uid;
                             const loginTime = userData.lastLogin ? userData.lastLogin.toDate().toLocaleString() : 'N/A';
 
-                            // Menambahkan baris baru ke dalam tabel
                             $('#userDataTable').DataTable().row.add([
                                 `<img src="${profilePhoto}" width="50" height="50">`,
                                 username,
                                 email,
                                 userId,
-                                loginTime
-                            ]).draw();
+                                loginTime.toLocaleString(),
+                                `<button onclick="viewProfile('${userId}')" class="btn btn-primary">View Profile</button>` // Tombol "View Profile"
+                            ]).draw();                            
                         }
                     });
                 })
@@ -68,5 +68,12 @@ document.addEventListener("DOMContentLoaded", event => {
         }
     });
 });
+
+// Fungsi untuk mengarahkan pengguna ke halaman profil pengguna
+function viewProfile(userId) {
+    // Redirect pengguna ke halaman user-profile.html dengan mengirimkan UID pengguna sebagai parameter URL
+    window.location.href = `user-profile.html?userId=${encodeURIComponent(userId)}`;
+}
+
 
 
