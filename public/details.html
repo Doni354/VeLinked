@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="VL/css/details.css">
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         
@@ -18,17 +19,26 @@
         <script defer src="/__/firebase/10.9.0/firebase-analytics-compat.js"></script>
         <script defer src="/__/firebase/10.9.0/firebase-remote-config-compat.js"></script>
         <script defer src="/__/firebase/10.9.0/firebase-performance-compat.js"></script>
-        
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap">
+
         <script defer src="/__/firebase/init.js?useEmulator=true"></script>
 
 
-    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body style="background-color: #F5F4FF;">
+    <div class="LiveTracking">
+        <div class="LTT">
+            <p>Live Track</p>
+
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3949.7269931177607!2d112.07230607455939!3d-8.12925268137641!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zOMKwMDcnNDUuMyJTIDExMsKwMDQnMjkuNiJF!5e0!3m2!1sid!2sid!4v1716285688598!5m2!1sid!2sid" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
 
     <button class="btn btn-primary"onclick="window.history.back()""><-- Back</button>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-                   
+                <p>TEST</p>   
     <div class="vehicle-details-container">
         <h1>Vehicle Details</h1>
         <div class="vehicle-details"></div>
