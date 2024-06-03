@@ -1,5 +1,5 @@
 .LiveTracking {
-    width: 950px; /* Lebar kotak */
+    width: 1000px; /* Lebar kotak */
     height: 450px; /* Tinggi kotak */
     border: 1px solid #E6EDFF; /* Ketebalan dan warna garis tepi kotak */
     display: flex;
@@ -29,3 +29,61 @@
     height: 100%;
     border-radius: 10px;
 }
+
+.vehdata {
+    width: 450px; /* Lebar kotak */
+    height: 370px; /* Tinggi kotak */
+    border: 1px solid #E6EDFF; /* Ketebalan dan warna garis tepi kotak */
+    display: flex;
+    margin: 20px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+
+.data {
+    display: flex;
+    justify-content: space-between;
+}
+
+.vehtittle {
+    width: 450px; /* Lebar kotak */
+    height: 40px; /* Tinggi kotak */
+    border: 1px solid #E6EDFF; /* Ketebalan dan warna garis tepi kotak */
+    display: flex;
+    margin: 20px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.veh p {
+    font-family: 'Manrope', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    font-style: bold;
+    margin-top: 6px;
+    align-content: center;
+    margin-left: 15px;
+}
+
+.vehname p {
+    color: #5243E6;
+    margin: 15px;
+    font-family: 'Manrope';
+    font-size: 25px;
+    font-weight: bolder;
+    font-style: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.vehimg {
+    margin-left: auto; /* Menggeser gambar ke ujung kanan */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Menggeser gambar ke tengah */
+    max-width: calc(100% - 450px - 40px); /* Mengatur lebar maksimum agar tidak menembus div .vehdata */
+}
+
+
