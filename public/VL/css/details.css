@@ -34,7 +34,6 @@
     width: 450px; /* Lebar kotak */
     height: 370px; /* Tinggi kotak */
     border: 1px solid #E6EDFF; /* Ketebalan dan warna garis tepi kotak */
-    display: flex;
     margin: 20px;
     background-color: white;
     border-radius: 10px;
@@ -87,3 +86,14 @@
 }
 
 
+.user img {
+    display: flex;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: auto;
+}
+
+.nameveh {
+    display: flex;
+    justify-content: space-between;
+}
