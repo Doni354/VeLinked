@@ -35,13 +35,13 @@
         width: 450px;
     }
     to {
-        width: 650px; /* Menyesuaikan lebar maksimum sesuai ukuran layar dan lebar div LiveTracking */
+        width: 680px; /* Menyesuaikan lebar maksimum sesuai ukuran layar dan lebar div LiveTracking */
     }
 }
 
 @keyframes contract {
     from {
-        width: 650px; /* Menyesuaikan lebar maksimum sesuai ukuran layar dan lebar div LiveTracking */
+        width: 680px; /* Menyesuaikan lebar maksimum sesuai ukuran layar dan lebar div LiveTracking */
     }
     to {
         width: 450px;
