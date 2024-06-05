@@ -34,3 +34,5 @@ function getVehicleDetails(docId) {
 
 // Panggil fungsi untuk mendapatkan dan menampilkan detail kendaraan
 getVehicleDetails(docId);
+
+

@@ -41,13 +41,43 @@
         
         <div class="vehtittle"><p>My Fleet</p></div>
         <div class="vehdata">
+            <div class="ShowDetail SlideButton" id="showDetailButton">
+                <img src="assets/images/SlideButton.svg" alt="">
+            </div>
             <div class="nameveh">
                 <div class="vehname"></div>
                 <div class="user"><img src="assets/images/userv.svg" alt=""></div>
                 
             </div>
-            
+            <div class="vehdat">
+               
+
+            <div class="stats">
+                
+                <div class="Data">
+                    <div class="Dat">125 Km/h</div>
+                    <div class="stat">Speed <img src="assets/images/rocket_speed.svg" alt=""></div>
+                </div>
+                <div class="Data">
+                    <div class="Dat">532 Km</div>
+                    <div class="stat">Traveled</div>
+                </div>
+                <div class="Data">
+                    <div class="Dat">80°C</div>
+                    <div class="stat">Temperature</div>
+                </div>
+                <div class="Data">
+                    <div class="Dat">
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                          </label>                          
+                    </div>
+                    <div class="stat">Engine Status</div>
+                </div>
+            </div>
             <div class="vehimg"><img src="assets/images/CarD.svg" alt=""></div>
+        </div>
         </div>
     </div>
 
@@ -137,6 +167,67 @@
             `;
             vehicleDetailsContainer.innerHTML = detailsHTML;
         }
+        // Ambil elemen tombol "Show Detail"
+const showDetailButton = document.querySelector('.ShowDetail');
+
+// Tambahkan class active saat tombol ditekan
+showDetailButton.addEventListener('click', function() {
+    const vehdataDiv = document.querySelector('.vehdata');
+    vehdataDiv.classList.toggle('active');
+    
+    // Ganti class sesuai dengan kondisi active
+    vehdataDiv.classList.contains('active') ? vehdataDiv.classList.remove('inactive') : vehdataDiv.classList.add('inactive');
+
+    // Tambahkan atau hilangkan class advstats sesuai kondisi active
+    const statsDiv = document.querySelector('.stats');
+    const advStatsDiv = document.createElement('div');
+    advStatsDiv.classList.add('Data', 'advstats');
+    advStatsDiv.innerHTML = `
+        <div style="margin-top:25px;">
+        <div class="Dat" style="color:#65B768;">Closed</div>
+        <div class="stat">Door Condition</div>
+        <div class="Dat" style="color:#E14444;">Outside</div>
+        <div class="stat">Area Control</div>
+        <div class="Dat" style="color:#E14444;">145 Km/Hours</div>
+        <div class="stat">Average Speed</div>
+        </div>
+    `;
+
+    const existingAdvStatsDiv = document.querySelector('.advstats');
+    if (existingAdvStatsDiv) {
+        existingAdvStatsDiv.remove();
+    } else {
+        statsDiv.insertAdjacentElement('afterend', advStatsDiv);
+    }
+});
+
+
+const image = showDetailButton.querySelector('img');
+
+let isButtonPressed = false;
+
+showDetailButton.addEventListener('click', function() {
+    // Ganti status tombol dan ubah gambar sesuai
+    isButtonPressed = !isButtonPressed;
+    
+    if (isButtonPressed) {
+        image.src = 'assets/images/ClosedSlideButton.svg';
+    } else {
+        image.src = 'assets/images/SlideButton.svg';
+    }
+    
+    // Tambahkan animasi saat perubahan gambar
+    image.classList.add('clicked');
+    
+    // Hilangkan class animasi setelah beberapa detik
+    setTimeout(function() {
+        image.classList.remove('clicked');
+    }, 500); // Sesuaikan dengan durasi animasi CSS
+});
+
+
+
+
     </script>
 </body>
 </html>
