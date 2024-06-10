@@ -49,6 +49,38 @@
                 <div class="user"><img src="assets/images/userv.svg" alt=""></div>
                 
             </div>
+            <div class="userdat">
+                <div class="nameveh">
+                    <div class="vehname"></div>
+                    <div class="user"><img src="assets/images/back.svg" alt=""></div>
+                    
+                </div>
+                <div class="userdat-stats">
+                    <div class="Data">
+                        <div class="Dat">User Data 1</div>
+                        <div class="stat">User Stat 1</div>
+                    </div>
+                    <div class="Data">
+                        <div class="Dat">User Data 2</div>
+                        <div class="stat">User Stat 2</div>
+                    </div>
+                    <div class="Data">
+                        <div class="Dat">User Data 3</div>
+                        <div class="stat">User Stat 3</div>
+                    </div>
+                    <div class="Data">
+                        <div class="Dat">
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>                          
+                        </div>
+                        <div class="stat">User Status</div>
+                    </div>
+                </div>
+                <div class="userimg"><img src="assets/images/user_image.svg" alt=""></div>
+            </div>
+            
             <div class="vehdat">
                
 
@@ -224,6 +256,24 @@ showDetailButton.addEventListener('click', function() {
         image.classList.remove('clicked');
     }, 500); // Sesuaikan dengan durasi animasi CSS
 });
+const userImage = document.querySelector('.user img');
+        // Ambil elemen .userdat
+        const userdatDiv = document.querySelector('.userdat');
+        userdatDiv.style.display = 'none'; // Mulanya tersembunyi
+
+        // Event listener untuk menampilkan dan menyembunyikan div .userdat
+        userImage.addEventListener('click', function() {
+            userdatDiv.style.display = 'block';
+            userdatDiv.classList.add('show'); // Tambahkan class untuk animasi
+        });
+
+        const backImage = document.querySelector('.userdat .user img');
+        backImage.addEventListener('click', function() {
+            userdatDiv.classList.remove('show'); // Hilangkan class untuk animasi
+            setTimeout(() => {
+                userdatDiv.style.display = 'none';
+            }, 500); // Durasi sesuai dengan animasi CSS
+        });
 
 
 

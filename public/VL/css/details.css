@@ -122,6 +122,45 @@
     max-width: calc(100% - 450px - 40px); /* Mengatur lebar maksimum agar tidak menembus div .vehdata */
 }
 
+/* Style dasar untuk .userdat */
+.userdat {
+    width: 450px;
+    height: 370px;
+    border: 1px solid #E6EDFF;
+    margin-bottom: 20px;
+    background-color: white;
+    border-radius: 10px;
+    position: absolute;
+    right: 0;
+    top: -10px;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translateY(-20px); /* Posisi awal saat tersembunyi */
+}
+
+/* Class untuk menampilkan .userdat dengan animasi */
+.userdat.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Animasi hover untuk gambar .user img */
+.user img {
+    transition: transform 0.2s, filter 0.2s;
+}
+
+.user img:hover {
+    filter: brightness(80%);
+    transform: scale(1.05);
+}
+
+/* Animasi click untuk gambar .user img */
+.user img:active {
+    filter: brightness(60%);
+    transform: scale(0.95);
+}
+
 
 .user img {
     display: flex;
