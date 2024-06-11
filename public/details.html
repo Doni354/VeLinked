@@ -51,34 +51,51 @@
             </div>
             <div class="userdat">
                 <div class="nameveh">
-                    <div class="vehname"></div>
-                    <div class="user"><img src="assets/images/back.svg" alt=""></div>
+                    <div class="vehname"><p>Username</p></div>
+                    <div class="user" style=" margin-top: 22px; margin-right: 20px; "><img style="width: 50%;" src="assets/images/back.svg" alt=""></div>
                     
                 </div>
                 <div class="userdat-stats">
-                    <div class="Data">
-                        <div class="Dat">User Data 1</div>
-                        <div class="stat">User Stat 1</div>
-                    </div>
-                    <div class="Data">
-                        <div class="Dat">User Data 2</div>
-                        <div class="stat">User Stat 2</div>
-                    </div>
-                    <div class="Data">
-                        <div class="Dat">User Data 3</div>
-                        <div class="stat">User Stat 3</div>
-                    </div>
-                    <div class="Data">
-                        <div class="Dat">
-                            <label class="switch">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>                          
+                    <div class="Ustats">
+                        <div class="UData">
+                            <div class="UDat">IDR.4.200.00</div>
+                            <div class="Ustat">Salary</div>
+                            <div class="Uview">View</div>
                         </div>
-                        <div class="stat">User Status</div>
+                        <div class="UData">
+                            <div class="UDat">A</div>
+                            <div class="Ustat">Driving License</div>
+                            <div class="Uview">View</div>
+                        </div>
+                        <div class="UData">
+                            <div class="UDat">+4 Years</div>
+                            <div class="Ustat">Experience</div>
+                            <div class="Uview">View</div>
+                        </div>
                     </div>
+                
+                    <div class="Ustats right-align">
+                        <div class="UData">
+                            <div class="UDat">+62882009031</div>
+                            <div class="Ustat">Phone number</div>
+                            <div class="Uview"></div>
+                        </div>
+                        <div class="UData">
+                            <div class="UDat" style="color: #9ED573;">2 Times</div>
+                            <div class="Ustat">Over Speed History</div>
+                            <div class="Uview">View</div>
+                        </div>
+                        <div class="UData">
+                            <div class="UDat">8 hours/d</div>
+                            <div class="Ustat">Working Hours</div>
+                            <div class="Uview"></div>
+                        </div>
+                    </div>
+                
+                    <div class="userimg"><img src="assets/images/UserD.svg" alt=""></div>
                 </div>
-                <div class="userimg"><img src="assets/images/user_image.svg" alt=""></div>
+                
+                
             </div>
             
             <div class="vehdat">
@@ -199,6 +216,8 @@
             `;
             vehicleDetailsContainer.innerHTML = detailsHTML;
         }
+
+
         // Ambil elemen tombol "Show Detail"
 const showDetailButton = document.querySelector('.ShowDetail');
 

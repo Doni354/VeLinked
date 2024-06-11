@@ -124,6 +124,7 @@
 
 /* Style dasar untuk .userdat */
 .userdat {
+    display: flex;
     width: 450px;
     height: 370px;
     border: 1px solid #E6EDFF;
@@ -132,17 +133,17 @@
     border-radius: 10px;
     position: absolute;
     right: 0;
-    top: -10px;
+    top: -1px;
     z-index: 2;
     opacity: 0;
     transition: opacity 0.5s ease, transform 0.5s ease;
-    transform: translateY(-20px); /* Posisi awal saat tersembunyi */
+    transform: translateX(20px); /* Posisi awal saat tersembunyi */
 }
 
 /* Class untuk menampilkan .userdat dengan animasi */
 .userdat.show {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0px) ;
 }
 
 /* Animasi hover untuk gambar .user img */
@@ -229,7 +230,6 @@
     display: none;
   }
   
-  /* Style slider */
   .slider {
     position: absolute;
     cursor: pointer;
@@ -294,4 +294,74 @@
 .clicked {
     transform: scale(0.9); /* Ubah ukuran gambar saat tombol ditekan */
     transition: transform 0.2s; /* Durasi animasi */
+}
+
+.username p {
+    color: #5243E6;
+    margin: 15px;
+    font-family: 'Manrope';
+    font-size: 30px;
+    font-weight: bolder;
+    font-style: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.userdat-stats {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+}
+
+.UData {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.UDdata {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.Ustats {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Tambahkan kelas ini untuk Ustats kedua */
+.Ustats.right-align .UData {
+    text-align: right;
+    margin-left: auto;
+}
+
+.UDat {
+    font-family: 'Manrope';
+    font-size: 18px;
+    font-style: bolder;
+    font-weight: bolder;
+}
+
+.Ustat {
+    font-family: 'Manrope';
+    font-size: 12px;
+    font-style: bolder;
+    font-weight: bolder;
+    color: #5243E6;
+}
+
+.Uview {
+    font-family: 'Manrope';
+    font-size: 8px;
+    font-style: bolder;
+    font-weight: bolder;
+    color: #55C1F8;
+}
+
+.userimg {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    position: absolute;
+    top: -95px;
 }
