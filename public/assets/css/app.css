@@ -263,6 +263,9 @@
   color: white;
 }
 
+.vehicleDetailsRow h3 {
+  font-weight: bolder;
+}
 
 .vehicleDetailsRow {
   display: flex;

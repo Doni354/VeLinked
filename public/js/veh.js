@@ -22,12 +22,12 @@ function displayVehicleCard(vehicleData, docId) {
     // Buat elemen h3 untuk judul kendaraan
     const vehicleTitle = document.createElement("h3");
     vehicleTitle.classList.add("vehicleTitle");
-    vehicleTitle.textContent = vehicleData.name;
+    vehicleTitle.textContent = vehicleData.nickname;
 
     // Buat elemen h5 untuk label total pengguna
     const usersTotalLabel = document.createElement("h5");
     usersTotalLabel.classList.add("usersTotalLabel");
-    usersTotalLabel.textContent = "Total users";
+    usersTotalLabel.textContent = vehicleData.name;
 
     // Tambahkan elemen judul dan label ke dalam div teks kendaraan
     vehicleText.appendChild(vehicleTitle);
