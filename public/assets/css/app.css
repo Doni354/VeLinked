@@ -76,7 +76,7 @@
   background-color: #F5F4FF;
 }
 
- #overlay {
+#overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -94,28 +94,40 @@
   transform: translate(-50%, -50%);
   display: none;
   z-index: 1000;
+  width: 90%; /* Adjusted for responsiveness */
+  max-width: 700px; /* Max width for larger screens */
+  box-sizing: border-box; /* Include padding in width */
 }
 
 .container {
-  width: 700px;
-  height: 650px;
+  width: 100%; /* Use full width of the parent */
+  max-width: 600px; /* Max width for larger screens */
+  height: auto; /* Let the height adjust according to the content */
   background: white;
-  padding: 25px 35px;
+  padding: 25px 5%; /* Responsive padding */
+  box-sizing: border-box;
 }
 
 /* Tambahkan gaya yang sesuai untuk form dan judul */
 .heading {
+  
+  display: flex;
+  justify-content: space-between;
   font-family: 'Manrope';
   font-weight: 900;
-  font-size: 30px;
+  font-size: 2em; /* Responsive font size */
   color: #5243E6;
+  text-align: left; /* Align the heading to the left */
+}
+.heading img {
+  margin-right: 7px;
+  width: 5px;
 }
 
 .form {
   margin-top: 20px;
   background-color: #FFFFFF;
 }
-
 
 .input {
   color: #999999;
@@ -126,6 +138,12 @@
   background: #FFFFFF;
   margin-top: 15px;
   padding: 10px;
+  box-sizing: border-box; /* Include padding in width */
+  font-size: 1em; /* Adjust font size for responsiveness */
+}
+
+.input::placeholder {
+  font-size: 1em; /* Ensure placeholder text matches input font size */
 }
 
 .label {
@@ -141,6 +159,11 @@
 .file-name {
   font-size: 14px;
   color: #999999;
+  white-space: nowrap; /* Prevent line breaks */
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Add ellipsis for overflow text */
+  display: inline-block; /* Make it inline-block */
+  max-width: 100%; /* Ensure it doesn't exceed the container width */
 }
 
 .submit-button {
@@ -156,7 +179,35 @@
   transition: all 0.2s ease-in-out;
 }
 
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+  .container {
+    padding: 25px 20px;
+  }
+  .heading {
+    font-size: 1.5em;
+  }
+  .submit-button {
+    margin: 20px auto;
+    padding: 10px;
+  }
+}
 
+@media (max-width: 480px) {
+  .heading {
+    font-size: 1.2em;
+  }
+  .input {
+    height: 35px;
+    padding: 8px;
+  }
+  .input::placeholder {
+    font-size: 0.9em; /* Adjust placeholder font size for small screens */
+  }
+  .submit-button {
+    padding: 10px;
+  }
+}
 
 
 .popup {
