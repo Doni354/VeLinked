@@ -1,63 +1,109 @@
 import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
 
 const db = getFirestore();
+const storage = getStorage();
 
+let emailInput = document.getElementById("email");
+let nickInput = document.getElementById("nickname");
+let plateInput = document.getElementById("plate");
 let nameInput = document.getElementById("name");
 let typeInput = document.getElementById("type");
 let addVehButton = document.getElementById("addVeh");
 let formContainer = document.getElementById("formContainer");
 let popup = document.getElementById("popup");
+let picInput = document.getElementById("pic");
+let fileNameSpan = document.getElementById("file-name");
+
+// Update file name display when a file is selected
+picInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        fileNameSpan.textContent = file.name;
+    }
+});
 
 // Event listener untuk menambahkan kendaraan
 addVehButton.addEventListener("click", async (event) => {
     event.preventDefault(); // Mencegah perilaku default dari form submission
 
-    // Memastikan input nama tidak kosong
+    if (plateInput.value.trim() === "") {
+        showPopup("Nomor Plat tidak boleh kosong!");
+        return;
+    }
+
+    if (nickInput.value.trim() === "") {
+        showPopup("NickName tidak boleh kosong!");
+        return;
+    }
+
     if (nameInput.value.trim() === "") {
         showPopup("Nama tidak boleh kosong!");
         return;
     }
 
-    // Mendapatkan pengguna saat ini
+    if (typeInput.value.trim() === "") {
+        showPopup("Kamu harus memilih tipe kendaraan!");
+        return;
+    }
+
     const user = firebase.auth().currentUser;
     if (!user) {
-        // Jika pengguna belum login, arahkan mereka ke halaman login
         window.location.href = "login.html";
         return;
     }
 
     try {
-        // Menambahkan data kendaraan
-        await addDocument_AutoID(user.uid);
-        // Menampilkan popup data berhasil ditambahkan
+        let pictureURL = "";
+        if (picInput.files.length > 0) {
+            pictureURL = await uploadPicture(picInput.files[0]);
+        }
+
+        await addDocument_AutoID(user.uid, pictureURL);
         showPopup("Data berhasil ditambahkan");
-        // Kosongkan form nama
-        nameInput.value = "";
-        // Tutup form tambah kendaraan
+        clearForm();
         toggleForm();
     } catch (error) {
         console.error("Error adding document: ", error);
-        showPopup("Terjadi kesalahan saat menambahkan data: " + error.message); // Menampilkan pesan kesalahan
+        showPopup("Terjadi kesalahan saat menambahkan data: " + error.message);
     }
 });
 
-// Fungsi untuk menampilkan popup dengan pesan tertentu
+async function uploadPicture(file) {
+    const storageReference = storageRef(storage, 'Vehicle/Image/' + file.name);
+    await uploadBytes(storageReference, file);
+    return await getDownloadURL(storageReference);
+}
+
 function showPopup(message) {
     popup.textContent = message;
     popup.style.display = "block";
     setTimeout(() => {
         popup.style.display = "none";
-    }, 3000); // Popup akan hilang setelah 3 detik
+    }, 3000);
 }
 
-// Fungsi untuk menambahkan data kendaraan dengan user_id
-async function addDocument_AutoID(userID) {
+async function addDocument_AutoID(userID, pictureURL) {
     const ref = collection(db, "Vehicle");
 
     await addDoc(ref, {
+        nickname: nickInput.value,
         name: nameInput.value,
         type: typeInput.value,
-        status: true,
+        status: false,
+        plate: plateInput.value,
+        email: emailInput.value,
+        picture: pictureURL,
         user_id: userID
     });
+}
+
+function clearForm() {
+    nickInput.value = "";
+    nameInput.value = "";
+    typeInput.value = "";
+    plateInput.value = "";
+    emailInput.value = "";
+    fileNameSpan.textContent = "No picture chosen (optional)";
+    picInput.value = "";
 }

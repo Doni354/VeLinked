@@ -115,23 +115,34 @@
                         }
 
                     </script>
-                    <div id="formContainer">
+                     <div id="formContainer">
                         <div class="container">
-                            
-                            <div class="heading">Add Vehicle</div>
+                            <div class="heading">Vehicle Data</div>
                             <form class="form" id="vehicleForm">
-                                <input required class="input" type="text" name="name" id="name" placeholder="Vehicle Name">
+                                <input required class="input" type="text" id="nickname" placeholder="Vehicle NickName">
                                 <select class="input" name="type" id="type">
+                                    <option value="" disabled selected hidden>Vehicle Type</option>
                                     <option value="car">Car</option>
                                     <option value="bus">Bus</option>
                                     <option value="truck">Truck</option>
                                 </select>
-                                <input class="login-button" type="submit" id="addVeh" value="Add Vehicle">
+                                <input required class="input" type="text" id="name" placeholder="Vehicle Name">
+                                <input required class="input" type="text" id="plate" placeholder="Plate no">
+                                <input class="input" type="email" id="email" placeholder="Email Vehicle (optional)">
+                                
+                                <div class="input-container">
+                                    <div class="input">
+                                        <label for="pic"><img src="assets/images/Input-vehpic.svg" alt=""></label>
+                                        <span id="file-name" class="file">No picture chosen (optional)</span>
+                                    </div>
+                                    <input required class="input" style="visibility: hidden;" type="file" id="pic" accept="image/*">
+                                </div>
+                                
+                                <input class="submit-button" type="submit" id="addVeh" value="Confirm">
                             </form>
-                            
                         </div>
-                          
                     </div>
+                    
                 
 
                       

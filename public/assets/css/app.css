@@ -97,69 +97,68 @@
 }
 
 .container {
-  max-width: 350px;
-  background: #F8F9FD;
-  background: linear-gradient(0deg, rgb(255, 255, 255) 0%, rgb(244, 247, 251) 100%);
-  border-radius: 40px;
+  width: 700px;
+  height: 650px;
+  background: white;
   padding: 25px 35px;
-  border: 5px solid rgb(255, 255, 255);
-  box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 30px 30px -20px;
 }
 
 /* Tambahkan gaya yang sesuai untuk form dan judul */
 .heading {
-  text-align: center;
+  font-family: 'Manrope';
   font-weight: 900;
   font-size: 30px;
-  color: rgb(16, 137, 211);
+  color: #5243E6;
 }
 
 .form {
   margin-top: 20px;
+  background-color: #FFFFFF;
 }
 
-.form .input {
+
+.input {
+  color: #999999;
   width: 100%;
-  background: white;
-  border: none;
-  padding: 15px 20px;
-  border-radius: 20px;
+  height: 40px;
+  outline: auto;
+  outline-color: #CCCCCC;
+  background: #FFFFFF;
   margin-top: 15px;
-  box-shadow: #cff0ff 0px 10px 10px -5px;
+  padding: 10px;
 }
 
-.form .input::placeholder {
-  color: rgb(170, 170, 170);
+.label {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-right: 10px;
 }
 
-.form .input:focus {
-  outline: none;
-  border: 2px solid #12B1D1;
+.file-name {
+  font-size: 14px;
+  color: #999999;
 }
 
-.login-button {
+.submit-button {
   display: block;
   width: 100%;
   font-weight: bold;
-  background: linear-gradient(45deg, rgb(16, 137, 211) 0%, rgb(18, 177, 209) 100%);
+  background: #5243E6;
   color: white;
   padding: 15px;
-  margin: 20px auto;
-  border-radius: 20px;
-  box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 20px 10px -15px;
+  border-radius: 5px;
+  margin: 50px auto;
   border: none;
   transition: all 0.2s ease-in-out;
 }
 
-.login-button:hover {
-  transform: scale(1.03);
-  box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 23px 10px -20px;
-}
 
-.login-button:active {
-  transform: scale(0.95);
-  box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 15px 10px -10px;
-}
+
+
 .popup {
   position: fixed;
   bottom: 20px;
