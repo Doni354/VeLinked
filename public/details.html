@@ -125,7 +125,7 @@
                     <div class="stat">Engine Status</div>
                 </div>
             </div>
-            <div class="vehimg"><img src="assets/images/CarD.svg" alt=""></div>
+            <div class="vehimg"></div>
         </div>
         </div>
     </div>
@@ -189,6 +189,7 @@
                 displayVehicleDetails(vehicleData);
                 displayVehicleName(vehicleData);
                 displayVehicleNickName(vehicleData);
+                displayVehicleImage(vehicleData);
                 
             } else {
                 console.log("No such document!");
@@ -225,6 +226,15 @@
             `;
             vehicleDetailsContainer.innerHTML = detailsHTML;
         }
+        function displayVehicleImage(vehicleData) {
+            const vehicleDetailsContainer = document.querySelector(".vehimg");
+            const imageUrl = (vehicleData.picture && vehicleData.picture.trim() !== '') ? vehicleData.picture : 'assets/images/CarD.svg';
+            const detailsHTML = `
+                <img src="${imageUrl}" alt="${vehicleData.name}">
+            `;
+            vehicleDetailsContainer.innerHTML = detailsHTML;
+        }
+
 
 
         // Ambil elemen tombol "Show Detail"

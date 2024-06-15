@@ -121,6 +121,10 @@
     justify-content: flex-end; /* Menggeser gambar ke tengah */
     max-width: calc(100% - 450px - 40px); /* Mengatur lebar maksimum agar tidak menembus div .vehdata */
 }
+.vehimg img {
+    margin-right: 8px;
+    max-width: 200px;
+}
 
 /* Style dasar untuk .userdat */
 .userdat {
