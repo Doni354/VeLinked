@@ -39,7 +39,7 @@
 
     <div class="veh">
         
-        <div class="vehtittle"><p>My Fleet</p></div>
+        <div class="vehtittle"></div>
         <div class="vehdata">
             <div class="ShowDetail SlideButton" id="showDetailButton">
                 <img src="assets/images/SlideButton.svg" alt="">
@@ -188,6 +188,8 @@
                 // Tampilkan data kendaraan di halaman
                 displayVehicleDetails(vehicleData);
                 displayVehicleName(vehicleData);
+                displayVehicleNickName(vehicleData);
+                
             } else {
                 console.log("No such document!");
             }
@@ -213,6 +215,13 @@
             const vehicleDetailsContainer = document.querySelector(".vehname");
             const detailsHTML = `
                     <p>${vehicleData.name}</p>
+            `;
+            vehicleDetailsContainer.innerHTML = detailsHTML;
+        }
+        function displayVehicleNickName(vehicleData) {
+            const vehicleDetailsContainer = document.querySelector(".vehtittle");
+            const detailsHTML = `
+                    <p>${vehicleData.nickname}</p>
             `;
             vehicleDetailsContainer.innerHTML = detailsHTML;
         }
