@@ -95,7 +95,7 @@
   display: none;
   z-index: 1000;
   width: 90%; /* Adjusted for responsiveness */
-  max-width: 700px; /* Max width for larger screens */
+  max-width: 550px; /* Max width for larger screens */
   box-sizing: border-box; /* Include padding in width */
 }
 
@@ -155,6 +155,11 @@
   border-radius: 5px;
   margin-right: 10px;
 }
+/* Default image style */
+#pic-preview {
+  width: auto; /* Default width */
+  height: auto; /* Default height */
+}
 
 .file-name {
   font-size: 14px;
@@ -167,14 +172,14 @@
 }
 
 .submit-button {
-  display: block;
+  display: flex;
   width: 100%;
   font-weight: bold;
-  background: #5243E6;
+  background: #1200C5;
   color: white;
   padding: 15px;
   border-radius: 5px;
-  margin: 50px auto;
+  margin: auto;
   border: none;
   transition: all 0.2s ease-in-out;
 }

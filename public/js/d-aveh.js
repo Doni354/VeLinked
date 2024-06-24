@@ -15,12 +15,21 @@ let formContainer = document.getElementById("formContainer");
 let popup = document.getElementById("popup");
 let picInput = document.getElementById("pic");
 let fileNameSpan = document.getElementById("file-name");
+let picPreview = document.getElementById("pic-preview");
 
-// Update file name display when a file is selected
+// Update file name display and preview image when a file is selected
 picInput.addEventListener('change', (event) => {
     const file = event.target.files[0];
     if (file) {
         fileNameSpan.textContent = file.name;
+        
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            picPreview.src = e.target.result;
+            picPreview.style.width = '25px';
+            picPreview.style.height = '25px';
+        };
+        reader.readAsDataURL(file);
     }
 });
 
@@ -33,7 +42,7 @@ addVehButton.addEventListener("click", async (event) => {
         return;
     }
     if (brandInput.value.trim() === "") {
-        showPopup("Kamu harus memilih Brand Kendaraan!")
+        showPopup("Kamu harus memilih Brand Kendaraan!");
     }
 
     if (nickInput.value.trim() === "") {
@@ -112,4 +121,7 @@ function clearForm() {
     emailInput.value = "";
     fileNameSpan.textContent = "No picture chosen (optional)";
     picInput.value = "";
+    picPreview.src = "assets/images/Input-vehpic.svg"; // reset preview image to default
+    picPreview.style.width = 'auto'; // reset width
+    picPreview.style.height = 'auto'; // reset height
 }
