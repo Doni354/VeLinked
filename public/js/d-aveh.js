@@ -4,6 +4,7 @@ import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "http
 const db = getFirestore();
 const storage = getStorage();
 
+let brandInput = document.getElementById("brand");
 let emailInput = document.getElementById("email");
 let nickInput = document.getElementById("nickname");
 let plateInput = document.getElementById("plate");
@@ -30,6 +31,9 @@ addVehButton.addEventListener("click", async (event) => {
     if (plateInput.value.trim() === "") {
         showPopup("Nomor Plat tidak boleh kosong!");
         return;
+    }
+    if (brandInput.value.trim() === "") {
+        showPopup("Kamu harus memilih Brand Kendaraan!")
     }
 
     if (nickInput.value.trim() === "") {
@@ -90,6 +94,7 @@ async function addDocument_AutoID(userID, pictureURL) {
         nickname: nickInput.value,
         name: nameInput.value,
         type: typeInput.value,
+        brand: brandInput.value,
         status: false,
         plate: plateInput.value,
         email: emailInput.value,
@@ -102,6 +107,7 @@ function clearForm() {
     nickInput.value = "";
     nameInput.value = "";
     typeInput.value = "";
+    brandInput.value = "";
     plateInput.value = "";
     emailInput.value = "";
     fileNameSpan.textContent = "No picture chosen (optional)";
