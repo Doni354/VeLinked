@@ -1,0 +1,253 @@
+
+.vehdata {
+    width: 450px;
+    height: 370px;
+    border: 1px solid #E6EDFF;
+    margin-right: 20px;
+    margin-bottom: 50px;
+    background-color: white;
+    border-radius: 10px;
+    position: absolute;
+    right: 0; /* Tetap berada di samping kanan */
+    z-index: 1;
+    transition: width 0.5s ease;
+}
+
+.vehdata.active {
+    animation: expand 0.5s forwards;
+    right: 0; /* Tetap berada di samping kanan saat tidak aktif */
+    left: initial; /* Hapus pengaturan left */ /* Set posisi left ke 0 agar div memanjang ke kiri */
+}
+
+/* Class tambahan untuk menunjukkan div vehdata yang tidak aktif */
+.vehdata.inactive {
+    animation: contract 0.5s forwards;
+    right: 0; /* Tetap berada di samping kanan saat tidak aktif */
+    left: initial; /* Hapus pengaturan left */
+}
+
+
+
+.data {
+    display: flex;
+    justify-content: space-between;
+}
+
+.vehtittle {
+    width: 450px; /* Lebar kotak */
+    height: 40px; /* Tinggi kotak */
+    border: 1px solid #E6EDFF; /* Ketebalan dan warna garis tepi kotak */
+    display: flex;
+    margin: 20px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.vehtittle p {
+    font-family: 'Manrope', sans-serif;
+    font-size: 20px;
+    margin-top: 5px;
+    font-weight: bold;
+    font-style: bold;
+    display: flex;
+    align-content: center;
+    margin-left: 15px;
+}
+
+.vehname p {
+    color: #5243E6;
+    margin: 15px;
+    font-family: 'Manrope';
+    font-size: 30px;
+    font-weight: bolder;
+    font-style: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.vehimg {
+    margin-left: auto; /* Menggeser gambar ke ujung kanan */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Menggeser gambar ke tengah */
+    max-width: calc(100% - 450px - 40px); /* Mengatur lebar maksimum agar tidak menembus div .vehdata */
+}
+.vehimg img {
+    margin-right: 8px;
+    max-width: 250px;
+}
+
+/* Style dasar untuk .userdat */
+.userdat {
+    display: flex;
+    width: 450px;
+    height: 370px;
+    border: 1px solid #E6EDFF;
+    margin-bottom: 20px;
+    background-color: white;
+    border-radius: 10px;
+    position: absolute;
+    right: 0;
+    top: -1px;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translateX(20px); /* Posisi awal saat tersembunyi */
+}
+
+/* Class untuk menampilkan .userdat dengan animasi */
+.userdat.show {
+    opacity: 1;
+    transform: translateX(0px) ;
+}
+
+/* Animasi hover untuk gambar .user img */
+.user img {
+    transition: transform 0.2s, filter 0.2s;
+}
+
+.user img:hover {
+    filter: brightness(80%);
+    transform: scale(1.05);
+}
+
+/* Animasi click untuk gambar .user img */
+.user img:active {
+    filter: brightness(60%);
+    transform: scale(0.95);
+}
+
+
+.user img {
+    display: flex;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: auto;
+}
+
+.nameveh {
+    display: flex;
+    justify-content: space-between;
+}
+
+.vehdat {
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+}
+
+.stats {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+
+.Dat {
+    font-family: 'Manrope';
+    font-size:25px;
+    font-style: bolder;
+    font-weight: bolder;
+
+
+}
+
+.stat {
+
+    font-family: 'Manrope';
+    font-size: small;
+    font-style: bolder;
+    font-weight: bolder;
+    color: #5243E6;
+
+}
+
+.Data {
+    margin: 5px;
+}
+
+/* Style dasar untuk tombol switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+/* Style dasar untuk tombol switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  
+  /* Hide default checkbox */
+  .switch input {
+    display: none;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc; /* Warna default saat off */
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+  }
+  
+  /* Style untuk slider ketika tombol dalam posisi aktif (on) */
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+  }
+  
+  /* Style untuk slider ketika tombol dalam posisi aktif (on) */
+  input:checked + .slider {
+    background-color: #4CAF50; /* Warna hijau saat on */
+  }
+  
+  /* Style untuk slider ketika tombol dalam posisi aktif (on) */
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  .ShowDetail {
+    position: absolute;
+    left: -15px; /* Menyesuaikan agar berada di tengah garis border sisi kiri */
+    top: 50%; /* Posisi vertikal di tengah */
+    transform: translateY(-50%); /* Membuat tombol berada di tengah secara vertikal */
+  }
+  
+  .SlideButton img {
+    width: 100%;
+    height: auto;
+  }
+  
+  /* Efek menggelap saat dihover */
+  .ShowDetail:hover img {
+    filter: brightness(80%);
+  }
+  
+  /* Efek menggelap saat ditekan */
+  .ShowDetail:active img {
+    filter: brightness(60%);
+  }
+
+  /* Animasi untuk perubahan gambar saat tombol ditekan */
+.clicked {
+    transform: scale(0.9); /* Ubah ukuran gambar saat tombol ditekan */
+    transition: transform 0.2s; /* Durasi animasi */
+} 

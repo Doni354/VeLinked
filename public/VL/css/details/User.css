@@ -1,0 +1,70 @@
+
+.username p {
+    color: #5243E6;
+    margin: 15px;
+    font-family: 'Manrope';
+    font-size: 30px;
+    font-weight: bolder;
+    font-style: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.userdat-stats {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+}
+
+.UData {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.UDdata {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.Ustats {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Tambahkan kelas ini untuk Ustats kedua */
+.Ustats.right-align .UData {
+    text-align: right;
+    margin-left: auto;
+}
+
+.UDat {
+    font-family: 'Manrope';
+    font-size: 18px;
+    font-style: bolder;
+    font-weight: bolder;
+}
+
+.Ustat {
+    font-family: 'Manrope';
+    font-size: 12px;
+    font-style: bolder;
+    font-weight: bolder;
+    color: #5243E6;
+}
+
+.Uview {
+    font-family: 'Manrope';
+    font-size: 8px;
+    font-style: bolder;
+    font-weight: bolder;
+    color: #55C1F8;
+}
+
+.userimg {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    position: absolute;
+    top: -95px;
+}

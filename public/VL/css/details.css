@@ -1,371 +1,110 @@
-.LiveTracking {
-    width: 1000px; /* Lebar kotak */
-    height: 450px; /* Tinggi kotak */
+.Last_Trip {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.LastTrip {
+    width: 850px; /* Lebar kotak */
+    height: 40px; /* Tinggi kotak */
     border: 1px solid #E6EDFF; /* Ketebalan dan warna garis tepi kotak */
     display: flex;
-    margin: 20px; /* Jarak dari atas dan bawah, dan otomatis untuk sisi kiri dan kanan */
+    margin-left: 20px;
     background-color: white;
     border-radius: 10px; /* Radius sudut */
 }
 
-.LTT p {
-    font-family: 'Manrope', sans-serif;
-    font-size: 22px;
-    font-weight: 800;
-    margin-top: 10px;
-    margin-left: 15px;
+.LastTrip h1 {
+    color: black;
+    font-family: 'Manrope';
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px;
 }
 
-.map-container {
-    display: flex;
-    width: 955px;
-    height: 380px;
-    margin: 15px;
-}
-
-.map-container iframe {
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-}
-
-/* Animasi untuk memperluas dan menyusutkan div vehdata */
-@keyframes expand {
-    from {
-        width: 450px;
-    }
-    to {
-        width: 680px; /* Menyesuaikan lebar maksimum sesuai ukuran layar dan lebar div LiveTracking */
-    }
-}
-
-@keyframes contract {
-    from {
-        width: 680px; /* Menyesuaikan lebar maksimum sesuai ukuran layar dan lebar div LiveTracking */
-    }
-    to {
-        width: 450px;
-    }
-}
-.vehdata {
-    width: 450px;
-    height: 370px;
-    border: 1px solid #E6EDFF;
-    margin-right: 20px;
-    margin-bottom: 50px;
-    background-color: white;
-    border-radius: 10px;
-    position: absolute;
-    right: 0; /* Tetap berada di samping kanan */
-    z-index: 1;
-    transition: width 0.5s ease;
-}
-
-.vehdata.active {
-    animation: expand 0.5s forwards;
-    right: 0; /* Tetap berada di samping kanan saat tidak aktif */
-    left: initial; /* Hapus pengaturan left */ /* Set posisi left ke 0 agar div memanjang ke kiri */
-}
-
-/* Class tambahan untuk menunjukkan div vehdata yang tidak aktif */
-.vehdata.inactive {
-    animation: contract 0.5s forwards;
-    right: 0; /* Tetap berada di samping kanan saat tidak aktif */
-    left: initial; /* Hapus pengaturan left */
-}
-
-
-
-.data {
-    display: flex;
-    justify-content: space-between;
-}
-
-.vehtittle {
-    width: 450px; /* Lebar kotak */
-    height: 40px; /* Tinggi kotak */
+.LT-Data {
+    width: 850px; /* Lebar kotak */
+    height: 250px; /* Tinggi kotak */
     border: 1px solid #E6EDFF; /* Ketebalan dan warna garis tepi kotak */
     display: flex;
-    margin: 20px;
+    flex-direction: column;
+    overflow-y: scroll; /* Membuat daftar dapat digulir secara vertikal */
+    margin: 20px; /* Jarak dari atas dan bawah, dan otomatis untuk sisi kiri dan kanan */
     background-color: white;
-    border-radius: 10px;
+    border-radius: 10px; /* Radius sudut */
+    scrollbar-width: none; /* Untuk menghilangkan scrollbar di Firefox */
 }
 
-.vehtittle p {
-    font-family: 'Manrope', sans-serif;
-    font-size: 20px;
-    margin-top: 5px;
-    font-weight: bold;
-    font-style: bold;
+.LT-Data::-webkit-scrollbar {
+    display: none; /* Untuk menghilangkan scrollbar di Chrome, Safari, dan Opera */
+}
+
+.LTDat {
+    margin: 10px;
+}
+
+.trip-item {
     display: flex;
-    align-content: center;
-    margin-left: 15px;
+    flex-direction: column;
+    padding: 10px;
+
 }
 
-.vehname p {
-    color: #5243E6;
-    margin: 15px;
-    font-family: 'Manrope';
-    font-size: 30px;
-    font-weight: bolder;
-    font-style: bold;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.trip-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Menyelaraskan item secara vertikal di tengah */
 }
 
-.vehimg {
-    margin-left: auto; /* Menggeser gambar ke ujung kanan */
+.trip-details {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.time-location {
     display: flex;
     align-items: center;
-    justify-content: flex-end; /* Menggeser gambar ke tengah */
-    max-width: calc(100% - 450px - 40px); /* Mengatur lebar maksimum agar tidak menembus div .vehdata */
-}
-.vehimg img {
-    margin-right: 8px;
-    max-width: 250px;
+
 }
 
-/* Style dasar untuk .userdat */
-.userdat {
+.time-location img.icon {
+    width: 24px; /* Set width to a standard size */
+    height: 24px; /* Set height to a standard size */
+    margin-right: 10px;
+}
+
+.time-location .time {
+    margin-right: 30px;
+    font-weight: bold;
+}
+
+.vehicle-info {
     display: flex;
-    width: 450px;
-    height: 370px;
-    border: 1px solid #E6EDFF;
-    margin-bottom: 20px;
-    background-color: white;
-    border-radius: 10px;
-    position: absolute;
-    right: 0;
-    top: -1px;
-    z-index: 2;
-    opacity: 0;
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    transform: translateX(20px); /* Posisi awal saat tersembunyi */
+    flex-direction: column;
+    align-items: flex-end; /* Menyelaraskan item secara horizontal di tengah */
+    margin-left: auto; /* Pindahkan ke kanan */
+    text-align: flex-end; /* Pusatkan teks di dalam div */
 }
 
-/* Class untuk menampilkan .userdat dengan animasi */
-.userdat.show {
-    opacity: 1;
-    transform: translateX(0px) ;
+.vehicle-name {
+    color: #7C8DB5;
 }
 
-/* Animasi hover untuk gambar .user img */
-.user img {
-    transition: transform 0.2s, filter 0.2s;
+.distance {
+    font-weight: bold;
 }
 
-.user img:hover {
-    filter: brightness(80%);
-    transform: scale(1.05);
-}
-
-/* Animasi click untuk gambar .user img */
-.user img:active {
-    filter: brightness(60%);
-    transform: scale(0.95);
-}
-
-
-.user img {
-    display: flex;
+.horizontal-line {
+    border-top: 1px solid #E6EDFF;
     margin-top: 10px;
-    margin-right: 10px;
-    margin-left: auto;
 }
 
-.nameveh {
-    display: flex;
-    justify-content: space-between;
+.trip-item:last-child .horizontal-line {
+    display: none; /* Menghilangkan garis horizontal pada item terakhir */
 }
 
-.vehdat {
-    display: flex;
-    justify-content: space-around;
-    position: relative;
-}
-
-.stats {
-    display: flex;
-    flex-direction: column;
-    margin-left: 20px;
-}
-
-.Dat {
-    font-family: 'Manrope';
-    font-size:25px;
-    font-style: bolder;
-    font-weight: bolder;
-
-
-}
-
-.stat {
-
-    font-family: 'Manrope';
-    font-size: small;
-    font-style: bolder;
-    font-weight: bolder;
-    color: #5243E6;
-
-}
-
-.Data {
-    margin: 5px;
-}
-
-/* Style dasar untuk tombol switch */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
-/* Style dasar untuk tombol switch */
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-  }
-  
-  /* Hide default checkbox */
-  .switch input {
-    display: none;
-  }
-  
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc; /* Warna default saat off */
-    -webkit-transition: .4s;
-    transition: .4s;
-    border-radius: 34px;
-  }
-  
-  /* Style untuk slider ketika tombol dalam posisi aktif (on) */
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
-    border-radius: 50%;
-  }
-  
-  /* Style untuk slider ketika tombol dalam posisi aktif (on) */
-  input:checked + .slider {
-    background-color: #4CAF50; /* Warna hijau saat on */
-  }
-  
-  /* Style untuk slider ketika tombol dalam posisi aktif (on) */
-  input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-  }
-  .ShowDetail {
-    position: absolute;
-    left: -15px; /* Menyesuaikan agar berada di tengah garis border sisi kiri */
-    top: 50%; /* Posisi vertikal di tengah */
-    transform: translateY(-50%); /* Membuat tombol berada di tengah secara vertikal */
-  }
-  
-  .SlideButton img {
-    width: 100%;
-    height: auto;
-  }
-  
-  /* Efek menggelap saat dihover */
-  .ShowDetail:hover img {
-    filter: brightness(80%);
-  }
-  
-  /* Efek menggelap saat ditekan */
-  .ShowDetail:active img {
-    filter: brightness(60%);
-  }
-
-  /* Animasi untuk perubahan gambar saat tombol ditekan */
-.clicked {
-    transform: scale(0.9); /* Ubah ukuran gambar saat tombol ditekan */
-    transition: transform 0.2s; /* Durasi animasi */
-}
-
-.username p {
-    color: #5243E6;
-    margin: 15px;
-    font-family: 'Manrope';
-    font-size: 30px;
-    font-weight: bolder;
-    font-style: bold;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.userdat-stats {
-    display: flex;
-    position: relative;
-    justify-content: space-between;
-}
-
-.UData {
-    margin-right: 10px;
-    margin-left: 10px;
-}
-
-.UDdata {
-    display: flex;
-    justify-content: space-evenly;
-}
-
-.Ustats {
-    display: flex;
-    flex-direction: column;
-}
-
-/* Tambahkan kelas ini untuk Ustats kedua */
-.Ustats.right-align .UData {
-    text-align: right;
-    margin-left: auto;
-}
-
-.UDat {
-    font-family: 'Manrope';
-    font-size: 18px;
-    font-style: bolder;
-    font-weight: bolder;
-}
-
-.Ustat {
-    font-family: 'Manrope';
-    font-size: 12px;
-    font-style: bolder;
-    font-weight: bolder;
-    color: #5243E6;
-}
-
-.Uview {
-    font-family: 'Manrope';
-    font-size: 8px;
-    font-style: bolder;
-    font-weight: bolder;
-    color: #55C1F8;
-}
-
-.userimg {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    position: absolute;
-    top: -95px;
+.location {
+    color: #7C8DB5;
 }

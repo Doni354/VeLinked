@@ -1,0 +1,49 @@
+.LiveTracking {
+    width: 1000px; /* Lebar kotak */
+    height: 450px; /* Tinggi kotak */
+    border: 1px solid #E6EDFF; /* Ketebalan dan warna garis tepi kotak */
+    display: flex;
+    margin: 20px; /* Jarak dari atas dan bawah, dan otomatis untuk sisi kiri dan kanan */
+    background-color: white;
+    border-radius: 10px; /* Radius sudut */
+}
+
+.LTT p {
+    font-family: 'Manrope', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
+.map-container {
+    display: flex;
+    width: 955px;
+    height: 380px;
+    margin: 15px;
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+/* Animasi untuk memperluas dan menyusutkan div vehdata */
+@keyframes expand {
+    from {
+        width: 450px;
+    }
+    to {
+        width: 680px; /* Menyesuaikan lebar maksimum sesuai ukuran layar dan lebar div LiveTracking */
+    }
+}
+
+@keyframes contract {
+    from {
+        width: 680px; /* Menyesuaikan lebar maksimum sesuai ukuran layar dan lebar div LiveTracking */
+    }
+    to {
+        width: 450px;
+    }
+}
