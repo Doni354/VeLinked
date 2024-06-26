@@ -70,6 +70,24 @@
  * 6. Responsive
  */
 
+ #profile-container {
+  display: flex;
+  align-items: flex-start;
+}
+
+
+
+#user-name {
+  white-space: nowrap;
+}
+
+/* Tambahkan aturan media query untuk memastikan responsivitas */
+@media (max-width: 768px) {
+  #profile-container {
+      flex-direction: ;
+      align-items: flex-start;
+  }
+}
 
 
  .main-content {
