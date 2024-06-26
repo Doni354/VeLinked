@@ -84,7 +84,6 @@
 /* Tambahkan aturan media query untuk memastikan responsivitas */
 @media (max-width: 768px) {
   #profile-container {
-      flex-direction: ;
       align-items: flex-start;
   }
 }
