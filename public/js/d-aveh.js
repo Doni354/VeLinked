@@ -32,6 +32,10 @@ picInput.addEventListener('change', (event) => {
         reader.readAsDataURL(file);
     }
 });
+// Event listener untuk mengubah input plat nomor menjadi huruf kapital
+plateInput.addEventListener('input', (event) => {
+    plateInput.value = plateInput.value.toUpperCase();
+});
 
 // Event listener untuk menambahkan kendaraan
 addVehButton.addEventListener("click", async (event) => {
