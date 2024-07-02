@@ -9,70 +9,7 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-  <style>
-    /* CSS untuk membuat halaman vertikal dan horizontal ditengah */
-    body {
-      background-color: #343a40; /* Ubah warna background agar lebih terang */
-      color: white; /* Ubah warna teks agar lebih kontras */
-      height: 100vh; /* Buat halaman memenuhi tinggi viewport */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .button-container {
-      margin-top: 20px; /* Beri sedikit jarak atas dari tombol */
-      text-align: center; /* Atur agar tombol berada di tengah */
-    }
-    button {
-      border: none;
-      display: block;
-      position: relative;
-      padding: 0.7em 2.4em;
-      font-size: 18px;
-      background: transparent;
-      cursor: pointer;
-      user-select: none;
-      overflow: hidden;
-      color: royalblue;
-      z-index: 1;
-      font-family: inherit;
-      font-weight: 500;
-      margin: auto; /* Agar tombol berada di tengah */
-    }
-    button span {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background: transparent;
-      z-index: -1;
-      border: 4px solid royalblue;
-    }
-    button span::before {
-      content: "";
-      display: block;
-      position: absolute;
-      width: 8%;
-      height: 500%;
-      background: var(--lightgray);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(-60deg);
-      transition: all 0.3s;
-    }
-    button:hover span::before {
-      transform: translate(-50%, -50%) rotate(-90deg);
-      width: 100%;
-      background: royalblue;
-    }
-    button:hover {
-      color: white;
-    }
-    button:active span::before {
-      background: #2751cd;
-    }
-  </style>
+  <link rel="stylesheet" href="VL/css/main.css">
   <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
@@ -82,22 +19,49 @@
         <a href="index.html"><img class="logo" src="assets/images/VL.svg" alt="VeLinked"></a>
     </div>
     <div class="nav-links">
-        <a href="#">Home</a>
-        <a href="#">About Us</a>
-        <a href="#">Services</a>
-        <a href="#">Products</a>
-        <a href="#">Pricing</a>
+        <a href="#home">Home</a>
+        <a href="#about">About Us</a>
+        <a href="#services">Services</a>
+        <a href="#products">Products</a>
+        <a href="#pricing">Pricing</a>
         <a href="#">Contact Us</a>
         <button class="lbtn" onclick="window.location.href = 'login.html';">Login</button>
         <button class="sbtn">Sign Up</button>
     </div>
 </header>
-  <div class="container text-center">
-    <h1>Selamat Datang</h1>
-    <p>Silakan login untuk melanjutkan.</p>
-    <div class="button-container">
-      <button onclick="window.location.href='login.html'">Login<span></span></button>
+<main>
+  <section id="home">
+    <div class="home">
+      <div class="content1">
+        <h2>Manage your fleet easily, you can focus on your business</h2>
+        <p>The Future of management vehicle platform with<br>Internet of Things system</p>
+        
+      </div>
+      <div class="imgbox">
+        <div class="img-btn">
+          <img src="assets/images/img-btn.svg" alt="">
+        </div>
+      </div>
     </div>
+      
+  </section>
+
+  <section id="about">
+      <h2>Section 2</h2>
+      <p>This is the content for section 2.</p>
+  </section>
+
+  <section id="section3">
+      <h2>Section 3</h2>
+      <p>This is the content for section 3.</p>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2024 Your Website. All rights reserved.</p>
+</footer>
+    
+  </div>
   </div>
   <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js"></script>

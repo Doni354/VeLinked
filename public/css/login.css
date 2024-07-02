@@ -1,5 +1,6 @@
       @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
-        body {
+        
+      body {
             margin: 0;
             padding: 0;
             background-color: #ffffff;
@@ -14,7 +15,6 @@
             padding: 1rem;
             background-color: #ffffff;
             width: 100%;
-            position: fixed;
             top: 0;
             left: 0;
             z-index: 1000;
@@ -148,8 +148,6 @@
     line-height: 1.25rem;
     font-weight: 700;
     text-align: center;
-    text-transform: uppercase;
-
     cursor: pointer;
     transition: all .6s ease;
     border: none;

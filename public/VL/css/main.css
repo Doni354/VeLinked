@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+  .button-container {
+    margin-top: 20px; /* Beri sedikit jarak atas dari tombol */
+    text-align: center; /* Atur agar tombol berada di tengah */
+  }
+  button {
+    border: none;
+    display: block;
+    position: relative;
+    padding: 0.7em 2.4em;
+    font-size: 18px;
+    background: transparent;
+    cursor: pointer;
+    user-select: none;
+    overflow: hidden;
+    color: royalblue;
+    z-index: 1;
+    font-family: inherit;
+    font-weight: 500;
+    margin: auto; /* Agar tombol berada di tengah */
+  }
+  button span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: -1;
+    border: 4px solid royalblue;
+  }
+  button span::before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 8%;
+    height: 500%;
+    background: var(--lightgray);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-60deg);
+    transition: all 0.3s;
+  }
+  button:hover span::before {
+    transform: translate(-50%, -50%) rotate(-90deg);
+    width: 100%;
+    background: royalblue;
+  }
+  button:hover {
+    color: white;
+  }
+  button:active span::before {
+    background: #2751cd;
+  }
+
+  
+
+section {
+  padding: 2em;
+  min-height: 100vh;
+}
+
+section:nth-of-type(odd) {
+    background-color: #FFFFFF;
+}
+
+section:nth-of-type(even) {
+    background-color: #F4FAFF;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1em 0;
+}
+
+.home {
+  margin-top: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  
+}
+
+.content1 {
+  width: 500px;
+  margin-left: 50px;
+}
+.content1 h2 {
+  font-size: 50px;
+  font-weight: 100px;
+  font-family: 'Manrope';
+
+}
+
+.content1 p {
+  font-family: 'DM Sans';
+  color: #454545;
+}
+
+.imgbox {
+  margin-right: 50px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 300px;
+  height: 400px;
+  border-radius: 20px;
+  background-color: rgba(217, 217, 217, 0.54);
+}
+
+.img-btn {
+  margin: 10px;
+}
