@@ -75,7 +75,8 @@
 }
 .vehimg img {
     margin-right: 8px;
-    max-width: 250px;
+    max-width: 300px;
+    max-height: 250px;
 }
 
 /* Style dasar untuk .userdat */
