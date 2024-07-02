@@ -86,6 +86,7 @@ footer {
 }
 
 .content1 {
+  margin-top: 50px;
   width: 500px;
   margin-left: 50px;
 }
@@ -99,6 +100,24 @@ footer {
 .content1 p {
   font-family: 'DM Sans';
   color: #454545;
+}
+
+.funfact {
+  display: flex;
+  justify-content: baseline;
+}
+
+.fact {
+  width: 120px;
+  margin: 10px;
+}
+
+.fact h2 {
+  font-size: 45px;
+}
+
+.fact p {
+ font-size: 10px;
 }
 
 .imgbox {
