@@ -41,17 +41,18 @@ plateInput.addEventListener('input', (event) => {
 addVehButton.addEventListener("click", async (event) => {
     event.preventDefault(); // Mencegah perilaku default dari form submission
 
-    if (plateInput.value.trim() === "") {
-        showPopup("Nomor Plat tidak boleh kosong!");
+    if (nickInput.value.trim() === "") {
+        showPopup("NickName tidak boleh kosong!");
         return;
     }
-    if (brandInput.value.trim() === "") {
-        showPopup("Kamu harus memilih Brand Kendaraan!");
+    
+    if (typeInput.value.trim() === "") {
+        showPopup("Kamu harus memilih tipe kendaraan!");
         return;
     }
 
-    if (nickInput.value.trim() === "") {
-        showPopup("NickName tidak boleh kosong!");
+    if (brandInput.value.trim() === "") {
+        showPopup("Kamu harus memilih Brand Kendaraan!");
         return;
     }
 
@@ -60,10 +61,12 @@ addVehButton.addEventListener("click", async (event) => {
         return;
     }
 
-    if (typeInput.value.trim() === "") {
-        showPopup("Kamu harus memilih tipe kendaraan!");
+    if (plateInput.value.trim() === "") {
+        showPopup("Nomor Plat tidak boleh kosong!");
         return;
     }
+    
+
 
     const user = firebase.auth().currentUser;
     if (!user) {
@@ -72,6 +75,8 @@ addVehButton.addEventListener("click", async (event) => {
     }
 
     try {
+        showPopup("Data sedang diproses...");
+
         let pictureURL = "";
         if (picInput.files.length > 0) {
             pictureURL = await uploadPicture(picInput.files[0]);
