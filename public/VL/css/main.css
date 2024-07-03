@@ -146,6 +146,11 @@ footer {
   width: 550px;
 }
 
+.about {
+  padding: 2em;
+  
+}
+
 .about-tittle h4 {
   color: #55C1F8;
   font-weight: bold;
@@ -161,7 +166,8 @@ footer {
 }
 
 .about-LearnMore {
-  width: 550px;
+  width: 510px;
+  margin-right: 100px;
 }
 
 .about-LearnMore p {
@@ -172,17 +178,30 @@ footer {
 .content2 {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-content: center;
 }
 
 .about-Left img {
   width: 750px;
 }
 
-.about-right-content {
+.about-right {
+  margin-top: 60px;
+  margin-right: 50px;
+}
 
-  margin-right: 200px;
-  margin-bottom: 150px;
+.about-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 100px;
+  
+  
+}
+.about-right-content {
+  
+  margin-right: 75px;
+  
   width: 375px; 
   
 
@@ -199,8 +218,25 @@ footer {
 
 }
 
+.head-about-right h2 {
+  font-size: 45px;
+  font-weight: 75px;
+  font-family: 'Manrope';
+}
+
 .head-about-right img {
   width: 40px;
   margin-right: 25px;
   margin-bottom: 50px;
+}
+
+.about-right-foot {
+  display: flex;
+  justify-content: first baseline;
+  margin-right: 150px;
+}
+
+.about-foot-img {
+  margin: 10px;
+  
 }
