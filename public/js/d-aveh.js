@@ -47,6 +47,7 @@ addVehButton.addEventListener("click", async (event) => {
     }
     if (brandInput.value.trim() === "") {
         showPopup("Kamu harus memilih Brand Kendaraan!");
+        return;
     }
 
     if (nickInput.value.trim() === "") {
