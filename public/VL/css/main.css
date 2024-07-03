@@ -134,3 +134,37 @@ footer {
 .img-btn {
   margin: 10px;
 }
+
+.about-head {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+  align-items: center;
+}
+
+.about-tittle {
+  width: 550px;
+}
+
+.about-tittle h4 {
+  color: #55C1F8;
+  font-weight: bold;
+  font-size: 15px;
+  font-family: 'Manrope';
+  
+}
+
+.about-tittle h2 {
+  font-size: 45px;
+  font-weight: 75px;
+  font-family: 'Manrope';
+}
+
+.about-LearnMore {
+  width: 550px;
+}
+
+.about-LearnMore p {
+  font-family: 'DM Sans';
+  color: #454545;
+}
