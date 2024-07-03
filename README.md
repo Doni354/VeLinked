@@ -9,7 +9,9 @@ You must have Node.JS (https://nodejs.org/en)
 
 Firebase
 
-instal globaly with 'npm install firebase-tools -g'
+install globaly with 'npm install firebase-tools -g'
+
+then run 'firebase init'
 
 ### 3. Demo & Live Coding Result
 
