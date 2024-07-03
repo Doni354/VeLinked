@@ -168,3 +168,39 @@ footer {
   font-family: 'DM Sans';
   color: #454545;
 }
+
+.content2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.about-Left img {
+  width: 750px;
+}
+
+.about-right-content {
+
+  margin-right: 200px;
+  margin-bottom: 150px;
+  width: 375px;
+  
+
+}
+
+.about-right-p p {
+  font-family: 'DM Sans';
+  color: #454545;
+}
+
+.head-about-right {
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.head-about-right img {
+  width: 40px;
+  margin-right: 25px;
+  margin-bottom: 50px;
+}
