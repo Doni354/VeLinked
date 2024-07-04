@@ -245,21 +245,20 @@ footer {
 
 
 
+
 .services {
   padding: 2em;
 }
 
-
-
 .tittle_services {
   width: 800px;
 }
+
 .tittle_services h4 {
   color: #55C1F8;
   font-weight: bold;
   font-size: 15px;
   font-family: 'Manrope';
-  
 }
 
 .tittle_services h2 {
@@ -275,6 +274,59 @@ footer {
 
 .head_services img {
   margin-right: 10px;
+}
+
+.container_services {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 25px;
+  max-width: 100%;
+  font-family: 'Manrope';
+}
+
+.card_services {
+  padding: 50px;
+  text-align: left;
+  flex: 1 1 calc(33.333% - 25px); /* Three cards per row with gap considered */
+  box-sizing: border-box;
+}
+
+.card-number_services {
+  color: #787878;
+  font-size: 30px;
+  font-weight: 75px;
+  margin-bottom: 10px;
+}
+
+.card-title_services {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.card-content_services {
+  color: #787878;
+  font-size: 18px;
+}
+
+@media (max-width: 1200px) {
+  .card_services {
+      flex: 1 1 calc(48% - 25px); /* Two cards per row with gap considered */
+  }
+}
+
+@media (max-width: 768px) {
+  .card_services {
+      flex: 1 1 calc(48% - 25px); /* Two cards per row with gap considered */
+  }
+}
+
+@media (max-width: 480px) {
+  .card_services {
+      flex: 1 1 100%;
+      text-align: center;
+  }
 }
 
 
