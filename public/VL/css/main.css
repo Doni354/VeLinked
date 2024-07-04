@@ -73,7 +73,8 @@ footer {
     background-color: #333;
     color: white;
     text-align: center;
-    padding: 1em 0;
+    padding: 2em 0;
+
 }
 
 .home {
@@ -240,3 +241,40 @@ footer {
   margin: 10px;
   
 }
+
+
+
+
+.reason {
+  padding: 2em;
+}
+
+
+
+.tittle_reason {
+  width: 800px;
+}
+.tittle_reason h4 {
+  color: #55C1F8;
+  font-weight: bold;
+  font-size: 15px;
+  font-family: 'Manrope';
+  
+}
+
+.tittle_reason h2 {
+  font-size: 45px;
+  font-weight: 75px;
+  font-family: 'Manrope';
+}
+
+.head_reason {
+  display: flex;
+  justify-content: space-between;
+}
+
+.head_reason img {
+  margin-right: 10px;
+}
+
+
