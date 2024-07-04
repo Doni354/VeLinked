@@ -245,16 +245,16 @@ footer {
 
 
 
-.reason {
+.services {
   padding: 2em;
 }
 
 
 
-.tittle_reason {
+.tittle_services {
   width: 800px;
 }
-.tittle_reason h4 {
+.tittle_services h4 {
   color: #55C1F8;
   font-weight: bold;
   font-size: 15px;
@@ -262,18 +262,18 @@ footer {
   
 }
 
-.tittle_reason h2 {
+.tittle_services h2 {
   font-size: 45px;
   font-weight: 75px;
   font-family: 'Manrope';
 }
 
-.head_reason {
+.head_services {
   display: flex;
   justify-content: space-between;
 }
 
-.head_reason img {
+.head_services img {
   margin-right: 10px;
 }
 
