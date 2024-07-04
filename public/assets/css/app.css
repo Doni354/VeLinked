@@ -338,7 +338,9 @@
   flex: 1;
   margin-right: 20px;
 }
-
+.statusLabel {
+  margin-left: 5px;
+}
 .statusRow {
   display: flex;
   align-items: center;
