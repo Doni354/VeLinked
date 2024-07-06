@@ -252,17 +252,17 @@ footer {
 }
 
 .tittle_services {
-  width: 800px;
+  width:550px;
 }
 
-.tittle_services h4 {
+.h4bt h4 {
   color: #55C1F8;
   font-weight: bold;
   font-size: 15px;
   font-family: 'Manrope';
 }
 
-.tittle_services h2 {
+.h2bt h2 {
   font-size: 45px;
   font-weight: 75px;
   font-family: 'Manrope';
@@ -331,3 +331,21 @@ footer {
 }
 
 
+.products {
+  padding: 2em;
+}
+
+.head_products {
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.left_head_products {
+  width: 500px;
+}
+
+.right_head_products {
+  margin-top: 50px;
+  width: 500px;
+}
