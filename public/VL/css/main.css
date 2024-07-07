@@ -349,3 +349,33 @@ footer {
   margin-top: 50px;
   width: 500px;
 }
+
+
+
+
+
+.container_products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+.card_products {
+  text-align: start;
+
+}
+.card_products img {
+  width: 325px;
+  height: 225px;
+  display: block;
+  margin: 0 auto;
+}
+.card-title_products {
+  margin: 10px 0;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+.card-description_products {
+  font-size: 1em;
+  color: #555;
+}
