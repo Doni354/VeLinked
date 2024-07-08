@@ -70,13 +70,15 @@ section:nth-of-type(even) {
 }
 
 footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 2em 0;
-
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 2em 0;
+  position: relative;
+  width: 100%;
+  bottom: 0;
+  left: 0;
 }
-
 .home {
   margin-top: 30px;
   display: flex;
@@ -355,27 +357,33 @@ footer {
 
 
 .container_products {
+  margin-top: 50px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px;
+  gap: 125px;
+
 }
 .card_products {
   text-align: start;
 
 }
 .card_products img {
-  width: 325px;
-  height: 225px;
+  width: 350px;
+  height: 250px;
   display: block;
   margin: 0 auto;
 }
 .card-title_products {
+  font-family: 'Manrope';
+  width: 350px;
   margin: 10px 0;
   font-size: 1.2em;
   font-weight: bold;
 }
 .card-description_products {
+  font-family: 'Manrope';
+  width: 350px;
   font-size: 1em;
   color: #555;
 }
