@@ -387,3 +387,9 @@ footer {
   font-size: 1em;
   color: #555;
 }
+
+.footer_products {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
