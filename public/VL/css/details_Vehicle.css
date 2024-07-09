@@ -3,8 +3,9 @@
     width: 450px;
     height: 370px;
     border: 1px solid #E6EDFF;
-    margin-right: 20px;
-    margin-bottom: 50px;
+    margin-right: 15px;
+    margin-top: 10px;
+    margin-bottom: 25px;
     background-color: white;
     border-radius: 10px;
     position: absolute;
@@ -38,7 +39,6 @@
     height: 40px; /* Tinggi kotak */
     border: 1px solid #E6EDFF; /* Ketebalan dan warna garis tepi kotak */
     display: flex;
-    margin: 20px;
     background-color: white;
     border-radius: 10px;
 }

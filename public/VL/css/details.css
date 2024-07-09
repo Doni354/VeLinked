@@ -1,117 +1,56 @@
-.Last_Trip {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+body {
+    padding: 1em;
 }
 
-.LastTrip {
-    width: 850px; /* Lebar kotak */
-    height: 40px; /* Tinggi kotak */
-    border: 1px solid #E6EDFF; /* Ketebalan dan warna garis tepi kotak */
-    display: flex;
-    margin-left: 20px;
-    background-color: white;
-    border-radius: 10px; /* Radius sudut */
-}
-
-.LastTrip h1 {
-    color: black;
-    font-family: 'Manrope';
-    font-size: 20px;
-    font-weight: bold;
-    margin: 10px;
-}
-
-.LT-Data {
-    width: 850px; /* Lebar kotak */
-    height: 250px; /* Tinggi kotak */
-    border: 1px solid #E6EDFF; /* Ketebalan dan warna garis tepi kotak */
-    display: flex;
-    flex-direction: column;
-    overflow-y: scroll; /* Membuat daftar dapat digulir secara vertikal */
-    margin: 20px; /* Jarak dari atas dan bawah, dan otomatis untuk sisi kiri dan kanan */
-    background-color: white;
-    border-radius: 10px; /* Radius sudut */
-    scrollbar-width: none; /* Untuk menghilangkan scrollbar di Firefox */
-}
-
-.LT-Data::-webkit-scrollbar {
-    display: none; /* Untuk menghilangkan scrollbar di Chrome, Safari, dan Opera */
-}
-
-.LTDat {
-    margin: 10px;
-}
-
-.trip-item {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-
-}
-
-.trip-content {
+.content_bawah {
     display: flex;
     justify-content: space-between;
-    align-items: center; /* Menyelaraskan item secara vertikal di tengah */
+    padding-top: 1em;
 }
 
-.trip-details {
+.Vehicle_List_Tittle, .Vehicle_List_Row {
     display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-}
-
-.time-location {
-    display: flex;
+    justify-content: space-between;
     align-items: center;
-
+    padding: 10px;
+    background-color: white;
+    border-radius: 10px; /* Radius sudut */
+    width: 100%; /* Lebar kotak */
+    max-width: 600px; /* Lebar maksimum kotak */
+    border: 1px solid #E6EDFF; /* Ketebalan dan warna garis tepi kotak */
 }
 
-.time-location img.icon {
-    width: 24px; /* Set width to a standard size */
-    height: 24px; /* Set height to a standard size */
-    margin-right: 10px;
+.Vehicle_List_Tittle {
+    height: 50px; /* Tinggi kotak */
 }
 
-.time-location .time {
-    margin-right: 30px;
-    font-weight: bold;
+.Vehicle_List_Row {
+    height: 50px; /* Tinggi kotak */
 }
 
-.vehicle-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end; /* Menyelaraskan item secara horizontal di tengah */
-    margin-left: auto; /* Pindahkan ke kanan */
-    text-align: flex-end; /* Pusatkan teks di dalam div */
+.Vehicle_List_Row:nth-child(even) {
+    background-color: #F5F4FF;
 }
 
-.vehicle-name {
-    color: #7C8DB5;
+.title-cell, .row-cell {
+    flex: 1;
+    text-align: center;
 }
 
-.distance {
-    font-weight: bold;
+.Vehicle_List_Container {
+    max-height: 150px; /* Tinggi maksimum container */
+    overflow-y: auto; /* Membuat scroll vertikal */
+    background-color: white; /* Latar belakang putih */
+    border-radius: 10px; /* Radius sudut */
+    border: 1px solid #E6EDFF; /* Ketebalan dan warna garis tepi kotak */
 }
 
-.horizontal-line {
-    border-top: 2px solid #DBDBDB;
-    margin-top: 10px;
+/* Hilangkan scrollbar */
+.Vehicle_List_Container::-webkit-scrollbar {
+    display: none;
 }
 
-.trip-item:last-child .horizontal-line {
-    display: none; /* Menghilangkan garis horizontal pada item terakhir */
-}
-
-.location {
-    color: #7C8DB5;
-}
-
-.dotted-line {
-    margin-left: 11px;
-    border-left: 2px dashed #5243E6;
-    height: 30px; /* Sesuaikan tinggi sesuai kebutuhan */
-    position: relative;
+.Vehicle_List_Container {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }

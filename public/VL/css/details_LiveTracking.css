@@ -3,7 +3,7 @@
     height: 450px; /* Tinggi kotak */
     border: 1px solid #E6EDFF; /* Ketebalan dan warna garis tepi kotak */
     display: flex;
-    margin: 20px; /* Jarak dari atas dan bawah, dan otomatis untuk sisi kiri dan kanan */
+ 
     background-color: white;
     border-radius: 10px; /* Radius sudut */
 }
