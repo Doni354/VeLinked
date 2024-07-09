@@ -178,4 +178,40 @@ const userImage = document.querySelector('.user img');
         });
 
 
+        document.addEventListener('DOMContentLoaded', function() {
+            const engineStatusCheckbox = document.getElementById('engineStatusCheckbox');
+        
+            // Mendapatkan nilai docId dari parameter URL
+            const docId = getParameterByName('docId');
+        
+            // Dapatkan referensi dokumen kendaraan dari Firestore berdasarkan docId
+            const vehicleDocRef = firebase.firestore().collection("Vehicle").doc(docId);
+        
+            // Ambil data kendaraan dan update checkbox engine
+            vehicleDocRef.onSnapshot(doc => {
+                if (doc.exists) {
+                    const vehicleData = doc.data();
+                    // Update nilai checkbox berdasarkan nilai engine
+                    engineStatusCheckbox.checked = vehicleData.engine;
+                } else {
+                    console.log("No such document!");
+                }
+            });
+        
+            // Tambahkan event listener untuk checkbox
+            engineStatusCheckbox.addEventListener('change', function(event) {
+                const isChecked = event.target.checked;
+                // Update nilai engine di Firestore berdasarkan checkbox
+                vehicleDocRef.update({
+                    engine: isChecked
+                }).then(() => {
+                    console.log("Engine status updated successfully!");
+                }).catch(error => {
+                    console.error("Error updating engine status:", error);
+                    // Reset checkbox jika terjadi error
+                    engineStatusCheckbox.checked = !isChecked;
+                });
+            });
+        });
+        
 
