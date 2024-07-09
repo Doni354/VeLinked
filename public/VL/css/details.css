@@ -35,7 +35,16 @@ body {
 .Vehicle_List_Tittle {
     height: 50px; /* Tinggi kotak */
 }
+.tbb {
+    font-family: 'Manrope', sans-serif;
 
+    margin-top: px;
+    font-weight: bold;
+    font-style: bold;
+    display: flex;
+    align-content: center;
+
+}
 .Vehicle_List_Row {
     height: 50px; /* Tinggi kotak */
 }
@@ -52,7 +61,7 @@ body {
 .Vehicle_List_Container {
     margin-top: 15px;
     width: 600px;
-    max-height: 150px; /* Tinggi maksimum container */
+    max-height: 200px; /* Tinggi maksimum container */
     overflow-y: auto; /* Membuat scroll vertikal */
     background-color: white; /* Latar belakang putih */
     border-radius: 10px; /* Radius sudut */

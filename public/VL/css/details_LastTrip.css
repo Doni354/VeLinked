@@ -24,7 +24,7 @@
 
 .LT-Data {
     width: 850px; /* Lebar kotak */
-    height: 250px; /* Tinggi kotak */
+    height: 350px; /* Tinggi kotak */
     border: 1px solid #E6EDFF; /* Ketebalan dan warna garis tepi kotak */
     display: flex;
     flex-direction: column;
