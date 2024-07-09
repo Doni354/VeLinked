@@ -19,8 +19,8 @@ body {
     width: 100%; /* Lebar kotak */
     max-width: 600px; /* Lebar maksimum kotak */
     border: 1px solid #E6EDFF;
-
 }
+
 .Vehicle_List_Row {
     display: flex;
     justify-content: space-between;
@@ -32,21 +32,21 @@ body {
     max-width: 600px; /* Lebar maksimum kotak */
     border: 1px solid #E6EDFF; /* Ketebalan dan warna garis tepi kotak */
 }
+
 .Vehicle_List_Tittle {
     height: 50px; /* Tinggi kotak */
 }
+
 .tbb {
     font-family: 'Manrope', sans-serif;
-
-    margin-top: px;
     font-weight: bold;
     font-style: bold;
     display: flex;
     align-content: center;
-
 }
+
 .Vehicle_List_Row {
-    height: 50px; /* Tinggi kotak */
+    height: 70px; /* Tinggi kotak */
 }
 
 .Vehicle_List_Row:nth-child(even) {
@@ -56,6 +56,11 @@ body {
 .title-cell, .row-cell {
     flex: 1;
     text-align: center;
+    padding: 0 5px; /* Menambahkan padding horizontal */
+}
+
+.title-cell:nth-child(5), .row-cell:nth-child(5) {
+    flex: 2; /* Menambah lebar kolom "Over Speed Record" */
 }
 
 .Vehicle_List_Container {
@@ -77,3 +82,5 @@ body {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
+
+
