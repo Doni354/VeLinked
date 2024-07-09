@@ -8,7 +8,20 @@ body {
     padding-top: 1em;
 }
 
-.Vehicle_List_Tittle, .Vehicle_List_Row {
+.Vehicle_List_Tittle {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: white;
+    border-radius: 10px; /* Radius sudut */
+    width: 100%; /* Lebar kotak */
+    max-width: 600px; /* Lebar maksimum kotak */
+    border: 1px solid #E6EDFF;
+
+}
+.Vehicle_List_Row {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -19,7 +32,6 @@ body {
     max-width: 600px; /* Lebar maksimum kotak */
     border: 1px solid #E6EDFF; /* Ketebalan dan warna garis tepi kotak */
 }
-
 .Vehicle_List_Tittle {
     height: 50px; /* Tinggi kotak */
 }
@@ -38,6 +50,8 @@ body {
 }
 
 .Vehicle_List_Container {
+    margin-top: 15px;
+    width: 600px;
     max-height: 150px; /* Tinggi maksimum container */
     overflow-y: auto; /* Membuat scroll vertikal */
     background-color: white; /* Latar belakang putih */
