@@ -47,6 +47,7 @@ body {
 
 .Vehicle_List_Row {
     height: 70px; /* Tinggi kotak */
+    font-size: small;
 }
 
 .Vehicle_List_Row:nth-child(even) {
@@ -83,4 +84,30 @@ body {
     scrollbar-width: none;  /* Firefox */
 }
 
+.fvl {
+    color: #5243E6;
+    font-weight: bold;
+    font-family: 'Manrope';
+}
 
+.pvl {
+    font-family: 'Manrope';
+    font-weight: bold;
+}
+.gos {
+    color: #A7E668;
+    font-family: 'Manrope';
+    font-weight: bold;
+}
+
+.avgos {
+    color: #E6DA68;
+    font-family: 'Manrope';
+    font-weight: bold;
+}
+
+.ovos {
+    color: #E66868;
+    font-family: 'Manrope';
+    font-weight: bold;
+}
