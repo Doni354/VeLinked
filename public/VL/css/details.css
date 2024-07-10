@@ -38,9 +38,6 @@ body {
     align-items: center;
     justify-content: center;
     padding: 1px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
     text-align: center;
     margin-right: 10px; /* Add gap between cards */
 }
@@ -60,4 +57,10 @@ body {
     font-weight: bold;
     font-size: 13px;
     color: #7C8DB5;
+}
+
+
+.card-gasF {
+    background-color: #D1ECFF;
+    border-radius: 5px;
 }
