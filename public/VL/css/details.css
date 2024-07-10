@@ -1,46 +1,53 @@
 body {
     padding: 1em;
 }
-
-
- .Vehicle_Financing {
-            margin-top: 15px;
-            display: flex;
-            justify-content: flex-start; /* Align cards to the start */
-            align-items: center;
-            padding: 5px;
-            background-color: white;
-            border-radius: 10px;
-            width: 100%;
-            max-width: 600px;
-            height: 120px;
-            border: 1px solid #E6EDFF;
-            gap: 20px; /* Add gap between cards */
-        }
-        .card_Financing {
-            width: 120px;
-            height: 100px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 1px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            text-align: center;
-        }
-        .card_Financing img {
-            max-width: 100%;
-            max-height: 40px;
-            object-fit: cover;
-        }
-        .card-title_Financing {
-            font-size: 14px;
-            font-weight: bold;
-            margin: 5px 0;
-        }
-        .card-description_Financing {
-            font-size: 12px;
-            color: #666;
-        }
+.Vehicle_Financing {
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 5px;
+    background-color: white;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 600px;
+    height: 120px;
+    border: 1px solid #E6EDFF;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap; /* Prevent line breaks */
+    scroll-behavior: smooth; /* Smooth scrolling */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+.Vehicle_Financing::-webkit-scrollbar {
+    display: none; /* Hide scrollbar */
+}
+.card_Financing {
+    flex: 0 0 auto; /* Prevent card from shrinking */
+    width: 120px;
+    height: 100px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+    margin-right: 10px; /* Add gap between cards */
+}
+.card_Financing img {
+    max-width: 100%;
+    max-height: 40px;
+    object-fit: cover;
+}
+.card-title_Financing {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 5px 0;
+}
+.card-description_Financing {
+    font-size: 12px;
+    color: #666;
+}
