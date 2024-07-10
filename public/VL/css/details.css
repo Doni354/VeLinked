@@ -1,7 +1,6 @@
 body {
     padding: 1em;
-}
-.Vehicle_Financing {
+} .Vehicle_Financing {
     margin-top: 15px;
     display: flex;
     justify-content: flex-start;
@@ -20,7 +19,15 @@ body {
     -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 .Vehicle_Financing::-webkit-scrollbar {
-    display: none; /* Hide scrollbar */
+    height: 8px;
+}
+.Vehicle_Financing::-webkit-scrollbar-track {
+    background: transparent;
+}
+.Vehicle_Financing::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+    border: 2px solid #fff;
 }
 .card_Financing {
     flex: 0 0 auto; /* Prevent card from shrinking */
@@ -43,11 +50,14 @@ body {
     object-fit: cover;
 }
 .card-title_Financing {
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 15px;
+    font-family: 'Manrope';
+    font-weight: bolder;
     margin: 5px 0;
 }
 .card-description_Financing {
-    font-size: 12px;
-    color: #666;
+    font-family: 'Manrope';
+    font-weight: bold;
+    font-size: 13px;
+    color: #7C8DB5;
 }
