@@ -79,3 +79,12 @@ body {
 .card-washF {
     background-color: #FFEDD7;
 }
+
+.add_CardF {
+    border: 1px black ;
+    border-style: dashed;
+}
+
+.add_CardF img {
+    width: 30px;
+}
