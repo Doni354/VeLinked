@@ -30,6 +30,7 @@ body {
     border: 2px solid #fff;
 }
 .card_Financing {
+    border-radius: 5px;
     flex: 0 0 auto; /* Prevent card from shrinking */
     width: 120px;
     height: 100px;
@@ -62,23 +63,19 @@ body {
 
 .card-gasF {
     background-color: #D1ECFF;
-    border-radius: 5px;
 }
 
 
 .card-oilF {
     background-color: #DCFFEE;
-    border-radius: 5px;
 }
 
 
 
 .card-tollF {
     background-color: #F4D8FF;
-    border-radius: 5px;
 }
 
 .card-washF {
     background-color: #FFEDD7;
-    border-radius: 5px;
 }
