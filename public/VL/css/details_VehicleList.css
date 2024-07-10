@@ -1,0 +1,110 @@
+
+.content_bawah {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1em;
+}
+
+.Vehicle_List_Tittle {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: white;
+    border-radius: 10px; /* Radius sudut */
+    width: 100%; /* Lebar kotak */
+    max-width: 600px; /* Lebar maksimum kotak */
+    border: 1px solid #E6EDFF;
+}
+
+.Vehicle_List_Row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: white;
+    border-radius: 10px; /* Radius sudut */
+    width: 100%; /* Lebar kotak */
+    max-width: 600px; /* Lebar maksimum kotak */
+    border: 1px solid #E6EDFF; /* Ketebalan dan warna garis tepi kotak */
+}
+
+.Vehicle_List_Tittle {
+    height: 50px; /* Tinggi kotak */
+}
+
+.tbb {
+    font-family: 'Manrope', sans-serif;
+    font-weight: bold;
+    font-style: bold;
+    display: flex;
+    align-content: center;
+}
+
+.Vehicle_List_Row {
+    height: 70px; /* Tinggi kotak */
+    font-size: small;
+}
+
+.Vehicle_List_Row:nth-child(even) {
+    background-color: #F5F4FF;
+}
+
+.title-cell, .row-cell {
+    flex: 1;
+    text-align: center;
+    padding: 0 5px; /* Menambahkan padding horizontal */
+}
+
+.title-cell:nth-child(5), .row-cell:nth-child(5) {
+    flex: 2; /* Menambah lebar kolom "Over Speed Record" */
+}
+
+.Vehicle_List_Container {
+    margin-top: 15px;
+    width: 600px;
+    max-height: 200px; /* Tinggi maksimum container */
+    overflow-y: auto; /* Membuat scroll vertikal */
+    background-color: white; /* Latar belakang putih */
+    border-radius: 10px; /* Radius sudut */
+    border: 1px solid #E6EDFF; /* Ketebalan dan warna garis tepi kotak */
+}
+
+/* Hilangkan scrollbar */
+.Vehicle_List_Container::-webkit-scrollbar {
+    display: none;
+}
+
+.Vehicle_List_Container {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.fvl {
+    color: #5243E6;
+    font-weight: bold;
+    font-family: 'Manrope';
+}
+
+.pvl {
+    font-family: 'Manrope';
+    font-weight: bold;
+}
+.gos {
+    color: #A7E668;
+    font-family: 'Manrope';
+    font-weight: bold;
+}
+
+.avgos {
+    color: #E6DA68;
+    font-family: 'Manrope';
+    font-weight: bold;
+}
+
+.ovos {
+    color: #E66868;
+    font-family: 'Manrope';
+    font-weight: bold;
+}
