@@ -196,6 +196,16 @@
     
   </div>
   </div>
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
   <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js"></script>
   <script src="/__/firebase/init.js"></script>
