@@ -406,69 +406,112 @@ footer {
     word-wrap: break-word;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .content_products {
+  margin-top: 25px;
   padding: 20px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  font-family: 'Manrope';
 }
 
 
-.card-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-        }
-        .card {
-            width: 500px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .card img {
-            width: 500px;
-            height: 300px;
-            object-fit: cover;
-        }
-        .card-content {
-            width: 100%;
-            padding: 15px;
-        }
-        .card-content .title-price {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .card-content .rating-review {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .card-content .rating {
-            display: flex;
-            align-items: center;
-        }
-        .card-content .rating span {
-            margin-right: 5px;
-        }
-        .card-content .rating .star {
-            color: #CACD36;
-        }
-        .card-content .button-buy {
-            cursor: pointer;
-            color: #55C1F8;
-            text-decoration: none;
-        }
-        @media (max-width: 768px) {
-            .card-container {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
+
+
+.card-container_products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 50px; /* Memberi jarak antara kartu */
+}
+.card_products {
+  width: 500px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px; /* Memberi jarak antara kartu */
+}
+.card_products img {
+  width: 500px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px 8px 8px 8px;
+}
+.card-content_products {
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* Memberi jarak antara elemen dalam konten kartu */
+}
+.card-content_products .title-price_products {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.card-content_products .title-price_products p {
+  font-weight: bold;
+  margin-top: 10px;
+  font-size: 25px;
+  color: #787878; /* Mengubah warna harga */
+}
+.card-content_products .rating-review_products {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-size: 20px;
+}
+.card-content_products .rating_products {
+  display: flex;
+  align-items: center;
+}
+.card-content_products .rating_products span {
+  margin-right: 5px;
+}
+.card-content_products .rating_products .star {
+  color: #CACD36;
+}
+.card-content_products .button-buy {
+  font-weight: bold;
+  cursor: pointer;
+  color: #55C1F8;
+  text-decoration: none;
+}
+@media (max-width: 768px) {
+  .card-container_products {
+      flex-direction: column;
+      align-items: center;
+  }
+  .card_products {
+      width: 100%;
+  }
+  .card_products img {
+      width: 100%;
+  }
+}
+
+
+.bold {
+  font-weight: bold;
+}
+.light {
+  font-family: 'DM Sans';
+  color: #787878;
+  font-weight: light;
+  font-size: small;
+}
+
+.footer_products {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
