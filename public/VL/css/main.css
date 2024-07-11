@@ -150,10 +150,7 @@ footer {
   width: 550px;
 }
 
-.about {
-  padding: 2em;
-  
-}
+
 
 .about-tittle h4 {
   color: #55C1F8;
@@ -249,12 +246,14 @@ footer {
 
 
 
-.why {
-  padding: 2em;
-}
+
 
 .tittle_why {
   width:550px;
+}
+
+.padd {
+  padding: 2em;
 }
 
 .h4bt h4 {
@@ -333,9 +332,6 @@ footer {
 }
 
 
-.services {
-  padding: 2em;
-}
 
 .head_services {
   display: flex;
@@ -395,3 +391,17 @@ footer {
 }
 
 
+
+
+.head_products {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  
+}
+
+.head_products h2 {
+  max-width: 700px;
+    word-wrap: break-word;
+}
