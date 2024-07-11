@@ -249,11 +249,11 @@ footer {
 
 
 
-.services {
+.why {
   padding: 2em;
 }
 
-.tittle_services {
+.tittle_why {
   width:550px;
 }
 
@@ -270,16 +270,16 @@ footer {
   font-family: 'Manrope';
 }
 
-.head_services {
+.head_why {
   display: flex;
   justify-content: space-between;
 }
 
-.head_services img {
+.head_why img {
   margin-right: 10px;
 }
 
-.container_services {
+.container_why {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -288,66 +288,66 @@ footer {
   font-family: 'Manrope';
 }
 
-.card_services {
+.card_why {
   padding: 50px;
   text-align: left;
   flex: 1 1 calc(33.333% - 25px); /* Three cards per row with gap considered */
   box-sizing: border-box;
 }
 
-.card-number_services {
+.card-number_why {
   color: #787878;
   font-size: 30px;
   font-weight: 75px;
   margin-bottom: 10px;
 }
 
-.card-title_services {
+.card-title_why {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 10px;
 }
 
-.card-content_services {
+.card-content_why {
   color: #787878;
   font-size: 18px;
 }
 
 @media (max-width: 1200px) {
-  .card_services {
+  .card_why {
       flex: 1 1 calc(48% - 25px); /* Two cards per row with gap considered */
   }
 }
 
 @media (max-width: 768px) {
-  .card_services {
+  .card_why {
       flex: 1 1 calc(48% - 25px); /* Two cards per row with gap considered */
   }
 }
 
 @media (max-width: 480px) {
-  .card_services {
+  .card_why {
       flex: 1 1 100%;
       text-align: center;
   }
 }
 
 
-.products {
+.services {
   padding: 2em;
 }
 
-.head_products {
+.head_services {
   display: flex;
   justify-content: space-between;
 
 }
 
-.left_head_products {
+.left_head_services {
   width: 500px;
 }
 
-.right_head_products {
+.right_head_services {
   margin-top: 50px;
   width: 500px;
 }
@@ -356,7 +356,7 @@ footer {
 
 
 
-.container_products {
+.container_services {
   margin-top: 50px;
   display: flex;
   flex-wrap: wrap;
@@ -364,32 +364,34 @@ footer {
   gap: 125px;
 
 }
-.card_products {
+.card_services {
   text-align: start;
 
 }
-.card_products img {
+.card_services img {
   width: 350px;
   height: 250px;
   display: block;
   margin: 0 auto;
 }
-.card-title_products {
+.card-title_services {
   font-family: 'Manrope';
   width: 350px;
   margin: 10px 0;
   font-size: 1.2em;
   font-weight: bold;
 }
-.card-description_products {
+.card-description_services {
   font-family: 'Manrope';
   width: 350px;
   font-size: 1em;
   color: #555;
 }
 
-.footer_products {
+.footer_services {
   display: flex;
   justify-content: center;
   margin-top: 50px;
 }
+
+
