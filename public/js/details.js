@@ -60,12 +60,7 @@
         function displayVehicleDetails(vehicleData) {
             const vehicleDetailsContainer = document.querySelector(".vehicle-details");
             const detailsHTML = `
-                <div>
-                    <h2>${vehicleData.name}</h2>
-                    <p>Type: ${vehicleData.type}</p>
-                    <p>Status: ${vehicleData.status ? 'Online' : 'Offline'}</p>
-                    <!-- Tambahkan lebih banyak informasi kendaraan sesuai kebutuhan -->
-                </div>
+                
             `;
             vehicleDetailsContainer.innerHTML = detailsHTML;
         }
