@@ -114,3 +114,26 @@
     height: 30px; /* Sesuaikan tinggi sesuai kebutuhan */
     position: relative;
 }
+
+
+
+/* Media Queries */
+@media (max-width: 1450px) {
+    .LT-Data, .LastTrip  {
+        max-width: 800px;
+    }
+}
+
+@media (max-width: 1300px) {
+    .LT-Data, .LastTrip {
+        max-width: 600px;
+    }
+}
+
+@media (max-width: 800px) {
+    .LT-Data, .LastTrip {
+        max-width: 400px;
+
+    }
+
+}

@@ -25,3 +25,9 @@ body {
 .navbar .left a, .navbar .right a {
     margin: 0 5px;
 }
+
+.content_bawah {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1em;
+}
