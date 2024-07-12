@@ -226,7 +226,7 @@
   
   /* Style untuk slider ketika tombol dalam posisi aktif (on) */
   input:checked + .slider {
-    background-color: #4CAF50; /* Warna hijau saat on */
+    background-color: #458846; /* Warna hijau saat on */
   }
   
   /* Style untuk slider ketika tombol dalam posisi aktif (on) */
