@@ -38,38 +38,7 @@
         // Dapatkan referensi dokumen kendaraan dari Firestore berdasarkan docId
         const vehicleDocRef = firebase.firestore().collection("Vehicle").doc(docId);
 
-        // Ambil data kendaraan
-        vehicleDocRef.get().then(doc => {
-            if (doc.exists) {
-                const vehicleData = doc.data();
-                // Tampilkan data kendaraan di halaman
-                displayVehicleDetails(vehicleData);
-                displayVehicleName(vehicleData);
-                displayVehicleNickName(vehicleData);
-                displayVehicleImage(vehicleData);
-                displayVehicleNameLT(vehicleData);
-                
-            } else {
-                console.log("No such document!");
-            }
-        }).catch(error => {
-            console.error("Error getting document:", error);
-        });
-
-        // Fungsi untuk menampilkan detail kendaraan
-        function displayVehicleDetails(vehicleData) {
-            const vehicleDetailsContainer = document.querySelector(".vehicle-details");
-            const detailsHTML = `
-                <div>
-                    <h2>${vehicleData.name}</h2>
-                    <p>Type: ${vehicleData.type}</p>
-                    <p>Status: ${vehicleData.status ? 'Online' : 'Offline'}</p>
-                    <!-- Tambahkan lebih banyak informasi kendaraan sesuai kebutuhan -->
-                </div>
-            `;
-            vehicleDetailsContainer.innerHTML = detailsHTML;
-        }
-       
+        
         function displayVehicleName(vehicleData) {
             const vehicleDetailsContainer = document.querySelector(".vehname");
             const detailsHTML = `
