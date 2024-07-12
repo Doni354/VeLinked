@@ -3,3 +3,25 @@ body {
 
     
 } 
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.leftnav img {
+    margin-left: 10px;
+    width: 10px;
+}
+.rightnav img {
+    margin-right: 10px;
+    width: 25px;
+}
+.navbar .left, .navbar .right {
+    display: flex;
+    align-items: center;
+}
+.navbar .left a, .navbar .right a {
+    margin: 0 5px;
+}
