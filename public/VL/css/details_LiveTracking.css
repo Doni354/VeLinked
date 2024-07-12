@@ -1,11 +1,19 @@
 .LiveTracking {
-    width: 1000px; /* Lebar kotak */
-    height: 450px; /* Tinggi kotak */
-    border: 1px solid #E6EDFF; /* Ketebalan dan warna garis tepi kotak */
+    width: 100%;
+    max-width: 1000px;
+    height: 450px;
+    border: 1px solid #E6EDFF;
     display: flex;
- 
     background-color: white;
-    border-radius: 10px; /* Radius sudut */
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.LTT {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .LTT p {
@@ -17,10 +25,10 @@
 }
 
 .map-container {
+    flex: 1;
+    height: 100%;
     display: flex;
-    width: 955px;
-    height: 380px;
-    margin: 15px;
+    margin: 15px 0;
 }
 
 .map-container iframe {
@@ -29,21 +37,33 @@
     border-radius: 10px;
 }
 
-/* Animasi untuk memperluas dan menyusutkan div vehdata */
-@keyframes expand {
-    from {
-        width: 450px;
-    }
-    to {
-        width: 680px; /* Menyesuaikan lebar maksimum sesuai ukuran layar dan lebar div LiveTracking */
+/* Media Queries */
+@media (max-width: 1200px) {
+    .LiveTracking {
+        max-width: 800px;
     }
 }
 
-@keyframes contract {
-    from {
-        width: 680px; /* Menyesuaikan lebar maksimum sesuai ukuran layar dan lebar div LiveTracking */
+@media (max-width: 992px) {
+    .LiveTracking {
+        max-width: 600px;
     }
-    to {
-        width: 450px;
+}
+
+@media (max-width: 768px) {
+    .LiveTracking {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .map-container {
+        height: auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .LTT p {
+        font-size: 18px;
+        text-align: center;
     }
 }

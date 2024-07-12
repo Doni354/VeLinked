@@ -8,16 +8,15 @@
     margin-bottom: 25px;
     background-color: white;
     border-radius: 10px;
-    position: absolute;
+    position: relative;
     right: 0; /* Tetap berada di samping kanan */
     z-index: 1;
     transition: width 0.5s ease;
 }
 
 .vehdata.active {
-    animation: expand 0.5s forwards;
-    right: 0; /* Tetap berada di samping kanan saat tidak aktif */
-    left: initial; /* Hapus pengaturan left */ /* Set posisi left ke 0 agar div memanjang ke kiri */
+     width: 700px; /* Lebar ketika div aktif */
+    transition: width 0.5s ease; /* Hapus pengaturan left */ /* Set posisi left ke 0 agar div memanjang ke kiri */
 }
 
 /* Class tambahan untuk menunjukkan div vehdata yang tidak aktif */
@@ -33,7 +32,6 @@
     display: flex;
     justify-content: space-between;
 }
-
 .vehtittle {
     width: 450px; /* Lebar kotak */
     height: 40px; /* Tinggi kotak */
@@ -41,6 +39,19 @@
     display: flex;
     background-color: white;
     border-radius: 10px;
+    transition: width 0.5s ease; /* Transisi untuk perubahan lebar */
+}
+
+.vehtittle.active {
+    width: 700px; /* Lebar ketika div aktif */
+   transition: width 0.5s ease; /* Hapus pengaturan left */ /* Set posisi left ke 0 agar div memanjang ke kiri */
+}
+
+/* Class tambahan untuk menunjukkan div vehdata yang tidak aktif */
+.vehtittle.inactive {
+   animation: contract 0.5s forwards;
+   right: 0; /* Tetap berada di samping kanan saat tidak aktif */
+   left: initial; /* Hapus pengaturan left */
 }
 
 .vehtittle p {
