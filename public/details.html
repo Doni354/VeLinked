@@ -45,10 +45,18 @@
     </header>
 
     <div id="overlay" onclick="toggleForm()"></div>
+    <div id="overlayEdit" onclick="toggleFormEdit()"></div>
                     <script>
                         function toggleForm() {
                             var overlay = document.getElementById("overlay");
                             var formContainer = document.getElementById("formContainer");
+
+                            overlay.style.display = (overlay.style.display === "block") ? "none" : "block";
+                            formContainer.style.display = (formContainer.style.display === "block") ? "none" : "block";
+                        }
+                        function toggleFormEdit() {
+                            var overlay = document.getElementById("overlayEdit");
+                            var formContainer = document.getElementById("formContainerEdit");
 
                             overlay.style.display = (overlay.style.display === "block") ? "none" : "block";
                             formContainer.style.display = (formContainer.style.display === "block") ? "none" : "block";
@@ -59,8 +67,49 @@
                         <div class="container">
                             <div class="heading">Vehicle Details <img src="assets/images/back.svg" alt="" onclick="toggleForm();"></div>
                             <div class="vehicle_Details-setting"></div>
+                            <button class="setting_button" onclick="toggleFormEdit()">
+                                <img src="assets/images/settings.svg" alt="">
+                            </button>
                         </div>
                     </div>
+                    <div id="formContainerEdit">
+                        <div class="container">
+                            <div class="heading">Vehicle Edit <img src="assets/images/back.svg" alt="" onclick="toggleFormEdit();"></div>
+                            <form class="form" id="vehicleForm">
+                                <input required class="input" type="text" id="nickname" placeholder="Vehicle NickName">
+                                <select class="input" name="type" id="type">
+                                    <option value="" disabled selected hidden>Vehicle Type</option>
+                                    <option value="car">Car</option>
+                                    <option value="bus">Bus</option>
+                                    <option value="truck">Truck</option>
+                                </select>
+                                <select class="input" name="brand" id="brand">
+                                    <option value="" disabled selected hidden>Brand</option>
+                                    <option value="Toyota">Toyota</option>
+                                    <option value="Mitshubishi">Mitshubishi</option>
+                                    <option value="Suzuki">Suzuki</option>
+                                    <option value="Daihatsu">Daihatsu</option>
+                                    <option value="Polestar">Polestar</option>
+                                </select>
+                                <input required class="input" type="text" id="name" placeholder="Vehicle Name">
+                                <input required class="input" type="text" id="plate" placeholder="Plate no">
+                                <input class="input" type="email" id="email" placeholder="Email Vehicle (optional)">
+                                
+                                <div class="input-container">
+                                    <div class="input">
+                                        <label for="pic">
+                                            <img id="pic-preview" src="assets/images/Input-vehpic.svg" alt="">
+                                        </label>
+                                        <span id="file-name" class="file">No picture chosen (optional)</span>
+                                    </div>
+                                    <input required class="input" style="visibility: hidden;" type="file" id="pic" accept="image/*">
+                                </div>
+                                
+                                <input class="submit-button" type="submit" id="SaveVeh" value="Confirm">
+                            </form>
+                        </div>
+                    </div>
+                    
 
     <div class="data">
     <div class="LiveTracking">
@@ -320,7 +369,7 @@
 
     </div>
 
-
+    <div id="popup" class="popup"></div>  
 
 
 
