@@ -20,6 +20,10 @@ body {
     padding: 0;
     cursor: pointer;
     outline: none;
+    
+}
+.leftnav:hover img {
+    opacity: 75%;
 }
 
 .setting_button img {
