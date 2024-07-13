@@ -58,9 +58,22 @@
 
         // Fungsi untuk menampilkan detail kendaraan
         function displayVehicleDetails(vehicleData) {
-            const vehicleDetailsContainer = document.querySelector(".vehicle-details");
+            const vehicleDetailsContainer = document.querySelector(".vehicle_Details-setting");
+            const email = vehicleData.email ? vehicleData.email : "No email provided";
+            const imageUrl = vehicleData.picture && vehicleData.picture.trim() !== '' ? vehicleData.picture : 'assets/images/CarD.svg';
             const detailsHTML = `
-                
+            <div class="vehicle-info-setting">
+                <div class="vehicle-image-setting">
+                    <img src="${imageUrl}" alt="${vehicleData.name}">
+                </div>
+                <div class="vehicle-text-setting">
+                    <h3>${vehicleData.name}</h3>
+                    <p><strong>Nickname:</strong> ${vehicleData.nickname}</p>
+                    <p><strong>Type:</strong> ${vehicleData.type}</p>
+                    <p><strong>Plate:</strong> ${vehicleData.plate}</p>
+                    <p><strong>Email:</strong> ${email}</p>
+                </div>
+            </div>
             `;
             vehicleDetailsContainer.innerHTML = detailsHTML;
         }

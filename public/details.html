@@ -38,9 +38,29 @@
             <a href="dashboard.html"><img src="assets/images/back.svg" alt=""></a>
         </div>
         <div class="rightnav">
-            <a href="#"><img src="assets/images/settings.svg" alt=""></a>
+            <button class="setting_button" onclick="toggleForm()">
+                <img src="assets/images/settings.svg" alt="">
+            </button>
         </div>
     </header>
+
+    <div id="overlay" onclick="toggleForm()"></div>
+                    <script>
+                        function toggleForm() {
+                            var overlay = document.getElementById("overlay");
+                            var formContainer = document.getElementById("formContainer");
+
+                            overlay.style.display = (overlay.style.display === "block") ? "none" : "block";
+                            formContainer.style.display = (formContainer.style.display === "block") ? "none" : "block";
+                        }
+
+                    </script>
+                    <div id="formContainer">
+                        <div class="container">
+                            <div class="heading">Vehicle Details <img src="assets/images/back.svg" alt="" onclick="toggleForm();"></div>
+                            <div class="vehicle_Details-setting"></div>
+                        </div>
+                    </div>
 
     <div class="data">
     <div class="LiveTracking">
