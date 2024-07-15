@@ -3,6 +3,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    margin-right: 10px;
 }
 
 .LastTrip {
@@ -32,7 +33,8 @@
     margin-top: 15px;/* Jarak dari atas dan bawah, dan otomatis untuk sisi kiri dan kanan */
     background-color: white;
     border-radius: 10px; /* Radius sudut */
-    scrollbar-width: none; /* Untuk menghilangkan scrollbar di Firefox */
+    scrollbar-width: none;
+    margin-right: 10px; /* Untuk menghilangkan scrollbar di Firefox */
 }
 
 .LT-Data::-webkit-scrollbar {
@@ -121,18 +123,21 @@
 @media (max-width: 1450px) {
     .LT-Data, .LastTrip  {
         max-width: 800px;
+        margin-right: 10px;
     }
 }
 
 @media (max-width: 1300px) {
     .LT-Data, .LastTrip {
         max-width: 600px;
+        margin-right: 10px;
     }
 }
 
 @media (max-width: 800px) {
     .LT-Data, .LastTrip {
         max-width: 400px;
+        margin-right: 10px;
 
     }
 
