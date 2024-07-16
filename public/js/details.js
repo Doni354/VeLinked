@@ -47,7 +47,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstati
         const vehicleDocRef = firebase.firestore().collection("Vehicle").doc(docId);
 
         // Ambil data kendaraan
-        vehicleDocRef.get().then(doc => {
+        vehicleDocRef.onSnapshot(doc => {
             if (doc.exists) {
                 const vehicleData = doc.data();
                 // Tampilkan data kendaraan di halaman
@@ -60,7 +60,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstati
             } else {
                 console.log("No such document!");
             }
-        }).catch(error => {
+        }, error => {
             console.error("Error getting document:", error);
         });
 // Event listener untuk mengubah preview gambar saat ada perubahan pada input gambar
