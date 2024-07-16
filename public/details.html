@@ -116,9 +116,47 @@
         <div class="LTT">
             <p>Live Track</p>
 
-            <div class="map-container">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3949.7269931177607!2d112.07230607455939!3d-8.12925268137641!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zOMKwMDcnNDUuMyJTIDExMsKwMDQnMjkuNiJF!5e0!3m2!1sid!2sid!4v1716285688598!5m2!1sid!2sid" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
+            <div class="map-container" id="map"></div>
+
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxIQBsrTW8PKnM3xNBpRjoBRktyhM4NCk&callback=initMap&v=weekly" async defer></script>
+            <script>
+                let map;
+    let marker;
+    let lat = -8.129252;
+    let lng = 112.072306;
+
+    function initMap() {
+        const initialLocation = { lat: lat, lng: lng };
+        
+        const mapOptions = {
+            center: initialLocation,
+            zoom: 14
+        };
+
+        map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        
+        marker = new google.maps.Marker({
+            position: initialLocation,
+            map: map,
+            title: 'Lokasi Saya'
+        });
+        
+        document.getElementById('map').style.display = 'block'; // Tampilkan peta
+
+        // Perbarui lokasi setiap detik
+        setInterval(updateLocation, 1000);
+    }
+
+    function updateLocation() {
+        // Simulasikan perubahan lokasi dengan nilai acak
+        lat += (Math.random() - 0.5) * 0.001; // Ubah lat dengan nilai acak kecil
+        lng += (Math.random() - 0.5) * 0.001; // Ubah lng dengan nilai acak kecil
+        const newLocation = { lat: lat, lng: lng };
+        
+        map.setCenter(newLocation);
+        marker.setPosition(newLocation);
+    }
+            </script>
         </div>
     </div>
 
@@ -385,7 +423,156 @@
     <div class="vehicle-details-container">
         <div class="vehicle-details"></div>
     </div>
+    <script type="module" >
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-analytics.js";
+import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
 
+const firebaseConfig = {
+    apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
+    authDomain: "velinked-web.firebaseapp.com",
+    projectId: "velinked-web",
+    storageBucket: "velinked-web.appspot.com",
+    messagingSenderId: "844821073092",
+    appId: "1:844821073092:web:f243c25668079240ec0d91",
+    measurementId: "G-CLGQ4RWWTX"
+};
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+const form = document.getElementById('vehicleForm');
+const nicknameInput = document.getElementById('nickname');
+const typeSelect = document.getElementById('type');
+const brandSelect = document.getElementById('brand');
+const nameInput = document.getElementById('name');
+const plateInput = document.getElementById('plate');
+const emailInput = document.getElementById('email');
+const picInput = document.getElementById('pic');
+const picPreview = document.getElementById('pic-preview');
+const fileName = document.getElementById('file-name');
+const popup = document.getElementById('popup');
+
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+const docId = getParameterByName('docId');
+const vehicleDocRef = doc(db, "Vehicle", docId);
+
+async function fetchVehicleData() {
+    try {
+        const docSnap = await getDoc(vehicleDocRef);
+        if (docSnap.exists()) {
+            const vehicleData = docSnap.data();
+            nicknameInput.value = vehicleData.nickname || '';
+            typeSelect.value = vehicleData.type || '';
+            brandSelect.value = vehicleData.brand || '';
+            nameInput.value = vehicleData.name || '';
+            plateInput.value = vehicleData.plate || '';
+            emailInput.value = vehicleData.email || '';
+            if (vehicleData.picture) {
+                picPreview.src = vehicleData.picture;
+                picPreview.style.width = '25px';
+                picPreview.style.height = '25px';
+                fileName.textContent = 'Picture chosen';
+            }
+        } else {
+            console.log("No such document!");
+        }
+    } catch (error) {
+        console.error("Error getting document:", error);
+    }
+}
+
+fetchVehicleData();
+
+picInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        fileName.textContent = file.name;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            picPreview.src = e.target.result;
+            picPreview.style.width = '25px';
+            picPreview.style.height = '25px';
+        };
+        reader.readAsDataURL(file);
+    } else {
+        picPreview.src = 'assets/images/Input-vehpic.svg';
+        picPreview.style.width = 'auto';
+        picPreview.style.height = 'auto';
+        fileName.textContent = 'No picture chosen (optional)';
+    }
+});
+
+plateInput.addEventListener('input', (event) => {
+    plateInput.value = plateInput.value.toUpperCase();
+});
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (nicknameInput.value.trim() === "") {
+        showPopup("Vehicle NickName tidak boleh kosong!");
+        return;
+    }
+    
+    if (typeSelect.value.trim() === "") {
+        showPopup("Kamu harus memilih Vehicle Type!");
+        return;
+    }
+
+    if (brandSelect.value.trim() === "") {
+        showPopup("Kamu harus memilih Brand Kendaraan!");
+        return;
+    }
+
+    if (nameInput.value.trim() === "") {
+        showPopup("Vehicle Name tidak boleh kosong!");
+        return;
+    }
+
+    if (plateInput.value.trim() === "") {
+        showPopup("Plate no tidak boleh kosong!");
+        return;
+    }
+
+    const updatedData = {
+        nickname: nicknameInput.value,
+        type: typeSelect.value,
+        brand: brandSelect.value,
+        name: nameInput.value,
+        plate: plateInput.value.toUpperCase(),
+        email: emailInput.value || null
+    };
+
+    try {
+        await updateDoc(vehicleDocRef, updatedData);
+        showPopup("Data berhasil diperbarui!");
+    } catch (error) {
+        console.error("Error updating document:", error);
+        showPopup("Terjadi kesalahan saat memperbarui data: " + error.message);
+    }
+});
+
+function showPopup(message) {
+    popup.textContent = message;
+    popup.style.display = "block";
+    setTimeout(() => {
+        popup.style.display = "none";
+    }, 3000);
+}
+    </script>
     <script type="module" src="js/details.js"></script>
 </body>
 </html>

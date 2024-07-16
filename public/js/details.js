@@ -25,15 +25,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstati
             const storageRef = ref(storage);
 
             const form = document.getElementById('vehicleForm');
-            const nicknameInput = document.getElementById('nickname');
-            const typeSelect = document.getElementById('type');
-            const brandSelect = document.getElementById('brand');
-            const nameInput = document.getElementById('name');
-            const plateInput = document.getElementById('plate');
-            const emailInput = document.getElementById('email');
-            const picInput = document.getElementById('pic');
-            const picPreview = document.getElementById('pic-preview');
-            const fileName = document.getElementById('file-name');
+
 
 
         // Fungsi untuk mendapatkan parameter dari URL
@@ -58,19 +50,6 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstati
         vehicleDocRef.get().then(doc => {
             if (doc.exists) {
                 const vehicleData = doc.data();
-        nicknameInput.value = vehicleData.nickname || '';
-        typeSelect.value = vehicleData.type || '';
-        brandSelect.value = vehicleData.brand || '';
-        nameInput.value = vehicleData.name || '';
-        plateInput.value = vehicleData.plate || '';
-        emailInput.value = vehicleData.email || '';
-        // Menampilkan preview gambar jika ada
-        if (vehicleData.picture) {
-            picPreview.src = vehicleData.picture;
-            picPreview.style.width = '25px';
-            picPreview.style.height = '25px';
-            fileName.textContent = 'Picture chosen';
-        }
                 // Tampilkan data kendaraan di halaman
                 displayVehicleDetails(vehicleData);
                 displayVehicleName(vehicleData);
@@ -85,88 +64,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstati
             console.error("Error getting document:", error);
         });
 // Event listener untuk mengubah preview gambar saat ada perubahan pada input gambar
-picInput.addEventListener('change', (event) => {
-    const file = event.target.files[0];
-    if (file) {
-        fileName.textContent = file.name;
-        
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            picPreview.src = e.target.result;
-            picPreview.style.width = '25px';
-            picPreview.style.height = '25px';
-        };
-        reader.readAsDataURL(file);
-    } else {
-        picPreview.src = 'assets/images/Input-vehpic.svg'; // Jika tidak ada file dipilih, kembalikan ke gambar default
-        picPreview.style.width = 'auto';
-        picPreview.style.height = 'auto';
-        fileName.textContent = 'No picture chosen (optional)';
-    }
-});
 
-// Event listener untuk input plat nomor, mengubah menjadi huruf kapital
-plateInput.addEventListener('input', (event) => {
-    plateInput.value = plateInput.value.toUpperCase();
-});
-
-// Event listener untuk meng-handle submit form
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    // Validasi input sebelum update Firestore
-    if (nicknameInput.value.trim() === "") {
-        showPopup("Vehicle NickName tidak boleh kosong!");
-        return;
-    }
-    
-    if (typeSelect.value.trim() === "") {
-        showPopup("Kamu harus memilih Vehicle Type!");
-        return;
-    }
-
-    if (brandSelect.value.trim() === "") {
-        showPopup("Kamu harus memilih Brand Kendaraan!");
-        return;
-    }
-
-    if (nameInput.value.trim() === "") {
-        showPopup("Vehicle Name tidak boleh kosong!");
-        return;
-    }
-
-    if (plateInput.value.trim() === "") {
-        showPopup("Plate no tidak boleh kosong!");
-        return;
-    }
-
-    const updatedData = {
-        nickname: nicknameInput.value,
-        type: typeSelect.value,
-        brand: brandSelect.value,
-        name: nameInput.value,
-        plate: plateInput.value.toUpperCase(), // Pastikan plat nomor huruf kapital
-        email: emailInput.value || null // Menggunakan null jika email kosong
-    };
-
-    try {
-        // Update data kendaraan di Firestore
-        await updateDoc(vehicleDocRef, updatedData);
-        showPopup("Data berhasil diperbarui!");
-    } catch (error) {
-        console.error("Error updating document:", error);
-        showPopup("Terjadi kesalahan saat memperbarui data: " + error.message);
-    }
-});
-
-// Fungsi untuk menampilkan popup respons
-function showPopup(message) {
-    popup.textContent = message;
-    popup.style.display = "block";
-    setTimeout(() => {
-        popup.style.display = "none";
-    }, 3000);
-}
 
         // Fungsi untuk menampilkan detail kendaraan
         function displayVehicleDetails(vehicleData) {
