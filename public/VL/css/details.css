@@ -22,9 +22,43 @@ body {
     outline: none;
     
 }
+.del_button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  
+}
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
 .leftnav:hover img {
     opacity: 75%;
 }
+
+.del_button img {
+  color: red;
+  width: 24px; /* Anda bisa menyesuaikan ukuran gambar */
+  height: 23px;
+  margin-right: 2px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+/* Hover effect to enlarge the image */
+.del_button:hover img {
+  transform: scale(1.1);
+}
+
+
+
+/* Active effect to dim and bounce the image */
+.del_button:active img {
+  filter: brightness(0.7);
+}
+
 
 .setting_button img {
     width: 25px; /* Anda bisa menyesuaikan ukuran gambar */
@@ -40,21 +74,9 @@ body {
 /* Active effect to dim and bounce the image */
 .setting_button:active img {
     filter: brightness(0.7);
-    animation: bounce 0.5s ease;
+
 }
 
-/* Keyframes for bounce animation */
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-    }
-    40% {
-        transform: translateY(-15px);
-    }
-    60% {
-        transform: translateY(-10px);
-    }
-}
 
 
 .navbar .left, .navbar .right {
