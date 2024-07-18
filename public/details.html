@@ -128,36 +128,67 @@
 
             <div class="map-container" id="map"></div>
 
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxIQBsrTW8PKnM3xNBpRjoBRktyhM4NCk&callback=initMap&v=weekly&libraries=marker" async defer></script>
-            <script>
-                let map;
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxIQBsrTW8PKnM3xNBpRjoBRktyhM4NCk&callback=initMap&v=weekly&libraries=marker" async defer></script>
+<script>
+    let map;
     let marker;
     let lat = -8.129252;
     let lng = 112.072306;
+    let pathCoordinates = [];
 
     function initMap() {
         const initialLocation = { lat: lat, lng: lng };
-        
-        const map = new google.maps.Map(document.getElementById("map"),  {
+
+        map = new google.maps.Map(document.getElementById("map"),  {
             zoom: 14,
             center: initialLocation,
             mapId: "DEMO_MAP_ID", // Map ID is required for advanced markers.
         });
 
-            // The advanced marker, positioned at Uluru
-            const marker = new google.maps.marker.AdvancedMarkerElement({
-                map,
-                position: initialLocation,
-                title: 'Uluru',
-            });
-        
-        document.getElementById('map').style.display = 'block'; // Tampilkan peta
+        marker = new google.maps.marker.AdvancedMarkerElement({
+            map,
+            position: initialLocation,
+            title: 'Current Location',
+        });
+
+        // Tampilkan peta
+        document.getElementById('map').style.display = 'block';
+
+        // Simpan lokasi awal
+        pathCoordinates.push(initialLocation);
 
         // Perbarui lokasi setiap detik
         setInterval(updateLocation, 1000);
     }
 
-            </script>
+    function updateLocation() {
+        // Simulasi perubahan lokasi
+        lat += (Math.random() - 0.5) * 0.001;
+        lng += (Math.random() - 0.5) * 0.001;
+        const newLocation = { lat: lat, lng: lng };
+
+        // Pindahkan marker ke lokasi baru
+        marker.position = newLocation;
+
+        // Tambahkan lokasi baru ke pathCoordinates
+        pathCoordinates.push(newLocation);
+
+        // Gambarkan garis baru
+        const pathLine = new google.maps.Polyline({
+            path: pathCoordinates,
+            geodesic: true,
+            strokeColor: '#FF0000',
+            strokeOpacity: 1.0,
+            strokeWeight: 2,
+        });
+
+        pathLine.setMap(map);
+
+        // Update center map ke lokasi baru
+        map.setCenter(newLocation);
+    }
+</script>
+
         </div>
     </div>
 
