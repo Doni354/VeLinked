@@ -25,6 +25,8 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstati
             const storageRef = ref(storage);
 
             const form = document.getElementById('vehicleForm');
+            const deleteButton = document.getElementById('confirmDelete');
+
 
 
 
@@ -45,6 +47,22 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstati
 
         // Dapatkan referensi dokumen kendaraan dari Firestore berdasarkan docId
         const vehicleDocRef = firebase.firestore().collection("Vehicle").doc(docId);
+
+        // Fungsi untuk menghapus dokumen kendaraan
+deleteButton.addEventListener('click', async () => {
+    try {
+        // Hapus dokumen berdasarkan docId
+        await firebase.firestore().collection('Vehicle').doc(docId).delete();
+        console.log('Dokumen berhasil dihapus');
+        
+        // Redirect ke halaman dashboard setelah berhasil menghapus
+        window.location.href = 'dashboard.html';
+    } catch (error) {
+        console.error('Error saat menghapus dokumen:', error);
+        // Handle error jika perlu
+    }
+});
+
 
         // Ambil data kendaraan
         vehicleDocRef.onSnapshot(doc => {
@@ -239,4 +257,16 @@ const userImage = document.querySelector('.user img');
             });
         });
         
+
+// Fungsi untuk menambahkan event listener dengan ID
+document.getElementById('deleteButton').addEventListener('click', function() {
+    const popup = document.getElementById('deletePopup');
+    popup.style.display = 'block';
+});
+
+// Fungsi untuk menutup popup konfirmasi
+document.getElementById('cancelDelete').addEventListener('click', function() {
+    const popup = document.getElementById('deletePopup');
+    popup.style.display = 'none';
+});
 
