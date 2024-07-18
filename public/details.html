@@ -142,13 +142,22 @@
         map = new google.maps.Map(document.getElementById("map"),  {
             zoom: 14,
             center: initialLocation,
-            mapId: "DEMO_MAP_ID", // Map ID is required for advanced markers.
+            mapId: "DEMO_MAP_ID",
+        });
+
+        // Membuat marker dengan custom SVG glyph
+        const glyphImg = document.createElement("img");
+        glyphImg.src = "https://developers.google.com/maps/documentation/javascript/examples/full/images/google_logo_g.svg";
+
+        const glyphSvgPinElement = new google.maps.marker.PinElement({
+            glyph: glyphImg,
         });
 
         marker = new google.maps.marker.AdvancedMarkerElement({
             map,
             position: initialLocation,
-            title: 'Current Location',
+            content: glyphSvgPinElement.element,
+            title: "Current Location",
         });
 
         // Tampilkan peta
@@ -188,6 +197,7 @@
         map.setCenter(newLocation);
     }
 </script>
+
 
         </div>
     </div>
