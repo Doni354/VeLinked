@@ -126,77 +126,126 @@
         <div class="LTT">
             <p>Live Track</p>
 
-            <div class="map-container" id="map"></div>
+  <div class="map-container" id="map"></div>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxIQBsrTW8PKnM3xNBpRjoBRktyhM4NCk&callback=initMap&v=weekly&libraries=marker" async defer></script>
-<script>
-    let map;
-    let marker;
-    let lat = -8.129252;
-    let lng = 112.072306;
-    let pathCoordinates = [];
-
-    function initMap() {
-        const initialLocation = { lat: lat, lng: lng };
-
-        map = new google.maps.Map(document.getElementById("map"),  {
-            zoom: 14,
-            center: initialLocation,
-            mapId: "DEMO_MAP_ID",
-        });
-
-        // Membuat marker dengan custom SVG glyph
-        const glyphImg = document.createElement("img");
-        glyphImg.src = "https://developers.google.com/maps/documentation/javascript/examples/full/images/google_logo_g.svg";
-
-        const glyphSvgPinElement = new google.maps.marker.PinElement({
-            glyph: glyphImg,
-        });
-
-        marker = new google.maps.marker.AdvancedMarkerElement({
-            map,
-            position: initialLocation,
-            content: glyphSvgPinElement.element,
-            title: "Current Location",
-        });
-
-        // Tampilkan peta
-        document.getElementById('map').style.display = 'block';
-
-        // Simpan lokasi awal
-        pathCoordinates.push(initialLocation);
-
-        // Perbarui lokasi setiap detik
-        setInterval(updateLocation, 1000);
-    }
-
-    function updateLocation() {
-        // Simulasi perubahan lokasi
-        lat += (Math.random() - 0.5) * 0.001;
-        lng += (Math.random() - 0.5) * 0.001;
-        const newLocation = { lat: lat, lng: lng };
-
-        // Pindahkan marker ke lokasi baru
-        marker.position = newLocation;
-
-        // Tambahkan lokasi baru ke pathCoordinates
-        pathCoordinates.push(newLocation);
-
-        // Gambarkan garis baru
-        const pathLine = new google.maps.Polyline({
-            path: pathCoordinates,
-            geodesic: true,
-            strokeColor: '#FF0000',
-            strokeOpacity: 1.0,
-            strokeWeight: 2,
-        });
-
-        pathLine.setMap(map);
-
-        // Update center map ke lokasi baru
-        map.setCenter(newLocation);
-    }
-</script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxIQBsrTW8PKnM3xNBpRjoBRktyhM4NCk&callback=initMap&v=weekly&libraries=marker" async defer></script>
+  <script>
+      let map;
+      let marker;
+      let lat = -8.129252;
+      let lng = 112.072306;
+      let pathCoordinates = [];
+      const MAX_POINTS = 100;
+  
+      function initMap() {
+          const initialLocation = { lat: lat, lng: lng };
+  
+          map = new google.maps.Map(document.getElementById("map"), {
+              zoom: 14,
+              center: initialLocation,
+              mapId: "DEMO_MAP_ID"
+          });
+  
+          // Membuat marker dengan custom SVG glyph
+          const glyphImg = document.createElement("img");
+          glyphImg.src = "https://developers.google.com/maps/documentation/javascript/examples/full/images/google_logo_g.svg";
+  
+          const glyphSvgPinElement = new google.maps.marker.PinElement({
+              glyph: glyphImg,
+          });
+  
+          marker = new google.maps.marker.AdvancedMarkerElement({
+              map,
+              position: initialLocation,
+              content: glyphSvgPinElement.element,
+              title: "Current Location",
+          });
+  
+          // Tampilkan peta
+          document.getElementById('map').style.display = 'block';
+  
+          // Simpan lokasi awal
+          pathCoordinates.push(initialLocation);
+  
+          // Perbarui lokasi setiap detik
+          setInterval(updateLocation, 1000);
+      }
+  
+      function updateLocation() {
+          // Simulasi perubahan lokasi
+          lat += (Math.random() - 0.5) * 0.001;
+          lng += (Math.random() - 0.5) * 0.001;
+          const newLocation = { lat: lat, lng: lng };
+  
+          // Tambahkan lokasi baru ke pathCoordinates
+          pathCoordinates.push(newLocation);
+  
+          // Batasi jumlah titik maksimal ke 100
+          if (pathCoordinates.length > MAX_POINTS) {
+              pathCoordinates.shift(); // Hapus titik pertama jika sudah lebih dari 100 titik
+          }
+  
+          if (pathCoordinates.length <= MAX_POINTS) {
+              // Snap ke jalan menggunakan Snap to Roads API
+              snapToRoad(pathCoordinates, function(snappedCoordinates) {
+                  // Update pathCoordinates dengan lokasi yang telah di-snap
+                  pathCoordinates = snappedCoordinates;
+  
+                  // Pindahkan marker ke lokasi terakhir yang telah di-snap
+                  marker.position = pathCoordinates[pathCoordinates.length - 1];
+  
+                  // Gambarkan garis baru
+                  const pathLine = new google.maps.Polyline({
+                      path: pathCoordinates,
+                      geodesic: true,
+                      strokeColor: '#FF0000',
+                      strokeOpacity: 1.0,
+                      strokeWeight: 2,
+                  });
+  
+                  pathLine.setMap(map);
+  
+                  // Update center map ke lokasi baru
+                  map.setCenter(marker.position);
+              });
+          } else {
+              // Gambarkan garis baru tanpa snap
+              const pathLine = new google.maps.Polyline({
+                  path: pathCoordinates,
+                  geodesic: true,
+                  strokeColor: '#FF0000',
+                  strokeOpacity: 1.0,
+                  strokeWeight: 2,
+              });
+  
+              pathLine.setMap(map);
+  
+              // Pindahkan marker ke lokasi terakhir yang tidak di-snap
+              marker.position = pathCoordinates[pathCoordinates.length - 1];
+  
+              // Update center map ke lokasi baru
+              map.setCenter(marker.position);
+          }
+      }
+  
+      function snapToRoad(locations, callback) {
+          const path = locations.map(loc => `${loc.lat},${loc.lng}`).join('|');
+          const url = `https://roads.googleapis.com/v1/snapToRoads?path=${path}&interpolate=true&key=AIzaSyBxIQBsrTW8PKnM3xNBpRjoBRktyhM4NCk`;
+  
+          fetch(url)
+              .then(response => response.json())
+              .then(data => {
+                  if (data.snappedPoints && data.snappedPoints.length > 0) {
+                      const snappedLatLngs = data.snappedPoints.map(point => ({
+                          lat: point.location.latitude,
+                          lng: point.location.longitude,
+                      }));
+                      callback(snappedLatLngs);
+                  }
+              })
+              .catch(error => console.error('Error:', error));
+      }
+  </script>
 
 
         </div>
