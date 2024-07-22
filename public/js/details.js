@@ -114,7 +114,7 @@ deleteButton.addEventListener('click', async () => {
             vehicleDetailsContainer.innerHTML = detailsHTML;
         }
         function displayVehicleNickName(vehicleData) {
-            const vehicleDetailsContainer = document.querySelector(".vehtittle");
+            const vehicleDetailsContainer = document.querySelector(".vehtittledat");
             const detailsHTML = `
                     <p>${vehicleData.nickname}</p>
             `;
@@ -143,7 +143,7 @@ const showDetailButton = document.querySelector('.ShowDetail');
 // Tambahkan class active saat tombol ditekan
 showDetailButton.addEventListener('click', function() {
     const vehdataDiv = document.querySelector('.vehdata');
-    const vehtittleDiv = document.querySelector('.vehtittle');
+    const vehtittleDiv = document.querySelector('.vehtittledat');
 
     vehtittleDiv.classList.toggle('active');
     

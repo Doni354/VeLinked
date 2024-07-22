@@ -33,16 +33,6 @@
 </head>
 <body style="background-color: #F5F4FF;">
 
-    <header class="navbar">
-        <div class="leftnav">
-            <a href="dashboard.html"><img src="assets/images/back.svg" alt=""></a>
-        </div>
-        <div class="rightnav">
-            <button class="setting_button" onclick="toggleForm()">
-                <img src="assets/images/settings.svg" alt="">
-            </button>
-        </div>
-    </header>
 
     <div id="overlay" onclick="toggleForm()"></div>
     <div id="overlayEdit" onclick="toggleFormEdit()"></div>
@@ -319,7 +309,15 @@
 
     <div class="veh">
         
-        <div class="vehtittle" id="vehtittle"></div>
+        <div class="vehtittle">
+            <div class="vehtittledat" id="vehtittledat"></div>
+            <div class="rightnav">
+                <button class="setting_button" onclick="toggleForm()">
+                    <img src="assets/images/settings.svg" alt="">
+                </button>
+            </div>
+
+        </div>
         <div class="vehdata">
             <div class="ShowDetail SlideButton" id="showDetailButton">
                 <img src="assets/images/SlideButton.svg" alt="">
