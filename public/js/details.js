@@ -229,6 +229,7 @@ const userImage = document.querySelector('.user img');
         
             // Dapatkan referensi dokumen kendaraan dari Firestore berdasarkan docId
             const vehicleDocRef = firebase.firestore().collection("Vehicle").doc(docId);
+            const logsCollectionRef = firebase.firestore().collection("Logs");
         
             // Ambil data kendaraan dan update checkbox engine
             vehicleDocRef.onSnapshot(doc => {
@@ -244,11 +245,24 @@ const userImage = document.querySelector('.user img');
             // Tambahkan event listener untuk checkbox
             engineStatusCheckbox.addEventListener('change', function(event) {
                 const isChecked = event.target.checked;
+                const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+                const logEntry = {
+                    docId: docId,
+                    engineStatus: isChecked,
+                    timestamp: timestamp
+                };
+        
                 // Update nilai engine di Firestore berdasarkan checkbox
                 vehicleDocRef.update({
                     engine: isChecked
                 }).then(() => {
                     console.log("Engine status updated successfully!");
+                    // Kirim log ke Firestore
+                    logsCollectionRef.add(logEntry).then(() => {
+                        console.log("Log entry added successfully!");
+                    }).catch(error => {
+                        console.error("Error adding log entry:", error);
+                    });
                 }).catch(error => {
                     console.error("Error updating engine status:", error);
                     // Reset checkbox jika terjadi error
@@ -256,6 +270,7 @@ const userImage = document.querySelector('.user img');
                 });
             });
         });
+        
         
 
 // Fungsi untuk menambahkan event listener dengan ID
