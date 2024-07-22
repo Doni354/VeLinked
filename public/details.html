@@ -125,10 +125,9 @@
     <div class="LiveTracking">
         <div class="LTT">
             <p>Live Track</p>
-
             <div class="map-container" id="map"></div>
 
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxIQBsrTW8PKnM3xNBpRjoBRktyhM4NCk&callback=initMap&v=weekly&libraries=marker" async defer></script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxIQBsrTW8PKnM3xNBpRjoBRktyhM4NCk&callback=initMap&v=weekly&libraries=marker,geometry" async defer></script>
             <script>
                 let map;
                 let marker;
@@ -137,6 +136,9 @@
                 let pathCoordinates = [];
                 const MAX_POINTS = 100;
                 const PAGINATION_OVERLAP = 10;  // Adjust overlap as needed
+                let resetTimer;
+                const FOCUS_DELAY = 10000; // 10 seconds in milliseconds
+                let isUserInteracting = false;
             
                 function initMap() {
                     const initialLocation = { lat: lat, lng: lng };
@@ -144,7 +146,8 @@
                     map = new google.maps.Map(document.getElementById("map"), {
                         zoom: 14,
                         center: initialLocation,
-                        mapId: "DEMO_MAP_ID"
+                        mapId: "DEMO_MAP_ID",
+                        gestureHandling: 'greedy',  // Enable gestures to interact with the map
                     });
             
                     const glyphImg = document.createElement("img");
@@ -166,6 +169,67 @@
                     pathCoordinates.push(initialLocation);
             
                     setInterval(updateLocation, 1000);
+            
+                    map.addListener('dragstart', () => {
+                        isUserInteracting = true;
+                        clearTimeout(resetTimer);  // Clear the reset timer when user starts interacting
+                    });
+                    map.addListener('dragend', () => {
+                        isUserInteracting = false;
+                        resetFocusTimer();
+                    });
+                    map.addListener('zoom_changed', () => {
+                        if (map.getZoom() !== 14) { // Adjust zoom level threshold as needed
+                            isUserInteracting = true;
+                            clearTimeout(resetTimer);  // Clear the reset timer when user starts interacting
+                        } else {
+                            isUserInteracting = false;
+                            resetFocusTimer();
+                        }
+                    });
+                    map.addListener('idle', () => {
+                        if (!isUserInteracting) {
+                            resetFocusTimer();
+                        }
+                    });
+                }
+            
+                function resetFocusTimer() {
+                    clearTimeout(resetTimer);
+                    resetTimer = setTimeout(() => {
+                        if (!isUserInteracting) {
+                            animateToMarker();
+                        }
+                    }, FOCUS_DELAY);
+                }
+            
+                function animateToMarker() {
+                    const targetPosition = marker.position;
+                    const currentCenter = map.getCenter();
+                    const distance = google.maps.geometry.spherical.computeDistanceBetween(currentCenter, targetPosition);
+                    const heading = google.maps.geometry.spherical.computeHeading(currentCenter, targetPosition);
+            
+                    const duration = 1000; // Duration of the animation in milliseconds
+                    const start = performance.now();
+            
+                    function animate(time) {
+                        const elapsed = time - start;
+                        const fraction = Math.min(elapsed / duration, 1);
+            
+                        const latLng = google.maps.geometry.spherical.computeOffset(
+                            currentCenter,
+                            distance * fraction,
+                            heading
+                        );
+            
+                        map.setCenter(latLng);
+            
+                        if (fraction < 1) {
+                            requestAnimationFrame(animate);
+                        }
+                    }
+            
+                    requestAnimationFrame(animate);
                 }
             
                 function updateLocation() {
@@ -194,7 +258,10 @@
             
                         pathLine.setMap(map);
             
-                        map.setCenter(marker.position);
+                        // Always update marker position, but only animate to marker if not interacting
+                        if (!isUserInteracting) {
+                            animateToMarker();
+                        }
                     });
                 }
             
@@ -240,6 +307,8 @@
                     processChunk();
                 }
             </script>
+            
+            
             
 
             
