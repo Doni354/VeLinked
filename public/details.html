@@ -51,6 +51,13 @@
                             overlay.style.display = (overlay.style.display === "block") ? "none" : "block";
                             formContainer.style.display = (formContainer.style.display === "block") ? "none" : "block";
                         }
+                        function toggleFormFinance() {
+                            var overlay = document.getElementById("overlayFinance");
+                            var formContainer = document.getElementById("formContainerFinance");
+
+                            overlay.style.display = (overlay.style.display === "block") ? "none" : "block";
+                            formContainer.style.display = (formContainer.style.display === "block") ? "none" : "block";
+                        }
 
                     </script>
                     <div id="formContainer">
@@ -558,13 +565,91 @@
                 <div class="card-title_Financing">$4212</div>
                 <div class="card-description_Financing">Vehicle Wash</div>
             </div>
+
             <div class="card_Financing add_CardF">
-                <img src="assets/images/Button_addCardF.svg" alt="">
+                <button class="addF_button" onclick="toggleFormFinance()">
+                    <img src="assets/images/Button_addCardF.svg" alt="">
+                </button>
             </div>
         </div>
 
     </div>
 
+    </div>
+    <div id="overlayFinance" onclick="toggleFormFinance()"></div>
+    <div id="formContainerFinance">
+        <div class="container">
+            <div class="headFinance"><h5>Vehicle Financing Tracker</h5></div>
+            <div>
+                <div class="card-container">
+                    <div class="Addcard_Financing">
+                        <img src="assets/images/Finance_Gas.svg" alt="">
+                        <div class="Addcard-description_Financing">Gas Station</div>
+                    </div>
+                    <div class="Addcard_Financing">
+                        <img src="assets/images/Finance_Oil.svg" alt="">
+                        <div class="Addcard-description_Financing">Engine Oil</div>
+                    </div>
+                    <div class="Addcard_Financing">
+                        <img src="assets/images/Finance_Toll.svg" alt="">
+                        <div class="Addcard-description_Financing">Highway</div>
+                    </div>
+                    <div class="Addcard_Financing">
+                        <img src="assets/images/Finance_Wash.svg" alt="">
+                        <div class="Addcard-description_Financing">Vehicle Wash</div>
+                    </div>
+                    <div class="Addcard_Financing">
+                        <img src="assets/images/Finance_Wash.svg" alt="">
+                        <div class="Addcard-description_Financing">Vehicle Wash</div>
+                    </div>
+                    <div class="Addcard_Financing">
+                        <img src="assets/images/Finance_Wash.svg" alt="">
+                        <div class="Addcard-description_Financing">Vehicle Wash</div>
+                    </div>
+                    <div class="Addcard_Financing">
+                        <img src="assets/images/Finance_Wash.svg" alt="">
+                        <div class="Addcard-description_Financing">Vehicle Wash</div>
+                    </div>
+                    <div class="Addcard_Financing">
+                        <img src="assets/images/Finance_Wash.svg" alt="">
+                        <div class="Addcard-description_Financing">Vehicle Wash</div>
+                    </div>
+                    <div class="Addcard_Financing">
+                        <img src="assets/images/Finance_Wash.svg" alt="">
+                        <div class="Addcard-description_Financing">Vehicle Wash</div>
+                    </div>
+                    <div class="Addcard_Financing">
+                        <img src="assets/images/Finance_Wash.svg" alt="">
+                        <div class="Addcard-description_Financing">Vehicle Wash</div>
+                    </div>
+                    <div class="Addcard_Financing">
+                        <img src="assets/images/Finance_Wash.svg" alt="">
+                        <div class="Addcard-description_Financing">Vehicle Wash</div>
+                    </div>
+                    <div class="Addcard_Financing">
+                        <img src="assets/images/Finance_Wash.svg" alt="">
+                        <div class="Addcard-description_Financing">Vehicle Wash</div>
+                    </div>
+                    <div class="Addcard_Financing">
+                        <img src="assets/images/Finance_Wash.svg" alt="">
+                        <div class="Addcard-description_Financing">Vehicle Wash</div>
+                    </div>
+                    <div class="Addcard_Financing">
+                        <img src="assets/images/Finance_Wash.svg" alt="">
+                        <div class="Addcard-description_Financing">Vehicle Wash</div>
+                    </div>
+                    <div class="Addcard_Financing">
+                        <img src="assets/images/Finance_Wash.svg" alt="">
+                        <div class="Addcard-description_Financing">Vehicle Wash</div>
+                    </div>
+                    <div class="Addcard_Financing">
+                        <img src="assets/images/Finance_Wash.svg" alt="">
+                        <div class="Addcard-description_Financing">Vehicle Wash</div>
+                    </div>
+                </div>
+                    
+            </div>
+        </div>
     </div>
 
     <div id="popup" class="popup"></div>  

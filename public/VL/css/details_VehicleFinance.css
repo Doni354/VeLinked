@@ -28,6 +28,7 @@
     border: 2px solid #fff;
 }
 .card_Financing {
+    background-color: #E5E3FF;
     border-radius: 5px;
     flex: 0 0 auto; /* Prevent card from shrinking */
     width: 120px;
@@ -79,10 +80,118 @@
 }
 
 .add_CardF {
+    background-color: white;
     border: 1px black ;
     border-style: dashed;
 }
 
 .add_CardF img {
     width: 30px;
+}
+
+
+
+
+
+#overlayFinance {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 999;
+}
+
+#formContainerFinance {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    z-index: 1000;
+    width: 90%;
+    max-width: 800px;
+    box-sizing: border-box;
+    height: auto;
+}
+
+
+.addF_button {
+
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        outline: none;
+        
+}
+
+
+.addF_button:hover img {
+    transform: scale(1.1);
+  }
+
+
+  .headFinance h5 {
+    font-family: 'Manrope';
+    font-size: 30px;
+    font-weight: bolder;
+    color: #5243E6;
+  }
+
+
+
+  .card-container {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(4, 120px); /* Tetapkan 4 kolom dengan lebar tetap 120px */
+    gap: 35px; /* Jarak antar card */
+    justify-content: center; /* Pusatkan grid jika tidak penuh */
+    box-sizing: border-box; /* Pastikan padding termasuk dalam dimensi container */
+}
+
+.Addcard_Financing {
+    margin-top: 10px;
+    background-color: #E5E3FF;
+    border-radius: 5px;
+    width: 120px; /* Tetap dengan lebar tetap */
+    height: 100px; /* Tetap dengan tinggi tetap */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box; /* Pastikan padding termasuk dalam dimensi card */
+}
+
+/* Responsivitas */
+@media (max-width: 1200px) {
+    .card-container {
+        grid-template-columns: repeat(3, 120px); /* 3 kolom dengan lebar tetap 120px */
+    }
+}
+
+@media (max-width: 900px) {
+    .card-container {
+        grid-template-columns: repeat(2, 120px); /* 2 kolom dengan lebar tetap 120px */
+    }
+}
+
+@media (max-width: 600px) {
+    .card-container {
+        grid-template-columns: repeat(1, 120px); /* 1 kolom dengan lebar tetap 120px */
+    }
+}
+
+
+
+
+.Addcard-description_Financing {
+    font-family: 'Manrope';
+    font-weight: bold;
+    font-size: 13px;
+    color: #7C8DB5;
+    margin-top: 3px;
 }
