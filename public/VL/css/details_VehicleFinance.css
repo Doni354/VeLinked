@@ -112,7 +112,7 @@
     display: none;
     z-index: 1000;
     width: 90%;
-    max-width: 800px;
+    max-width: 700px;
     box-sizing: border-box;
     height: auto;
 }
@@ -187,11 +187,10 @@
 
 
 
-
 .Addcard-description_Financing {
     font-family: 'Manrope';
     font-weight: bold;
     font-size: 13px;
     color: #7C8DB5;
-    margin-top: 3px;
+    margin-top: 5px;
 }
