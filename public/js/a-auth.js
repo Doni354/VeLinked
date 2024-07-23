@@ -1,8 +1,8 @@
 // Function to handle Google login
 function googleLogin() {
-    const provider = new firebase.auth.GoogleAuthProvider();
+    const userCred = new signInWithPopup(auth, new GoogleAuthProvider());
 
-    firebase.auth().signInWithPopup(provider)
+    firebase.auth().signInWithPopup(userCred)
         .then(result => {
             // Redirect to dashboard after successful login
             window.location.href = "../dashboard.html";
