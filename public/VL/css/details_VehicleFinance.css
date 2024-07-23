@@ -61,7 +61,7 @@
 
 
 .card-gasF {
-    background-color: #D1ECFF;
+    background-color: #D1ECFF
 }
 
 
@@ -76,9 +76,47 @@
 }
 
 .card-washF {
-    background-color: #FFEDD7;
+    background-color: #BFFFF7;
 }
 
+.card-maintenanceF {
+    background-color: #FFBFAB;
+}
+
+.card-InsuranceF {
+    background-color: #B6FFA4;
+}
+
+.card-FeesF {
+    background-color: #FFFCE3;
+}
+
+.card-TaxF {
+    background-color: #FFE0A4;
+}
+
+.card-DocF {
+    background-color: #FFD9F7;
+}
+
+.card-ParkF {
+    background-color: #F3EAFF;
+}
+.card-ErpF {
+    background-color: #EFFFE3;
+}
+.card-TicketF {
+    background-color: #FF9D97;
+}
+.card-SoftwareF {
+    background-color: #E2EAE4;
+}
+.card-AccidentRF {
+    background-color: #FFE7DC;
+}
+.card-ConsumptionF {
+    background-color: #FFF384;
+}
 .add_CardF {
     background-color: white;
     border: 1px black ;
@@ -154,7 +192,7 @@
 
 .Addcard_Financing {
     margin-top: 10px;
-    background-color: #E5E3FF;
+
     border-radius: 5px;
     width: 120px; /* Tetap dengan lebar tetap */
     height: 100px; /* Tetap dengan tinggi tetap */
@@ -192,5 +230,5 @@
     font-weight: bold;
     font-size: 13px;
     color: #7C8DB5;
-    margin-top: 5px;
+    margin-top: 15px;
 }
