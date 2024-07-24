@@ -28,7 +28,35 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap">
 
         <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+<style>
+    .log-table-container {
+    max-height: 400px; /* Tinggi maksimum untuk scrolling */
+    overflow-y: auto; /* Enable scrolling jika konten melebihi tinggi maksimum */
+}
 
+.log-table {
+    width: 100%;
+    padding: 10px;
+}
+
+.log-item {
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+.log-item p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.log-item p strong {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+</style>
 
 </head>
 <body style="background-color: #F5F4FF;">
@@ -36,6 +64,7 @@
 
     <div id="overlay" onclick="toggleForm()"></div>
     <div id="overlayEdit" onclick="toggleFormEdit()"></div>
+    <div id="overlayLog" onclick="toggleFormLog()"></div>
                     <script>
                         function toggleForm() {
                             var overlay = document.getElementById("overlay");
@@ -58,6 +87,13 @@
                             overlay.style.display = (overlay.style.display === "block") ? "none" : "block";
                             formContainer.style.display = (formContainer.style.display === "block") ? "none" : "block";
                         }
+                        function toggleFormLog() {
+                            var overlay = document.getElementById("overlayLog");
+                            var formContainer = document.getElementById("formContainerLog");
+
+                            overlay.style.display = (overlay.style.display === "block") ? "none" : "block";
+                            formContainer.style.display = (formContainer.style.display === "block") ? "none" : "block";
+                        }
 
                     </script>
                     <div id="formContainer">
@@ -70,7 +106,7 @@
                                     <button class="del_button" onclick="toggleFormEdit()">
                                         <img src="assets/images/Edit-ico.svg" alt="">
                                     </button>
-                                    <button class="del_button" onclick="toggleFormEdit()">
+                                    <button class="del_button" onclick="toggleFormLog()">
                                         <img src="assets/images/Log-ico.svg" alt="">
                                     </button>
                                 </div>
@@ -123,6 +159,16 @@
                         </div>
                     </div>
                     
+                    <div id="formContainerLog">
+                        <div class="container">
+                            <div class="heading">Vehicle Log <img src="assets/images/back.svg" alt="" onclick="toggleFormLog();"></div>
+                            <div id="logTableContainer" class="log-table-container">
+                                <div id="logTable" class="log-table"></div>
+                            </div>
+
+                        </div>
+                    </div>
+
 
     <div class="data">
     <div class="LiveTracking">

@@ -1,7 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+import { getFirestore, query, where, orderBy, onSnapshot, collection, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-analytics.js";
-import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
             // TODO: Add SDKs for Firebase products that you want to use
             // https://firebase.google.com/docs/web/setup#available-libraries
@@ -48,6 +50,32 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstati
         // Dapatkan referensi dokumen kendaraan dari Firestore berdasarkan docId
         const vehicleDocRef = firebase.firestore().collection("Vehicle").doc(docId);
 
+
+// Reference to the Logs collection filtered by docId
+const logsRef = collection(db, 'Logs');
+const queryLogs = query(logsRef, where('docId', '==', docId), orderBy('timestamp', 'desc'));
+
+// DOMContentLoaded event listener
+document.addEventListener('DOMContentLoaded', function () {
+    const logTable = document.getElementById('logTable');
+
+    // Real-time listener for Logs collection
+    onSnapshot(queryLogs, (snapshot) => {
+        logTable.innerHTML = ''; // Clear previous data
+
+        snapshot.forEach((doc) => {
+            const logData = doc.data();
+            const logItem = document.createElement('div');
+            logItem.classList.add('log-item');
+            logItem.innerHTML = `
+                <p><strong>Engine Status:</strong> ${logData.engineStatus}</p>
+                <p><strong>Timestamp:</strong> ${logData.timestamp.toDate()}</p>
+            `;
+            logTable.appendChild(logItem);
+        });
+    });
+});
+        
         // Fungsi untuk menghapus dokumen kendaraan
 deleteButton.addEventListener('click', async () => {
     try {
