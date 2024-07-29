@@ -61,9 +61,9 @@
     background-color: #E5EEFF;
     border-radius: 18px;
     display: flex;
-    justify-content: ;
+    justify-content: space-around;
     align-items: center;
-    justify-content: space-between;
+
 }
 .username {
     display: flex;
