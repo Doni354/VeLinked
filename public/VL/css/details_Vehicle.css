@@ -44,7 +44,7 @@
 
 .vehtittle.active {
     width: 700px; /* Lebar ketika div aktif */
-   transition: width 0.5s ease; /* Hapus pengaturan left */ /* Set posisi left ke 0 agar div memanjang ke kiri */
+    transition: width 0.5s ease; /* Hapus pengaturan left */ /* Set posisi left ke 0 agar div memanjang ke kiri */
 }
 
 /* Class tambahan untuk menunjukkan div vehdata yang tidak aktif */

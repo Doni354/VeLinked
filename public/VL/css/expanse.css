@@ -28,7 +28,7 @@
 
 }
 
-.title-pa {
+.p-bold p {
     color: #5243E6;
     font-weight: bolder;
     font-size: larger;
@@ -78,6 +78,27 @@
     border-top: 2px solid #E6EDFF; /* Menambahkan garis mendatar dengan warna dan ketebalan yang diinginkan */
     margin: 20px 0; /* Menambahkan margin untuk memberi jarak ke elemen lain (opsional) */
 }
+
+
+.vehicle {
+    padding: 1em;
+    width: 475px;
+    height: 225px;
+    background-color: #F6FAFF;
+    border: #E6EDFF solid 2px;
+    border-radius: 18px;
+}
+.vehicle-title {
+    display: flex;
+    flex-direction: column;
+}
+
+.vehicle-detail {
+    display: flex;
+    justify-content: space-between;
+}
+
+
 
 
   * {

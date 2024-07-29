@@ -171,7 +171,7 @@ const showDetailButton = document.querySelector('.ShowDetail');
 // Tambahkan class active saat tombol ditekan
 showDetailButton.addEventListener('click', function() {
     const vehdataDiv = document.querySelector('.vehdata');
-    const vehtittleDiv = document.querySelector('.vehtittledat');
+    const vehtittleDiv = document.querySelector('.vehtittle');
 
     vehtittleDiv.classList.toggle('active');
     
