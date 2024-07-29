@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - VeLinked</title>
+    <!-- Di dalam elemen <head> -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="assets/vendors/chartjs/Chart.min.css">
+
+    <link rel="stylesheet" href="assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="shortcut icon" href="assets/images/icon.svg" type="image/x-icon">
+        <!-- include only the Firebase features as you need -->
+        <script defer src="/__/firebase/10.9.0/firebase-app-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-auth-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-database-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-firestore-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-functions-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-messaging-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-storage-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-analytics-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-remote-config-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-performance-compat.js"></script>
+
+        <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+</head>
+<body>
+    
+    <script type="module" src="js/config.js"></script>
+
+    <script type="module" src="js/d-aveh.js"></script>
+    <script src="js/veh.js"></script>
+
+<div id="alertContainer">
+    <script src="js/d-aveh.js"></script>
+</div>
+<!--</header>-->
+    <div id="app" style="height: 100vh; display: flex;">
+        <div id="sidebar" class='active'>
+            <div class="sidebar-wrapper active">
+    <div class="sidebar-header">
+        <img src="assets/images/VL.svg" alt="" srcset="">
+    </div>
+    <div class="sidebar-menu">
+        <ul class="menu">
+            
+            
+                <li class='sidebar-title'>Main Menu</li>
+            
+
+                <li class="sidebar-item active ">
+                    <a href="dashboard.html" class='sidebar-link'>
+                        <img src="assets/images/DashActive.svg" style="width: 20px;"> 
+                        <span>Dashboard</span> 
+                    </a>
+                </li>
+                <li class="sidebar-item ">
+                    <a href="Expanse.html" class='sidebar-link'>
+                        <img src="assets/images/Expanse.svg" style="width: 20px;"> 
+                        <span>Dashboard</span> 
+                    </a>
+                </li>
+                        
+               
+    </div>
+    <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+</div>
+        </div>
+        <div id="main" style="flex: 1; background-color: #F5F4FF;">
+            <!--   HEADER  -->
+            <nav class="navbar navbar-header navbar-expand navbar-light" style="background-color: white;">
+                <a class="sidebar-toggler" href="#"><span class="navbar-toggler-icon"></span></a>
+                <button class="btn navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav d-flex align-items-center navbar-light ml-auto">
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                                <div id="profile-container" class="d-flex align-items-center">
+                                    <div id="profile-picture" class="avatar mr-1"></div>
+                                    <div class="d-none d-md-block d-lg-inline-block" id="user-name"></div>
+                                </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="profile.html"><i data-feather="user"></i> Account</a>
+                                <a class="dropdown-item active" href="#"><i data-feather="mail"></i> Messages</a>
+                                <a class="dropdown-item" href="#"><i data-feather="settings"></i> Settings</a>
+                                <div class="dropdown-divider"></div>
+                                <button class="dropdown-item" onclick="logout()"><i data-feather="log-out"></i> Logout</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+            </nav>
+            <div style="background-color: white; padding: 20px;">
+              <b>
+                <strong><h2 id="welcome-message">Welcome Back,</h2></strong>
+                <p style="font-weight: 100" class="text-subtitle text-muted">Your Vehicle in your Hand</p>
+              </b>
+            </div>
+            <div class="main-content container-fluid">
+                <br>
+                <div class="DashHead">
+                    <h4 class="title">Vehicle List</h4>
+                    <button class="AddVeh" onclick="toggleForm()">
+                        <img class="vehicleImage" src="VL/assets/Add-Buton.png" alt="Add Vehicle" />
+                        <div class="vehicleNameLabel">Add Vehicle</div>
+                    </button>
+                    
+                    <div id="overlay" onclick="toggleForm()"></div>
+                    <script>
+                        function toggleForm() {
+                            var overlay = document.getElementById("overlay");
+                            var formContainer = document.getElementById("formContainer");
+
+                            overlay.style.display = (overlay.style.display === "block") ? "none" : "block";
+                            formContainer.style.display = (formContainer.style.display === "block") ? "none" : "block";
+                        }
+
+                    </script>
+                     <div id="formContainer">
+                        <div class="container">
+                            <div class="heading">Vehicle Data <img src="assets/images/back.svg" alt="<" onclick="toggleForm();"></div>
+                            <form class="form" id="vehicleForm">
+                                <input required class="input" type="text" id="nickname" placeholder="Vehicle NickName">
+                                <select class="input" name="type" id="type">
+                                    <option value="" disabled selected hidden>Vehicle Type</option>
+                                    <option value="car">Car</option>
+                                    <option value="bus">Bus</option>
+                                    <option value="truck">Truck</option>
+                                </select>
+                                <select class="input" name="brand" id="brand">
+                                    <option value="" disabled selected hidden>Brand</option>
+                                    <option value="Toyota">Toyota</option>
+                                    <option value="Mitshubishi">Mitshubishi</option>
+                                    <option value="Suzuki">Suzuki</option>
+                                    <option value="Daihatsu">Daihatsu</option>
+                                    <option value="Polestar">Polestar</option>
+                                </select>
+                                
+                                <input required class="input" type="text" id="name" placeholder="Vehicle Name">
+                                <input required class="input" type="text" id="plate" placeholder="Plate no">
+                                <input class="input" type="email" id="email" placeholder="Email Vehicle (optional)">
+                                
+                                <div class="input-container">
+                                    <div class="input">
+                                        <label for="pic">
+                                            <img id="pic-preview" src="assets/images/Input-vehpic.svg" alt="">
+                                        </label>
+                                        <span id="file-name" class="file">No picture chosen (optional)</span>
+                                    </div>
+                                    <input required class="input" style="visibility: hidden;" type="file" id="pic" accept="image/*">
+                                </div>
+                                
+                                <input class="submit-button" type="submit" id="addVeh" value="Confirm">
+                            </form>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                
+
+                      
+                </div>
+                
+                <br>
+
+                <div class="vehicleDetailsRow">
+                    <!-- Daftar kendaraan akan dimasukkan oleh JavaScript -->
+                </div>
+                
+                <section class="section">
+                    
+                   
+                </section>
+            </div>
+
+            <footer style="margin-top: auto;">
+                <div class="footer clearfix mb-0 text-muted">
+                    <div class="float-left">
+                        <p>2024 &copy; VeLinked</p>
+                    </div>
+                    <div class="float-right">
+                        <p>Crafted with <span class='text-danger'><i data-feather="heart"></i></span> by <a href="https://www.instagram.com/velinked/">VeLinked Teams</a></p> 
+                        <div id="popup" class="popup"></div>  
+                    </div>
+
+                </div>
+            </footer>
+        </div>
+    </div>
+   
+
+    <script src="js/UserAndStatus_check.js"></script>
+
+    
+    
+        
+        
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="assets/js/feather-icons/feather.min.js"></script>
+    <script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="assets/js/app.js"></script>
+    
+    <script src="assets/vendors/chartjs/Chart.min.js"></script>
+    <script src="assets/vendors/apexcharts/apexcharts.min.js"></script>
+    <script src="assets/js/pages/dashboard.js"></script>
+
+    <script src="assets/js/main.js"></script>
+    
+    <script src="js/a-auth.js"></script>
+    <script src="js/a-pp.js"></script>
+
+  
+</body>
+</html>
