@@ -1,0 +1,19 @@
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 2em;
+}
+
+.left-content {
+    display: flex;
+    
+}
+
+.title-name {
+    display: flex;
+    width: 420px;
+    height: 95px;
+    background-color: #F6FAFF;
+    border-radius: 12px;
+    border-color: #E6EDFF;
+}
