@@ -12,7 +12,8 @@
 }
 
 .title-name {
-    display: flex;
+    padding: 1em;
+
     width: 475px;
     height: 125px;
     background-color: #F6FAFF;
@@ -20,44 +21,36 @@
     border: 2px solid #E6EDFF; /* Tambahkan properti border */
 }
 
+.title-up {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.title-pa {
+    color: #5243E6;
+    font-weight: bolder;
+    font-size: larger;
+
+}
+
+.title-stats {
+    justify-content: center;
+    align-content: center;
+    display: flex;
+    width: 80px;
+    height: 25px;
+    background-color: #BBF6EA;
+    color: #17E438;
+    border-radius: 12px;
+    font-weight: bolder;
+    font-size: small;
+    padding-top: 2px;
+}
 
 
 
-.color-primary {
-    color: #5A8DEE;
-  }
-  
-  .color-secondary {
-    color: #475F7B;
-  }
-  
-  .color-success {
-    color: #39DA8A;
-  }
-  
-  .color-danger {
-    color: #FF5B5C;
-  }
-  
-  .color-warning {
-    color: #FDAC41;
-  }
-  
-  .color-info {
-    color: #00CFDD;
-  }
-  
-  .color-dark {
-    color: #222f3e;
-  }
-  
-  .color-light {
-    color: #A3AFBD;
-  }
-  
-  .color-link {
-    color: #2178d1;
-  }
+
   
   * {
     font-family: "Manrope";
