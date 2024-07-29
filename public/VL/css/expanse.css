@@ -49,7 +49,7 @@
     padding-top: 2px;
 }
 
-.title-bottom h2 {
+.h2-bold h2 {
 
     font-weight: 1000;
 
@@ -60,8 +60,18 @@
     height: 75px;
     background-color: #E5EEFF;
     border-radius: 18px;
+    display: flex;
+    justify-content: ;
+    align-items: center;
+    justify-content: space-between;
 }
-
+.username {
+    display: flex;
+    flex-direction: column;
+}
+.username h2 {
+    font-size: small;
+}
   
   * {
     font-family: "Manrope";
