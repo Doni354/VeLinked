@@ -73,6 +73,13 @@
     font-size: small;
 }
   
+.custom-line {
+    border: none; /* Menghilangkan border default */
+    border-top: 2px solid #E6EDFF; /* Menambahkan garis mendatar dengan warna dan ketebalan yang diinginkan */
+    margin: 20px 0; /* Menambahkan margin untuk memberi jarak ke elemen lain (opsional) */
+}
+
+
   * {
     font-family: "Manrope";
   }
