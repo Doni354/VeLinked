@@ -7,13 +7,14 @@
 }
 
 .left-content {
+    gap: 25px;
     display: flex;
-    
+    flex-direction: column; /* Mengatur agar konten ditampilkan dalam kolom */
 }
+
 
 .title-name {
     padding: 1em;
-
     width: 475px;
     height: 125px;
     background-color: #F6FAFF;
@@ -54,6 +55,12 @@
 
 }
 
+.user {
+    width: 300px;
+    height: 75px;
+    background-color: #E5EEFF;
+    border-radius: 18px;
+}
 
   
   * {
