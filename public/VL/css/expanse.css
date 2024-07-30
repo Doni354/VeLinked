@@ -7,7 +7,7 @@
 }
 
 .left-content {
-    gap: 25px;
+
     display: flex;
     flex-direction: column; /* Mengatur agar konten ditampilkan dalam kolom */
 }
@@ -56,6 +56,7 @@
 }
 
 .user {
+    margin-top: 1em;
     width: 300px;
     height: 75px;
     background-color: #E5EEFF;
@@ -87,19 +88,78 @@
     background-color: #F6FAFF;
     border: #E6EDFF solid 2px;
     border-radius: 18px;
+    overflow: hidden; /* Agar konten tidak meluap */
+    display: flex;
+    flex-direction: column;
+    
+    box-sizing: border-box; /* Memastikan padding dihitung dalam ukuran elemen */
 }
+
 .vehicle-title {
     display: flex;
     flex-direction: column;
+   
+    margin-bottom: 0.5em; /* Jarak antara title dan detail */
+}
+
+.vehicle-title h2 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #333333; /* Warna teks */
+}
+
+.vehicle-title p {
+    margin: 0.2em 0 0 0; /* Jarak sedikit antara h2 dan p */
+    font-size: 0.9em;
+    color: #5243E6; /* Warna teks */
 }
 
 .vehicle-detail {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start; /* Menyelaraskan konten ke atas */
+    overflow: hidden; /* Agar konten tidak meluap */
 }
 
+.vehicle-data {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2em; /* Jarak antara left-data dan right-data */
+    flex-grow: 1; /* Memastikan vehicle-data mengambil ruang maksimal */
+}
 
+.data {
+    margin: 0 0.5em; /* Jarak antara elemen data */
+}
 
+.data h5 {
+    font-weight: bolder;
+    margin: 0;
+    font-size: 0.85em; /* Sesuaikan ukuran font */
+    color: #999999; /* Warna teks */
+    white-space: nowrap; /* Agar teks tidak membungkus */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Tambahkan "..." jika teks terlalu panjang */
+}
+
+.data p {
+    margin: 0;
+    font-size: 0.85em; /* Sesuaikan ukuran font */
+    font-weight: bolder;
+    color: #333333; /* Warna teks */
+}
+
+.vehicle-img {
+    margin-left: auto; /* Agar gambar berada di paling kanan */
+    align-self: center; /* Menyelaraskan gambar di tengah vertikal */
+}
+
+.vehicle-img img {
+    max-width: 100%; /* Sesuaikan ukuran gambar */
+    height: auto;
+    display: block;
+}
 
   * {
     font-family: "Manrope";
