@@ -208,28 +208,36 @@
 }
 
 
+.driver-doc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Menambahkan jarak antara kolom */
+}
+
 .doc {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    width: 200px;
+    width: calc(50% - 5px); /* Mengatur lebar untuk membuat dua kolom */
     height: 50px;
-
 }
 
 
-
 .doc-name h5 {
+    font-size: 1em;
     font-weight: bold;
     margin-bottom: 2px; /* Mengurangi jarak bawah dari h5 */
 }
 
 .doc-name p {
     color: #7F8489;
+    font-size: 1em;
     
 }
 
 .doc-view img {
-    margin-top: 25px;
+   margin-bottom: 15px;
+   margin-right: 8px;
 }
 
 
