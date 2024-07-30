@@ -161,6 +161,17 @@
     display: block;
 }
 
+.expanses {
+    margin-top: 1em;
+    background-color: #F6FAFF;
+    width: 475px;
+    height: 400px;
+    border: #E6EDFF solid 2px;
+    border-radius: 18px;
+}
+
+
+
   * {
     font-family: "Manrope";
   }
