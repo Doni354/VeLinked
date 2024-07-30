@@ -208,7 +208,29 @@
 }
 
 
+.doc {
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+    height: 50px;
 
+}
+
+
+
+.doc-name h5 {
+    font-weight: bold;
+    margin-bottom: 2px; /* Mengurangi jarak bawah dari h5 */
+}
+
+.doc-name p {
+    color: #7F8489;
+    
+}
+
+.doc-view img {
+    margin-top: 25px;
+}
 
 
 
