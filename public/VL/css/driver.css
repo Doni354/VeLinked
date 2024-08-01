@@ -10,6 +10,7 @@
     padding: 12px;
     border-radius: 12px;
     background-color: #F8F8F9;
+    color: #7F8489;
 }
 
 .header-item {
@@ -29,6 +30,8 @@
     border-bottom: 1px solid #E6EDFF;
     text-align: center;
     vertical-align: middle;
+    color: #7F8489;
+
 }
 
 .driver-photo {
@@ -37,4 +40,15 @@
     border-radius: 50%;
     margin-right: 10px;
     vertical-align: middle;
+}
+
+
+.username {
+    color: #09244B;
+    font-size: large;
+    font-weight: bold;
+}
+
+.online {
+    color: #46EF4D;
 }
