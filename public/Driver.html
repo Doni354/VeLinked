@@ -8,7 +8,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     
     <link rel="stylesheet" href="assets/vendors/chartjs/Chart.min.css">
-
+    <link rel="stylesheet" href="VL/css/driver.css">
     <link rel="stylesheet" href="assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" href="assets/css/app.css">
     <link rel="shortcut icon" href="assets/images/icon.svg" type="image/x-icon">
@@ -74,7 +74,7 @@
     <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
 </div>
         </div>
-        <div id="main" style="flex: 1; background-color: #F5F4FF;">
+        <div id="main" style="flex: 1; background-color: #F6FAFF;">
             <!--   HEADER  -->
             <nav class="navbar navbar-header navbar-expand navbar-light" style="background-color: white;">
                 <a class="sidebar-toggler" href="#"><span class="navbar-toggler-icon"></span></a>
@@ -109,8 +109,74 @@
                 <p style="font-weight: 100" class="text-subtitle text-muted">monitor all your driver data</p>
               </b>
             </div>
-
+                 <!-- HEADER TABEL -->
+    <div class="table-header-container">
+        <div class="table-header">
+            <span class="header-item" style="width: 20%;">Driver Photo & Name</span>
+            <span class="header-item" style="width: 15%;">Vehicle Used</span>
+            <span class="header-item" style="width: 20%;">Employment Status</span>
+            <span class="header-item" style="width: 15%;">Driving Behavior</span>
+            <span class="header-item" style="width: 15%;">Today's Expenses</span>
+            <span class="header-item" style="width: 15%;">Vehicle Status</span>
         </div>
+    </div>
+    <!-- TABEL DATA -->
+    <div style="background-color: white; padding: 20px;">
+        <div style="overflow-x:auto;">
+            <table style="width: 100%; border-collapse: separate; border-spacing: 0; background-color: #fff; border-top: 1px solid #E6EDFF; border-bottom: 1px solid #E6EDFF; border-radius: 5px;">
+                <tbody>
+                    <tr class="table-row-odd">
+                        <td class="table-data" style="width: 20%;"><img src="driver1.jpg" alt="Driver Photo" class="driver-photo"> John Doe</td>
+                        <td class="table-data" style="width: 15%;">Car A</td>
+                        <td class="table-data" style="width: 20%;">Full-Time</td>
+                        <td class="table-data" style="width: 15%;">Good</td>
+                        <td class="table-data" style="width: 15%;">$30</td>
+                        <td class="table-data" style="width: 15%;">Active</td>
+                    </tr>
+                    <tr class="table-row-even">
+                        <td class="table-data" style="width: 20%;"><img src="driver2.jpg" alt="Driver Photo" class="driver-photo"> Jane Smith</td>
+                        <td class="table-data" style="width: 15%;">Car B</td>
+                        <td class="table-data" style="width: 20%;">Part-Time</td>
+                        <td class="table-data" style="width: 15%;">Average</td>
+                        <td class="table-data" style="width: 15%;">$15</td>
+                        <td class="table-data" style="width: 15%;">Inactive</td>
+                    </tr>
+                    <tr class="table-row-odd">
+                        <td class="table-data" style="width: 20%;"><img src="driver3.jpg" alt="Driver Photo" class="driver-photo"> James Brown</td>
+                        <td class="table-data" style="width: 15%;">Car C</td>
+                        <td class="table-data" style="width: 20%;">Contract</td>
+                        <td class="table-data" style="width: 15%;">Excellent</td>
+                        <td class="table-data" style="width: 15%;">$20</td>
+                        <td class="table-data" style="width: 15%;">Active</td>
+                    </tr>
+                    <tr class="table-row-even">
+                        <td class="table-data" style="width: 20%;"><img src="driver4.jpg" alt="Driver Photo" class="driver-photo"> Emily Davis</td>
+                        <td class="table-data" style="width: 15%;">Car D</td>
+                        <td class="table-data" style="width: 20%;">Full-Time</td>
+                        <td class="table-data" style="width: 15%;">Poor</td>
+                        <td class="table-data" style="width: 15%;">$25</td>
+                        <td class="table-data" style="width: 15%;">Inactive</td>
+                    </tr>
+                    <tr class="table-row-odd">
+                        <td class="table-data" style="width: 20%;"><img src="driver5.jpg" alt="Driver Photo" class="driver-photo"> Michael Wilson</td>
+                        <td class="table-data" style="width: 15%;">Car E</td>
+                        <td class="table-data" style="width: 20%;">Full-Time</td>
+                        <td class="table-data" style="width: 15%;">Good</td>
+                        <td class="table-data" style="width: 15%;">$35</td>
+                        <td class="table-data" style="width: 15%;">Active</td>
+                    </tr>
+                    <tr class="table-row-even">
+                        <td class="table-data" style="width: 20%;"><img src="driver6.jpg" alt="Driver Photo" class="driver-photo"> Sarah Johnson</td>
+                        <td class="table-data" style="width: 15%;">Car F</td>
+                        <td class="table-data" style="width: 20%;">Contract</td>
+                        <td class="table-data" style="width: 15%;">Average</td>
+                        <td class="table-data" style="width: 15%;">$10</td>
+                        <td class="table-data" style="width: 15%;">Inactive</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
     </div>
    
 
