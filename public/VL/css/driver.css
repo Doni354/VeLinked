@@ -17,11 +17,11 @@
 }
 
 .table-row-odd {
-    background-color: #E6EDFF;
+    background-color: #FFFFFF;
 }
 
 .table-row-even {
-    background-color: #FFFFFF;
+    background-color: #E6EDFF;
 }
 
 .table-data {
