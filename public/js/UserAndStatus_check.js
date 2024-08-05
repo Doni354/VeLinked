@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     const lastUpdate = doc.data().lastUpdate.toMillis();
                     const currentTimestamp = firebase.firestore.Timestamp.now().toMillis();
                     // Tentukan apakah perlu mengupdate status
-                    if (currentTimestamp - lastUpdate <= 20000) {
+                    if (currentTimestamp - lastUpdate <= 10000) {
                         // Update status menjadi true hanya jika belum pernah diupdate sebelumnya atau lastUpdate berubah
                         if (!doc.data().status || !doc.data().lastUpdateUpdated || doc.data().lastUpdateUpdated < lastUpdate) {
                             firebase.firestore().collection("Vehicle").doc(doc.id).update({
