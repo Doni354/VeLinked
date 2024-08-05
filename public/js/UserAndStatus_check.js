@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
 
-            // Set interval untuk memantau perubahan setiap 15 detik
+            // Set interval untuk memantau perubahan 
             setInterval(function() {
                 // Ambil semua dokumen di koleksi Vehicle
                 firebase.firestore().collection("Vehicle").get()
