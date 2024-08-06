@@ -277,14 +277,13 @@
 .AddVeh:active {
   background-color: #1b107e; /* Efek on click */
 }
-
 .vehicleImage {
   width: 13px;
   height: 13px;
 }
 
 .vehicleNameLabel {
-  font:  "Poppins", Helvetica, Arial, serif;
+  font: "Poppins", Helvetica, Arial, serif;
   font-size: small;
   color: white;
   font-weight: bold;
@@ -295,21 +294,21 @@
 }
 
 .vehicleDetailsRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Membagi grid menjadi 4 kolom */
+  gap: 20px; /* Jarak antara kartu */
   width: 100%;
-  overflow-x: auto;
   padding-bottom: 20px;
 }
 
 .vehicleCard {
-  flex: 1 1 calc(25% - 20px); /* Menggunakan flex untuk menyesuaikan lebar kartu */
+  width: 287px; /* Lebar kartu tetap 350px */
+  height: 138px;
   background-color: white;
   border-radius: 12px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
-  margin-bottom: 20px; /* Menambahkan margin bawah agar terlihat jelas antara kartu */
+  margin-bottom: 20px; /* Jarak antara baris kartu */
 }
 
 .vehicleCard:hover {
@@ -320,6 +319,7 @@
   font-weight: 600;
   font-size: normal;
 }
+
 .vehicleCardContent {
   display: flex;
   flex-direction: column;
@@ -330,12 +330,14 @@
 
 .vehicleInfo {
   display: flex;
-  align-items: center;
-  margin-bottom: 10px;
+
+
   width: 100%;
 }
 
 .vehicleThumbnail {
+  display: flex;
+  align-items: start;
   width: 80px;
   height: 80px;
   border-radius: 12px;
@@ -344,30 +346,42 @@
 }
 
 .vehicleText {
-  
   flex: 1;
   margin-right: 20px;
 }
+
 .statusLabel {
   margin-left: 5px;
 }
+
 .statusRow {
   display: flex;
-  align-items: center;
-  margin-top: 10px;
+
+  padding-bottom: 19px;
+  margin-bottom: 20px;
 }
 
-/* Media query untuk perangkat dengan lebar kurang dari 992px (menengah) */
-@media only screen and (max-width: 992px) {
-  .vehicleCard {
-      flex: 1 1 calc(50% - 20px); /* Menyesuaikan untuk menampung 2 kartu per baris */
+/* Media query untuk perangkat dengan lebar kurang dari 1400px (menengah) */
+@media only screen and (max-width: 1400px) {
+  .vehicleDetailsRow {
+    grid-template-columns: repeat(3, 1fr); /* Menyesuaikan menjadi 3 kolom */
+    justify-content: center; /* Memusatkan kartu di tengah */
   }
 }
 
-/* Media query untuk perangkat dengan lebar kurang dari 576px (kecil) */
+/* Media query untuk perangkat dengan lebar kurang dari 992px (kecil) */
+@media only screen and (max-width: 992px) {
+  .vehicleDetailsRow {
+    grid-template-columns: repeat(2, 1fr); /* Menyesuaikan menjadi 2 kolom */
+    justify-content: center; /* Memusatkan kartu di tengah */
+  }
+}
+
+/* Media query untuk perangkat dengan lebar kurang dari 576px (sangat kecil) */
 @media only screen and (max-width: 576px) {
-  .vehicleCard {
-      flex: 1 1 calc(100% - 20px); /* Menyesuaikan untuk menampung 1 kartu per baris */
+  .vehicleDetailsRow {
+    grid-template-columns: 1fr; /* Menyesuaikan menjadi 1 kolom */
+    justify-content: center; /* Memusatkan kartu di tengah */
   }
 }
 
