@@ -25,7 +25,7 @@ function displayVehicleCard(vehicleData, docId) {
     vehicleTitle.textContent = vehicleData.nickname;
 
     // Buat elemen h5 untuk label total pengguna
-    const usersTotalLabel = document.createElement("h5");
+    const usersTotalLabel = document.createElement("p");
     usersTotalLabel.classList.add("usersTotalLabel");
     usersTotalLabel.textContent = vehicleData.name;
 

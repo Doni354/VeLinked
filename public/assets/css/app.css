@@ -254,14 +254,17 @@
 
 .title {
   margin-right: auto;
+  font-weight: bold;
 }
 
 .AddVeh {
+  width: 115px;
+  height: 30px;
   display: flex;
   align-items: center;
   gap: 5px;
   background-color: #5243E6;
-  border-radius: 6px;
+  border-radius: 40px;
   padding: 4px 7px;
   border: none; /* Menghapus border */
   cursor: pointer; /* Mengubah kursor saat diarahkan ke tombol */
@@ -281,8 +284,10 @@
 }
 
 .vehicleNameLabel {
-  font: 500 12px/1.5 "Poppins", Helvetica, Arial, serif;
+  font:  "Poppins", Helvetica, Arial, serif;
+  font-size: small;
   color: white;
+  font-weight: bold;
 }
 
 .vehicleDetailsRow h3 {
@@ -311,6 +316,10 @@
   transform: translateY(-5px);
 }
 
+.usersTotalLabel {
+  font-weight: 600;
+  font-size: normal;
+}
 .vehicleCardContent {
   display: flex;
   flex-direction: column;
@@ -335,6 +344,7 @@
 }
 
 .vehicleText {
+  
   flex: 1;
   margin-right: 20px;
 }
