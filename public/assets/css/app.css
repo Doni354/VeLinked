@@ -306,7 +306,7 @@
   height: 138px;
   background-color: white;
   border-radius: 12px;
-  
+  border: #E6EDFF solid 2px;
   transition: transform 0.3s ease;
   margin-bottom: 20px; /* Jarak antara baris kartu */
 }
