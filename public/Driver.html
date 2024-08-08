@@ -124,7 +124,7 @@
         <div style="overflow-x:auto;">
             <table style="width: 100%; border-collapse: separate; border-spacing: 0; background-color: #fff; border-top: 2px solid #E6EDFF; border-bottom: 2px solid #E6EDFF; border-radius: 12px;">
                 <tbody>
-                    <tr class="table-row-odd">
+                    <tr class="table-row-odd" onclick="openOverlay()">
                         <td class="table-data username" style="width: 20%;"><img src="assets/images/userDummyExpanse.svg" alt="Driver Photo" class="driver-photo">Hellyos Haqiqie</td>
                         <td class="table-data" style="width: 15%;">VOLVO Polestar 1</td>
                         <td class="table-data" style="width: 20%;">Driver Internship</td>
@@ -228,14 +228,33 @@
     </div>
    
     </div>
-   
-
+   <!-- Overlay Div -->
+<div id="overlay" class="overlay" onclick="closeOverlay()">
+    <div class="overlay-content" onclick="event.stopPropagation()">
+        <!-- Content of the overlay -->
+        <p>Informasi Detail</p>
+    </div>
+</div>
+    <div class="add-driver-btn">
+        <img src="assets/images/btn-AddNewDriver.svg" alt="Add New Driver Button">
+    </div>
+    
+    
     <script src="js/UserAndStatus_check.js"></script>
 
     
     
         
-        
+    <script>
+        function openOverlay() {
+    document.getElementById('overlay').style.display = 'block';
+}
+
+function closeOverlay() {
+    document.getElementById('overlay').style.display = 'none';
+}
+
+    </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

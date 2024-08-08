@@ -52,3 +52,49 @@
 .online {
     color: #46EF4D;
 }
+
+.add-driver-btn {
+    position: fixed;
+    bottom: 30px; /* Jarak dari bawah */
+    right: 10px; /* Jarak dari kanan */
+    z-index: 1000; /* Memastikan tombol berada di atas elemen lain */
+}
+
+.add-driver-btn img {
+    width: 80%; /* Memastikan gambar penuh */
+    height: auto;
+    transition: opacity 0.3s ease; /* Animasi ketika di-hover */
+}
+
+.add-driver-btn img:hover {
+    opacity: 0.8; /* Sedikit ke-dim ketika di-hover */
+}
+
+
+
+/* Overlay background */
+.overlay {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dim effect */
+    z-index: 1000; /* Ensure overlay is on top */
+}
+
+/* Centered content */
+.overlay-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #F9F9F9;
+    padding: 20px;
+    border-radius: 10px;
+    height: auto;
+    width: 600px; /* Adjust as needed */
+    text-align: center;
+    border: #F1F1F1 solid 2px;
+}
