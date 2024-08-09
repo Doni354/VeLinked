@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
 .table-header-container {
     background-color: white;
     padding: 20px;
@@ -71,7 +73,6 @@
 }
 
 
-
 /* Overlay background */
 .overlay {
     display: none; /* Initially hidden */
@@ -94,7 +95,38 @@
     padding: 20px;
     border-radius: 10px;
     height: auto;
-    width: 600px; /* Adjust as needed */
-    text-align: center;
+    width: 810px; /* Adjust as needed */
+    text-align: left; /* Align text to the left */
     border: #F1F1F1 solid 2px;
+}
+
+/* User data container */
+.userdat {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Add some space between the image and text */
+}
+
+/* User image styling */
+.user-image {
+    width: 75px; /* Set the width of the image */
+    height: 75px; /* Set the height of the image */
+    border-radius: 50%; /* Optional: make the image circular */
+}
+
+/* Username data */
+.usernamedat {
+    font-family: "Lato";
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Individual text styling */
+.usernamedat p {
+    margin: 2px 0; /* Adjust spacing between text lines */
+}
+
+.h4-bold h4 {
+    font-weight: bold;
 }
