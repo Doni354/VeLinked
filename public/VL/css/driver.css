@@ -133,6 +133,8 @@
     color: black;
 }
 
+
+
 /* Table styling */
 .table-container {
     width: 100%; /* Full width of the content */
@@ -141,17 +143,16 @@
 .custom-table {
     width: 100%;
     border-collapse: collapse; /* Merge borders of adjacent cells */
-    text-align: left;
     font-family: "Lato";
 }
 
 .custom-table td {
-    color: #7F8489;
     padding: 8px 10px; /* Padding inside cells */
     border-top: 2px solid #F1F1F1; /* Border on top of each row */
     border-bottom: 2px solid #F1F1F1; /* Border on bottom of each row */
     border-left: none; /* Remove left border */
     border-right: none; /* Remove right border */
+    vertical-align: middle; /* Center content vertically */
 }
 
 /* Border for middle column */
@@ -166,4 +167,19 @@
 
 .custom-table tr:last-child td {
     border-bottom: 2px solid #F1F1F1; /* Border on bottom of the last row */
+}
+
+/* Alignment for content in table cells */
+.table-cell-content {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    margin-right: 10px; /* Space between image and text */
+}
+
+.text {
+    margin: 0; /* Remove default margin for <p> */
+    text-align: center; /* Center text */
 }
