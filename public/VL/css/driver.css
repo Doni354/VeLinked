@@ -146,6 +146,7 @@
 }
 
 .custom-table td {
+    color: #7F8489;
     padding: 8px 10px; /* Padding inside cells */
     border-top: 2px solid #F1F1F1; /* Border on top of each row */
     border-bottom: 2px solid #F1F1F1; /* Border on bottom of each row */
