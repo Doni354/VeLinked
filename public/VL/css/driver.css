@@ -222,7 +222,12 @@
 }
 
 .navbar-item a:hover {
-    background-color: #ddd; /* Background color on hover */
+    background-color: #E5F5F5; /* Background color on hover */
     color: #000; /* Text color on hover */
     border-radius: 4px; /* Rounded corners */
+}
+
+.navbar-active a {
+    background-color: #E1F0F3;
+    border-radius: 4px;
 }
