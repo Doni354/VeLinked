@@ -231,3 +231,22 @@
     background-color: #E1F0F3;
     border-radius: 4px;
 }
+
+/* Navbar content styling */
+.navbar-content {
+    display: none; /* Hide all content sections by default */
+}
+
+.content-section {
+    display: none; /* Hide sections by default */
+    padding: 20px;
+    border: 1px solid #ddd;
+    margin-top: 10px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+/* Show active content section */
+.navbar-active-content {
+    display: block; /* Show the active section */
+}

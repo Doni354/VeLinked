@@ -280,14 +280,43 @@
         <!-- Navbar Section -->
         <div class="navbar">
             <ul class="navbar-list">
-                <li class="navbar-item navbar-active"><a href="#home">Personal</a></li>
-                <li class="navbar-item"><a href="#services">Log behavior</a></li>
-                <li class="navbar-item"><a href="#about">Salary</a></li>
-                <li class="navbar-item"><a href="#portfolio">Vehicle</a></li>
-                <li class="navbar-item"><a href="#contact">Documents</a></li>
-                <li class="navbar-item"><a href="#faq">Attendance</a></li>
+                <li class="navbar-item" data-target="personal"><a href="#home">Personal</a></li>
+                <li class="navbar-item" data-target="log-behavior"><a href="#services">Log behavior</a></li>
+                <li class="navbar-item" data-target="salary"><a href="#about">Salary</a></li>
+                <li class="navbar-item" data-target="vehicle"><a href="#portfolio">Vehicle</a></li>
+                <li class="navbar-item" data-target="documents"><a href="#contact">Documents</a></li>
+                <li class="navbar-item" data-target="attendance"><a href="#faq">Attendance</a></li>
             </ul>
         </div>
+
+        <!-- Content Section -->
+        <div class="navbar-content">
+            <div id="personal" class="content-section"> 
+                <h2>Personal</h2>
+                <p>Content related to Personal.</p>
+            </div>
+            <div id="log-behavior" class="content-section">
+                <h2>Log Behavior</h2>
+                <p>Content related to Log Behavior.</p>
+            </div>
+            <div id="salary" class="content-section">
+                <h2>Salary</h2>
+                <p>Content related to Salary.</p>
+            </div>
+            <div id="vehicle" class="content-section">
+                <h2>Vehicle</h2>
+                <p>Content related to Vehicle.</p>
+            </div>
+            <div id="documents" class="content-section">
+                <h2>Documents</h2>
+                <p>Content related to Documents.</p>
+            </div>
+            <div id="attendance" class="content-section">
+                <h2>Attendance</h2>
+                <p>Content related to Attendance.</p>
+            </div>
+        </div>
+
 
 
             </div>
@@ -304,6 +333,31 @@
     
         
     <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const items = document.querySelectorAll('.navbar-item');
+    const sections = document.querySelectorAll('.content-section');
+    
+    items.forEach(item => {
+        item.addEventListener('click', function() {
+            // Remove active class from all items
+            items.forEach(i => i.classList.remove('navbar-active'));
+            // Hide all sections
+            sections.forEach(section => section.classList.remove('navbar-active-content'));
+            
+            // Add active class to the clicked item
+            this.classList.add('navbar-active');
+            
+            // Show the corresponding section
+            const targetId = this.getAttribute('data-target');
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+                targetSection.classList.add('navbar-active-content');
+            }
+        });
+    });
+});
+
+
         function openOverlay() {
     document.getElementById('overlay').style.display = 'block';
 }
