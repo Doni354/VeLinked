@@ -84,8 +84,7 @@
     background-color: rgba(0, 0, 0, 0.5); /* Dim effect */
     z-index: 1000; /* Ensure overlay is on top */
 }
-
-/* Centered content */
+/* Ensure the overlay-content has proper positioning */
 .overlay-content {
     position: absolute;
     top: 50%;
@@ -98,6 +97,7 @@
     width: 810px; /* Adjust as needed */
     text-align: left; /* Align text to the left */
     border: #F1F1F1 solid 2px;
+    box-sizing: border-box;
 }
 
 /* User data container */
@@ -190,4 +190,39 @@
 
 .online {
     color: #64D182;
+}
+
+/* Navbar styling */
+.navbar {
+    position: relative;
+    margin-top: 20px; /* Space between the table and navbar */
+    display: flex;
+    justify-content: center; /* Center navbar horizontally */
+}
+
+.navbar-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 15px; /* Space between items */
+}
+
+.navbar-item {
+    /* No additional styling needed here */
+}
+
+.navbar-item a {
+    text-decoration: none;
+    color: #333; /* Text color */
+    font-weight: bold;
+    padding: 10px 15px;
+    display: inline-block;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar-item a:hover {
+    background-color: #ddd; /* Background color on hover */
+    color: #000; /* Text color on hover */
+    border-radius: 4px; /* Rounded corners */
 }
