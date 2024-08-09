@@ -125,7 +125,7 @@
 .usernamedat h4, .usernamedat p {
     color: #7F8489;
     margin: 0; /* Remove default margin */
-    line-height: 1.2; /* Adjust line-height for closer spacing */
+    line-height: 1.5; /* Adjust line-height for closer spacing */
 }
 
 .h4-bold h4 {
