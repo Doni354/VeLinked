@@ -173,6 +173,8 @@
 .table-cell-content {
     display: flex;
     align-items: center;
+    color: #7F8489;
+    font-family: "Lato";
 }
 
 .icon {
