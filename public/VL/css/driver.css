@@ -102,6 +102,7 @@
 
 /* User data container */
 .userdat {
+    margin-top: 10px;
     display: flex;
     align-items: center;
     gap: 15px; /* Add some space between the image and text */
@@ -109,8 +110,8 @@
 
 /* User image styling */
 .user-image {
-    width: 75px; /* Set the width of the image */
-    height: 75px; /* Set the height of the image */
+    width: 100px; /* Set the width of the image */
+    height: 100px; /* Set the height of the image */
     border-radius: 50%; /* Optional: make the image circular */
 }
 
@@ -137,6 +138,7 @@
 
 /* Table styling */
 .table-container {
+    margin-top: 50px;
     width: 100%; /* Full width of the content */
 }
 
