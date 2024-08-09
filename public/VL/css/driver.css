@@ -185,3 +185,7 @@
     margin: 0; /* Remove default margin for <p> */
     text-align: center; /* Center text */
 }
+
+.online {
+    color: #64D182;
+}
