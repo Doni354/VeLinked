@@ -28,13 +28,8 @@
 </head>
 <body>
     
-    <script type="module" src="js/config.js"></script>
-
-    <script type="module" src="js/d-aveh.js"></script>
-    <script src="js/veh.js"></script>
 
 <div id="alertContainer">
-    <script src="js/d-aveh.js"></script>
 </div>
 <!--</header>-->
     <div id="app" style="height: 100vh; display: flex;">
@@ -280,12 +275,13 @@
         <!-- Navbar Section -->
         <div class="navbar">
             <ul class="navbar-list">
-                <li class="navbar-item" data-target="personal"><a href="#home">Personal</a></li>
-                <li class="navbar-item" data-target="log-behavior"><a href="#services">Log behavior</a></li>
-                <li class="navbar-item" data-target="salary"><a href="#about">Salary</a></li>
-                <li class="navbar-item" data-target="vehicle"><a href="#portfolio">Vehicle</a></li>
-                <li class="navbar-item" data-target="documents"><a href="#contact">Documents</a></li>
-                <li class="navbar-item" data-target="attendance"><a href="#faq">Attendance</a></li>
+                <li class="navbar-item" data-target="personal"><a href="#personal">Personal</a></li>
+                <li class="navbar-item" data-target="log-behavior"><a href="#log-behavior">Log behavior</a></li>
+                <li class="navbar-item" data-target="salary"><a href="#salary">Salary</a></li>
+                <li class="navbar-item" data-target="vehicle"><a href="#vehicle">Vehicle</a></li>
+                <li class="navbar-item" data-target="documents"><a href="#documents">Documents</a></li>
+                <li class="navbar-item" data-target="attendance"><a href="#attendance">Attendance</a></li>
+
             </ul>
         </div>
 
@@ -315,6 +311,7 @@
                 <h2>Attendance</h2>
                 <p>Content related to Attendance.</p>
             </div>
+            
         </div>
 
 
@@ -333,29 +330,54 @@
     
         
     <script>
-document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {
     const items = document.querySelectorAll('.navbar-item');
     const sections = document.querySelectorAll('.content-section');
-    
-    items.forEach(item => {
-        item.addEventListener('click', function() {
-            // Remove active class from all items
-            items.forEach(i => i.classList.remove('navbar-active'));
-            // Hide all sections
-            sections.forEach(section => section.classList.remove('navbar-active-content'));
-            
-            // Add active class to the clicked item
-            this.classList.add('navbar-active');
-            
-            // Show the corresponding section
-            const targetId = this.getAttribute('data-target');
-            const targetSection = document.getElementById(targetId);
-            if (targetSection) {
-                targetSection.classList.add('navbar-active-content');
+
+    // Function to update active navbar item and show corresponding content
+    function updateContent(targetId) {
+        items.forEach(item => {
+            const id = item.getAttribute('data-target');
+            if (id === targetId) {
+                item.classList.add('navbar-active');
+            } else {
+                item.classList.remove('navbar-active');
             }
         });
+
+        sections.forEach(section => {
+            if (section.id === targetId) {
+                section.classList.add('navbar-active-content');
+            } else {
+                section.classList.remove('navbar-active-content');
+            }
+        });
+    }
+
+    // On click, update the URL hash and content
+    items.forEach(item => {
+        item.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default link behavior
+            const targetId = this.getAttribute('data-target');
+            window.location.hash = targetId; // Update URL hash
+            updateContent(targetId);
+        });
     });
+
+    // On page load, show content based on URL hash
+    function initContent() {
+        const hash = window.location.hash.substring(1); // Remove the '#' character
+        if (hash) {
+            updateContent(hash);
+        } else {
+            // Optionally, you can set a default view if there's no hash
+            updateContent('personal'); // Example default
+        }
+    }
+
+    initContent(); // Initialize content based on the URL hash
 });
+
 
 
         function openOverlay() {

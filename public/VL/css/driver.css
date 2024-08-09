@@ -231,10 +231,9 @@
     background-color: #E1F0F3;
     border-radius: 4px;
 }
-
 /* Navbar content styling */
 .navbar-content {
-    display: none; /* Hide all content sections by default */
+    display: block; /* Initially hidden */
 }
 
 .content-section {
