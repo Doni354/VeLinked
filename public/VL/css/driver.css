@@ -132,3 +132,37 @@
     font-weight: bold;
     color: black;
 }
+
+/* Table styling */
+.table-container {
+    width: 100%; /* Full width of the content */
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse; /* Merge borders of adjacent cells */
+    text-align: left;
+    font-family: "Lato";
+}
+
+.custom-table td {
+    padding: 8px 10px; /* Padding inside cells */
+    border-top: 2px solid #F1F1F1; /* Border on top of each row */
+    border-bottom: 2px solid #F1F1F1; /* Border on bottom of each row */
+    border-left: none; /* Remove left border */
+    border-right: none; /* Remove right border */
+}
+
+/* Border for middle column */
+.custom-table td + td {
+    border-left: 2px solid #F1F1F1; /* Border between columns */
+}
+
+/* Remove top and bottom border for first and last row */
+.custom-table tr:first-child td {
+    border-top: 2px solid #F1F1F1; /* Border on top of the first row */
+}
+
+.custom-table tr:last-child td {
+    border-bottom: 2px solid #F1F1F1; /* Border on bottom of the last row */
+}
