@@ -286,3 +286,8 @@
     font-weight: bold;
     margin-top: -2px; /* Jarak atas negatif untuk lebih dekat */
 }
+
+
+.content-personal-data-Performance_Ratings p {
+    color: #65B468;
+}
