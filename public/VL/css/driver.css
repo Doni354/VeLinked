@@ -94,7 +94,7 @@
     transform: translate(-50%, -50%)scale(0.75); /* Pusatkan dan scale konten */
     background-color: #F9F9F9;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 30px;
     height: auto;
     width: 810px; /* Sesuaikan jika diperlukan */
     text-align: left; /* Rata kiri teks */
