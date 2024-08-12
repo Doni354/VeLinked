@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Manrope:wght@200..800&display=swap');
+
 
 .table-header-container {
     background-color: white;
@@ -257,4 +259,30 @@
 
 .head-content h5 {
     font-weight: bold;
+}
+
+.personal-content {
+    display: flex;
+    justify-content: space-between;
+    width: 500px;
+}
+
+
+
+.content-personal-data {
+    padding: 1em;
+    flex-direction: column;
+    display: flex;
+}
+
+.content-personal-data h5 {
+    font-family: "Lato";
+    color: #7F8489;
+    margin-bottom: 0; /* Jarak bawah dihilangkan */
+}
+
+.content-personal-data p {
+    font-family: "Manrope";
+    font-weight: bold;
+    margin-top: -2px; /* Jarak atas negatif untuk lebih dekat */
 }
