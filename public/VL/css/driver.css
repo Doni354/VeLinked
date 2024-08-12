@@ -239,13 +239,17 @@
 .content-section {
     display: none; /* Hide sections by default */
     padding: 20px;
-    border: 1px solid #ddd;
     margin-top: 10px;
     border-radius: 4px;
-    background-color: #f9f9f9;
+    background-color: #FFFFFF;
 }
 
 /* Show active content section */
 .navbar-active-content {
     display: block; /* Show the active section */
+}
+
+.head-content {
+    display: flex;
+    justify-content: space-between;
 }
