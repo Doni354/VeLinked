@@ -250,6 +250,11 @@
 }
 
 .head-content {
+
     display: flex;
     justify-content: space-between;
+}
+
+.head-content h5 {
+    font-weight: bold;
 }
