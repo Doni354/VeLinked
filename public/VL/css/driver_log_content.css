@@ -1,0 +1,76 @@
+
+.LTDat {
+    margin: 10px;
+}
+
+.trip-item {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+
+}
+
+.trip-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Menyelaraskan item secara vertikal di tengah */
+}
+
+.trip-details {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.time-location {
+    display: flex;
+    align-items: center;
+
+}
+
+.time-location img.icon {
+    width: 24px; /* Set width to a standard size */
+    height: 24px; /* Set height to a standard size */
+    margin-right: 10px;
+}
+
+.time-location .time {
+    margin-right: 30px;
+    font-weight: bold;
+}
+
+.vehicle-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Menyelaraskan item secara horizontal di tengah */
+    margin-left: auto; /* Pindahkan ke kanan */
+    text-align: flex-end; /* Pusatkan teks di dalam div */
+}
+
+.vehicle-name {
+    color: #7C8DB5;
+}
+
+.distance {
+    font-weight: bold;
+}
+
+.horizontal-line {
+    border-top: 2px solid #DBDBDB;
+    margin-top: 10px;
+}
+
+.trip-item:last-child .horizontal-line {
+    display: none; /* Menghilangkan garis horizontal pada item terakhir */
+}
+
+.location {
+    color: #7C8DB5;
+}
+
+.dotted-line {
+    margin-left: 11px;
+    border-left: 2px dashed #5243E6;
+    height: 30px; /* Sesuaikan tinggi sesuai kebutuhan */
+    position: relative;
+}
