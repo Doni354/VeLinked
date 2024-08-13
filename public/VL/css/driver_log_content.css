@@ -1,3 +1,45 @@
+.Last_Trip {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-right: 10px;
+}
+
+.LastTrip {
+    width: 850px; /* Lebar kotak */
+    height: 50px; /* Tinggi kotak */
+    border: 1px solid #E6EDFF; /* Ketebalan dan warna garis tepi kotak */
+    display: flex;
+    background-color: white;
+    border-radius: 10px; /* Radius sudut */
+}
+
+.LastTrip h1 {
+    color: black;
+    font-family: 'Manrope';
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+.LT-Data {
+    width: 725px; /* Lebar kotak */
+    height: 350px; /* Tinggi kotak */
+    border: 1px solid #E6EDFF; /* Ketebalan dan warna garis tepi kotak */
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll; /* Membuat daftar dapat digulir secara vertikal */
+    margin-top: 15px;/* Jarak dari atas dan bawah, dan otomatis untuk sisi kiri dan kanan */
+    background-color: white;
+    border-radius: 10px; /* Radius sudut */
+    scrollbar-width: none;
+    margin-right: 10px; /* Untuk menghilangkan scrollbar di Firefox */
+}
+
+.LT-Data::-webkit-scrollbar {
+    display: none; /* Untuk menghilangkan scrollbar di Chrome, Safari, dan Opera */
+}
 
 .LTDat {
     margin: 10px;
@@ -7,14 +49,21 @@
     display: flex;
     flex-direction: column;
     padding: 10px;
+}
 
+.trip-date {
+    font-weight: bold;
+    font-size: 14px;
+    color: #7C8DB5;
+    margin-bottom: 5px; /* Tambahkan jarak antara trip-date dan trip-content */
 }
 
 .trip-content {
     display: flex;
     justify-content: space-between;
-    align-items: center; /* Menyelaraskan item secara vertikal di tengah */
+    align-items: center;
 }
+
 
 .trip-details {
     display: flex;
@@ -74,3 +123,5 @@
     height: 30px; /* Sesuaikan tinggi sesuai kebutuhan */
     position: relative;
 }
+
+
