@@ -96,11 +96,10 @@
     text-align: flex-end; /* Pusatkan teks di dalam div */
 }
 
-.vehicle-name {
-    color: #7C8DB5;
-}
-
+.vehicle-name,
 .distance {
+    margin-left: auto; /* Pindahkan elemen ini ke kanan */
+    text-align: right;
     font-weight: bold;
 }
 
@@ -119,9 +118,21 @@
 
 .dotted-line {
     margin-left: 11px;
-    border-left: 2px dashed #5243E6;
-    height: 30px; /* Sesuaikan tinggi sesuai kebutuhan */
+    border-left: 1px dashed #5243E6;
+    height: 15px; /* Sesuaikan tinggi sesuai kebutuhan */
     position: relative;
 }
 
+.log-trip {
+    display: flex;
+    justify-content: space-between;
+    width: 550px;
+}
 
+.vehicle-name {
+    color: #DB1111;
+}
+
+.distance-dat {
+    color: #DB1111;
+}
