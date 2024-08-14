@@ -26,7 +26,6 @@
 .LT-Data {
     width: 725px; /* Lebar kotak */
     height: 350px; /* Tinggi kotak */
-    border: 1px solid #E6EDFF; /* Ketebalan dan warna garis tepi kotak */
     display: flex;
     flex-direction: column;
     overflow-y: scroll; /* Membuat daftar dapat digulir secara vertikal */
