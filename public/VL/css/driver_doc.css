@@ -1,12 +1,24 @@
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    column-gap: 75px; /* Gap besar di antara kolom (samping) */
+    row-gap: 40px; /* Gap kecil di antara baris (atas-bawah) */
+    padding: 20px;
+    max-width: 650px; /* Menyesuaikan lebar maksimum container */
+    margin: 0 auto; /* Memastikan container berada di tengah */
+}
+
+
 .card-doc {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 290px;
+    width: 300px;
     height: 90px;
     background-color: #F2F2F2;
-    border-radius: 10px;
-    padding: 10px;
+    border-radius: 25px;
+    padding: 20px;
     box-sizing: border-box;
 }
 
@@ -16,24 +28,16 @@
 }
 
 .card-doc-title {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 5px;
+    font-family: "Lato";
+    font-size: 18px;
+    font-weight: 800;
+
 }
 
 .card-doc-description {
-    font-size: 14px;
-    color: #555;
-}
-
-.btn-doc-image {
-    width: 40px;
-    height: 40px;
-    background: url('btnDocument.svg') no-repeat center center;
-    background-size: contain;
-    border: none;
-    cursor: pointer;
-    outline: none;
+    font-family: "Lato";
+    font-size: 16px;
+    color: #7F8489;
 }
 
 .card-doc-overlay {

@@ -487,12 +487,53 @@
                         <img src="assets/images/BtnEditContent.svg" alt="Edit">
                       </button>
                 </div>
-                 
+                <div class="cards-container">
+                    <div class="card-doc">
+                        <div class="card-doc-content">
+                            <div class="card-doc-title">Driver License</div>
+                            <div class="card-doc-description">Attached</div>
+                        </div>
+                        <button style="border: none; background: none; padding: 0; cursor: pointer; outline: none;" onclick="toggleDocOverlay()">
+                            <img src="assets/images/btnDocument.svg" alt="Edit">
+                        </button>
+                    </div>
+                    
+                    <div class="card-doc">
+                        <div class="card-doc-content">
+                            <div class="card-doc-title">VeCard</div>
+                            <div class="card-doc-description">Attached</div>
+                        </div>
+                        <button style="border: none; background: none; padding: 0; cursor: pointer; outline: none;" onclick="toggleDocOverlay()">
+                            <img src="assets/images/btnDocument.svg" alt="Edit">
+                        </button>
+                    </div>
+
+                    <div class="card-doc">
+                        <div class="card-doc-content">
+                            <div class="card-doc-title">Indonesia Identity card</div>
+                            <div class="card-doc-description">Pending</div>
+                        </div>
+                        <button style="border: none; background: none; padding: 0; cursor: pointer; outline: none;" onclick="toggleDocOverlay()">
+                            <img src="assets/images/btnDocument.svg" alt="Edit">
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card-doc-overlay" id="cardDocOverlay">
+                    <div class="card-doc-overlay-content">
+                        <p>Ini adalah konten overlay.</p>
+                        <button onclick="toggleDocOverlay()">Tutup</button>
+                    </div>
+                </div>
+                
+                <script>
+                    function toggleDocOverlay() {
+                        const overlay = document.getElementById('cardDocOverlay');
+                        overlay.classList.toggle('show');
+                    }
+                </script>
             </div>
-            <div id="attendance" class="content-section">
-                <h2>Attendance</h2>
-                <p>Content related to Attendance.</p>
-            </div>
+            
             
         </div>
 
