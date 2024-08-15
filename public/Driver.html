@@ -489,7 +489,7 @@
                 </div>
                 
                 <div class="cards-container">
-                    <div class="card-doc" onclick="showOverlay('Driver License')">
+                    <div class="card-doc" onclick="showOverlay('Driver License', 'Nomor Lisensi: 12345678<br>Tanggal Kadaluarsa: 12/12/2025')">
                         <div class="card-doc-content">
                             <div class="card-doc-title">Driver License</div>
                             <div class="card-doc-description">Attached</div>
@@ -499,7 +499,7 @@
                         </button>
                     </div>
                 
-                    <div class="card-doc" onclick="showOverlay('VeCard')">
+                    <div class="card-doc" onclick="showOverlay('VeCard', 'Nomor VeCard: 87654321<br>Status: Active')">
                         <div class="card-doc-content">
                             <div class="card-doc-title">VeCard</div>
                             <div class="card-doc-description">Attached</div>
@@ -509,7 +509,7 @@
                         </button>
                     </div>
                 
-                    <div class="card-doc" onclick="showOverlay('Indonesia Identity Card')">
+                    <div class="card-doc" onclick="showOverlay('Indonesia Identity Card', 'Nomor KTP: 11223344<br>Status: Pending')">
                         <div class="card-doc-content">
                             <div class="card-doc-title">Indonesia Identity Card</div>
                             <div class="card-doc-description">Pending</div>
@@ -527,14 +527,18 @@
                     </div>
                 </div>
                 
+                
                 <script>
-                    function showOverlay(content) {
+                   function showOverlay(title, content) {
                         const overlay = document.getElementById('cardDocOverlay');
                         const overlayContent = document.getElementById('overlayContent');
-                        overlayContent.innerHTML = `<button class="close-btn" onclick="hideOverlay(event)">✖</button><p>${content}</p>`;
+                        overlayContent.innerHTML = `
+                            <button class="close-btn" onclick="hideOverlay(event)">✖</button>
+                            <h2>${title}</h2>
+                            <p>${content}</p>`;
                         overlay.classList.add('show');
                     }
-                
+
                     function hideOverlay(event) {
                         const overlay = document.getElementById('cardDocOverlay');
                         const overlayContent = document.getElementById('overlayContent');
@@ -542,6 +546,7 @@
                             overlay.classList.remove('show');
                         }
                     }
+
                 </script>
                 
 
