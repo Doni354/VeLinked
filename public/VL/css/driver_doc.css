@@ -2,13 +2,12 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     justify-content: center;
-    column-gap: 75px; /* Gap besar di antara kolom (samping) */
-    row-gap: 40px; /* Gap kecil di antara baris (atas-bawah) */
+    column-gap: 75px;
+    row-gap: 40px;
     padding: 20px;
-    max-width: 650px; /* Menyesuaikan lebar maksimum container */
-    margin: 0 auto; /* Memastikan container berada di tengah */
+    max-width: 650px;
+    margin: 0 auto;
 }
-
 
 .card-doc {
     display: flex;
@@ -20,6 +19,7 @@
     border-radius: 25px;
     padding: 20px;
     box-sizing: border-box;
+    cursor: pointer;
 }
 
 .card-doc-content {
@@ -31,7 +31,6 @@
     font-family: "Lato";
     font-size: 18px;
     font-weight: 800;
-
 }
 
 .card-doc-description {
@@ -51,14 +50,28 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    border-radius: 30px; /* Border radius untuk background dim */
 }
 
 .card-doc-overlay-content {
+    width: 650px;
+    height: 600px;
     background-color: white;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 30px; /* Border radius untuk konten overlay */
+    position: relative; /* Memungkinkan positioning absolut untuk tombol close */
 }
 
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+  
 .card-doc-overlay.show {
     display: flex;
 }

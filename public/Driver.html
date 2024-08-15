@@ -487,51 +487,64 @@
                         <img src="assets/images/BtnEditContent.svg" alt="Edit">
                       </button>
                 </div>
+                
                 <div class="cards-container">
-                    <div class="card-doc">
+                    <div class="card-doc" onclick="showOverlay('Driver License')">
                         <div class="card-doc-content">
                             <div class="card-doc-title">Driver License</div>
                             <div class="card-doc-description">Attached</div>
                         </div>
-                        <button style="border: none; background: none; padding: 0; cursor: pointer; outline: none;" onclick="toggleDocOverlay()">
+                        <button style="border: none; background: none; padding: 0; cursor: pointer; outline: none;">
                             <img src="assets/images/btnDocument.svg" alt="Edit">
                         </button>
                     </div>
-                    
-                    <div class="card-doc">
+                
+                    <div class="card-doc" onclick="showOverlay('VeCard')">
                         <div class="card-doc-content">
                             <div class="card-doc-title">VeCard</div>
                             <div class="card-doc-description">Attached</div>
                         </div>
-                        <button style="border: none; background: none; padding: 0; cursor: pointer; outline: none;" onclick="toggleDocOverlay()">
+                        <button style="border: none; background: none; padding: 0; cursor: pointer; outline: none;">
                             <img src="assets/images/btnDocument.svg" alt="Edit">
                         </button>
                     </div>
-
-                    <div class="card-doc">
+                
+                    <div class="card-doc" onclick="showOverlay('Indonesia Identity Card')">
                         <div class="card-doc-content">
-                            <div class="card-doc-title">Indonesia Identity card</div>
+                            <div class="card-doc-title">Indonesia Identity Card</div>
                             <div class="card-doc-description">Pending</div>
                         </div>
-                        <button style="border: none; background: none; padding: 0; cursor: pointer; outline: none;" onclick="toggleDocOverlay()">
+                        <button style="border: none; background: none; padding: 0; cursor: pointer; outline: none;">
                             <img src="assets/images/btnDocument.svg" alt="Edit">
                         </button>
                     </div>
                 </div>
                 
-                <div class="card-doc-overlay" id="cardDocOverlay">
-                    <div class="card-doc-overlay-content">
+                <div class="card-doc-overlay" id="cardDocOverlay" onclick="hideOverlay(event)">
+                    <div class="card-doc-overlay-content" id="overlayContent">
+                        <button class="close-btn" onclick="hideOverlay(event)">✖</button>
                         <p>Ini adalah konten overlay.</p>
-                        <button onclick="toggleDocOverlay()">Tutup</button>
                     </div>
                 </div>
                 
                 <script>
-                    function toggleDocOverlay() {
+                    function showOverlay(content) {
                         const overlay = document.getElementById('cardDocOverlay');
-                        overlay.classList.toggle('show');
+                        const overlayContent = document.getElementById('overlayContent');
+                        overlayContent.innerHTML = `<button class="close-btn" onclick="hideOverlay(event)">✖</button><p>${content}</p>`;
+                        overlay.classList.add('show');
+                    }
+                
+                    function hideOverlay(event) {
+                        const overlay = document.getElementById('cardDocOverlay');
+                        const overlayContent = document.getElementById('overlayContent');
+                        if (event.target === overlay || event.target.classList.contains('close-btn')) {
+                            overlay.classList.remove('show');
+                        }
                     }
                 </script>
+                
+
             </div>
             
             
