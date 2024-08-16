@@ -229,6 +229,7 @@ showDetailButton.addEventListener('click', function() {
         image.classList.remove('clicked');
     }, 500); // Sesuaikan dengan durasi animasi CSS
 });
+
 const userImage = document.querySelector('.user img');
         // Ambil elemen .userdat
         const userdatDiv = document.querySelector('.userdat');
@@ -255,19 +256,14 @@ const userImage = document.querySelector('.user img');
             // Mendapatkan nilai docId dari parameter URL
             const docId = getParameterByName('docId');
         
-            // Dapatkan referensi dokumen kendaraan dari Firestore berdasarkan docId
-            const vehicleDocRef = firebase.firestore().collection("Vehicle").doc(docId);
+            // Dapatkan referensi ke Vehicle di Realtime Database berdasarkan docId
+            const vehicleStatusRef = firebase.database().ref(`Vehicle/${docId}/engine_status`);
             const logsCollectionRef = firebase.firestore().collection("Logs");
         
-            // Ambil data kendaraan dan update checkbox engine
-            vehicleDocRef.onSnapshot(doc => {
-                if (doc.exists) {
-                    const vehicleData = doc.data();
-                    // Update nilai checkbox berdasarkan nilai engine
-                    engineStatusCheckbox.checked = vehicleData.engine;
-                } else {
-                    console.log("No such document!");
-                }
+            // Ambil data engine status dari Realtime Database dan update checkbox engine
+            vehicleStatusRef.on('value', snapshot => {
+                const engineStatus = snapshot.val();
+                engineStatusCheckbox.checked = engineStatus || false;
             });
         
             // Tambahkan event listener untuk checkbox
@@ -280,11 +276,10 @@ const userImage = document.querySelector('.user img');
                     timestamp: timestamp
                 };
         
-                // Update nilai engine di Firestore berdasarkan checkbox
-                vehicleDocRef.update({
-                    engine: isChecked
-                }).then(() => {
-                    console.log("Engine status updated successfully!");
+                // Update nilai engine_status di Realtime Database berdasarkan checkbox
+                vehicleStatusRef.set(isChecked).then(() => {
+                    console.log("Engine status updated successfully in Realtime Database!");
+        
                     // Kirim log ke Firestore
                     logsCollectionRef.add(logEntry).then(() => {
                         console.log("Log entry added successfully!");
@@ -292,12 +287,13 @@ const userImage = document.querySelector('.user img');
                         console.error("Error adding log entry:", error);
                     });
                 }).catch(error => {
-                    console.error("Error updating engine status:", error);
+                    console.error("Error updating engine status in Realtime Database:", error);
                     // Reset checkbox jika terjadi error
                     engineStatusCheckbox.checked = !isChecked;
                 });
             });
         });
+        
         
         
 
