@@ -32,7 +32,8 @@ function displayVehicleCard(vehicleData, docId) {
     // Referensi ke Realtime Database untuk status_device
     const statusRef = firebase.database().ref(`/Vehicle/${docId}/status_device`);
 
-    statusRef.once('value', (snapshot) => {
+    // Mendengarkan perubahan secara real-time pada status_device
+    statusRef.on('value', (snapshot) => {
         const statusEngine = snapshot.val();
         console.log("Data status_engine:", statusEngine);
 
@@ -72,6 +73,7 @@ function loadAndDisplayVehicles() {
     const vehiclesRef = firebase.firestore().collection("Vehicle").where("user_id", "==", user.uid);
     const vehicleDetailsRow = document.querySelector(".vehicleDetailsRow");
 
+    // Mendengarkan perubahan secara real-time pada koleksi Vehicle di Firestore
     vehiclesRef.onSnapshot(snapshot => {
         vehicleDetailsRow.innerHTML = "";
         snapshot.forEach(doc => {
