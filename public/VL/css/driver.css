@@ -98,7 +98,9 @@
     height: auto;
     width: 810px; /* Sesuaikan jika diperlukan */
     text-align: left; /* Rata kiri teks */
-    border: #F1F1F1 solid 2px;
+    border: none; /* Tidak menggunakan border */
+    outline: 2px solid #F1F1F1; /* Membuat outline */
+    outline-offset: -2px; /* Menempatkan outline di dalam elemen */
     box-sizing: border-box;
 }
 
