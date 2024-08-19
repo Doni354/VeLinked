@@ -39,21 +39,21 @@
 .tittle_expanse_head h4 {
     font-weight: bolder;
     color: #09244B;
-    font-size: 28px;
+    font-size: 25px;
     margin-bottom: 2px; /* Mengurangi jarak bawah untuk mendekatkan ke elemen p */
 }
 
 .tittle_expanse_head p {
     color: #5243E6;
     font-weight: bolder;
-    font-size: 20px;
+    font-size: 18px;
     margin-top: 2px; /* Mengurangi jarak atas untuk mendekatkan ke elemen h4 */
     margin-bottom: 3px; /* Mengurangi jarak bawah untuk mendekatkan ke elemen span */
 }
 
 .tittle_expanse_head span {
     color: #999999;
-    font-size: 17px;
+    font-size: 15px;
     font-weight: bolder;
     margin-top: 1px; /* Mengurangi jarak atas untuk mendekatkan ke elemen p */
     margin-bottom: 0; /* Menghilangkan jarak bawah */
@@ -80,4 +80,40 @@
 .toggle-button:active {
     outline: none; /* Menghilangkan outline saat tombol di-klik atau fokus */
     box-shadow: none; /* Menghilangkan bayangan bawaan yang mungkin ditambahkan oleh browser */
+}
+
+.expanse_data {
+    display: flex;
+    justify-content: space-between;
+}
+
+.expanse_dat {
+    display: flex;
+    width: 500px;
+    justify-content: space-between;
+}
+
+.dat-exp {
+    flex-direction: column;
+    font-family: "Manrope";
+
+
+}
+
+.dat-exp h5 {
+    color: #999999;
+    font-size: 14px;
+    font-weight: bolder;
+    margin-top: 5px; /* Mengurangi jarak atas untuk mendekatkan ke elemen p */
+    margin-bottom: 0; /* Menghilangkan jarak bawah */
+}
+
+.dat-exp p {
+    font-weight: 800;
+    font-size: 12px;
+}
+
+.expanse_img img {
+    size: 80%;
+
 }
