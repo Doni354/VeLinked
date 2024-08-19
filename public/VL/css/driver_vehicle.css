@@ -17,16 +17,14 @@
     background-color: #F6FAFF;
     border-radius: 12px;
     border: #E6EDFF solid 1px;
+    padding: 1em;
 }
 
 .details_vehicle {
     flex-direction: column;
 }
 
-.vehicle_expanse {
 
-    padding: 1em;
-}
 
 .expanse_head {
     display: flex;
@@ -50,7 +48,13 @@
     margin-top: 2px; /* Mengurangi jarak atas untuk mendekatkan ke elemen h4 */
     margin-bottom: 3px; /* Mengurangi jarak bawah untuk mendekatkan ke elemen span */
 }
-
+.tittle__head p {
+    color: #5243E6;
+    font-weight: bolder;
+    font-size: 18px;
+    margin-top: 2px; /* Mengurangi jarak atas untuk mendekatkan ke elemen h4 */
+    margin-bottom: 3px; /* Mengurangi jarak bawah untuk mendekatkan ke elemen span */
+}
 .tittle_expanse_head span {
     color: #999999;
     font-size: 15px;
@@ -96,24 +100,29 @@
 .dat-exp {
     flex-direction: column;
     font-family: "Manrope";
-
-
+    margin-bottom: 8px; /* Menambah jarak antara elemen dat-exp */
 }
 
 .dat-exp h5 {
     color: #999999;
     font-size: 14px;
     font-weight: bolder;
-    margin-top: 5px; /* Mengurangi jarak atas untuk mendekatkan ke elemen p */
-    margin-bottom: 0; /* Menghilangkan jarak bawah */
+    margin-top: 2px; /* Mengurangi jarak atas untuk mendekatkan ke elemen p */
+    margin-bottom: 2px; /* Mengurangi jarak bawah */
 }
 
 .dat-exp p {
     font-weight: 800;
     font-size: 12px;
+    margin-top: 2px; /* Mengurangi jarak atas untuk mendekatkan ke elemen h5 */
+    margin-bottom: 2px; /* Mengurangi jarak bawah */
 }
 
 .expanse_img img {
-    size: 80%;
-
+    width: 160px; /* Sesuaikan ukuran gambar agar pas dengan container */
+    height: auto; /* Memastikan proporsi gambar tetap */
+    display: block; /* Menghapus whitespace di sekitar gambar */
+    margin: 0 auto; /* Menjaga gambar tetap di tengah */
 }
+
+
