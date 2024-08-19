@@ -4,6 +4,7 @@
 }
 
 .vehicle_list {
+
     width: 285px;
     height: 370px;
     background-color: #F6FAFF;
@@ -125,4 +126,46 @@
     margin: 0 auto; /* Menjaga gambar tetap di tengah */
 }
 
+.list-dat {
+    padding: 0.3em;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 70px;
 
+    border-radius: 18px;
+}
+
+.active-veh {
+    background-color: #E5EEFF;
+}
+
+.list-img {
+    margin-right: 2px; /* Jarak antara gambar dan teks */
+}
+
+.list-detail {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 50px;
+}
+
+.list-detail h5, 
+.list-detail p {
+    font-family: "Manrope";
+    margin: 0;
+    text-align: left; /* Teks sejajar kiri */
+}
+
+.list-detail h5 {
+    color: #09244B;
+    font-weight: 800;
+    margin-bottom: 2px; /* Jarak vertikal antara h5 dan p */
+}
+
+.list-detail p {
+    color: #7F8489;
+    margin-top: 2px; /* Jarak vertikal antara h5 dan p */
+    font-size: 0.9em; /* Sesuaikan ukuran font jika perlu */
+}
