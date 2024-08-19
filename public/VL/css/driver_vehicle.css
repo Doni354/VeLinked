@@ -58,3 +58,20 @@
     margin-top: 1px; /* Mengurangi jarak atas untuk mendekatkan ke elemen p */
     margin-bottom: 0; /* Menghilangkan jarak bawah */
 }
+
+
+.toggle-button {
+    font-family: 'Manrope', sans-serif;
+    font-weight: bold;
+    background-color: #EBEBEB;
+    color: #000;
+    border: none;
+    padding: 5px 10px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    outline: none;
+    font-size: 14px;
+    width: auto;
+    white-space: nowrap;
+}

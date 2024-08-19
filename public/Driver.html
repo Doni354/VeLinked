@@ -495,9 +495,23 @@
                                             <h4>Volvo, Polestar 1</h4>
                                             <p>Vehicle Expenses <span>/ 23, Oct, 2021</span></p>
                                         </div>
-                                        <button style="border: none; background: none; padding: 0; cursor: pointer; outline: none;">
-                                            <img src="assets/images/BtnEditContent.svg" alt="Edit">
-                                          </button>
+
+                                        <div>
+                                            <button class="toggle-button" id="toggleButton">weekly</button>
+
+    <script>
+        const toggleButton = document.getElementById('toggleButton');
+        const states = ['weekly', 'monthly', 'yearly'];
+        let currentIndex = 0;
+
+        toggleButton.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % states.length;
+            toggleButton.textContent = states[currentIndex];
+        });
+    </script>
+                                        </div>
+                                        
+                                        
                                     </div>
                                     <div class=""></div>
                                 </div>
