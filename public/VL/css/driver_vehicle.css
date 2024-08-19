@@ -61,17 +61,23 @@
 
 
 .toggle-button {
+    margin-top: 5px;
     font-family: 'Manrope', sans-serif;
-    font-weight: bold;
+    font-weight: 800;
     background-color: #EBEBEB;
     color: #000;
-    border: none;
+    border: none; /* Menghilangkan border */
     padding: 5px 10px;
     text-align: center;
     cursor: pointer;
     border-radius: 5px;
-    outline: none;
-    font-size: 14px;
+    font-size: 13px;
     width: auto;
     white-space: nowrap;
+}
+
+.toggle-button:focus,
+.toggle-button:active {
+    outline: none; /* Menghilangkan outline saat tombol di-klik atau fokus */
+    box-shadow: none; /* Menghilangkan bayangan bawaan yang mungkin ditambahkan oleh browser */
 }
