@@ -46,7 +46,7 @@ function displayVehicleCard(vehicleData, docId) {
         } else {
             console.error("Unexpected status_engine value:", statusEngine);
             statusIcon.src = 'assets/images/offline.svg';
-            statusLabel.textContent = 'Offline';
+            statusLabel.textContent = 'Not Connected';
         }
     });
 
