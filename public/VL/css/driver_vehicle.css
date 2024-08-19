@@ -1,0 +1,20 @@
+.content_Vehicle {
+    display: flex;
+    justify-content: space-between;
+}
+
+.vehicle_list {
+    width: 315px;
+    height: 370px;
+    background-color: #F6FAFF;
+    border-radius: 18px;
+    border: #DEDEDE solid 1px;
+}
+
+.vehicle_details {
+    width: 400px;
+    height: 385px;
+    background-color: #F6FAFF;
+    border-radius: 12px;
+    border: #E6EDFF solid 1px;
+}
