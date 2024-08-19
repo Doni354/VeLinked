@@ -4,7 +4,7 @@
 }
 
 .vehicle_list {
-    width: 315px;
+    width: 285px;
     height: 370px;
     background-color: #F6FAFF;
     border-radius: 18px;
@@ -12,9 +12,49 @@
 }
 
 .vehicle_details {
-    width: 400px;
+    width: 425px;
     height: 385px;
     background-color: #F6FAFF;
     border-radius: 12px;
     border: #E6EDFF solid 1px;
+}
+
+.details_vehicle {
+    flex-direction: column;
+}
+
+.vehicle_expanse {
+
+    padding: 1em;
+}
+
+.expanse_head {
+    display: flex;
+    justify-content: space-between;
+}
+.tittle_expanse_head {
+    flex-direction: column;
+}
+
+.tittle_expanse_head h4 {
+    font-weight: bolder;
+    color: #09244B;
+    font-size: 28px;
+    margin-bottom: 2px; /* Mengurangi jarak bawah untuk mendekatkan ke elemen p */
+}
+
+.tittle_expanse_head p {
+    color: #5243E6;
+    font-weight: bolder;
+    font-size: 20px;
+    margin-top: 2px; /* Mengurangi jarak atas untuk mendekatkan ke elemen h4 */
+    margin-bottom: 3px; /* Mengurangi jarak bawah untuk mendekatkan ke elemen span */
+}
+
+.tittle_expanse_head span {
+    color: #999999;
+    font-size: 17px;
+    font-weight: bolder;
+    margin-top: 1px; /* Mengurangi jarak atas untuk mendekatkan ke elemen p */
+    margin-bottom: 0; /* Menghilangkan jarak bawah */
 }
