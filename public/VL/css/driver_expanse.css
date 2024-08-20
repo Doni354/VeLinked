@@ -44,22 +44,25 @@
 }
 
 .expanse-detail {
-
     border-radius: 21px;
-    height: 270px; /* Ubah menjadi 299px sesuai permintaan */
+    height: 299px;
     background-color: #F6FAFF;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
 .expanse-detail-head {
     padding: 0.5em;
     flex-direction: column;
+    flex-shrink: 0; /* Mencegah bagian ini ikut di-scroll */
 }
 
 .expanse-detail-head h5 {
     font-size: 18px;
     font-weight: 800;
     color: #09244B;
-    margin-bottom: 0px; /* Atur jarak bawah dari h5 */
+    margin-bottom: 0px;
 }
 
 .expanse-detail-head p {
@@ -69,3 +72,62 @@
     margin-top: 0;
     margin-bottom: 5px;
 }
+
+.expanse-detail-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px; /* Mengurangi jarak antara elemen */
+    overflow-y: auto; /* Menambahkan scroll jika konten melebihi tinggi container */
+    scrollbar-width: none; /* Firefox: menyembunyikan scrollbar */
+    flex-grow: 1; /* Agar bagian ini mengambil sisa ruang */
+}
+
+/* Chrome, Safari, dan Edge: menyembunyikan scrollbar */
+.expanse-detail-content::-webkit-scrollbar {
+    display: none;
+}
+
+.expense-item {
+    display: flex;
+    flex-direction: column;
+    margin: 2px 0; /* Mengurangi jarak atas dan bawah antar item */
+}
+
+.expense-type {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.expense-value {
+    font-size: 13px;
+}
+
+.left {
+    text-align: left;
+}
+
+.right {
+    text-align: right;
+}
+
+.consumption {
+    color: #C2431F;
+}
+
+.gas-station {
+    color: #6AA5B5;
+}
+
+.parking {
+    color: #A085C2;
+}
+
+.erp {
+    color: #6DB24A;
+}
+
+.tol {
+    color: #6DB24A;
+}
+
