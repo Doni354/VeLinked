@@ -133,7 +133,6 @@
 }
 
 
-
 .expanse-table {
     width: 100%;
     margin: 20px auto;
@@ -153,21 +152,24 @@
 
 .expanse-table th {
     color: #888888;
-    font-weight: 600;
+    font-weight: 800;
 }
 
 .expanse-table td {
-    font-size: 14px;
-    color: #1F2937;
+    font-weight: 800;
+    font-size: 16px;
+    color: #09244B;
 }
 
-.expanse-table .type {
-    color: #C55A11; /* Warna merah untuk teks "Consumption" */
+.expanse-table .type-expanse {
+    font-weight: 800;
+    color: #BC452A; /* Warna merah untuk teks "Consumption" */
 }
 
-.expanse-table .time {
+.expanse-table .time-expanse {
+    font-weight: thin;
     display: block;
-    font-size: 12px;
-    color: #5B6A82;
-    margin-top: 4px;
+    font-size: 14px;
+    color: #BABABA;
+    margin-top: -5px; /* Kurangi jarak antara tanggal dan waktu */
 }
