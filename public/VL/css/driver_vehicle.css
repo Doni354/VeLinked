@@ -169,3 +169,15 @@
     margin-top: 2px; /* Jarak vertikal antara h5 dan p */
     font-size: 0.9em; /* Sesuaikan ukuran font jika perlu */
 }
+
+.line-space {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto; /* Pusatkan div */
+}
+
+.line-space::after {
+    content: "";
+    border-bottom: 1px solid #D1D9E1;
+    width: 265px;
+}
