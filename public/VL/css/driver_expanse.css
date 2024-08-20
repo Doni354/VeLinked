@@ -1,6 +1,7 @@
 .expanse-content {
     margin-top: 1em;
     display: flex;
+    gap: 20px;
     justify-content: space-between;
 }
 
@@ -131,3 +132,42 @@
     color: #6DB24A;
 }
 
+
+
+.expanse-table {
+    width: 100%;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+.expanse-table table {
+    width: 100%;
+    font-family: 'Manrope', sans-serif;
+}
+
+.expanse-table th, .expanse-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.expanse-table th {
+    color: #888888;
+    font-weight: 600;
+}
+
+.expanse-table td {
+    font-size: 14px;
+    color: #1F2937;
+}
+
+.expanse-table .type {
+    color: #C55A11; /* Warna merah untuk teks "Consumption" */
+}
+
+.expanse-table .time {
+    display: block;
+    font-size: 12px;
+    color: #5B6A82;
+    margin-top: 4px;
+}
