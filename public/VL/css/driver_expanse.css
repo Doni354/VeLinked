@@ -19,12 +19,7 @@
     background-color: #F6FAFF;
 }
 
-.expanse-detail {
 
-    border-radius: 21px;
-    height: 270px; /* Ubah menjadi 299px sesuai permintaan */
-    background-color: #F6FAFF;
-}
 
 .total-expanse h5 p h4 {
     font-family: "Manrope";
@@ -46,6 +41,13 @@
 .total-expanse h4 {
     font-size: 22px;
     font-weight: 800;
+}
+
+.expanse-detail {
+
+    border-radius: 21px;
+    height: 270px; /* Ubah menjadi 299px sesuai permintaan */
+    background-color: #F6FAFF;
 }
 
 .expanse-detail-head {
