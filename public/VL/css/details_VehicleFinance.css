@@ -173,8 +173,9 @@
 
 
   .headFinance h5 {
+    margin-left: 40px;
     font-family: 'Manrope';
-    font-size: 30px;
+    font-size: 26px;
     font-weight: bolder;
     color: #5243E6;
   }
@@ -192,7 +193,7 @@
 
 .Addcard_Financing {
     margin-top: 10px;
-
+    background-color: #E5E3FF;
     border-radius: 5px;
     width: 120px; /* Tetap dengan lebar tetap */
     height: 100px; /* Tetap dengan tinggi tetap */
