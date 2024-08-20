@@ -89,7 +89,19 @@
                     <div class="title-name">
                         <div class="title-up">
                             <div class="p-bold">
-                                <p>Polestar A1</p>
+                                <p>Polestar A1 <span><button class="toggle-button" id="toggleButton">weekly</button>
+
+                                    <script>
+                                        const toggleButton = document.getElementById('toggleButton');
+                                        const states = ['weekly', 'monthly', 'yearly'];
+                                        let currentIndex = 0;
+
+                                        toggleButton.addEventListener('click', () => {
+                                            currentIndex = (currentIndex + 1) % states.length;
+                                            toggleButton.textContent = states[currentIndex];
+                                        });
+                                    </script></span></p>
+                                
                             </div>
 
                              <div class="title-stats">
@@ -115,7 +127,7 @@
 
                     <div class="vehicle">
                         <div class="vehicle-title h2-bold p-bold">
-                            <h2>Volvo, Polestar 1</h2>
+                            <h2>Volvo, Polestar 1 </h2>
                             <p>Vehicle Expenses</p>
                         </div>
                         <div class="vehicle-detail">

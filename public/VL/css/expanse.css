@@ -28,12 +28,38 @@
 
 }
 
-.p-bold p {
-    color: #5243E6;
-    font-weight: bolder;
-    font-size: larger;
 
+.p-bold p {
+  color: #5243E6;
+  font-weight: bolder;
+  font-size: larger;
+  display: inline-flex; /* Menyelaraskan teks dan tombol secara horizontal */
+  align-items: center; /* Menyelaraskan teks dan tombol secara vertikal */
 }
+
+.toggle-button {
+  margin-left: 10px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  background-color: #EBEBEB;
+  color: #373636;
+  border: none; /* Menghilangkan border */
+  text-align: center;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 10px;
+  height: 20px;
+  white-space: nowrap;
+  padding: 0 5px; /* Menambahkan sedikit padding di kiri dan kanan */
+  transform: translateY(-5px); /* Menaikkan tombol sedikit ke atas */
+}
+
+.toggle-button:focus,
+.toggle-button:active {
+  outline: none; /* Menghilangkan outline saat tombol di-klik atau fokus */
+  box-shadow: none; /* Menghilangkan bayangan bawaan yang mungkin ditambahkan oleh browser */
+}
+
 
 .title-stats {
     justify-content: center;
@@ -464,5 +490,8 @@
   .navbar.navbar-header .dropdown > a:after {
     display: none;
   }
+
+
+  
   
   
