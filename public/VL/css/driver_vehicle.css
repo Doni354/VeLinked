@@ -231,3 +231,23 @@
     font-size: 22px;
     font-weight: 800;
 }
+
+.expanse-detail-head {
+    padding: 0.5em;
+    flex-direction: column;
+}
+
+.expanse-detail-head h5 {
+    font-size: 18px;
+    font-weight: 800;
+    color: #09244B;
+    margin-bottom: 0px; /* Atur jarak bawah dari h5 */
+}
+
+.expanse-detail-head p {
+    font-size: 12px;
+    font-weight: 800;
+    color: #5243E6;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
