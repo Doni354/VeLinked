@@ -1,0 +1,69 @@
+.expanse-content {
+    margin-top: 1em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.expanse-data {
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px; /* Ganti dari column-gap ke row-gap untuk mengatur jarak vertikal */
+}
+
+.total-expanse {
+    padding: 0.5em;
+    flex-direction: column;
+    border-radius: 21px;
+    height: 120px; /* Ubah menjadi 100px sesuai permintaan */
+    background-color: #F6FAFF;
+}
+
+.expanse-detail {
+
+    border-radius: 21px;
+    height: 270px; /* Ubah menjadi 299px sesuai permintaan */
+    background-color: #F6FAFF;
+}
+
+.total-expanse h5 p h4 {
+    font-family: "Manrope";
+}
+
+
+.total-expanse h5 {
+    font-size: 18px;
+    font-weight: 800;
+    color: #09244B;
+}
+
+.total-expanse p {
+    font-size: 12px;
+    font-weight: 800;
+    color: #5243E6;
+}
+
+.total-expanse h4 {
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.expanse-detail-head {
+    padding: 0.5em;
+    flex-direction: column;
+}
+
+.expanse-detail-head h5 {
+    font-size: 18px;
+    font-weight: 800;
+    color: #09244B;
+    margin-bottom: 0px; /* Atur jarak bawah dari h5 */
+}
+
+.expanse-detail-head p {
+    font-size: 12px;
+    font-weight: 800;
+    color: #5243E6;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
