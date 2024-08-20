@@ -181,3 +181,28 @@
     border-bottom: 1px solid #D1D9E1;
     width: 265px;
 }
+
+.expanse-content {
+    margin-top: 1em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.expanse-data {
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px; /* Ganti dari column-gap ke row-gap untuk mengatur jarak vertikal */
+}
+
+.total-expanse {
+    border-radius: 21px;
+    height: 120px; /* Ubah menjadi 100px sesuai permintaan */
+    background-color: #F6FAFF;
+}
+
+.expanse-detail {
+    border-radius: 21px;
+    height: 270px; /* Ubah menjadi 299px sesuai permintaan */
+    background-color: #F6FAFF;
+}
