@@ -133,15 +133,15 @@
 }
 
 
-.expanse-table {
+.expanse-table-wrapper {
     width: 100%;
-    margin: 20px auto;
     border-collapse: collapse;
 }
 
-.expanse-table table {
+.expanse-table {
     width: 100%;
     font-family: 'Manrope', sans-serif;
+    border-collapse: collapse;
 }
 
 .expanse-table th, .expanse-table td {
@@ -153,6 +153,9 @@
 .expanse-table th {
     color: #888888;
     font-weight: 800;
+    background-color: #F9F9F9; /* Tambahkan background color untuk header */
+    position: sticky;
+    top: 0;
 }
 
 .expanse-table td {
@@ -171,5 +174,14 @@
     display: block;
     font-size: 14px;
     color: #BABABA;
-    margin-top: -5px; /* Kurangi jarak antara tanggal dan waktu */
+    margin-top: -5px;
+}
+
+.expanse-table-body-wrapper {
+    max-height: 400px; /* Sesuaikan dengan tinggi yang diinginkan */
+    overflow-y: auto; /* Agar <tbody> bisa di-scroll ke bawah */
+}
+
+.expanse-table-body-wrapper::-webkit-scrollbar {
+    display: none; /* Sembunyikan scrollbar */
 }
