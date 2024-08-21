@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.css' rel='stylesheet' />
     <link rel="stylesheet" href="VL/css/details.css">
     <link rel="stylesheet" href="VL/css/details_LiveTracking.css">
     <link rel="stylesheet" href="VL/css/details_User.css">
@@ -175,10 +178,131 @@
         <div class="LTT">
             <p>Live Track</p>
             <div class="map-container">
+                <div class="map-container" id="map"></div>
 
-
-            <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3949.7269950871446!2d112.0723063745595!3d-8.12925248137642!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zOMKwMDcnNDUuMyJTIDExMsKwMDQnMjkuNiJF!5e0!3m2!1sid!2sid!4v1721621480262!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>   
+            
         </div>
+        
+
+
+        <script>
+            mapboxgl.accessToken = 'pk.eyJ1IjoiaGVsbHlvc2hhcWlxaWUiLCJhIjoiY20wMzloNm81MDlqOTJxc2ExOWp3eWJkbiJ9.bfRMSLMCqZ_A1oyrRbaUdg';
+            const map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/streets-v9',
+                projection: 'globe',
+                zoom: 15, // Zoom level untuk melihat jalan
+                center: [112.072306, -8.129252] // Lokasi awal kendaraan
+            });
+        
+            map.addControl(new mapboxgl.NavigationControl());
+            map.scrollZoom.disable();
+        
+            map.on('style.load', () => {
+                map.setFog({});
+            });
+        
+            // Lokasi awal kendaraan
+            let vehicleLocation = {
+                lat: -8.129252,
+                lng: 112.072306
+            };
+        
+            // Tambahkan marker pada lokasi awal kendaraan
+            const marker = new mapboxgl.Marker()
+                .setLngLat([vehicleLocation.lng, vehicleLocation.lat])
+                .addTo(map);
+        
+            let isUserInteracting = false;
+            let resetTimeout;
+        
+            // Logging request information
+            let requestCount = 0;
+            let startTime = Date.now();
+        
+            function logRequest() {
+                requestCount++;
+                const currentTime = Date.now();
+                const elapsedTime = ((currentTime - startTime) / 1000).toFixed(2);
+                console.log(`Request #${requestCount} at ${elapsedTime} seconds.`);
+                if (requestCount >= 5) {
+                    const totalTime = ((currentTime - startTime) / 1000).toFixed(2);
+                    console.log(`Total requests: ${requestCount}. Total time: ${totalTime} seconds.`);
+                }
+            }
+        
+            // Fungsi untuk memperbarui posisi kendaraan dan marker pada peta
+            function updateVehiclePosition(newLat, newLng) {
+                vehicleLocation = { lat: newLat, lng: newLng };
+                if (!isUserInteracting) {
+                    map.easeTo({
+                        center: [vehicleLocation.lng, vehicleLocation.lat],
+                        duration: 1000 // Animasi selama 1 detik
+                    });
+                }
+                marker.setLngLat([vehicleLocation.lng, vehicleLocation.lat]); // Perbarui posisi marker
+                logRequest(); // Log setiap kali posisi kendaraan diperbarui
+            }
+        
+            // Dummy data: Array dari 5 lokasi yang berbeda
+            const locations = [
+                { lat: -8.129252, lng: 112.072306 },
+                { lat: -8.129300, lng: 112.072350 },
+                { lat: -8.129350, lng: 112.072400 },
+                { lat: -8.129400, lng: 112.072450 },
+                { lat: -8.129450, lng: 112.072500 }
+            ];
+        
+            let locationIndex = 0;
+        
+            // Simulasi pergerakan kendaraan, memperbarui lokasi setiap 1 detik hingga 5 kali
+            const intervalId = setInterval(() => {
+                if (locationIndex < locations.length) {
+                    updateVehiclePosition(locations[locationIndex].lat, locations[locationIndex].lng);
+                    locationIndex++;
+                } else {
+                    clearInterval(intervalId); // Hentikan interval setelah 5 kali perubahan
+                    console.log('Movement simulation completed.');
+                }
+            }, 1000); // Perbarui posisi setiap 1 detik
+        
+            // Deteksi interaksi pengguna dengan peta
+            map.on('mousedown', () => {
+                isUserInteracting = true;
+                clearTimeout(resetTimeout);
+            });
+        
+            map.on('dragstart', () => {
+                isUserInteracting = true;
+                clearTimeout(resetTimeout);
+            });
+        
+            // Ketika pengguna selesai berinteraksi dengan peta
+            map.on('mouseup', () => {
+                resetTimeout = setTimeout(() => {
+                    isUserInteracting = false;
+                    map.easeTo({
+                        center: [vehicleLocation.lng, vehicleLocation.lat],
+                        duration: 1000 // Animasi selama 1 detik
+                    });
+                }, 5000); // Tunggu 5 detik sebelum kembali mengikuti kendaraan
+            });
+        
+            map.on('dragend', () => {
+                resetTimeout = setTimeout(() => {
+                    isUserInteracting = false;
+                    map.easeTo({
+                        center: [vehicleLocation.lng, vehicleLocation.lat],
+                        duration: 3000
+                    });
+                }, 5000);
+            });
+        </script>
+        
+        
+        
+
+
             <!-- <div class="map-container" id="map"></div>
 
             <script src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap&v=weekly&libraries=marker,geometry" async defer></script>
