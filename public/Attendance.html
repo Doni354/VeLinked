@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - VeLinked</title>
+    <!-- Di dalam elemen <head> -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="VL/css/driver_personal_content.css">
+    <link rel="stylesheet" href="VL/css/driver_vehicle.css">
+    <link rel="stylesheet" href="VL/css/driver_expanse.css">
+    <link rel="stylesheet" href="VL/css/driver_log_content.css">
+    <link rel="stylesheet" href="assets/vendors/chartjs/Chart.min.css">
+    <link rel="stylesheet" href="VL/css/driver.css">
+    <link rel="stylesheet" href="assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="stylesheet" href="VL/css/driver_doc.css">
+    <link rel="shortcut icon" href="assets/images/icon.svg" type="image/x-icon">
+        <!-- include only the Firebase features as you need -->
+        <script defer src="/__/firebase/10.9.0/firebase-app-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-auth-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-database-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-firestore-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-functions-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-messaging-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-storage-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-analytics-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-remote-config-compat.js"></script>
+        <script defer src="/__/firebase/10.9.0/firebase-performance-compat.js"></script>
+
+        <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+</head>
+<body>
+    
+
+<div id="alertContainer">
+</div>
+<!--</header>-->
+    <div id="app" style="height: 100vh; display: flex;">
+        <div id="sidebar" class='active'>
+            <div class="sidebar-wrapper active">
+    <div class="sidebar-header">
+        <img src="assets/images/VL.svg" alt="" srcset="">
+    </div>
+    <div class="sidebar-menu">
+        <ul class="menu">
+            
+            
+                <li class='sidebar-title'>Main Menu</li>
+            
+
+                <li class="sidebar-item  ">
+                    <a href="dashboard.html" class='sidebar-link'>
+                        <img src="assets/images/Dash.svg" style="width: 20px;"> 
+                        <span>Dashboard</span> 
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="Driver.html" class='sidebar-link'>
+                        <img src="assets/images/Driver.svg" style="width: 20px;"> 
+                        <span>Driver Data</span> 
+                    </a>
+                </li>
+
+                <li class="sidebar-item ">
+                    <a href="Expanse.html" class='sidebar-link'>
+                        <img src="assets/images/Expanse.svg" style="width: 20px;"> 
+                        <span>Expenses</span> 
+                    </a>
+                </li>
+                <li class="sidebar-item active">
+                    <a href="Attendance.html" class='sidebar-link'>
+                        <img src="assets/images/AttendanceActive.svg" style="width: 20px;"> 
+                        <span>Attendance</span> 
+                    </a>
+                </li>
+                        
+               
+    </div>
+    <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+</div>
+        </div>
+        <div id="main" style="flex: 1; background-color: white;">
+            <nav class="navbar navbar-header navbar-expand navbar-light" style="background-color: white; padding-bottom: 100px;">
+                <div style=" padding: 20px; margin-top: 100px;">
+                    <b>
+                      <strong><h3 style="font-weight: bold">Time & Attendance</h3></strong>
+                    </b>
+                  </div>
+                <div style=" padding: 20px; margin-top: 50px;" class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav d-flex align-items-center navbar-light ml-auto">
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                                <div id="profile-container" class="d-flex align-items-center">
+                                    <div id="profile-picture" class="avatar mr-1"></div>
+                                    <div class="d-none d-md-block d-lg-inline-block" id="user-name"></div>
+                                </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="profile.html"><i data-feather="user"></i> Account</a>
+                                <a class="dropdown-item active" href="#"><i data-feather="mail"></i> Messages</a>
+                                <a class="dropdown-item" href="#"><i data-feather="settings"></i> Settings</a>
+                                <div class="dropdown-divider"></div>
+                                <button class="dropdown-item" onclick="logout()"><i data-feather="log-out"></i> Logout</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+            </nav>
+            
+                 <!-- HEADER TABEL -->
+    <div class="table-header-container">
+        <div class="table-header">
+            <span class="header-item" style="width: 20%;">Driver Photo & Name</span>
+            <span class="header-item" style="width: 15%;">Vehicle Used</span>
+            <span class="header-item" style="width: 20%;">Employment Status</span>
+            <span class="header-item" style="width: 15%;">Driving Behavior</span>
+            <span class="header-item" style="width: 15%;">Today's Expenses</span>
+            <span class="header-item" style="width: 15%;">Vehicle Status</span>
+        </div>
+         <!-- TABEL DATA -->
+    <div class="mt-2" style="border: #E6EDFF ;" >
+        <div style="overflow-x:auto;">
+            <table style="width: 100%; border-collapse: separate; border-spacing: 0; background-color: #fff; border-top: 2px solid #E6EDFF; border-bottom: 2px solid #E6EDFF; border-radius: 12px;">
+                <tbody>
+                    <tr class="table-row-odd" onclick="openOverlay()">
+                        <td class="table-data username" style="width: 20%;"><img src="assets/images/userDummyExpanse.svg" alt="Driver Photo" class="driver-photo">Hellyos Haqiqie</td>
+                        <td class="table-data" style="width: 15%;">VOLVO Polestar 1</td>
+                        <td class="table-data" style="width: 20%;">Driver Internship</td>
+                        <td class="table-data" style="width: 15%;">Safe</td>
+                        <td class="table-data" style="width: 15%;">Rp. 243 K</td>
+                        <td class="table-data online" style="width: 15%;">Online</td>
+                    </tr>
+                    <tr class="table-row-even">
+                        <td class="table-data username" style="width: 20%;"><img src="assets/images/userDummyExpanse.svg" alt="Driver Photo" class="driver-photo">Hellyos Haqiqie</td>
+                        <td class="table-data" style="width: 15%;">VOLVO Polestar 1</td>
+                        <td class="table-data" style="width: 20%;">Driver Internship</td>
+                        <td class="table-data" style="width: 15%;">Safe</td>
+                        <td class="table-data" style="width: 15%;">Rp. 243 K</td>
+                        <td class="table-data online" style="width: 15%;">Online</td>
+                    </tr>
+                    <tr class="table-row-odd">
+                        <td class="table-data username" style="width: 20%;"><img src="assets/images/userDummyExpanse.svg" alt="Driver Photo" class="driver-photo">Hellyos Haqiqie</td>
+                        <td class="table-data" style="width: 15%;">VOLVO Polestar 1</td>
+                        <td class="table-data" style="width: 20%;">Driver Internship</td>
+                        <td class="table-data" style="width: 15%;">Safe</td>
+                        <td class="table-data" style="width: 15%;">Rp. 243 K</td>
+                        <td class="table-data online" style="width: 15%;">Online</td>
+                    </tr>
+                    <tr class="table-row-even">
+                        <td class="table-data username" style="width: 20%;"><img src="assets/images/userDummyExpanse.svg" alt="Driver Photo" class="driver-photo">Hellyos Haqiqie</td>
+                        <td class="table-data" style="width: 15%;">VOLVO Polestar 1</td>
+                        <td class="table-data" style="width: 20%;">Driver Internship</td>
+                        <td class="table-data" style="width: 15%;">Safe</td>
+                        <td class="table-data" style="width: 15%;">Rp. 243 K</td>
+                        <td class="table-data online" style="width: 15%;">Online</td>
+                    </tr>
+                    <tr class="table-row-odd">
+                        <td class="table-data username" style="width: 20%;"><img src="assets/images/userDummyExpanse.svg" alt="Driver Photo" class="driver-photo">Hellyos Haqiqie</td>
+                        <td class="table-data" style="width: 15%;">VOLVO Polestar 1</td>
+                        <td class="table-data" style="width: 20%;">Driver Internship</td>
+                        <td class="table-data" style="width: 15%;">Safe</td>
+                        <td class="table-data" style="width: 15%;">Rp. 243 K</td>
+                        <td class="table-data online" style="width: 15%;">Online</td>
+                    </tr>
+                    <tr class="table-row-even">
+                        <td class="table-data username" style="width: 20%;"><img src="assets/images/userDummyExpanse.svg" alt="Driver Photo" class="driver-photo">Hellyos Haqiqie</td>
+                        <td class="table-data" style="width: 15%;">VOLVO Polestar 1</td>
+                        <td class="table-data" style="width: 20%;">Driver Internship</td>
+                        <td class="table-data" style="width: 15%;">Safe</td>
+                        <td class="table-data" style="width: 15%;">Rp. 243 K</td>
+                        <td class="table-data online" style="width: 15%;">Online</td>
+                    </tr>
+                    <tr class="table-row-odd">
+                        <td class="table-data username" style="width: 20%;"><img src="assets/images/userDummyExpanse.svg" alt="Driver Photo" class="driver-photo">Hellyos Haqiqie</td>
+                        <td class="table-data" style="width: 15%;">VOLVO Polestar 1</td>
+                        <td class="table-data" style="width: 20%;">Driver Internship</td>
+                        <td class="table-data" style="width: 15%;">Safe</td>
+                        <td class="table-data" style="width: 15%;">Rp. 243 K</td>
+                        <td class="table-data online" style="width: 15%;">Online</td>
+                    </tr>
+                    <tr class="table-row-even">
+                        <td class="table-data username" style="width: 20%;"><img src="assets/images/userDummyExpanse.svg" alt="Driver Photo" class="driver-photo">Hellyos Haqiqie</td>
+                        <td class="table-data" style="width: 15%;">VOLVO Polestar 1</td>
+                        <td class="table-data" style="width: 20%;">Driver Internship</td>
+                        <td class="table-data" style="width: 15%;">Safe</td>
+                        <td class="table-data" style="width: 15%;">Rp. 243 K</td>
+                        <td class="table-data online" style="width: 15%;">Online</td>
+                    </tr>
+                    <tr class="table-row-odd">
+                        <td class="table-data username" style="width: 20%;"><img src="assets/images/userDummyExpanse.svg" alt="Driver Photo" class="driver-photo">Hellyos Haqiqie</td>
+                        <td class="table-data" style="width: 15%;">VOLVO Polestar 1</td>
+                        <td class="table-data" style="width: 20%;">Driver Internship</td>
+                        <td class="table-data" style="width: 15%;">Safe</td>
+                        <td class="table-data" style="width: 15%;">Rp. 243 K</td>
+                        <td class="table-data online" style="width: 15%;">Online</td>
+                    </tr>
+                    <tr class="table-row-even">
+                        <td class="table-data username" style="width: 20%;"><img src="assets/images/userDummyExpanse.svg" alt="Driver Photo" class="driver-photo">Hellyos Haqiqie</td>
+                        <td class="table-data" style="width: 15%;">VOLVO Polestar 1</td>
+                        <td class="table-data" style="width: 20%;">Driver Internship</td>
+                        <td class="table-data" style="width: 15%;">Safe</td>
+                        <td class="table-data" style="width: 15%;">Rp. 243 K</td>
+                        <td class="table-data online" style="width: 15%;">Online</td>
+                    </tr>
+                    <tr class="table-row-odd">
+                        <td class="table-data username" style="width: 20%;"><img src="assets/images/userDummyExpanse.svg" alt="Driver Photo" class="driver-photo">Hellyos Haqiqie</td>
+                        <td class="table-data" style="width: 15%;">VOLVO Polestar 1</td>
+                        <td class="table-data" style="width: 20%;">Driver Internship</td>
+                        <td class="table-data" style="width: 15%;">Safe</td>
+                        <td class="table-data" style="width: 15%;">Rp. 243 K</td>
+                        <td class="table-data online" style="width: 15%;">Online</td>
+                    </tr>
+                    <tr class="table-row-even">
+                        <td class="table-data username" style="width: 20%;"><img src="assets/images/userDummyExpanse.svg" alt="Driver Photo" class="driver-photo">Hellyos Haqiqie</td>
+                        <td class="table-data" style="width: 15%;">VOLVO Polestar 1</td>
+                        <td class="table-data" style="width: 20%;">Driver Internship</td>
+                        <td class="table-data" style="width: 15%;">Safe</td>
+                        <td class="table-data" style="width: 15%;">Rp. 243 K</td>
+                        <td class="table-data online" style="width: 15%;">Online</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+   
+    </div>
+   <!-- Overlay Div -->
+   <div id="overlay" class="overlay" onclick="closeOverlay()">
+    <div class="overlay-content" onclick="event.stopPropagation()">
+
+        <div class="userdat">
+            <img src="assets/images/UserDataPic.svg" alt="User Image" class="user-image">
+            <div class="usernamedat h4-bold">
+                <h4>Hellyos Haqiqie</h4>
+                <p>Driver Polestar A1</p>
+                <p>349214</p>
+            </div>
+        </div>
+        <!-- Table Section -->
+        <div class="table-container">
+            <table class="custom-table">
+                <tr>
+                    <td>
+                        <div class="table-cell-content">
+                            <img src="assets/images/UserDatNumber.svg" alt="" class="icon">
+                            <p class="text">(+62) 882009061186</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="table-cell-content">
+                            <img src="assets/images/UserDatEmail.svg" alt="" class="icon">
+                            <p class="text"><a style="color: #7F8489;" href="mailto:Hellyoshaqiqie9@gmail.com">Hellyoshaqiqie9@gmail.com</a></p>
+                        </div>
+                    </td>
+                    
+                </tr>
+                <tr>
+                    <td>
+                        <div class="table-cell-content">
+                            <img src="assets/images/UserDatLoc.svg" alt="" class="icon">
+                            <p class="text">Kediri, Jawa Timur</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="table-cell-content">
+                            <img src="assets/images/UserDatOnline.svg" alt="" class="icon">
+                            <p class="text">Polestar A1 is <span class="online">online</span></p>
+                        </div>
+                    </td>
+                    
+                </tr>
+                <!-- Add more rows as needed -->
+            </table>
+        </div>
+
+        <!-- Navbar Section -->
+        <div class="navbar">
+            <ul class="navbar-list">
+                <li class="navbar-item" data-target="personal"><a href="#personal">Personal</a></li>
+                <li class="navbar-item" data-target="log-behavior"><a href="#log-behavior">Log behavior</a></li>
+                <li class="navbar-item" data-target="expenses"><a href="#expenses">Expenses</a></li>
+                <li class="navbar-item" data-target="vehicle"><a href="#vehicle">Vehicle</a></li>
+                <li class="navbar-item" data-target="documents"><a href="#documents">Documents</a></li>
+
+            </ul>
+        </div>
+
+        <!-- Content Section -->
+        <div class="navbar-content">
+            <div id="personal" class="content-section">
+                <div class="head-content">
+                    <h5>General Information</h5>
+                    <button style="border: none; background: none; padding: 0; cursor: pointer; outline: none;">
+                        <img src="assets/images/BtnEditContent.svg" alt="Edit">
+                      </button>
+                      
+                      
+                    
+                </div> 
+                <div class="content-personal">
+                    <div class="personal-content">
+                        <div class="left-personal-content">
+                            <div class="content-personal-data">
+                                <div class="content-personal-data-Nama">
+                                    <h5>Nama</h5>
+                                    <p>Hellyos Haqiqie</p>
+                                </div>
+                                <div class="content-personal-data-Joining_Date">
+                                    <h5>Joining Date</h5>
+                                    <p>3 Jan, 2022</p>
+                                </div>
+                                <div class="content-personal-data-Address">
+                                    <h5>Address</h5>
+                                    <p>Bago, Tulungagung</p>
+                                </div>
+                                <div class="content-personal-data-Working Hours">
+                                    <h5>Working Hours</h5>
+                                    <p>8 Hours </p>
+                                </div>
+                                <div class="content-personal-data-Email">
+                                    <h5>Email</h5>
+                                    <p>hellyos@gmail.com</p>
+                                </div>
+                                <div class="content-personal-data-Phone_Number">
+                                    <h5>Phone Number</h5>
+                                    <p>082334314902</p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="right-personal-content">
+                            <div class="content-personal-data">
+                            <div class="content-personal-data-Contract_type">
+                                <h5>Contract type</h5>
+                                <p>Fixed Term</p>
+                            </div>
+                            <div class="content-personal-data-salary">
+                                <h5>salary</h5>
+                                <p>Rp.4.050.000</p>
+                            </div>
+                            <div class="content-personal-data-Start_Date">
+                                <h5>Start Date</h5>
+                                <p>3 July , 2023</p>
+                            </div>
+                            <div class="content-personal-data-End_Date">
+                                <h5>End Date</h5>
+                                <p>8 July , 2025</p>
+                            </div>
+                            <div class="content-personal-data-Performance_Ratings">
+                                <h5>Performance Ratings</h5>
+                                <p>Good</p>
+                            </div>
+                            <div class="content-personal-data-Driving_Experience">
+                                <h5>Driving Experience</h5>
+                                <p>5 years</p>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div id="log-behavior" class="content-section">
+                <div class="head-content">
+                    <h5>Log Behavior</h5>    
+                </div>
+                <div class="content-log">
+                    <div class="LT-Data">
+                        <div class="LTDat">
+                            <div class="trip-item">
+                                <div class="trip-date">29 jan, 2024</div>
+                                <div class="trip-content">
+                                    <div class="trip-details">
+                                        <div class="time-location">
+                                            <img src="assets/images/Pointer.svg" alt="Pointer" class="icon">
+                                            <span class="time"><strong>20.00</strong></span>
+                                            <div class="log-trip">
+                                                <span class="location">Tulungagung, Kalidawir</span>
+                                                <span class="vehicle-name">Over Speed</span>
+                                            </div>
+                                        </div>
+                                        <div class="dotted-line"></div>
+                                        <div class="time-location">
+                                            <img src="assets/images/Location.svg" alt="Location" class="icon">
+                                            <span class="time"><strong>21.32</strong></span>
+                                            <div class="log-trip">
+                                                <span class="location">Kediri, Kediri Kota</span>
+                                                <span class="distance">Reached <span class="distance-dat">172 Km/H</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="horizontal-line"></div>
+                            </div>
+                            <div class="trip-item">
+                                <div class="trip-date">2 Feb, 2024</div>
+                                <div class="trip-content">
+                                    <div class="trip-details">
+                                        <div class="time-location">
+                                            <img src="assets/images/Pointer.svg" alt="Pointer" class="icon">
+                                            <span class="time"><strong>20.30</strong></span>
+                                            <div class="log-trip">
+                                                <span class="location">Tulungagung, Kedungwaru</span>
+                                                <span class="vehicle-name">Over Speed</span>
+                                            </div>
+                                        </div>
+                                        <div class="dotted-line"></div>
+                                        <div class="time-location">
+                                            <img src="assets/images/Location.svg" alt="Location" class="icon">
+                                            <span class="time"><strong>21.53</strong></span>
+                                            <div class="log-trip">
+                                                <span class="location">Kediri, Kediri Kota</span>
+                                                <span class="distance">Reached <span class="distance-dat">141 Km/H</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="horizontal-line"></div>
+                            </div>
+                            <div class="trip-item">
+                                <div class="trip-date">3 Feb, 2024</div>
+                                <div class="trip-content">
+                                    <div class="trip-details">
+                                        <div class="time-location">
+                                            <img src="assets/images/Pointer.svg" alt="Pointer" class="icon">
+                                            <span class="time"><strong>20.00</strong></span>
+                                            <div class="log-trip">
+                                                <span class="location">Tulungagung, Kalidawir</span>
+                                                <span class="vehicle-name">Over Speed</span>
+                                            </div>
+                                        </div>
+                                        <div class="dotted-line"></div>
+                                        <div class="time-location">
+                                            <img src="assets/images/Location.svg" alt="Location" class="icon">
+                                            <span class="time"><strong>21.32</strong></span>
+                                            <div class="log-trip">
+                                                <span class="location">Kediri, Kediri Kota</span>
+                                                <span class="distance">Reached <span class="distance-dat">185 Km/H</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="horizontal-line"></div>
+                            </div>
+                            <div class="trip-item">
+                                <div class="trip-date">5 Feb, 2024</div>
+                                <div class="trip-content">
+                                    <div class="trip-details">
+                                        <div class="time-location">
+                                            <img src="assets/images/Pointer.svg" alt="Pointer" class="icon">
+                                            <span class="time"><strong>20.00</strong></span>
+                                            <div class="log-trip">
+                                                <span class="location">Tulungagung, Kalidawir</span>
+                                                <span class="vehicle-name">Over Speed</span>
+                                            </div>
+                                        </div>
+                                        <div class="dotted-line"></div>
+                                        <div class="time-location">
+                                            <img src="assets/images/Location.svg" alt="Location" class="icon">
+                                            <span class="time"><strong>21.32</strong></span>
+                                            <div class="log-trip">
+                                                <span class="location">Kediri, Kediri Kota</span>
+                                                <span class="distance">Reached <span class="distance-dat">153 Km/H</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="horizontal-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div id="expenses" class="content-section">
+                <div class="head-content">
+                    <h5>Transactions history</h5>
+                    <button class="toggle-button" id="toggleButton">weekly</button>    
+                </div>
+                <div class="expanse-content">
+                    <div class="expanse-table-wrapper">
+                        <table class="expanse-table">
+                            <thead>
+                                <tr>
+                                    <th>Name ⇅</th>
+                                    <th>Type</th>
+                                    <th>Date ⇅</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="expanse-table-body-wrapper">
+                            <table class="expanse-table">
+                                <tbody>
+                                    <tr>
+                                        <td>Fried Rice</td>
+                                        <td class="type-expanse">Consumption</td>
+                                        <td>21, Oct, 2023<br><span class="time-expanse">10.42 PM</span></td>
+                                        <td>Rp32.000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fried Rice</td>
+                                        <td class="type-expanse">Consumption</td>
+                                        <td>21, Oct, 2023<br><span class="time-expanse">10.42 PM</span></td>
+                                        <td>Rp32.000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fried Rice</td>
+                                        <td class="type-expanse">Consumption</td>
+                                        <td>21, Oct, 2023<br><span class="time-expanse">10.42 PM</span></td>
+                                        <td>Rp32.000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fried Rice</td>
+                                        <td class="type-expanse">Consumption</td>
+                                        <td>21, Oct, 2023<br><span class="time-expanse">10.42 PM</span></td>
+                                        <td>Rp32.000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fried Rice</td>
+                                        <td class="type-expanse">Consumption</td>
+                                        <td>21, Oct, 2023<br><span class="time-expanse">10.42 PM</span></td>
+                                        <td>Rp32.000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fried Rice</td>
+                                        <td class="type-expanse">Consumption</td>
+                                        <td>21, Oct, 2023<br><span class="time-expanse">10.42 PM</span></td>
+                                        <td>Rp32.000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fried Rice</td>
+                                        <td class="type-expanse">Consumption</td>
+                                        <td>21, Oct, 2023<br><span class="time-expanse">10.42 PM</span></td>
+                                        <td>Rp32.000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fried Rice</td>
+                                        <td class="type-expanse">Consumption</td>
+                                        <td>21, Oct, 2023<br><span class="time-expanse">10.42 PM</span></td>
+                                        <td>Rp32.000</td>
+                                    </tr>
+                                    <!-- Tambahkan baris data lainnya seperti di atas -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="expanse-data">
+                        <div class="total-expanse">
+                            <h5>Total Expanse</h5>
+                            <p>Driver Expenses Total Record</p>
+                            <h4>Rp240.000</h4>
+                        </div>
+                        <div class="expanse-detail">
+                            <div class="expanse-detail-head">
+                                <h5>Expanses</h5>
+                                <p>Driver Expenses Detail</p>
+                            </div>
+                            <div class="expanse-detail-content">
+                                <div class="expense-item left">
+                                    <span class="expense-type consumption">Consumption</span>
+                                    <span class="expense-value">Rp512.000</span>
+                                </div>
+                                <div class="expense-item right">
+                                    <span class="expense-type consumption">Consumption</span>
+                                    <span class="expense-value">Rp512.000</span>
+                                </div>
+                                <div class="expense-item left">
+                                    <span class="expense-type gas-station">Gas Station</span>
+                                    <span class="expense-value">Rp1.412.000</span>
+                                </div>
+                                <div class="expense-item right">
+                                    <span class="expense-type consumption">Consumption</span>
+                                    <span class="expense-value">Rp1.412.000</span>
+                                </div>
+                                <div class="expense-item left">
+                                    <span class="expense-type parking">Parking</span>
+                                    <span class="expense-value">Rp20.000</span>
+                                </div>
+                                <div class="expense-item right">
+                                    <span class="expense-type consumption">Consumption</span>
+                                    <span class="expense-value">Rp20.000</span>
+                                </div>
+                                <div class="expense-item left">
+                                    <span class="expense-type erp">ERP</span>
+                                    <span class="expense-value">Rp512.000</span>
+                                </div>
+                                <div class="expense-item right">
+                                    <span class="expense-type consumption">Consumption</span>
+                                    <span class="expense-value">Rp512.000</span>
+                                </div>
+                                <div class="expense-item left">
+                                    <span class="expense-type tol">Tol</span>
+                                    <span class="expense-value">Rp772.000</span>
+                                </div>
+                                <div class="expense-item right">
+                                    <span class="expense-type tol">Tol</span>
+                                    <span class="expense-value">Rp772.000</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div id="vehicle" class="content-section">
+                <div class="head-content">
+                    <h5>Vehicle</h5>    
+                </div>
+                <div class="vehicle-content">
+                    <div class="content_Vehicle">
+                        <div class="vehicle_list">
+                            <div class="list-dat active-veh">
+                                <div class="list-img ">
+                                    <img src="assets/images/doc_vehlist.svg" alt="">
+                                </div>
+                                
+                                <div class="list-detail">
+                                    <h5>Volvo Polestar A1</h5>
+                                    <p>Volvo Polestar 1</p>
+                                </div>
+                            </div>
+                            <div class="list-dat">
+                                <div class="list-img ">
+                                    <img src="assets/images/doc_vehlist.svg" alt="">
+                                </div>
+                                
+                                <div class="list-detail">
+                                    <h5>AMG GT R A1</h5>
+                                    <p>Mercedes-Benz </p>
+                                </div>
+                            </div>
+                            <div class="line-space"></div>
+                            <div class="list-dat">
+                                <div class="list-img ">
+                                    <img src="assets/images/doc_vehlist.svg" alt="">
+                                </div>
+                                
+                                <div class="list-detail">
+                                    <h5>Avanza A2</h5>
+                                    <p>Toyota</p>
+                                </div>
+                            </div>
+                            <div class="line-space"></div>
+                            <div class="list-dat">
+                                <div class="list-img ">
+                                    <img src="assets/images/doc_vehlist.svg" alt="">
+                                </div>
+                                
+                                <div class="list-detail">
+                                    <h5>Calya A1</h5>
+                                    <p>Toyota</p>
+                                </div>
+                            </div>
+                            <div class="line-space"></div>
+                            <div class="list-dat">
+                                <div class="list-img ">
+                                    <img src="assets/images/doc_vehlist.svg" alt="">
+                                </div>
+                                
+                                <div class="list-detail">
+                                    <h5>BMW M4</h5>
+                                    <p>BMW </p>
+                                </div>
+                            </div>
+                            <div class="line-space"></div>
+                            
+
+
+
+                        </div>
+
+                        <div class="vehicle_details">
+                            <div class="details_vehicle">
+                                <div class="vehicle_expanse">
+                                    <div class="expanse_head">
+                                        <div class="tittle_expanse_head">
+                                            <h4>Volvo, Polestar 1</h4>
+                                            <p>Vehicle Expenses <span>/ 23, Oct, 2021</span></p>
+                                        </div>
+
+                                        <div>
+                                            <button class="toggle-button" id="toggleButton">weekly</button>
+
+                                            <script>
+                                                const toggleButton = document.getElementById('toggleButton');
+                                                const states = ['weekly', 'monthly', 'yearly'];
+                                                let currentIndex = 0;
+
+                                                toggleButton.addEventListener('click', () => {
+                                                    currentIndex = (currentIndex + 1) % states.length;
+                                                    toggleButton.textContent = states[currentIndex];
+                                                });
+                                            </script>
+
+                                        </div>
+                                        
+                                        
+                                    </div>
+
+                                    <div class="expanse_data">
+                                        <div class="expanse_dat">
+                                            <div class="left-expanse_dat">
+                                                <div class="data_expanse">
+                                                    <div class="dat-exp">
+                                                    <h5>Gas Station</h5>
+                                                    <p>Rp.900.000</p>
+                                                    </div>
+                                                    <div class="dat-exp">
+                                                        <h5>Highway</h5>
+                                                        <p>Rp.760.000</p>
+                                                        </div>
+                                                        <div class="dat-exp">
+                                                            <h5>ERP</h5>
+                                                            <p>Rp.210.000</p>
+                                                            </div>
+                                                </div>
+                                            </div>
+                                            <div class="right-expanse_dat">
+                                                <div class="data_expanse">
+                                                    <div class="dat-exp">
+                                                    <h5>Car Wash</h5>
+                                                    <p>Rp.54.000</p>
+                                                    </div>
+                                                    <div class="dat-exp">
+                                                        <h5>Parking</h5>
+                                                        <p>Rp.75.000</p>
+                                                        </div>
+                                                        <div class="dat-exp">
+                                                            <h5>Vehicle Tax</h5>
+                                                            <p>Rp.2.000.000</p>
+                                                            </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="expanse_img">
+                                            <img src="assets/images/carExpanse.svg" alt="" srcset="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vehicle_record">
+                                    <div class="tittle_expanse_head">
+                                        <p>Driver Violation Record</p>
+                                    </div>
+                                    <div class="expanse_data">
+                                        <div class="expanse_dat">
+                                            <div class="left-expanse_dat">
+                                                <div class="data_expanse">
+                                                    <div class="dat-exp">
+                                                    <h5>Traffic Ticket</h5>
+                                                    <p>Rp.512.000</p>
+                                                    </div>
+                                                    <div class="dat-exp">
+                                                        <h5>Repairing</h5>
+                                                        <p>Rp.5.412.000</p>
+                                                        </div>
+                                                        <div class="dat-exp">
+                                                            <h5>Driving Behavior</h5>
+                                                            <p class="online">Safe</p>
+                                                            </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="expanse_img">
+                                            <img src="assets/images/carDriver.svg" alt="" srcset="">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="documents" class="content-section">
+                <div class="head-content">
+                    <h5>Documents</h5>
+                    <button style="border: none; background: none; padding: 0; cursor: pointer; outline: none;">
+                        <img src="assets/images/BtnEditContent.svg" alt="Edit">
+                      </button>
+                </div>
+                
+                <div class="cards-container">
+                    <div class="card-doc" onclick="showOverlay('Driver License', 'Nomor Lisensi: 12345678<br>Tanggal Kadaluarsa: 12/12/2025')">
+                        <div class="card-doc-content">
+                            <div class="card-doc-title">Driver License</div>
+                            <div class="card-doc-description">Attached</div>
+                        </div>
+                        <button style="border: none; background: none; padding: 0; cursor: pointer; outline: none;">
+                            <img src="assets/images/btnDocument.svg" alt="Edit">
+                        </button>
+                    </div>
+                
+                    <div class="card-doc" onclick="showOverlay('VeCard', 'Nomor VeCard: 87654321<br>Status: Active')">
+                        <div class="card-doc-content">
+                            <div class="card-doc-title">VeCard</div>
+                            <div class="card-doc-description">Attached</div>
+                        </div>
+                        <button style="border: none; background: none; padding: 0; cursor: pointer; outline: none;">
+                            <img src="assets/images/btnDocument.svg" alt="Edit">
+                        </button>
+                    </div>
+                
+                    <div class="card-doc" onclick="showOverlay('Indonesia Identity Card', 'Nomor KTP: 11223344<br>Status: Pending')">
+                        <div class="card-doc-content">
+                            <div class="card-doc-title">Indonesia Identity Card</div>
+                            <div class="card-doc-description">Pending</div>
+                        </div>
+                        <button style="border: none; background: none; padding: 0; cursor: pointer; outline: none;">
+                            <img src="assets/images/btnDocument.svg" alt="Edit">
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card-doc-overlay" id="cardDocOverlay" onclick="hideOverlay(event)">
+                    <div class="card-doc-overlay-content" id="overlayContent">
+                        <button class="close-btn" onclick="hideOverlay(event)">✖</button>
+                        <p>Ini adalah konten overlay.</p>
+                    </div>
+                </div>
+                
+                
+                <script>
+                   function showOverlay(title, content) {
+                        const overlay = document.getElementById('cardDocOverlay');
+                        const overlayContent = document.getElementById('overlayContent');
+                        overlayContent.innerHTML = `
+                            <button class="close-btn" onclick="hideOverlay(event)">✖</button>
+                            <h2>${title}</h2>
+                            <p>${content}</p>`;
+                        overlay.classList.add('show');
+                    }
+
+                    function hideOverlay(event) {
+                        const overlay = document.getElementById('cardDocOverlay');
+                        const overlayContent = document.getElementById('overlayContent');
+                        if (event.target === overlay || event.target.classList.contains('close-btn')) {
+                            overlay.classList.remove('show');
+                        }
+                    }
+
+                </script>
+                
+
+            </div>
+            
+            
+        </div>
+
+
+
+            </div>
+        </div>
+
+
+    
+    
+    <script src="js/UserAndStatus_check.js"></script>
+
+    <div class="add-driver-btn">
+        <img src="assets/images/btn-AddNewDriver.svg" alt="Add New Driver">
+    </div>
+      
+    
+        
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const items = document.querySelectorAll('.navbar-item');
+    const sections = document.querySelectorAll('.content-section');
+
+    // Function to update active navbar item and show corresponding content
+    function updateContent(targetId) {
+        items.forEach(item => {
+            const id = item.getAttribute('data-target');
+            if (id === targetId) {
+                item.classList.add('navbar-active');
+            } else {
+                item.classList.remove('navbar-active');
+            }
+        });
+
+        sections.forEach(section => {
+            if (section.id === targetId) {
+                section.classList.add('navbar-active-content');
+            } else {
+                section.classList.remove('navbar-active-content');
+            }
+        });
+    }
+
+    // On click, update the URL hash and content
+    items.forEach(item => {
+        item.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default link behavior
+            const targetId = this.getAttribute('data-target');
+            window.location.hash = targetId; // Update URL hash
+            updateContent(targetId);
+        });
+    });
+
+    // On page load, show content based on URL hash
+    function initContent() {
+        const hash = window.location.hash.substring(1); // Remove the '#' character
+        if (hash) {
+            updateContent(hash);
+        } else {
+            // Optionally, you can set a default view if there's no hash
+            updateContent('personal'); // Example default
+        }
+    }
+
+    initContent(); // Initialize content based on the URL hash
+});
+
+
+
+        function openOverlay() {
+    document.getElementById('overlay').style.display = 'block';
+}
+
+function closeOverlay() {
+    document.getElementById('overlay').style.display = 'none';
+}
+
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="assets/js/feather-icons/feather.min.js"></script>
+    <script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="assets/js/app.js"></script>
+    
+    <script src="assets/vendors/chartjs/Chart.min.js"></script>
+    <script src="assets/vendors/apexcharts/apexcharts.min.js"></script>
+    <script src="assets/js/pages/dashboard.js"></script>
+
+    <script src="assets/js/main.js"></script>
+    
+    <script src="js/a-auth.js"></script>
+    <script src="js/a-pp.js"></script>
+
+  
+</body>
+</html>
