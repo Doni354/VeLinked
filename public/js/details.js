@@ -10,7 +10,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstati
 
             // Your web app's Firebase configuration
             // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-            const firebaseConfig = {
+        const firebaseConfig = {
             apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
             authDomain: "velinked-web.firebaseapp.com",
             projectId: "velinked-web",
@@ -18,7 +18,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstati
             messagingSenderId: "844821073092",
             appId: "1:844821073092:web:f243c25668079240ec0d91",
             measurementId: "G-CLGQ4RWWTX"
-            };
+        };
 
             const app = initializeApp(firebaseConfig);
             const analytics = getAnalytics(app);
@@ -27,6 +27,17 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstati
             const storageRef = ref(storage);
 
             const form = document.getElementById('vehicleForm');
+            const nicknameInput = document.getElementById('nickname');
+            const typeSelect = document.getElementById('type');
+            const brandSelect = document.getElementById('brand');
+            const nameInput = document.getElementById('name');
+            const plateInput = document.getElementById('plate');
+            const emailInput = document.getElementById('email');
+            const picInput = document.getElementById('pic');
+            const picPreview = document.getElementById('pic-preview');
+            const fileName = document.getElementById('file-name');
+            const popup = document.getElementById('popup');
+
             const deleteButton = document.getElementById('confirmDelete');
 
 
@@ -48,12 +59,140 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstati
         const docId = getParameterByName('docId');
 
         // Dapatkan referensi dokumen kendaraan dari Firestore berdasarkan docId
-        const vehicleDocRef = firebase.firestore().collection("Vehicle").doc(docId);
+        const vehicleDocRef = doc(db, "Vehicle", docId);
 
 
 // Reference to the Logs collection filtered by docId
 const logsRef = collection(db, 'Logs');
 const queryLogs = query(logsRef, where('docId', '==', docId), orderBy('timestamp', 'desc'));
+
+
+
+
+
+async function fetchVehicleData() {
+    try {
+        const docSnap = await getDoc(vehicleDocRef);
+        if (docSnap.exists()) {
+            const vehicleData = docSnap.data();
+            nicknameInput.value = vehicleData.nickname || '';
+            typeSelect.value = vehicleData.type || '';
+            brandSelect.value = vehicleData.brand || '';
+            nameInput.value = vehicleData.name || '';
+            plateInput.value = vehicleData.plate || '';
+            emailInput.value = vehicleData.email || '';
+            if (vehicleData.picture) {
+                picPreview.src = vehicleData.picture;
+                picPreview.style.width = '25px';
+                picPreview.style.height = '25px';
+                fileName.textContent = 'Picture chosen';
+            }
+        } else {
+            console.log("No such document!");
+        }
+    } catch (error) {
+        console.error("Error getting document:", error);
+    }
+}
+
+fetchVehicleData();
+
+picInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        fileName.textContent = file.name;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            picPreview.src = e.target.result;
+            picPreview.style.width = '25px';
+            picPreview.style.height = '25px';
+        };
+        reader.readAsDataURL(file);
+    } else {
+        picPreview.src = 'assets/images/Input-vehpic.svg';
+        picPreview.style.width = 'auto';
+        picPreview.style.height = 'auto';
+        fileName.textContent = 'No picture chosen (optional)';
+    }
+});
+
+plateInput.addEventListener('input', (event) => {
+    plateInput.value = plateInput.value.toUpperCase();
+});
+
+async function uploadPicture(file) {
+    const storageReference = ref(storage, 'Vehicle/Image/' + file.name);
+    await uploadBytes(storageReference, file);
+    return await getDownloadURL(storageReference);
+}
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (nicknameInput.value.trim() === "") {
+        showPopup("Vehicle NickName tidak boleh kosong!");
+        return;
+    }
+    
+    if (typeSelect.value.trim() === "") {
+        showPopup("Kamu harus memilih Vehicle Type!");
+        return;
+    }
+
+    if (brandSelect.value.trim() === "") {
+        showPopup("Kamu harus memilih Brand Kendaraan!");
+        return;
+    }
+
+    if (nameInput.value.trim() === "") {
+        showPopup("Vehicle Name tidak boleh kosong!");
+        return;
+    }
+
+    if (plateInput.value.trim() === "") {
+        showPopup("Plate no tidak boleh kosong!");
+        return;
+    }
+
+    let updatedData = {
+        nickname: nicknameInput.value,
+        type: typeSelect.value,
+        brand: brandSelect.value,
+        name: nameInput.value,
+        plate: plateInput.value.toUpperCase(),
+        email: emailInput.value || null
+    };
+
+    try {
+        showPopup("Uploading data...");
+        if (picInput.files[0]) {
+            const pictureURL = await uploadPicture(picInput.files[0]);
+            updatedData.picture = pictureURL;
+        }
+        await updateDoc(vehicleDocRef, updatedData);
+        showPopup("Data berhasil diperbarui!");
+        toggleFormEdit();
+    } catch (error) {
+        console.error("Error updating document:", error);
+        showPopup("Terjadi kesalahan saat memperbarui data: " + error.message);
+    }
+});
+
+function showPopup(message) {
+    popup.textContent = message;
+    popup.style.display = "block";
+    setTimeout(() => {
+        popup.style.display = "none";
+    }, 3000);
+}
+
+
+
+
+
+
+
+
 
 // DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function () {
@@ -93,9 +232,9 @@ deleteButton.addEventListener('click', async () => {
 
 
         // Ambil data kendaraan
-        vehicleDocRef.onSnapshot(doc => {
-            if (doc.exists) {
-                const vehicleData = doc.data();
+        onSnapshot(vehicleDocRef, (docSnap) => {
+            if (docSnap.exists()) {
+                const vehicleData = docSnap.data();
                 // Tampilkan data kendaraan di halaman
                 displayVehicleDetails(vehicleData);
                 displayVehicleName(vehicleData);

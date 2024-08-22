@@ -185,7 +185,7 @@
         
 
 
-        <script>
+        <!-- <script>
             mapboxgl.accessToken = 'pk.eyJ1IjoiaGVsbHlvc2hhcWlxaWUiLCJhIjoiY20wMzloNm81MDlqOTJxc2ExOWp3eWJkbiJ9.bfRMSLMCqZ_A1oyrRbaUdg';
             const map = new mapboxgl.Map({
                 container: 'map',
@@ -297,7 +297,7 @@
                     });
                 }, 5000);
             });
-        </script>
+        </script> -->
         
         
         
@@ -836,166 +836,16 @@
         <div class="vehicle-details"></div>
     </div>
     <script type="module" >
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-analytics.js";
-        import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
+        
+        
+        
+    
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
-            authDomain: "velinked-web.firebaseapp.com",
-            projectId: "velinked-web",
-            storageBucket: "velinked-web.appspot.com",
-            messagingSenderId: "844821073092",
-            appId: "1:844821073092:web:f243c25668079240ec0d91",
-            measurementId: "G-CLGQ4RWWTX"
-        };
 
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const db = getFirestore(app);
-        const storage = getStorage(app);
 
-        const form = document.getElementById('vehicleForm');
-        const nicknameInput = document.getElementById('nickname');
-        const typeSelect = document.getElementById('type');
-        const brandSelect = document.getElementById('brand');
-        const nameInput = document.getElementById('name');
-        const plateInput = document.getElementById('plate');
-        const emailInput = document.getElementById('email');
-        const picInput = document.getElementById('pic');
-        const picPreview = document.getElementById('pic-preview');
-        const fileName = document.getElementById('file-name');
-        const popup = document.getElementById('popup');
 
-        function getParameterByName(name, url) {
-            if (!url) url = window.location.href;
-            name = name.replace(/[[\]]/g, '\\$&');
-            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-                results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, ' '));
-        }
 
-        const docId = getParameterByName('docId');
-        const vehicleDocRef = doc(db, "Vehicle", docId);
 
-        async function fetchVehicleData() {
-            try {
-                const docSnap = await getDoc(vehicleDocRef);
-                if (docSnap.exists()) {
-                    const vehicleData = docSnap.data();
-                    nicknameInput.value = vehicleData.nickname || '';
-                    typeSelect.value = vehicleData.type || '';
-                    brandSelect.value = vehicleData.brand || '';
-                    nameInput.value = vehicleData.name || '';
-                    plateInput.value = vehicleData.plate || '';
-                    emailInput.value = vehicleData.email || '';
-                    if (vehicleData.picture) {
-                        picPreview.src = vehicleData.picture;
-                        picPreview.style.width = '25px';
-                        picPreview.style.height = '25px';
-                        fileName.textContent = 'Picture chosen';
-                    }
-                } else {
-                    console.log("No such document!");
-                }
-            } catch (error) {
-                console.error("Error getting document:", error);
-            }
-        }
-
-        fetchVehicleData();
-
-        picInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                fileName.textContent = file.name;
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    picPreview.src = e.target.result;
-                    picPreview.style.width = '25px';
-                    picPreview.style.height = '25px';
-                };
-                reader.readAsDataURL(file);
-            } else {
-                picPreview.src = 'assets/images/Input-vehpic.svg';
-                picPreview.style.width = 'auto';
-                picPreview.style.height = 'auto';
-                fileName.textContent = 'No picture chosen (optional)';
-            }
-        });
-
-        plateInput.addEventListener('input', (event) => {
-            plateInput.value = plateInput.value.toUpperCase();
-        });
-
-        async function uploadPicture(file) {
-            const storageReference = ref(storage, 'Vehicle/Image/' + file.name);
-            await uploadBytes(storageReference, file);
-            return await getDownloadURL(storageReference);
-        }
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            if (nicknameInput.value.trim() === "") {
-                showPopup("Vehicle NickName tidak boleh kosong!");
-                return;
-            }
-            
-            if (typeSelect.value.trim() === "") {
-                showPopup("Kamu harus memilih Vehicle Type!");
-                return;
-            }
-
-            if (brandSelect.value.trim() === "") {
-                showPopup("Kamu harus memilih Brand Kendaraan!");
-                return;
-            }
-
-            if (nameInput.value.trim() === "") {
-                showPopup("Vehicle Name tidak boleh kosong!");
-                return;
-            }
-
-            if (plateInput.value.trim() === "") {
-                showPopup("Plate no tidak boleh kosong!");
-                return;
-            }
-
-            let updatedData = {
-                nickname: nicknameInput.value,
-                type: typeSelect.value,
-                brand: brandSelect.value,
-                name: nameInput.value,
-                plate: plateInput.value.toUpperCase(),
-                email: emailInput.value || null
-            };
-
-            try {
-                showPopup("Uploading data...");
-                if (picInput.files[0]) {
-                    const pictureURL = await uploadPicture(picInput.files[0]);
-                    updatedData.picture = pictureURL;
-                }
-                await updateDoc(vehicleDocRef, updatedData);
-                showPopup("Data berhasil diperbarui!");
-                toggleFormEdit();
-            } catch (error) {
-                console.error("Error updating document:", error);
-                showPopup("Terjadi kesalahan saat memperbarui data: " + error.message);
-            }
-        });
-
-        function showPopup(message) {
-            popup.textContent = message;
-            popup.style.display = "block";
-            setTimeout(() => {
-                popup.style.display = "none";
-            }, 3000);
-        }
 
 
     </script>
