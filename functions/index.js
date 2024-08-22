@@ -1,19 +1,30 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/https");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
+const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+admin.initializeApp();
 
-const {onRequest} = require("firebase-functions/v2/https");
-const logger = require("firebase-functions/logger");
+// Cloud Function untuk mendengarkan perubahan di Realtime Database dan menyalinnya ke Firestore
+exports.syncVehicleData = functions.database.ref('/Vehicle/{docId}')
+    .onWrite(async (change, context) => {
+        const docId = context.params.docId;
+        const data = change.after.val();
 
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
+        if (!data || !data.lat || !data.lng) {
+            console.error('Invalid data received from Realtime Database');
+            return null;
+        }
 
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+        try {
+            // Update Firestore dengan data terbaru
+            const firestoreDocRef = admin.firestore().collection('Vehicle').doc(docId);
+            await firestoreDocRef.set({
+                lat: data.lat,
+                lng: data.lng
+            }, { merge: true });
+
+            console.log(`Data successfully written to Firestore: ${docId}`);
+            return null;
+        } catch (error) {
+            console.error('Error writing document to Firestore: ', error);
+            return null;
+        }
+    });
