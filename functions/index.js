@@ -2,6 +2,12 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
 
+
+// exports.helloWorld = onRequest((request, response) => {
+//   logger.info("Hello logs!", {structuredData: true});
+//   response.send("Hello from Firebase!");
+// });
+
 // Cloud Function untuk mendengarkan perubahan di Realtime Database dan menyalinnya ke Firestore
 exports.syncVehicleData = functions.database.ref('/Vehicle/{docId}')
     .onWrite(async (change, context) => {
