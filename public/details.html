@@ -838,8 +838,8 @@
     <script type="module">
         // Import Firebase dan Mapbox
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-        import { getFirestore, doc as fsDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-    
+        import { getDatabase, ref as dbRef, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+        
         // Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
@@ -848,13 +848,14 @@
             storageBucket: "velinked-web.appspot.com",
             messagingSenderId: "844821073092",
             appId: "1:844821073092:web:f243c25668079240ec0d91",
-            measurementId: "G-CLGQ4RWWTX"
+            measurementId: "G-CLGQ4RWWTX",
+            databaseURL: "https://velinked-web-default-rtdb.asia-southeast1.firebasedatabase.app"  // Tambahkan URL Realtime Database di sini
         };
-    
+        
         // Inisialisasi Firebase
         const app = initializeApp(firebaseConfig);
-        const firestoreDB = getFirestore(app);
-    
+        const database = getDatabase(app);
+        
         // Ambil parameter dari URL
         function getParameterByName(name, url) {
             if (!url) url = window.location.href;
@@ -865,10 +866,10 @@
             if (!results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, ' '));
         }
-    
+        
         const docId = getParameterByName('docId');
-        const vehicleDocRef = fsDoc(firestoreDB, 'Vehicle', docId);
-    
+        const vehicleRef = dbRef(database, 'Vehicle/' + docId);
+        
         // Inisialisasi Mapbox
         mapboxgl.accessToken = 'pk.eyJ1IjoiaGVsbHlvc2hhcWlxaWUiLCJhIjoiY20wMzloNm81MDlqOTJxc2ExOWp3eWJkbiJ9.bfRMSLMCqZ_A1oyrRbaUdg';
         const map = new mapboxgl.Map({
@@ -894,10 +895,10 @@
         let isUserInteracting = false;
         let resetTimeout;
     
-        // Mendengarkan perubahan data di Firestore
-        onSnapshot(vehicleDocRef, (doc) => {
-            const data = doc.data();
-            console.log('Data received from Firestore:', data); // Log data yang diterima
+        // Mendengarkan perubahan data di Realtime Database
+        onValue(vehicleRef, (snapshot) => {
+            const data = snapshot.val();
+            console.log('Data received from Realtime Database:', data); // Log data yang diterima
     
             if (data && data.lat !== undefined && data.lng !== undefined) {
                 const { lat, lng } = data;
@@ -952,6 +953,7 @@
         });
     
     </script>
+    
     <script type="module" src="js/details.js"></script>
 </body>
 </html>
