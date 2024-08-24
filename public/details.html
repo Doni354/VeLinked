@@ -840,7 +840,7 @@
 
         // Import Firebase dan Mapbox
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getDatabase, ref as dbRef, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { getDatabase, ref as dbRef, onValue, set, push } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
 // Firebase Config
 const firebaseConfig = {
@@ -871,6 +871,65 @@ function getParameterByName(name, url) {
 
 const docId = getParameterByName('docId');
 const vehicleRef = dbRef(realtimeDB, 'Vehicle/' + docId);
+
+document.addEventListener('DOMContentLoaded', function() {
+    const engineStatusCheckbox = document.getElementById('engineStatusCheckbox');
+
+    // Mengambil nilai docId dari parameter URL
+    const docId = getParameterByName('docId');
+
+    // Dapatkan referensi ke Vehicle dan Logs di Realtime Database berdasarkan docId
+    const vehicleStatusRef = dbRef(realtimeDB, `Vehicle/${docId}/engine_status`);
+    const logsRef = dbRef(realtimeDB, `Logs/`);
+
+    // Ambil data engine status dari Realtime Database dan update checkbox engine
+    onValue(vehicleStatusRef, snapshot => {
+        const engineStatus = snapshot.val();
+        engineStatusCheckbox.checked = engineStatus || false;
+    });
+
+    // Tambahkan event listener untuk checkbox
+    engineStatusCheckbox.addEventListener('change', function(event) {
+        const isChecked = event.target.checked;
+        const timestamp = new Date().toISOString();
+        const logEntry = {
+            docId: docId,
+            engineStatus: isChecked,
+            timestamp: timestamp
+        };
+
+        // Update nilai engine_status di Realtime Database berdasarkan checkbox
+        set(vehicleStatusRef, isChecked).then(() => {
+            console.log("Engine status updated successfully in Realtime Database!");
+
+            // Tambahkan log ke Realtime Database
+            push(logsRef, logEntry).then(() => {
+                console.log("Log entry added successfully in Realtime Database!");
+            }).catch(error => {
+                console.error("Error adding log entry in Realtime Database:", error);
+            });
+        }).catch(error => {
+            console.error("Error updating engine status in Realtime Database:", error);
+            // Reset checkbox jika terjadi error
+            engineStatusCheckbox.checked = !isChecked;
+        });
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Ambil data kendaraan secara real-time
 onValue(vehicleRef, (snapshot) => {
