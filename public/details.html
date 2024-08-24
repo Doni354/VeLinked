@@ -840,7 +840,8 @@
 
         // Import Firebase dan Mapbox
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getDatabase, ref as dbRef, onValue, set, push } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { getDatabase, ref as dbRef, onValue, set, push, remove } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { getFirestore, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
 // Firebase Config
 const firebaseConfig = {
@@ -857,7 +858,7 @@ const firebaseConfig = {
 // Inisialisasi Firebase
 const app = initializeApp(firebaseConfig);
 const realtimeDB = getDatabase(app);
-
+const firestoreDB = getFirestore(app);
 // Ambil parameter dari URL
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -868,9 +869,44 @@ function getParameterByName(name, url) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
-
+const deleteButton = document.getElementById('confirmDelete');
 const docId = getParameterByName('docId');
 const vehicleRef = dbRef(realtimeDB, 'Vehicle/' + docId);
+
+
+// Fungsi untuk menghapus dokumen kendaraan dari Realtime Database dan Firestore
+deleteButton.addEventListener('click', async () => {
+    try {
+        // Hapus data dari Realtime Database
+        await remove(vehicleRef);
+        console.log('Data berhasil dihapus dari Realtime Database');
+        
+        // Hapus dokumen dari Firestore
+        const vehicleDocRef = doc(firestoreDB, 'Vehicle', docId);
+        await deleteDoc(vehicleDocRef);
+        console.log('Dokumen berhasil dihapus dari Firestore');
+        
+        // Redirect ke halaman dashboard setelah berhasil menghapus
+        window.location.href = 'dashboard.html';
+    } catch (error) {
+        console.error('Error saat menghapus data:', error);
+        // Handle error jika perlu
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 document.addEventListener('DOMContentLoaded', function() {
     const engineStatusCheckbox = document.getElementById('engineStatusCheckbox');
