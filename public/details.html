@@ -835,190 +835,128 @@
     <div class="vehicle-details-container">
         <div class="vehicle-details"></div>
     </div>
+
     <script type="module">
+
         // Import Firebase dan Mapbox
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-        import { getFirestore, doc as fsDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-    
-        // Firebase Config
-        const firebaseConfig = {
-            apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
-            authDomain: "velinked-web.firebaseapp.com",
-            projectId: "velinked-web",
-            storageBucket: "velinked-web.appspot.com",
-            messagingSenderId: "844821073092",
-            appId: "1:844821073092:web:f243c25668079240ec0d91",
-            measurementId: "G-CLGQ4RWWTX"
-        };
-    
-        // Inisialisasi Firebase
-        const app = initializeApp(firebaseConfig);
-        const firestoreDB = getFirestore(app);
-    
-        // Ambil parameter dari URL
-        function getParameterByName(name, url) {
-            if (!url) url = window.location.href;
-            name = name.replace(/[[\]]/g, '\\$&');
-            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-                results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, ' '));
-        }
-    
-        const docId = getParameterByName('docId');
-        const vehicleDocRef = fsDoc(firestoreDB, 'Vehicle', docId);
-    
-        // Inisialisasi Mapbox
-        mapboxgl.accessToken = 'pk.eyJ1IjoiaGVsbHlvc2hhcWlxaWUiLCJhIjoiY20wMzloNm81MDlqOTJxc2ExOWp3eWJkbiJ9.bfRMSLMCqZ_A1oyrRbaUdg';
-        const map = new mapboxgl.Map({
-            container: 'map',
-            style: 'mapbox://styles/mapbox/streets-v9',
-            projection: 'globe',
-            zoom: 15,
-            center: [112.072306, -8.129252] // Lokasi default jika data belum ada
-        });
-    
-        map.addControl(new mapboxgl.NavigationControl());
-        map.scrollZoom.disable();
-    
-        map.on('style.load', () => {
-            map.setFog({});
-        });
-    
-        // Tambahkan marker pada lokasi default
-        let marker = new mapboxgl.Marker()
-            .setLngLat([112.072306, -8.129252])
-            .addTo(map);
-    
-        let isUserInteracting = false;
-        let resetTimeout;
-    
-        // Mendengarkan perubahan data di Firestore
-        onSnapshot(vehicleDocRef, (doc) => {
-            const data = doc.data();
-            console.log('Data received from Firestore:', data); // Log data yang diterima
-    
-            if (data && data.lat !== undefined && data.lng !== undefined) {
-                const { lat, lng } = data;
-                console.log(`Updating vehicle position to: Latitude ${lat}, Longitude ${lng}`);
-                updateVehiclePosition(lat, lng);
-            } else {
-                console.error('Lat/Lng data is missing or undefined');
-            }
-        });
-    
-        // Fungsi untuk memperbarui posisi kendaraan dan marker pada peta
-        function updateVehiclePosition(newLat, newLng) {
-            if (!isUserInteracting) {
-                map.easeTo({
-                    center: [newLng, newLat],
-                    duration: 1000 // Animasi selama 1 detik
-                });
-            }
-            marker.setLngLat([newLng, newLat]); // Perbarui posisi marker
-        }
-    
-        // Deteksi interaksi pengguna dengan peta
-        map.on('mousedown', () => {
-            isUserInteracting = true;
-            clearTimeout(resetTimeout);
-        });
-    
-        map.on('dragstart', () => {
-            isUserInteracting = true;
-            clearTimeout(resetTimeout);
-        });
-    
-        // Ketika pengguna selesai berinteraksi dengan peta
-        map.on('mouseup', () => {
-            resetTimeout = setTimeout(() => {
-                isUserInteracting = false;
-                map.easeTo({
-                    center: [marker.getLngLat().lng, marker.getLngLat().lat],
-                    duration: 1000 // Animasi selama 1 detik
-                });
-            }, 5000); // Tunggu 5 detik sebelum kembali mengikuti kendaraan
-        });
-    
-        map.on('dragend', () => {
-            resetTimeout = setTimeout(() => {
-                isUserInteracting = false;
-                map.easeTo({
-                    center: [marker.getLngLat().lng, marker.getLngLat().lat],
-                    duration: 3000
-                });
-            }, 5000);
-        });
-    
-        // Ambil data kendaraan dari Realtime Database
-onValue(vehicleRef, (snapshot) => {
-    const vehicleData = snapshot.val();
-    if (vehicleData) {
-        // Tampilkan data kendaraan di halaman
-        displayVehicleDetails(vehicleData);
-        displayVehicleName(vehicleData);
-        displayVehicleNickName(vehicleData);
-        displayVehicleImage(vehicleData);
-        displayVehicleNameLT(vehicleData);
-    } else {
-        console.log("No such document!");
-    }
-}, error => {
-    console.error("Error getting document:", error);
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+import { getDatabase, ref as dbRef, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+
+// Firebase Config
+const firebaseConfig = {
+    apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
+    authDomain: "velinked-web.firebaseapp.com",
+    databaseURL: "https://velinked-web-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "velinked-web",
+    storageBucket: "velinked-web.appspot.com",
+    messagingSenderId: "844821073092",
+    appId: "1:844821073092:web:f243c25668079240ec0d91",
+    measurementId: "G-CLGQ4RWWTX"
+};
+
+// Inisialisasi Firebase
+const app = initializeApp(firebaseConfig);
+const realtimeDB = getDatabase(app);
+
+// Ambil parameter dari URL
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+const docId = getParameterByName('docId');
+const vehicleRef = dbRef(realtimeDB, 'Vehicle/' + docId);
+
+// Inisialisasi Mapbox
+mapboxgl.accessToken = 'pk.eyJ1IjoiaGVsbHlvc2hhcWlxaWUiLCJhIjoiY20wMzloNm81MDlqOTJxc2ExOWp3eWJkbiJ9.bfRMSLMCqZ_A1oyrRbaUdg';
+const map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v9',
+    projection: 'globe',
+    zoom: 15,
+    center: [112.072306, -8.129252] // Lokasi default jika data belum ada
 });
 
-// Fungsi untuk menampilkan detail kendaraan
-function displayVehicleDetails(vehicleData) {
-    const vehicleDetailsContainer = document.querySelector(".vehicle_Details-setting");
-    const email = vehicleData.email ? vehicleData.email : "No email provided";
-    const imageUrl = vehicleData.picture && vehicleData.picture.trim() !== '' ? vehicleData.picture : 'assets/images/CarD.svg';
-    const detailsHTML = `
-        <div class="vehicle-info-setting">
-            <div class="vehicle-image-setting">
-                <img src="${imageUrl}" alt="${vehicleData.name}">
-            </div>
-            <div class="vehicle-text-setting">
-                <h3>${vehicleData.name}</h3>
-                <p><strong>Nickname:</strong> ${vehicleData.nickname}</p>
-                <p><strong>Type:</strong> ${vehicleData.type}</p>
-                <p><strong>Plate:</strong> ${vehicleData.plate}</p>
-                <p><strong>Email:</strong> ${email}</p>
-            </div>
-        </div>
-    `;
-    vehicleDetailsContainer.innerHTML = detailsHTML;
+map.addControl(new mapboxgl.NavigationControl());
+map.scrollZoom.disable();
+
+map.on('style.load', () => {
+    map.setFog({});
+});
+
+// Tambahkan marker pada lokasi default
+let marker = new mapboxgl.Marker()
+    .setLngLat([112.072306, -8.129252])
+    .addTo(map);
+
+let isUserInteracting = false;
+let resetTimeout;
+
+// Mendengarkan perubahan data di Firebase Realtime Database
+onValue(vehicleRef, (snapshot) => {
+    const data = snapshot.val();
+    console.log('Data received from Firebase:', data); // Log data yang diterima
+
+    if (data && data.lat !== undefined && data.lng !== undefined) {
+        const { lat, lng } = data;
+        console.log(`Updating vehicle position to: Latitude ${lat}, Longitude ${lng}`);
+        updateVehiclePosition(lat, lng);
+    } else {
+        console.error('Lat/Lng data is missing or undefined');
+    }
+});
+
+// Fungsi untuk memperbarui posisi kendaraan dan marker pada peta
+function updateVehiclePosition(newLat, newLng) {
+    if (!isUserInteracting) {
+        map.easeTo({
+            center: [newLng, newLat],
+            duration: 1000 // Animasi selama 1 detik
+        });
+    }
+    marker.setLngLat([newLng, newLat]); // Perbarui posisi marker
 }
 
-function displayVehicleName(vehicleData) {
-    const vehicleDetailsContainer = document.querySelector(".vehname");
-    const detailsHTML = `<p>${vehicleData.name}</p>`;
-    vehicleDetailsContainer.innerHTML = detailsHTML;
-}
+// Deteksi interaksi pengguna dengan peta
+map.on('mousedown', () => {
+    isUserInteracting = true;
+    clearTimeout(resetTimeout);
+});
 
-function displayVehicleNickName(vehicleData) {
-    const vehicleDetailsContainer = document.querySelector(".vehtittledat");
-    const detailsHTML = `<p>${vehicleData.nickname}</p>`;
-    vehicleDetailsContainer.innerHTML = detailsHTML;
-}
+map.on('dragstart', () => {
+    isUserInteracting = true;
+    clearTimeout(resetTimeout);
+});
 
-function displayVehicleNameLT(vehicleData) {
-    const vehicleNameElements = document.querySelectorAll(".vehicle-name");
-    vehicleNameElements.forEach(element => {
-        element.innerHTML = vehicleData.nickname;
-    });
-}
+// Ketika pengguna selesai berinteraksi dengan peta
+map.on('mouseup', () => {
+    resetTimeout = setTimeout(() => {
+        isUserInteracting = false;
+        map.easeTo({
+            center: [marker.getLngLat().lng, marker.getLngLat().lat],
+            duration: 1000 // Animasi selama 1 detik
+        });
+    }, 5000); // Tunggu 5 detik sebelum kembali mengikuti kendaraan
+});
 
-function displayVehicleImage(vehicleData) {
-    const vehicleDetailsContainer = document.querySelector(".vehimg");
-    const imageUrl = (vehicleData.picture && vehicleData.picture.trim() !== '') ? vehicleData.picture : 'assets/images/CarD.svg';
-    const detailsHTML = `<img src="${imageUrl}" alt="${vehicleData.name}">`;
-    vehicleDetailsContainer.innerHTML = detailsHTML;
-}
-
+map.on('dragend', () => {
+    resetTimeout = setTimeout(() => {
+        isUserInteracting = false;
+        map.easeTo({
+            center: [marker.getLngLat().lng, marker.getLngLat().lat],
+            duration: 3000
+        });
+    }, 5000);
+});
 
 
     </script>
+
     <script type="module" src="js/details.js"></script>
 </body>
 </html>
