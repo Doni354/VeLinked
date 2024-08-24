@@ -19,3 +19,28 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+
+
+const firestore = firebase.firestore();
+        const realtimeDatabase = firebase.database();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fungsi untuk menyalin data dari Firestore ke Realtime Database
+            const syncFirestoreToRealtimeDB = async () => {
+                try {
+                    // Ambil data dari koleksi Vehicle di Firestore
+                    const vehicleCollection = await firestore.collection('Vehicle').get();
+                    vehicleCollection.forEach(async (doc) => {
+                        const data = doc.data();
+                        // Salin data ke Realtime Database dengan menggunakan nama document dari Firestore sebagai child di Realtime Database
+                        await realtimeDatabase.ref('Vehicle/' + doc.id).set(data);
+                    });
+                    console.log('Data berhasil disinkronisasi dari Firestore ke Realtime Database.');
+                } catch (error) {
+                    console.error('Terjadi kesalahan saat sinkronisasi data:', error);
+                }
+            };
+
+            // Jalankan sinkronisasi
+            syncFirestoreToRealtimeDB();
+        });
