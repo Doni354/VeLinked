@@ -1174,6 +1174,19 @@ const userImage = document.querySelector('.user img');
                 userdatDiv.style.display = 'none';
             }, 500); // Durasi sesuai dengan animasi CSS
         });
+
+        // Fungsi untuk menambahkan event listener dengan ID
+document.getElementById('deleteButton').addEventListener('click', function() {
+    const popup = document.getElementById('deletePopup');
+    popup.style.display = 'block';
+});
+
+// Fungsi untuk menutup popup konfirmasi
+document.getElementById('cancelDelete').addEventListener('click', function() {
+    const popup = document.getElementById('deletePopup');
+    popup.style.display = 'none';
+});
+
     </script>
 
 
