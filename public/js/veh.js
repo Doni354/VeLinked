@@ -3,29 +3,40 @@ function displayVehicleCard(vehicleData, docId) {
     const vehicleDetailsRow = document.querySelector(".vehicleDetailsRow");
     const vehicleCard = document.createElement("div");
     vehicleCard.classList.add("vehicleCard");
+
     const vehicleCardContent = document.createElement("div");
     vehicleCardContent.classList.add("vehicleCardContent");
+
     const vehicleInfo = document.createElement("div");
     vehicleInfo.classList.add("vehicleInfo");
+
     const vehicleText = document.createElement("div");
     vehicleText.classList.add("vehicleText");
+
     const vehicleTitle = document.createElement("h3");
     vehicleTitle.classList.add("vehicleTitle");
     vehicleTitle.textContent = vehicleData.nickname;
+
     const usersTotalLabel = document.createElement("p");
     usersTotalLabel.classList.add("usersTotalLabel");
     usersTotalLabel.textContent = vehicleData.name;
+
     vehicleText.appendChild(vehicleTitle);
     vehicleText.appendChild(usersTotalLabel);
+
     const vehicleThumbnail = document.createElement("img");
     vehicleThumbnail.classList.add("vehicleThumbnail");
     vehicleThumbnail.src = `assets/images/${vehicleData.type}.svg`;
+
     vehicleInfo.appendChild(vehicleText);
     vehicleInfo.appendChild(vehicleThumbnail);
+
     const statusRow = document.createElement("div");
     statusRow.classList.add("statusRow");
+
     const statusIcon = document.createElement("img");
     statusIcon.classList.add("statusIcon");
+
     const statusLabel = document.createElement("div");
     statusLabel.classList.add("statusLabel");
 
@@ -52,16 +63,19 @@ function displayVehicleCard(vehicleData, docId) {
 
     statusRow.appendChild(statusIcon);
     statusRow.appendChild(statusLabel);
+
     vehicleCardContent.appendChild(vehicleInfo);
     vehicleCardContent.appendChild(statusRow);
+
     vehicleCard.appendChild(vehicleCardContent);
     vehicleCard.addEventListener("click", () => {
         window.location.href = `details.html?docId=${encodeURIComponent(docId)}`;
     });
+
     vehicleDetailsRow.appendChild(vehicleCard);
 }
 
-// Fungsi untuk memuat dan menampilkan data kendaraan dari Firestore
+// Fungsi untuk memuat dan menampilkan data kendaraan dari Realtime Database
 function loadAndDisplayVehicles() {
     const user = firebase.auth().currentUser;
 
@@ -70,15 +84,15 @@ function loadAndDisplayVehicles() {
         return;
     }
 
-    const vehiclesRef = firebase.firestore().collection("Vehicle").where("user_id", "==", user.uid);
+    const vehiclesRef = firebase.database().ref("Vehicle").orderByChild("user_id").equalTo(user.uid);
     const vehicleDetailsRow = document.querySelector(".vehicleDetailsRow");
 
-    // Mendengarkan perubahan secara real-time pada koleksi Vehicle di Firestore
-    vehiclesRef.onSnapshot(snapshot => {
+    // Mendengarkan perubahan secara real-time pada koleksi Vehicle di Realtime Database
+    vehiclesRef.on('value', snapshot => {
         vehicleDetailsRow.innerHTML = "";
-        snapshot.forEach(doc => {
-            const vehicleData = doc.data();
-            const docId = doc.id; // Dapatkan ID dokumen dari Firestore
+        snapshot.forEach(childSnapshot => {
+            const vehicleData = childSnapshot.val();
+            const docId = childSnapshot.key; // Dapatkan ID dari Realtime Database
             displayVehicleCard(vehicleData, docId);
         });
     }, error => {
