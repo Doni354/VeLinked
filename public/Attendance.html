@@ -6,15 +6,10 @@
     <title>Dashboard - VeLinked</title>
     <!-- Di dalam elemen <head> -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="VL/css/driver_personal_content.css">
-    <link rel="stylesheet" href="VL/css/driver_vehicle.css">
-    <link rel="stylesheet" href="VL/css/driver_expanse.css">
-    <link rel="stylesheet" href="VL/css/driver_log_content.css">
     <link rel="stylesheet" href="assets/vendors/chartjs/Chart.min.css">
-    <link rel="stylesheet" href="VL/css/driver.css">
+    <link rel="stylesheet" href="VL/css/attendance.css">
     <link rel="stylesheet" href="assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" href="assets/css/app.css">
-    <link rel="stylesheet" href="VL/css/driver_doc.css">
     <link rel="shortcut icon" href="assets/images/icon.svg" type="image/x-icon">
         <!-- include only the Firebase features as you need -->
         <script defer src="/__/firebase/10.9.0/firebase-app-compat.js"></script>
@@ -109,6 +104,33 @@
                 
             </nav>
             
+            <div class="request">
+                <div class="request-option">
+                    <h3>22 Request</h3>
+                    <div class="request-tabs">
+                        <button class="tab pending active">Pending <span class="badge">2</span></button>
+                        <button class="tab approved">Approved <span class="badge">2</span></button>
+                        <button class="tab rejected">Rejected <span class="badge">2</span></button>
+                    </div>
+                </div>
+            </div>
+            
+            
+
+<script>
+    const tabs = document.querySelectorAll('.tab');
+
+tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+    });
+});
+
+</script>
+
+
+
                  <!-- HEADER TABEL -->
     <div class="table-header-container">
         <div class="table-header">
