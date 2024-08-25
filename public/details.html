@@ -838,10 +838,10 @@
 
     <script type="module">
 
-        // Import Firebase dan Mapbox
+// Import Firebase dan Mapbox
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getDatabase, ref as dbRef, onValue, set, push, remove } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-import { getFirestore, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { getDatabase, ref as dbRef, onValue, set, push, remove, update } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
 
 // Firebase Config
 const firebaseConfig = {
@@ -858,7 +858,8 @@ const firebaseConfig = {
 // Inisialisasi Firebase
 const app = initializeApp(firebaseConfig);
 const realtimeDB = getDatabase(app);
-const firestoreDB = getFirestore(app);
+const storage = getStorage(app);
+const storageRef = ref(storage);
 // Ambil parameter dari URL
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -872,6 +873,147 @@ function getParameterByName(name, url) {
 const deleteButton = document.getElementById('confirmDelete');
 const docId = getParameterByName('docId');
 const vehicleRef = dbRef(realtimeDB, 'Vehicle/' + docId);
+
+            const form = document.getElementById('vehicleForm');
+            const nicknameInput = document.getElementById('nickname');
+            const typeSelect = document.getElementById('type');
+            const brandSelect = document.getElementById('brand');
+            const nameInput = document.getElementById('name');
+            const plateInput = document.getElementById('plate');
+            const emailInput = document.getElementById('email');
+            const picInput = document.getElementById('pic');
+            const picPreview = document.getElementById('pic-preview');
+            const fileName = document.getElementById('file-name');
+            const popup = document.getElementById('popup');
+
+
+
+
+
+// Fungsi untuk mengambil data kendaraan dari Realtime Database
+function fetchVehicleData() {
+    onValue(vehicleRef, (snapshot) => {
+        const vehicleData = snapshot.val();
+        if (vehicleData) {
+            nicknameInput.value = vehicleData.nickname || '';
+            typeSelect.value = vehicleData.type || '';
+            brandSelect.value = vehicleData.brand || '';
+            nameInput.value = vehicleData.name || '';
+            plateInput.value = vehicleData.plate || '';
+            emailInput.value = vehicleData.email || '';
+            if (vehicleData.picture) {
+                picPreview.src = vehicleData.picture;
+                picPreview.style.width = '25px';
+                picPreview.style.height = '25px';
+                fileName.textContent = 'Picture chosen';
+            }
+        } else {
+            console.log("No such data!");
+        }
+    }, (error) => {
+        console.error("Error getting data:", error);
+    });
+}
+
+fetchVehicleData();
+
+picInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        fileName.textContent = file.name;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            picPreview.src = e.target.result;
+            picPreview.style.width = '25px';
+            picPreview.style.height = '25px';
+        };
+        reader.readAsDataURL(file);
+    } else {
+        picPreview.src = 'assets/images/Input-vehpic.svg';
+        picPreview.style.width = 'auto';
+        picPreview.style.height = 'auto';
+        fileName.textContent = 'No picture chosen (optional)';
+    }
+});
+
+plateInput.addEventListener('input', (event) => {
+    plateInput.value = plateInput.value.toUpperCase();
+});
+
+async function uploadPicture(file) {
+    const storageReference = ref(storage, 'Vehicle/Image/' + file.name);
+    await uploadBytes(storageReference, file);
+    return await getDownloadURL(storageReference);
+}
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (nicknameInput.value.trim() === "") {
+        showPopup("Vehicle NickName tidak boleh kosong!");
+        return;
+    }
+    
+    if (typeSelect.value.trim() === "") {
+        showPopup("Kamu harus memilih Vehicle Type!");
+        return;
+    }
+
+    if (brandSelect.value.trim() === "") {
+        showPopup("Kamu harus memilih Brand Kendaraan!");
+        return;
+    }
+
+    if (nameInput.value.trim() === "") {
+        showPopup("Vehicle Name tidak boleh kosong!");
+        return;
+    }
+
+    if (plateInput.value.trim() === "") {
+        showPopup("Plate no tidak boleh kosong!");
+        return;
+    }
+
+    let updatedData = {
+        nickname: nicknameInput.value,
+        type: typeSelect.value,
+        brand: brandSelect.value,
+        name: nameInput.value,
+        plate: plateInput.value.toUpperCase(),
+        email: emailInput.value || null
+    };
+
+    try {
+        showPopup("Uploading data...");
+        if (picInput.files[0]) {
+            const pictureURL = await uploadPicture(picInput.files[0]);
+            updatedData.picture = pictureURL;
+        }
+        await update(vehicleRef, updatedData);
+        showPopup("Data berhasil diperbarui!");
+        toggleFormEdit();
+    } catch (error) {
+        console.error("Error updating data:", error);
+        showPopup("Terjadi kesalahan saat memperbarui data: " + error.message);
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1045,10 +1187,6 @@ deleteButton.addEventListener('click', async () => {
         await remove(vehicleRef);
         console.log('Data berhasil dihapus dari Realtime Database');
         
-        // Hapus dokumen dari Firestore
-        const vehicleDocRef = doc(firestoreDB, 'Vehicle', docId);
-        await deleteDoc(vehicleDocRef);
-        console.log('Dokumen berhasil dihapus dari Firestore');
         
         // Redirect ke halaman dashboard setelah berhasil menghapus
         window.location.href = 'dashboard.html';
@@ -1209,6 +1347,15 @@ function displayVehicleImage(vehicleData) {
 
 
     <script>
+
+function showPopup(message) {
+    popup.textContent = message;
+    popup.style.display = "block";
+    setTimeout(() => {
+        popup.style.display = "none";
+    }, 3000);
+}
+
         // Ambil elemen tombol "Show Detail"
 const showDetailButton = document.querySelector('.ShowDetail');
 
