@@ -1,8 +1,8 @@
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
+import { getDatabase, ref as dbRef, set, push } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
-const db = getFirestore();
 const storage = getStorage();
+const rtdb = getDatabase();  // Realtime Database
 
 let brandInput = document.getElementById("brand");
 let emailInput = document.getElementById("email");
@@ -32,6 +32,7 @@ picInput.addEventListener('change', (event) => {
         reader.readAsDataURL(file);
     }
 });
+
 // Event listener untuk mengubah input plat nomor menjadi huruf kapital
 plateInput.addEventListener('input', (event) => {
     plateInput.value = plateInput.value.toUpperCase();
@@ -65,8 +66,6 @@ addVehButton.addEventListener("click", async (event) => {
         showPopup("Nomor Plat tidak boleh kosong!");
         return;
     }
-    
-
 
     const user = firebase.auth().currentUser;
     if (!user) {
@@ -107,14 +106,15 @@ function showPopup(message) {
 }
 
 async function addDocument_AutoID(userID, pictureURL) {
-    const ref = collection(db, "Vehicle");
+    // Menghasilkan key baru untuk data di Realtime Database
+    const newVehRef = push(dbRef(rtdb, 'Vehicle'));
 
-    await addDoc(ref, {
+    // Menambahkan data ke Realtime Database
+    await set(newVehRef, {
         nickname: nickInput.value,
         name: nameInput.value,
         type: typeInput.value,
         brand: brandInput.value,
-        status: false,
         engine: false,
         plate: plateInput.value,
         email: emailInput.value,
