@@ -115,6 +115,7 @@ async function addDocument_AutoID(userID, pictureURL) {
         name: nameInput.value,
         type: typeInput.value,
         brand: brandInput.value,
+        engine_status: false,
         plate: plateInput.value,
         email: emailInput.value,
         picture: pictureURL,
