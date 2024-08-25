@@ -57,22 +57,6 @@
     color: #46EF4D;
 }
 
-.add-driver-btn {
-    position: fixed;
-    bottom: 30px; /* Jarak dari bawah */
-    right: 10px; /* Jarak dari kanan */
-    z-index: 1000; /* Memastikan tombol berada di atas elemen lain */
-}
-
-.add-driver-btn img {
-    width: 80%; /* Memastikan gambar penuh */
-    height: auto;
-    transition: opacity 0.3s ease; /* Animasi ketika di-hover */
-}
-
-.add-driver-btn img:hover {
-    opacity: 0.8; /* Sedikit ke-dim ketika di-hover */
-}
 
 
 /* Overlay background */
