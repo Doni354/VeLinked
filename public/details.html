@@ -890,6 +890,47 @@ const vehicleRef = dbRef(realtimeDB, 'Vehicle/' + docId);
 
 
 
+
+// DOMContentLoaded event listener
+document.addEventListener('DOMContentLoaded', function () {
+    const logTable = document.getElementById('logTable');
+
+    // Referensi ke path Logs di Realtime Database
+    const logsRef = dbRef(realtimeDB, 'Logs');
+
+    // Mendapatkan data autoID yang ada di dalam Logs
+    onValue(logsRef, (snapshot) => {
+        logTable.innerHTML = ''; // Hapus data sebelumnya
+        snapshot.forEach((autoIDSnapshot) => {
+            const autoID = autoIDSnapshot.key;
+            const docRef = dbRef(realtimeDB, `Logs/${autoID}`);
+
+            // Ambil data berdasarkan docId
+            onValue(docRef, (docSnapshot) => {
+                if (docSnapshot.exists()) {
+                    const data = docSnapshot.val();
+                    if (data.docId === docId) {
+                        const logItem = document.createElement('div');
+                        logItem.classList.add('log-item');
+                        logItem.innerHTML = `
+                            <p><strong>Engine Status:</strong> ${data.engineStatus}</p>
+                            <p><strong>Timestamp:</strong> ${new Date(data.timestamp).toLocaleString()}</p>
+                        `;
+                        logTable.appendChild(logItem);
+                    }
+                }
+            });
+        });
+    });
+});
+
+
+
+
+            
+
+
+
 // Fungsi untuk mengambil data kendaraan dari Realtime Database
 function fetchVehicleData() {
     onValue(vehicleRef, (snapshot) => {
