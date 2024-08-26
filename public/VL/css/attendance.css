@@ -59,193 +59,7 @@
 
 
 
-/* Overlay background */
-.overlay {
-    display: none; /* Initially hidden */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Dim effect */
-    z-index: 1000; /* Ensure overlay is on top */
-}
-/* Hanya konten overlay yang di-scale */
-.overlay-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%)scale(0.75); /* Pusatkan dan scale konten */
-    background-color: #F9F9F9;
-    padding: 20px;
-    border-radius: 30px;
-    height: auto;
-    width: 810px; /* Sesuaikan jika diperlukan */
-    text-align: left; /* Rata kiri teks */
-    border: none; /* Tidak menggunakan border */
-    outline: 2px solid #F1F1F1; /* Membuat outline */
-    outline-offset: -2px; /* Menempatkan outline di dalam elemen */
-    box-sizing: border-box;
-}
 
-/* User data container */
-.userdat {
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    gap: 15px; /* Add some space between the image and text */
-}
-
-/* User image styling */
-.user-image {
-    width: 100px; /* Set the width of the image */
-    height: 100px; /* Set the height of the image */
-    border-radius: 50%; /* Optional: make the image circular */
-}
-
-/* Username data */
-.usernamedat {
-    font-family: "Lato";
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.usernamedat h4, .usernamedat p {
-    color: #7F8489;
-    margin: 0; /* Remove default margin */
-    line-height: 1.5; /* Adjust line-height for closer spacing */
-}
-
-.h4-bold h4 {
-    font-weight: bold;
-    color: black;
-}
-
-
-
-/* Table styling */
-.table-container {
-    margin-top: 50px;
-    width: 100%; /* Full width of the content */
-}
-
-.custom-table {
-    width: 100%;
-    border-collapse: collapse; /* Merge borders of adjacent cells */
-    font-family: "Lato";
-}
-
-.custom-table td {
-    padding: 8px 10px; /* Padding inside cells */
-    border-top: 2px solid #F1F1F1; /* Border on top of each row */
-    border-bottom: 2px solid #F1F1F1; /* Border on bottom of each row */
-    border-left: none; /* Remove left border */
-    border-right: none; /* Remove right border */
-    vertical-align: middle; /* Center content vertically */
-}
-
-/* Border for middle column */
-.custom-table td + td {
-    border-left: 2px solid #F1F1F1; /* Border between columns */
-}
-
-/* Remove top and bottom border for first and last row */
-.custom-table tr:first-child td {
-    border-top: 2px solid #F1F1F1; /* Border on top of the first row */
-}
-
-.custom-table tr:last-child td {
-    border-bottom: 2px solid #F1F1F1; /* Border on bottom of the last row */
-}
-
-/* Alignment for content in table cells */
-.table-cell-content {
-    display: flex;
-    align-items: center;
-    color: #7F8489;
-    font-family: "Lato";
-}
-
-.icon {
-    margin-right: 10px; /* Space between image and text */
-}
-
-.text {
-    margin: 0; /* Remove default margin for <p> */
-    text-align: center; /* Center text */
-}
-
-.online {
-    color: #64D182;
-}
-
-/* Navbar styling */
-.navbar {
-    position: relative;
-    margin-top: 20px; /* Space between the table and navbar */
-    display: flex;
-    justify-content: center; /* Center navbar horizontally */
-}
-
-.navbar-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    gap: 15px; /* Space between items */
-}
-
-.navbar-item {
-    /* No additional styling needed here */
-}
-
-.navbar-item a {
-    text-decoration: none;
-    color: #333; /* Text color */
-    font-weight: bold;
-    padding: 10px 15px;
-    display: inline-block;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.navbar-item a:hover {
-    background-color: #E5F5F5; /* Background color on hover */
-    color: #000; /* Text color on hover */
-    border-radius: 4px; /* Rounded corners */
-}
-
-.navbar-active a {
-    background-color: #E1F0F3;
-    border-radius: 4px;
-}
-/* Navbar content styling */
-.navbar-content {
-    display: block; /* Initially hidden */
-}
-
-.content-section {
-    display: none; /* Hide sections by default */
-    padding: 20px;
-    margin-top: 10px;
-    border-radius: 4px;
-    background-color: #FFFFFF;
-}
-
-/* Show active content section */
-.navbar-active-content {
-    display: block; /* Show the active section */
-}
-
-.head-content {
-
-    display: flex;
-    justify-content: space-between;
-}
-
-.head-content h5 {
-    font-weight: bold;
-}
 
 
 .request {
@@ -327,3 +141,36 @@
     outline: none; /* Menghilangkan border hitam saat tombol ditekan */
 }
 
+.navbar-option {
+    font-size: small;
+    display: flex;
+    flex-direction: row;
+    row-gap: 0.5em;
+    padding-left: 2em;
+    color: #7F8489;
+    font-weight: bold;
+    font-family: 'Lato';
+    cursor: pointer;
+    align-items: center;
+}
+
+.navbar-option div img {
+    width: 18px; /* Ukuran gambar lebih besar */
+    height: auto;
+    margin-right: 3px;
+    margin-bottom: 5px;
+}
+.option-active {
+    color: #0D0E0F;
+}
+
+.option-active img {
+    filter: brightness(1.2);
+}
+
+.oprational-option:hover {
+    opacity: 75%;
+}
+.TimeOffReq-option:hover {
+    opacity: 75%;
+}
