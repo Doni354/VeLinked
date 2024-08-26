@@ -893,13 +893,89 @@
     
     <script src="js/UserAndStatus_check.js"></script>
 
-    <div class="add-driver-btn">
+    <div class="add-driver-btn" onclick="openCustomForm()">
         <img src="assets/images/btn-AddNewDriver.svg" alt="Add New Driver">
     </div>
+    
+    <div class="custom-form-container">
+        <div class="custom-form-page custom-form-page-1">
+            <!-- Form kiri -->
+            <h2>Your Driver Data</h2>
+            <input type="text" placeholder="Full Name">
+            <input type="text" placeholder="Address">
+            <input type="email" placeholder="Email">
+            <input type="text" placeholder="Phone Number">
+            <input type="date" placeholder="Date Of Birth">
+            <input type="text" placeholder="Emergency Contact (Optional)">
+            <input type="file" placeholder="Driver Photo (optional)">
+            <button onclick="nextCustomForm()">Next</button>
+        </div>
+    
+        <div class="custom-form-page custom-form-page-2">
+            <!-- Form kanan -->
+            <h2>Your Driver Data</h2>
+            <input type="text" placeholder="National ID Number (Optional)">
+            <input type="file" placeholder="National ID Picture (Optional)">
+            <select>
+                <option>Employment Type</option>
+                <option>Full-Time</option>
+                <option>Part-Time</option>
+            </select>
+            <select>
+                <option>Vehicle Used</option>
+                <option>Car</option>
+                <option>Motorcycle</option>
+            </select>
+            <input type="number" placeholder="Salary">
+            <input type="file" placeholder="Driving License (Optional)">
+            <input type="file" placeholder="Employee Card (Optional)">
+            <button onclick="prevCustomForm()">Previous</button>
+            <button onclick="confirmCustomForm()">Confirm</button>
+        </div>
+    </div>
+    
+    <div class="custom-dim-bg"></div>
+    
       
     
         
     <script>
+
+
+
+
+
+function openCustomForm() {
+    document.querySelector('.custom-form-container').style.display = 'block';
+    document.querySelector('.custom-form-page-1').classList.add('active');
+    document.querySelector('.custom-dim-bg').style.display = 'block';
+}
+
+function closeCustomForm() {
+    document.querySelector('.custom-form-container').style.display = 'none';
+    document.querySelector('.custom-form-page-1').classList.remove('active');
+    document.querySelector('.custom-form-page-2').classList.remove('active');
+    document.querySelector('.custom-dim-bg').style.display = 'none';
+}
+
+function nextCustomForm() {
+    document.querySelector('.custom-form-page-1').classList.remove('active');
+    document.querySelector('.custom-form-page-2').classList.add('active');
+}
+
+function prevCustomForm() {
+    document.querySelector('.custom-form-page-2').classList.remove('active');
+    document.querySelector('.custom-form-page-1').classList.add('active');
+}
+
+function confirmCustomForm() {
+    alert('Data has been submitted!');
+    closeCustomForm();
+}
+
+// Tutup form jika area di luar form diklik
+document.querySelector('.custom-dim-bg').addEventListener('click', closeCustomForm);
+
         document.addEventListener('DOMContentLoaded', function() {
     const items = document.querySelectorAll('.navbar-item');
     const sections = document.querySelectorAll('.content-section');
