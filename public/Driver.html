@@ -950,13 +950,16 @@
 
 
 
-        function openOverlay() {
+function openOverlay() {
     document.getElementById('overlay').style.display = 'block';
+    document.querySelector('.add-driver-btn').style.display = 'none';
 }
 
 function closeOverlay() {
     document.getElementById('overlay').style.display = 'none';
+    document.querySelector('.add-driver-btn').style.display = 'block';
 }
+
 
     </script>
 
