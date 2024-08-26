@@ -93,28 +93,7 @@
   background-color: #F5F4FF;
 }
 
-#overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Latar belakang gelap */
-  display: none;
-  z-index: 999;
-}
 
-#formContainer {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: none;
-  z-index: 1000;
-  width: 90%; /* Adjusted for responsiveness */
-  max-width: 550px; /* Max width for larger screens */
-  box-sizing: border-box; /* Include padding in width */
-}
 
 .container {
   width: 100%; /* Use full width of the parent */

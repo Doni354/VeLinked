@@ -174,3 +174,219 @@
 .TimeOffReq-option:hover {
     opacity: 75%;
 }
+
+
+/* Styling overlay */
+.overlay {
+    position: fixed;
+    right: -100%;
+    top: 0;
+    height: 100%;
+    width: 500px;
+    background-color: #F6FAFF;
+    border: #E6EDFF solid 1px;
+    transition: right 0.3s ease-in-out;
+    z-index: 9999;
+}
+
+.overlay.open {
+    right: 0;
+}
+
+.overlay-content {
+    padding: 20px;
+}
+
+.close-button {
+    background-color: transparent; /* Menghapus latar belakang tombol */
+    border: none; /* Menghapus border tombol */
+    cursor: pointer; /* Menampilkan kursor tangan saat hover */
+    outline: none; /* Menghapus outline saat tombol di-focus */
+}
+
+.close-button:focus {
+    outline: none; /* Menghapus outline saat tombol di-focus */
+}
+
+.close-button:active {
+    outline: none; /* Menghapus outline saat tombol di-klik */
+    border: none; /* Menghapus border saat tombol di-klik */
+}
+
+
+.head-overlay {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #09244B;
+    font-weight: 800;
+    font-size: 20px;
+}
+/* Additional styling (user-info, time-off-details, etc.) */
+
+.user-info {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    border: #E6EDFF solid 1px;
+    padding: 0.5em;
+    padding-left: 1em;
+    font-family: 'Lato';    
+    justify-content: space-between;
+}
+
+.left-user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info img {
+    width: 60px; /* Perbesar ukuran gambar */
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.user-details {
+    margin-top: 10px;
+}
+
+.user-details h5 {
+    color: #09244B;
+    margin-top: 5px;
+    margin-bottom: 0px;
+    font-weight: 800;
+}
+
+.user-details p {
+    color: #7F8489;
+    font-size: small;
+}
+
+.user-status img {
+    width: 120px; /* Sesuaikan ukuran gambar status */
+    height: 120px;
+}
+
+
+.status {
+    background-color: yellow;
+    border-radius: 10px;
+    padding: 5px;
+    font-size: 12px;
+}
+
+.time-off-details {
+    margin-top: 10px;
+}
+
+.time-off-details div {
+    margin-bottom: 5px;
+}
+
+.time-off-data {
+    display: flex;
+    flex-wrap: wrap; /* Membuat elemen dapat terbungkus ke baris berikutnya */
+}
+
+.time-off {
+    width: 50%; /* Mengatur agar elemen .time-off menempati 50% lebar kontainer */
+    box-sizing: border-box; /* Menghitung padding dan border dalam width */
+    padding: 10px; /* Opsional, untuk menambah jarak antar elemen */
+}
+
+.time-off h5 {
+    font-weight: 600;
+    color: #7F8489;
+    font-size: 15px;
+    font-family: 'Lato';
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.time-off span {
+    font-family: 'Manrope';
+    font-size: 13px;
+    font-weight: 800;
+    color: #373636;
+    margin-bottom: 10px;
+}
+
+.time-off img {
+    margin-top: 10px;
+    margin-bottom: 0;
+    width: 50px;
+    height: 15px;
+}
+
+.time-off-reason h5 {
+    font-family: 'Manrope';
+    font-weight: 800;
+    color: #373636;
+    font-size: 16px;
+}
+
+.time-off-reason-dat p {
+    color: #7F8489;
+    font-family: 'Lato';
+    font-weight: 600;
+    font-size: 14px;
+}
+
+
+.time-off-reason-dat {
+    padding: 1em;
+    width: 450px;
+    height: 100px;
+    background-color: #F8F8F8;
+    border: #E6EDFF solid 1px;
+    border-radius: 12px;
+}
+
+.actions {
+    margin-top: 160px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.actions button {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border: 2px solid;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    outline: none;
+    border-radius: 4px;
+    font-family: 'Lato';
+    font-weight: 700;
+}
+
+.actions .reject {
+    background-color: transparent;
+    color: #C22626;
+    border-color: #C22626;
+    margin-right: 10px;
+}
+
+.actions .reject:hover {
+    background-color: #C22626;
+    color: white;
+    transform: scale(1.05);
+}
+
+.actions .approve {
+    background-color: #142D5D;
+    color: white;
+    border-color: #142D5D;
+}
+
+.actions .approve:hover {
+    background-color: transparent;
+    color: #142D5D;
+    border-color: #142D5D;
+    transform: scale(1.05);
+}

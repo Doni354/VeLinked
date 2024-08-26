@@ -252,11 +252,78 @@ document.querySelectorAll('.navbar-option > div').forEach(function(option) {
         </div>
     </div>
     </div>
-   
+    <div id="overlay" class="overlay">
+        <div class="overlay-content">
+            <div class="head-overlay">
+                <div>Time off details</div>
+                <div>                <button class="close-button" onclick="closeOverlay()">
+                    <img src="assets/images/X-button.svg" alt="Close">
+                </button></div>
+
+            </div>
+
+            
+            <div class="user-info">
+                <div class="left-user-info">
+                    <img src="assets/images/User_imgOverlay.svg" alt="User Image">
+                    <div class="user-details">
+                        <h5>Hellyos Haqiqie</h5>
+                        <p>Using VOLVO Polestar 1</p>
+                    </div>
+                </div>
+                <div class="user-status">
+                    <img src="assets/images/PendingApproval.svg" alt="User Status">
+                </div>
+            </div>
+            
+            <div class="time-off-details">
+                <div class="time-off-data">
+                    <div class="time-off">
+                        <img src="assets/images/Line-TimeOffHead.svg" alt="">
+                        <h5>Time off type</h5>
+                        <span>Sick Leave</span>
+                    </div>
+                    <div class="time-off">
+                        <img src="assets/images/Line-TimeOffHead.svg" alt="">
+                        <h5>Time off date</h5>
+                        <span>1st - 4th Jul 2024</span>
+                    </div>
+                    <div class="time-off">
+                        <img src="assets/images/Line-TimeOffHead.svg" alt="">
+                        <h5>Duration</h5>
+                        <span>4 day</span>
+                    </div>
+                </div>
+                
+                
+                <div class="time-off-reason">
+                    <h5>Time off reason</h5>
+                    <div class="time-off-reason-dat">
+                        <p>I have a fever today....</p>
+                    </div>
+                   
+                </div>
+                <div class="actions">
+                    <button class="reject">Reject</button>
+                    <button class="approve">Approve</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     </div>
 
 
+<script>function openOverlay() {
+    document.getElementById("overlay").classList.add("open");
+}
 
+function closeOverlay() {
+    document.getElementById("overlay").classList.remove("open");
+}
+
+document.querySelector('.table-row-odd').addEventListener('click', openOverlay);
+</script>
     
     
     <script src="js/UserAndStatus_check.js"></script>
