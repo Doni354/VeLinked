@@ -953,7 +953,16 @@
                 <option>Motorcycle</option>
             </select>
             <input type="number" placeholder="Salary">
-            <input type="file" placeholder="Driving License (Optional)">
+
+            <!-- Driving License -->
+            <div class="custom-input-file">
+                <input type="file" id="driving-license-input" hidden>
+                <label for="driving-license-input">
+                <img id="driving-license-icon" src="assets/images/Input-vehpic.svg" alt="">
+                </label>
+                <span id="driving-license-file-chosen">Driving License (Optional)</span>
+            </div>
+
             <input type="file" placeholder="Employee Card (Optional)">
             <button onclick="prevCustomForm()">Previous</button>
             <button onclick="confirmCustomForm()">Confirm</button>
@@ -1011,7 +1020,14 @@ nationalIdInput.addEventListener('change', function() {
   handleFileInput(nationalIdInput, nationalIdIcon, nationalIdFileChosen);
 });
 
+// Driving License
+const drivingLicenseInput = document.getElementById('driving-license-input');
+const drivingLicenseIcon = document.getElementById('driving-license-icon');
+const drivingLicenseFileChosen = document.getElementById('driving-license-file-chosen');
 
+drivingLicenseInput.addEventListener('change', function() {
+  handleFileInput(drivingLicenseInput, drivingLicenseIcon, drivingLicenseFileChosen, 'Driving License (Optional)');
+});
 
 
 
