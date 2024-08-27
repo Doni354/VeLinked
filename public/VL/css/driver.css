@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Manrope:wght@200..800&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 .table-header-container {
     background-color: white;
@@ -270,12 +270,77 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background: white;
-    width: 400px;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 450px;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 5px;
     z-index: 1001;
 }
+
+.custom-form-page h2 {
+    font-family: 'Manrope';
+    font-size: 28px;
+    font-weight: 900;
+    color: #4A3AFF;
+    text-align: start;
+    margin-bottom: 20px;
+}
+
+.custom-form-page input[type="text"],
+.custom-form-page input[type="email"],
+.custom-form-page input[type="date"],
+.custom-form-page input[type="file"],
+.custom-form-page .custom-file-upload {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 25px;
+    border: 2px solid #4A3AFF;
+    border-radius: 10px;
+    font-size: 14px;
+    box-sizing: border-box;
+    font-family: 'Inter';
+    color: #000000;
+}
+
+::placeholder {
+    font-family: 'Inter';
+    color: #000000;
+}
+.custom-form-page .custom-file-upload {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+}
+
+.file-upload-label {
+    display: inline-block;
+    padding: 10px;
+    background-color: #F6F6F6;
+    border: 2px solid #4A3AFF;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.custom-form-page .custom-next-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #142D5D;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.custom-form-page .custom-next-button:hover {
+    background-color: #1E3D73;
+}
+
 
 .custom-form-page {
     display: none;
@@ -294,4 +359,22 @@
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
     z-index: 1000;
+}
+.custom-input-file {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 2px solid #4A3AFF;
+    border-radius: 8px;
+    font-size: 14px;
+    box-sizing: border-box;
+    font-family: 'Inter';
+    color: #000000;
+}
+
+
+.formStats {
+    margin-top: 0.8em;
+    display: flex;
+    justify-content: center;
 }
