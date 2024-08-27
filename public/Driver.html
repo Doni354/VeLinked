@@ -911,15 +911,13 @@
             <input type="text" placeholder="Emergency Contact (Optional)">
             <input type="file" id="driver-photo-input" hidden>
 
-            <input type="file" id="driver-photo-input" hidden>
+            <!-- Driver Photo -->
             <div class="custom-input-file">
-            <!-- our custom upload button -->
-            <label for="driver-photo-input">
+                <input type="file" id="driver-photo-input" hidden>
+                <label for="driver-photo-input">
                 <img id="input-icon" src="assets/images/Input-vehpic.svg" alt="">
-            </label>
-
-            <!-- name of file chosen -->
-            <span style="font-family: 'Inter'; color: #000000;" id="file-chosen">Driver Photo (optional)</span>
+                </label>
+                <span id="file-chosen">Driver Photo (Optional)</span>
             </div>
 
 
@@ -994,6 +992,15 @@ function handleFileInput(inputElement, iconElement, fileChosenElement) {
   }
 }
 
+// Driver Photo
+const actualBtn = document.getElementById('driver-photo-input');
+const fileChosen = document.getElementById('file-chosen');
+const inputIcon = document.getElementById('input-icon');
+
+actualBtn.addEventListener('change', function() {
+  handleFileInput(actualBtn, inputIcon, fileChosen, 'Driver Photo (Optional)');
+});
+
 // National ID Picture
 const nationalIdInput = document.getElementById('national-id-input');
 const nationalIdIcon = document.getElementById('national-id-icon');
@@ -1005,30 +1012,7 @@ nationalIdInput.addEventListener('change', function() {
 });
 
 
-const actualBtn = document.getElementById('driver-photo-input');
-const fileChosen = document.getElementById('file-chosen');
-const inputIcon = document.getElementById('input-icon');
 
-actualBtn.addEventListener('change', function() {
-  const file = this.files[0];
-  
-  if (file) {
-    fileChosen.textContent = file.name;
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      inputIcon.src = e.target.result;  // Ganti src dengan gambar yang dipilih
-      inputIcon.style.width = '24px';   // Ubah ukuran gambar preview menjadi 24x24
-      inputIcon.style.height = '24px';
-    };
-    reader.readAsDataURL(file);
-  } else {
-    fileChosen.textContent = 'Driver Photo (optional)';
-    inputIcon.src = 'assets/images/Input-vehpic.svg';  // Kembalikan ke gambar default
-    inputIcon.style.width = '';  // Kembalikan ukuran ke default
-    inputIcon.style.height = '';
-  }
-});
 
 
 
