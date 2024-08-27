@@ -378,3 +378,35 @@
     display: flex;
     justify-content: center;
 }
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-options button:focus {
+    outline: none;
+
+}
+
+.form-options button:active {
+    outline: none;
+    border: none;
+}
+.form-options button:hover {
+    opacity: 80%;
+}
+
+.Form-PreviousBtn {
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #EEEEEE;
+    border-radius: 7px;
+    font-weight: 900;
+    font-family: 'Inter';
+    font-size: 13px;
+    outline: none;
+    border: none;
+}
