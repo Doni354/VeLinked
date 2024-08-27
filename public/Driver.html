@@ -963,7 +963,16 @@
                 <span id="driving-license-file-chosen">Driving License (Optional)</span>
             </div>
 
-            <input type="file" placeholder="Employee Card (Optional)">
+            <!-- Employee Card -->
+            <div class="custom-input-file">
+                <input type="file" id="employee-card-input" hidden>
+                <label for="employee-card-input">
+                <img id="employee-card-icon" src="assets/images/Input-vehpic.svg" alt="">
+                </label>
+                <span id="employee-card-file-chosen">Employee Card (Optional)</span>
+            </div>
+
+            
             <button onclick="prevCustomForm()">Previous</button>
             <button onclick="confirmCustomForm()">Confirm</button>
         </div>
@@ -1029,7 +1038,14 @@ drivingLicenseInput.addEventListener('change', function() {
   handleFileInput(drivingLicenseInput, drivingLicenseIcon, drivingLicenseFileChosen, 'Driving License (Optional)');
 });
 
+// Employee Card
+const employeeCardInput = document.getElementById('employee-card-input');
+const employeeCardIcon = document.getElementById('employee-card-icon');
+const employeeCardFileChosen = document.getElementById('employee-card-file-chosen');
 
+employeeCardInput.addEventListener('change', function() {
+  handleFileInput(employeeCardInput, employeeCardIcon, employeeCardFileChosen, 'Employee Card (Optional)');
+});
 
 
 
