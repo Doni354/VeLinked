@@ -936,7 +936,14 @@
             <!-- Form kanan -->
             <h2>Your Driver Data</h2>
             <input type="text" placeholder="National ID Number (Optional)">
-            <input type="file" placeholder="National ID Picture (Optional)">
+            <!-- National ID Picture -->
+            <div class="custom-input-file">
+                <input type="file" id="national-id-input" hidden>
+                <label for="national-id-input">
+                <img id="national-id-icon" src="assets/images/Input-vehpic.svg" alt="">
+                </label>
+                <span id="national-id-file-chosen">National ID Picture (Optional)</span>
+            </div>
             <select>
                 <option>Employment Type</option>
                 <option>Full-Time</option>
@@ -961,6 +968,41 @@
     
         
     <script>
+
+
+
+
+// Function to handle image preview for each input
+function handleFileInput(inputElement, iconElement, fileChosenElement) {
+  const file = inputElement.files[0];
+
+  if (file) {
+    fileChosenElement.textContent = file.name;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      iconElement.src = e.target.result;
+      iconElement.style.width = '24px';
+      iconElement.style.height = '24px';
+    };
+    reader.readAsDataURL(file);
+  } else {
+    fileChosenElement.textContent = fileChosenElement.getAttribute('data-default-text');
+    iconElement.src = 'assets/images/Input-vehpic.svg';
+    iconElement.style.width = '';
+    iconElement.style.height = '';
+  }
+}
+
+// National ID Picture
+const nationalIdInput = document.getElementById('national-id-input');
+const nationalIdIcon = document.getElementById('national-id-icon');
+const nationalIdFileChosen = document.getElementById('national-id-file-chosen');
+nationalIdFileChosen.setAttribute('data-default-text', 'National ID Picture (Optional)');
+
+nationalIdInput.addEventListener('change', function() {
+  handleFileInput(nationalIdInput, nationalIdIcon, nationalIdFileChosen);
+});
 
 
 const actualBtn = document.getElementById('driver-photo-input');
