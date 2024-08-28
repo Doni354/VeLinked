@@ -922,8 +922,6 @@
 
 
 
-
-
             
             
             <button class="custom-next-button" onclick="nextCustomForm()">Next</button>
@@ -947,12 +945,55 @@
                 <option value="Full-Time">Full-Time</option>
                 <option value="Part-Time">Part-Time</option>
             </select>
+            
+
             <input type="search" list="vehicles" id="vehicle" name="vehicle" placeholder="Vehicle Used">
-            <datalist id="vehicles">
-                <option value="Car">
-                <option value="Motorcycle">
-            </datalist>
-            <input type="text" placeholder="Salary">
+    <datalist id="vehicles">
+        <!-- Options will be populated here -->
+    </datalist>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+        import { getDatabase, ref as dbRef, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
+            authDomain: "velinked-web.firebaseapp.com",
+            databaseURL: "https://velinked-web-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "velinked-web",
+            storageBucket: "velinked-web.appspot.com",
+            messagingSenderId: "844821073092",
+            appId: "1:844821073092:web:f243c25668079240ec0d91",
+            measurementId: "G-CLGQ4RWWTX"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const rtdb = getDatabase(app);  // Realtime Database
+
+        // Reference to the 'Vehicle' path in Realtime Database
+        const vehicleRef = dbRef(rtdb, 'Vehicle');
+
+        // Get the datalist element
+        const datalist = document.getElementById('vehicles');
+
+        // Listen for changes in the data at 'Vehicle' path
+        onValue(vehicleRef, (snapshot) => {
+            // Clear current options
+            datalist.innerHTML = '';
+
+            // Loop through the data and create option elements
+            snapshot.forEach((childSnapshot) => {
+                const vehicleData = childSnapshot.val();
+                const option = document.createElement('option');
+                option.value = vehicleData.nickname;  // Use 'nickname' field as the option value
+                datalist.appendChild(option);
+            });
+        });
+
+    </script>
 
             <!-- Driving License -->
             <div class="custom-input-file">
@@ -983,6 +1024,8 @@
     </div>
 
     <div class="custom-dim-bg"></div>
+    
+
     
       
     
