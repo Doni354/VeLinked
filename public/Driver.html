@@ -897,67 +897,90 @@
         <img src="assets/images/btn-AddNewDriver.svg" alt="Add New Driver">
     </div>
     
-    <div class="custom-form-container">
-        <div class="custom-form-page custom-form-page-1">
-            <h2>Your Driver Data</h2>
-            <input type="text" placeholder="Full Name">
-            <input type="text" placeholder="Address">
-            <input type="email" placeholder="Email">
-            <input type="text" placeholder="Phone Number">
-            <div class="custom-date-input">
-                <input type="text" id="date-of-birth" placeholder="Date Of Birth" onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}">
-            </div>
-            
-            <input type="text" placeholder="Emergency Contact (Optional)">
-            <input type="file" id="driver-photo-input" hidden>
-
-            <!-- Driver Photo -->
-            <div class="custom-input-file">
-                <input type="file" id="driver-photo-input" hidden>
-                <label for="driver-photo-input">
-                <img id="input-icon" src="assets/images/Input-vehpic.svg" alt="">
-                </label>
-                <span id="file-chosen">Driver Photo (Optional)</span>
-            </div>
-
-
-
-            
-            
-            <button class="custom-next-button" onclick="nextCustomForm()">Next</button>
-            <div class="formStats"><img src="assets/images/DriverForm1.svg" alt=""></div>
-        </div>
+    <div class="add-driver-btn" onclick="openCustomForm()">
+        <img src="assets/images/btn-AddNewDriver.svg" alt="Add New Driver">
+    </div>
     
-        <div class="custom-form-page custom-form-page-2">
-            <!-- Form kanan -->
-            <h2>Your Driver Data</h2>
-            <input type="text" placeholder="National ID Number (Optional)">
-            <!-- National ID Picture -->
-            <div class="custom-input-file">
-                <input type="file" id="national-id-input" hidden>
-                <label for="national-id-input">
-                <img id="national-id-icon" src="assets/images/Input-vehpic.svg" alt="">
-                </label>
-                <span id="national-id-file-chosen">National ID Picture (Optional)</span>
+    <form id="driver-form">
+        <div class="custom-form-container">
+            <div class="custom-form-page custom-form-page-1">
+                <h2>Your Driver Data</h2>
+                <input type="text" id="full-name" name="fullName" placeholder="Full Name" required>
+                <input type="text" name="address" placeholder="Address" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="text" name="phoneNumber" placeholder="Phone Number" required>
+                <div class="custom-date-input">
+                    <input type="text" id="date-of-birth" name="dateOfBirth" placeholder="Date Of Birth" onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}" required>
+                </div>
+                <input type="text" name="emergencyContact" placeholder="Emergency Contact (Optional)">
+                <!-- Driver Photo -->
+                <div class="custom-input-file">
+                    <input type="file" id="driver-photo-input" name="driverPhoto" hidden required>
+                    <label for="driver-photo-input">
+                        <img id="input-icon" src="assets/images/Input-vehpic.svg" alt="">
+                    </label>
+                    <span id="file-chosen">Driver Photo (Optional)</span>
+                </div>
+                <button type="button" class="custom-next-button" onclick="nextCustomForm()">Next</button>
+                <div class="formStats">
+                    <img src="assets/images/DriverForm1.svg" alt="">
+                </div>
             </div>
-            <select name="Employment" id="Employment">
-                <option value="" disabled selected hidden>Employment Type</option>
-                <option value="Full-Time">Full-Time</option>
-                <option value="Part-Time">Part-Time</option>
-            </select>
-            
-
-            <input type="search" list="vehicles" id="vehicle" name="vehicle" placeholder="Vehicle Used">
-    <datalist id="vehicles">
-        <!-- Options will be populated here -->
-    </datalist>
-
+    
+            <div class="custom-form-page custom-form-page-2">
+                <h2>Your Driver Data</h2>
+                <input type="text" name="nationalIdNumber" placeholder="National ID Number (Optional)">
+                <!-- National ID Picture -->
+                <div class="custom-input-file">
+                    <input type="file" id="national-id-input" name="nationalIdPhoto" hidden>
+                    <label for="national-id-input">
+                        <img id="national-id-icon" src="assets/images/Input-vehpic.svg" alt="">
+                    </label>
+                    <span id="national-id-file-chosen">National ID Picture (Optional)</span>
+                </div>
+                <select name="employmentType" id="Employment" required>
+                    <option value="" disabled selected hidden>Employment Type</option>
+                    <option value="Full-Time">Full-Time</option>
+                    <option value="Part-Time">Part-Time</option>
+                </select>
+                <input type="text" list="vehicles" id="vehicle" name="vehicleUsed" placeholder="Vehicle Used" required>
+                <datalist id="vehicles">
+                    <!-- Options will be populated here -->
+                </datalist>
+                <!-- Driving License -->
+                <div class="custom-input-file">
+                    <input type="file" id="driving-license-input" name="drivingLicensePhoto" hidden>
+                    <label for="driving-license-input">
+                        <img id="driving-license-icon" src="assets/images/Input-vehpic.svg" alt="">
+                    </label>
+                    <span id="driving-license-file-chosen">Driving License (Optional)</span>
+                </div>
+                <!-- Employee Card -->
+                <div class="custom-input-file">
+                    <input type="file" id="employee-card-input" name="employeeCardPhoto" hidden>
+                    <label for="employee-card-input">
+                        <img id="employee-card-icon" src="assets/images/Input-vehpic.svg" alt="">
+                    </label>
+                    <span id="employee-card-file-chosen">Employee Card (Optional)</span>
+                </div>
+                <div class="form-options">
+                    <button type="button" class="Form-PreviousBtn" onclick="prevCustomForm()">Previous</button>
+                    <input type="submit" class="Form-ConfirmBtn" value="Confirm">
+                </div>
+                <div class="formStats">
+                    <img src="assets/images/DriverForm2.svg" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="custom-dim-bg"></div>
+    </form>
+    
     <script type="module">
-        // Import the functions you need from the SDKs you need
+        import { getDatabase, ref as dbRef, set, onValue, push } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+        import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-        import { getDatabase, ref as dbRef, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-
-        // Your web app's Firebase configuration
+        
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
             authDomain: "velinked-web.firebaseapp.com",
@@ -968,60 +991,185 @@
             appId: "1:844821073092:web:f243c25668079240ec0d91",
             measurementId: "G-CLGQ4RWWTX"
         };
-
+        
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-        const rtdb = getDatabase(app);  // Realtime Database
-
-        // Reference to the 'Vehicle' path in Realtime Database
-        const vehicleRef = dbRef(rtdb, 'Vehicle');
-
-        // Get the datalist element
-        const datalist = document.getElementById('vehicles');
-
-        // Listen for changes in the data at 'Vehicle' path
-        onValue(vehicleRef, (snapshot) => {
-            // Clear current options
-            datalist.innerHTML = '';
-
-            // Loop through the data and create option elements
+        const db = getDatabase(app);
+        const storage = getStorage(app);
+        
+        // Fetch and populate vehicles datalist from Realtime Database
+        const vehiclesDatalist = document.getElementById('vehicles');
+        const vehiclesRef = dbRef(db, 'Vehicle');
+        let vehicleMap = {};  // Mapping between nickname and doc ID
+        
+        onValue(vehiclesRef, (snapshot) => {
+            vehiclesDatalist.innerHTML = '';  // Clear existing options
+            vehicleMap = {};  // Clear existing map
             snapshot.forEach((childSnapshot) => {
-                const vehicleData = childSnapshot.val();
+                const nickname = childSnapshot.val().nickname;
+                const docId = childSnapshot.key;
+        
                 const option = document.createElement('option');
-                option.value = vehicleData.nickname;  // Use 'nickname' field as the option value
-                datalist.appendChild(option);
+                option.value = nickname;
+                option.setAttribute('data-doc-id', docId);
+                vehiclesDatalist.appendChild(option);
+        
+                vehicleMap[nickname] = docId;  // Add to the map
             });
         });
+        
+        document.getElementById('vehicle').addEventListener('input', function() {
+            const selectedOption = vehiclesDatalist.querySelector(`option[value="${this.value}"]`);
+            if (selectedOption) {
+                this.dataset.docId = selectedOption.getAttribute('data-doc-id');
+            } else {
+                delete this.dataset.docId;
+            }
+        });
+        
+        // Handle form submission
+        document.getElementById('driver-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+        
+            const formData = new FormData(this);
+            const fullName = formData.get('fullName');
+            const driverPhotoFile = formData.get('driverPhoto');
+            const nationalIdPhotoFile = formData.get('nationalIdPhoto');
+            const drivingLicensePhotoFile = formData.get('drivingLicensePhoto');
+            const employeeCardPhotoFile = formData.get('employeeCardPhoto');
+            const selectedNickname = formData.get('vehicleUsed');
+            const vehicleUsed = vehicleMap[selectedNickname] || null;
+        
+            // Upload files to Firebase Storage and get their URLs
+            const uploadAndGetUrl = (file, path) => {
+                return new Promise((resolve, reject) => {
+                    if (file) {
+                        const fileName = `${path}_${Date.now()}_${file.name}`;
+                        const storageRefInstance = storageRef(storage, `Driver/images/${fileName}`);
+                        const uploadTask = uploadBytesResumable(storageRefInstance, file);
+        
+                        uploadTask.on('state_changed',
+                            (snapshot) => {
+                                // Handle upload progress if needed
+                            },
+                            (error) => {
+                                reject(error);
+                            },
+                            () => {
+                                getDownloadURL(uploadTask.snapshot.ref).then(resolve).catch(reject);
+                            }
+                        );
+                    } else {
+                        resolve(null);
+                    }
+                });
+            };
+        
+            Promise.all([
+                uploadAndGetUrl(driverPhotoFile, 'driverPhoto'),
+                uploadAndGetUrl(nationalIdPhotoFile, 'nationalIdPhoto'),
+                uploadAndGetUrl(drivingLicensePhotoFile, 'drivingLicensePhoto'),
+                uploadAndGetUrl(employeeCardPhotoFile, 'employeeCardPhoto')
+            ]).then(([driverPhotoUrl, nationalIdPhotoUrl, drivingLicensePhotoUrl, employeeCardPhotoUrl]) => {
+                const newDriverRef = push(dbRef(db, 'Drivers'));
+                const driverData = {
+                    fullName,
+                    address: formData.get('address'),
+                    email: formData.get('email'),
+                    phoneNumber: formData.get('phoneNumber'),
+                    dateOfBirth: formData.get('dateOfBirth'),
+                    emergencyContact: formData.get('emergencyContact') || null,
+                    nationalIdNumber: formData.get('nationalIdNumber') || null,
+                    employmentType: formData.get('employmentType'),
+                    vehicleUsed,  // Use the doc ID instead of nickname
+                    driverPhotoUrl,
+                    nationalIdPhotoUrl,
+                    drivingLicensePhotoUrl,
+                    employeeCardPhotoUrl
+                };
+                return set(newDriverRef, driverData);
+            }).then(() => {
+                alert('Driver data submitted successfully!');
+                closeCustomForm();
+            }).catch((error) => {
+                console.error('Error submitting form: ', error);
+                alert('Failed to submit driver data. Please try again.');
+            });
+        });
+        
+        // Handle file input and image preview
+        function handleFileInput(inputElement, iconElement, fileChosenElement) {
+            const file = inputElement.files[0];
+        
+            if (file) {
+                fileChosenElement.textContent = file.name;
+        
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    iconElement.src = e.target.result;
+                    iconElement.style.width = '24px';
+                    iconElement.style.height = '24px';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                fileChosenElement.textContent = fileChosenElement.getAttribute('data-default-text');
+                iconElement.src = 'assets/images/Input-vehpic.svg';
+                iconElement.style.width = '';
+                iconElement.style.height = '';
+            }
+        }
+        
+        // Attach event listeners to file inputs
+        const actualBtn = document.getElementById('driver-photo-input');
+        const fileChosen = document.getElementById('file-chosen');
+        const inputIcon = document.getElementById('input-icon');
+        actualBtn.addEventListener('change', () => handleFileInput(actualBtn, inputIcon, fileChosen));
+        
+        const nationalIdInput = document.getElementById('national-id-input');
+        const nationalIdIcon = document.getElementById('national-id-icon');
+        const nationalIdFileChosen = document.getElementById('national-id-file-chosen');
+        nationalIdInput.addEventListener('change', () => handleFileInput(nationalIdInput, nationalIdIcon, nationalIdFileChosen));
+        
+        const drivingLicenseInput = document.getElementById('driving-license-input');
+        const drivingLicenseIcon = document.getElementById('driving-license-icon');
+        const drivingLicenseFileChosen = document.getElementById('driving-license-file-chosen');
+        drivingLicenseInput.addEventListener('change', () => handleFileInput(drivingLicenseInput, drivingLicenseIcon, drivingLicenseFileChosen));
+        
+        const employeeCardInput = document.getElementById('employee-card-input');
+        const employeeCardIcon = document.getElementById('employee-card-icon');
+        const employeeCardFileChosen = document.getElementById('employee-card-file-chosen');
+        employeeCardInput.addEventListener('change', () => handleFileInput(employeeCardInput, employeeCardIcon, employeeCardFileChosen));
+        
+        // Navigation functions
+        function nextCustomForm() {
+            document.querySelector('.custom-form-page-1').style.display = 'none';
+            document.querySelector('.custom-form-page-2').style.display = 'block';
+        }
+        
+        function prevCustomForm() {
+            document.querySelector('.custom-form-page-2').style.display = 'none';
+            document.querySelector('.custom-form-page-1').style.display = 'block';
+        }
+        
+        // Custom form display
+        function openCustomForm() {
+            document.querySelector('.custom-form-container').style.display = 'block';
+            document.querySelector('.custom-dim-bg').style.display = 'block';
+            document.querySelector('.add-driver-btn').style.display = 'none';
+        }
+        
+        function closeCustomForm() {
+            document.querySelector('.custom-form-container').style.display = 'none';
+            document.querySelector('.custom-dim-bg').style.display = 'none';
+            document.querySelector('.add-driver-btn').style.display = 'block';
+            document.getElementById('driver-form').reset();
+            document.querySelector('.custom-form-page-2').style.display = 'none';
+            document.querySelector('.custom-form-page-1').style.display = 'block';
+        }
+        </script>
+        
+    
 
-    </script>
-
-            <!-- Driving License -->
-            <div class="custom-input-file">
-                <input type="file" id="driving-license-input" hidden>
-                <label for="driving-license-input">
-                <img id="driving-license-icon" src="assets/images/Input-vehpic.svg" alt="">
-                </label>
-                <span id="driving-license-file-chosen">Driving License (Optional)</span>
-            </div>
-
-            <!-- Employee Card -->
-            <div class="custom-input-file">
-                <input type="file" id="employee-card-input" hidden>
-                <label for="employee-card-input">
-                <img id="employee-card-icon" src="assets/images/Input-vehpic.svg" alt="">
-                </label>
-                <span id="employee-card-file-chosen">Employee Card (Optional)</span>
-            </div>
-
-            <div class="form-options">
-                <button class="Form-PreviousBtn" onclick="prevCustomForm()">Previous</button>
-                <button class="Form-ConfirmBtn" onclick="confirmCustomForm()">Confirm</button>
-            </div>
-            <div class="formStats">
-                <img src="assets/images/DriverForm2.svg" alt="">
-            </div>
-        </div>
-    </div>
 
     <div class="custom-dim-bg"></div>
     
@@ -1031,70 +1179,6 @@
     
         
     <script>
-
-
-
-
-// Function to handle image preview for each input
-function handleFileInput(inputElement, iconElement, fileChosenElement) {
-  const file = inputElement.files[0];
-
-  if (file) {
-    fileChosenElement.textContent = file.name;
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      iconElement.src = e.target.result;
-      iconElement.style.width = '24px';
-      iconElement.style.height = '24px';
-    };
-    reader.readAsDataURL(file);
-  } else {
-    fileChosenElement.textContent = fileChosenElement.getAttribute('data-default-text');
-    iconElement.src = 'assets/images/Input-vehpic.svg';
-    iconElement.style.width = '';
-    iconElement.style.height = '';
-  }
-}
-
-// Driver Photo
-const actualBtn = document.getElementById('driver-photo-input');
-const fileChosen = document.getElementById('file-chosen');
-const inputIcon = document.getElementById('input-icon');
-
-actualBtn.addEventListener('change', function() {
-  handleFileInput(actualBtn, inputIcon, fileChosen, 'Driver Photo (Optional)');
-});
-
-// National ID Picture
-const nationalIdInput = document.getElementById('national-id-input');
-const nationalIdIcon = document.getElementById('national-id-icon');
-const nationalIdFileChosen = document.getElementById('national-id-file-chosen');
-nationalIdFileChosen.setAttribute('data-default-text', 'National ID Picture (Optional)');
-
-nationalIdInput.addEventListener('change', function() {
-  handleFileInput(nationalIdInput, nationalIdIcon, nationalIdFileChosen);
-});
-
-// Driving License
-const drivingLicenseInput = document.getElementById('driving-license-input');
-const drivingLicenseIcon = document.getElementById('driving-license-icon');
-const drivingLicenseFileChosen = document.getElementById('driving-license-file-chosen');
-
-drivingLicenseInput.addEventListener('change', function() {
-  handleFileInput(drivingLicenseInput, drivingLicenseIcon, drivingLicenseFileChosen, 'Driving License (Optional)');
-});
-
-// Employee Card
-const employeeCardInput = document.getElementById('employee-card-input');
-const employeeCardIcon = document.getElementById('employee-card-icon');
-const employeeCardFileChosen = document.getElementById('employee-card-file-chosen');
-
-employeeCardInput.addEventListener('change', function() {
-  handleFileInput(employeeCardInput, employeeCardIcon, employeeCardFileChosen, 'Employee Card (Optional)');
-});
-
-
 
 
 
@@ -1121,10 +1205,7 @@ function prevCustomForm() {
     document.querySelector('.custom-form-page-1').classList.add('active');
 }
 
-function confirmCustomForm() {
-    alert('Data has been submitted!');
-    closeCustomForm();
-}
+
 
 // Tutup form jika area di luar form diklik
 document.querySelector('.custom-dim-bg').addEventListener('click', closeCustomForm);
