@@ -291,6 +291,8 @@
 .custom-form-page input[type="email"],
 .custom-form-page input[type="date"],
 .custom-form-page input[type="file"],
+.custom-form-page input[type="search"],
+.custom-form-page select,
 .custom-form-page .custom-file-upload {
     width: 100%;
     padding: 10px;
@@ -403,6 +405,23 @@
     padding-top: 10px;
     padding-bottom: 10px;
     background-color: #EEEEEE;
+    border-radius: 7px;
+    font-weight: 900;
+    font-family: 'Inter';
+    font-size: 13px;
+    outline: none;
+    border: none;
+}
+
+
+
+.Form-ConfirmBtn {
+    color: #FFFFFF;
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #142D5D;
     border-radius: 7px;
     font-weight: 900;
     font-family: 'Inter';

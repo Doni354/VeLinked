@@ -942,17 +942,17 @@
                 </label>
                 <span id="national-id-file-chosen">National ID Picture (Optional)</span>
             </div>
-            <select>
-                <option>Employment Type</option>
-                <option>Full-Time</option>
-                <option>Part-Time</option>
+            <select name="Employment" id="Employment">
+                <option value="" disabled selected hidden>Employment Type</option>
+                <option value="Full-Time">Full-Time</option>
+                <option value="Part-Time">Part-Time</option>
             </select>
-            <select>
-                <option>Vehicle Used</option>
-                <option>Car</option>
-                <option>Motorcycle</option>
-            </select>
-            <input type="number" placeholder="Salary">
+            <input type="search" list="vehicles" id="vehicle" name="vehicle" placeholder="Vehicle Used">
+            <datalist id="vehicles">
+                <option value="Car">
+                <option value="Motorcycle">
+            </datalist>
+            <input type="text" placeholder="Salary">
 
             <!-- Driving License -->
             <div class="custom-input-file">
@@ -974,7 +974,7 @@
 
             <div class="form-options">
                 <button class="Form-PreviousBtn" onclick="prevCustomForm()">Previous</button>
-                <button onclick="confirmCustomForm()">Confirm</button>
+                <button class="Form-ConfirmBtn" onclick="confirmCustomForm()">Confirm</button>
             </div>
             <div class="formStats">
                 <img src="assets/images/DriverForm2.svg" alt="">
