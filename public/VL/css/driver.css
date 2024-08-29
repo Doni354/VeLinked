@@ -442,4 +442,16 @@
     display: none; /* Mulai tersembunyi */
     z-index: 9999; /* Tingkatkan z-index agar muncul di atas elemen lain */
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Tambahkan bayangan untuk efek dim */
-  }
+}
+
+.popup.show {
+    display: block; /* Tampilkan popup */
+}
+
+.popup.success {
+    border: 2px solid #4CAF50; /* Warna border untuk sukses */
+}
+
+.popup.error {
+    border: 2px solid #F44336; /* Warna border untuk error */
+}
