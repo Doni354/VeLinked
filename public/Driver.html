@@ -948,6 +948,7 @@
                     <!-- Options will be populated here -->
                 </datalist>
                 <!-- Driving License -->
+                <input type="text" name="salary" placeholder="Salary (Optional)">
                 <div class="custom-input-file">
                     <input type="file" id="driving-license-input" name="drivingLicensePhoto" hidden>
                     <label for="driving-license-input">
@@ -976,7 +977,7 @@
     </form>
     
     <script type="module">
-        import { getDatabase, ref as dbRef, set, onValue, push, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { getDatabase, ref as dbRef, set, onValue, push, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 
@@ -1045,6 +1046,7 @@ document.getElementById('driver-form').addEventListener('submit', function(event
     const nationalIdPhotoFile = formData.get('nationalIdPhoto');
     const drivingLicensePhotoFile = formData.get('drivingLicensePhoto');
     const employeeCardPhotoFile = formData.get('employeeCardPhoto');
+    const salary = formData.get('salary');
 
     // Upload files to Firebase Storage and get their URLs
     const uploadAndGetUrl = (file, path) => {
@@ -1088,6 +1090,7 @@ document.getElementById('driver-form').addEventListener('submit', function(event
             nationalIdNumber: formData.get('nationalIdNumber') || null,
             employmentType: formData.get('employmentType'),
             vehicleUsed: vehicleDocId,  // Use the doc ID instead of nickname
+            salary: formData.get('salary') || null,
             driverPhotoUrl,
             nationalIdPhotoUrl,
             drivingLicensePhotoUrl,
@@ -1220,11 +1223,7 @@ document.getElementById('driver-form').addEventListener('submit', function(event
             prevCustomForm();
         }
         
-        document.getElementById('next-form-btn').addEventListener('click', nextCustomForm);
-        document.getElementById('prev-form-btn').addEventListener('click', prevCustomForm);
-        
-        document.getElementById('add-driver-btn').addEventListener('click', openCustomForm);
-        document.getElementById('close-form-btn').addEventListener('click', closeCustomForm);
+
 
 // Navigation functions
 function nextCustomForm() {
