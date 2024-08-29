@@ -977,147 +977,187 @@
     </form>
     
     <script type="module">
-import { getDatabase, ref as dbRef, set, onValue, push, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-
-// Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
-    authDomain: "velinked-web.firebaseapp.com",
-    databaseURL: "https://velinked-web-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "velinked-web",
-    storageBucket: "velinked-web.appspot.com",
-    messagingSenderId: "844821073092",
-    appId: "1:844821073092:web:f243c25668079240ec0d91",
-    measurementId: "G-CLGQ4RWWTX"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-const storage = getStorage(app);
-
-// Fetch and populate vehicles datalist from Realtime Database
-const vehiclesDatalist = document.getElementById('vehicles');
-const vehiclesRef = dbRef(db, 'Vehicle');
-let vehicleMap = {};  // Mapping between nickname and doc ID
-
-onValue(vehiclesRef, (snapshot) => {
-    vehiclesDatalist.innerHTML = '';  // Clear existing options
-    vehicleMap = {};  // Clear existing map
-    snapshot.forEach((childSnapshot) => {
-        const nickname = childSnapshot.val().nickname;
-        const docId = childSnapshot.key;
-
-        const option = document.createElement('option');
-        option.value = nickname;
-        option.setAttribute('data-doc-id', docId);
-        vehiclesDatalist.appendChild(option);
-
-        vehicleMap[nickname] = docId;  // Add to the map
-    });
-});
-
-document.getElementById('vehicle').addEventListener('input', function() {
-    const selectedOption = vehiclesDatalist.querySelector(`option[value="${this.value}"]`);
-    if (selectedOption) {
-        this.dataset.docId = selectedOption.getAttribute('data-doc-id');
-    } else {
-        delete this.dataset.docId;
-    }
-});
-
-// Validate vehicleUsed and handle form submission
-document.getElementById('driver-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    const formData = new FormData(this);
-    const selectedNickname = formData.get('vehicleUsed');
-    const vehicleDocId = vehicleMap[selectedNickname] || null;
-
-    if (!vehicleDocId) {
-        alert('Invalid vehicle selected. Please choose a valid vehicle.');
-        return;  // Prevent form submission
-    }
-
-    const fullName = formData.get('fullName');
-    const driverPhotoFile = formData.get('driverPhoto');
-    const nationalIdPhotoFile = formData.get('nationalIdPhoto');
-    const drivingLicensePhotoFile = formData.get('drivingLicensePhoto');
-    const employeeCardPhotoFile = formData.get('employeeCardPhoto');
-    const salary = formData.get('salary');
-
-    // Upload files to Firebase Storage and get their URLs
-    const uploadAndGetUrl = (file, path) => {
-        return new Promise((resolve, reject) => {
-            if (file) {
-                const fileName = `${path}_${Date.now()}_${file.name}`;
-                const storageRefInstance = storageRef(storage, `Driver/images/${fileName}`);
-                const uploadTask = uploadBytesResumable(storageRefInstance, file);
-
-                uploadTask.on('state_changed',
-                    (snapshot) => {
-                        // Handle upload progress if needed
-                    },
-                    (error) => {
-                        reject(error);
-                    },
-                    () => {
-                        getDownloadURL(uploadTask.snapshot.ref).then(resolve).catch(reject);
-                    }
-                );
+        import { getDatabase, ref as dbRef, set, onValue, push, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+        import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+        
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
+            authDomain: "velinked-web.firebaseapp.com",
+            databaseURL: "https://velinked-web-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "velinked-web",
+            storageBucket: "velinked-web.appspot.com",
+            messagingSenderId: "844821073092",
+            appId: "1:844821073092:web:f243c25668079240ec0d91",
+            measurementId: "G-CLGQ4RWWTX"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const storage = getStorage(app);
+        
+        // Utility functions for popup notifications
+        function showPopup(message, type = 'info') {
+            const popup = document.getElementById('popup');
+            popup.className = `popup ${type}`;
+            popup.innerText = message;
+            popup.style.display = 'block';
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Fetch and populate vehicles datalist from Realtime Database
+        const vehiclesDatalist = document.getElementById('vehicles');
+        const vehiclesRef = dbRef(db, 'Vehicle');
+        let vehicleMap = {};
+        
+        onValue(vehiclesRef, (snapshot) => {
+            vehiclesDatalist.innerHTML = '';
+            vehicleMap = {};
+            snapshot.forEach((childSnapshot) => {
+                const nickname = childSnapshot.val().nickname;
+                const docId = childSnapshot.key;
+        
+                const option = document.createElement('option');
+                option.value = nickname;
+                option.setAttribute('data-doc-id', docId);
+                vehiclesDatalist.appendChild(option);
+        
+                vehicleMap[nickname] = docId;
+            });
+        });
+        
+        document.getElementById('vehicle').addEventListener('input', function() {
+            const selectedOption = vehiclesDatalist.querySelector(`option[value="${this.value}"]`);
+            if (selectedOption) {
+                this.dataset.docId = selectedOption.getAttribute('data-doc-id');
             } else {
-                resolve(null);
+                delete this.dataset.docId;
             }
         });
-    };
-
-    Promise.all([
-        uploadAndGetUrl(driverPhotoFile, 'driverPhoto'),
-        uploadAndGetUrl(nationalIdPhotoFile, 'nationalIdPhoto'),
-        uploadAndGetUrl(drivingLicensePhotoFile, 'drivingLicensePhoto'),
-        uploadAndGetUrl(employeeCardPhotoFile, 'employeeCardPhoto')
-    ]).then(([driverPhotoUrl, nationalIdPhotoUrl, drivingLicensePhotoUrl, employeeCardPhotoUrl]) => {
-        const newDriverRef = push(dbRef(db, 'Drivers'));
-        const driverData = {
-            fullName,
-            address: formData.get('address'),
-            email: formData.get('email'),
-            phoneNumber: formData.get('phoneNumber'),
-            dateOfBirth: formData.get('dateOfBirth'),
-            emergencyContact: formData.get('emergencyContact') || null,
-            nationalIdNumber: formData.get('nationalIdNumber') || null,
-            employmentType: formData.get('employmentType'),
-            vehicleUsed: vehicleDocId,  // Use the doc ID instead of nickname
-            salary: formData.get('salary') || null,
-            driverPhotoUrl,
-            nationalIdPhotoUrl,
-            drivingLicensePhotoUrl,
-            employeeCardPhotoUrl
-        };
-        return set(newDriverRef, driverData);
-    }).then(() => {
-        alert('Driver data submitted successfully!');
-        closeCustomForm();
-    }).catch((error) => {
-        console.error('Error submitting form: ', error);
-        alert('Failed to submit driver data. Please try again.');
-    }).finally(() => {
-        // Reset file inputs to their default state
-        resetFileInput('driver-photo-input', 'input-icon', 'file-chosen', 'Driver Photo (Optional)');
-        resetFileInput('national-id-input', 'national-id-icon', 'national-id-file-chosen', 'National ID Photo (Optional)');
-        resetFileInput('driving-license-input', 'driving-license-icon', 'driving-license-file-chosen', 'Driving License Photo (Optional)');
-        resetFileInput('employee-card-input', 'employee-card-icon', 'employee-card-file-chosen', 'Employee Card Photo (Optional)');
-    });
-});
-
         
+        // Validate vehicleUsed and handle form submission
+        document.getElementById('driver-form').addEventListener('submit', function(event) {
+            event.preventDefault();
         
+            const formData = new FormData(this);
+            const selectedNickname = formData.get('vehicleUsed');
+            const vehicleDocId = vehicleMap[selectedNickname] || null;
         
-
+            if (!vehicleDocId) {
+                showPopup('Invalid vehicle selected. Please choose a valid vehicle.', 'error');
+                return;
+            }
         
+            // Show processing popup
+            showPopup('Processing data, please wait...', 'info');
+        
+            const fullName = formData.get('fullName');
+            const driverPhotoFile = formData.get('driverPhoto');
+            const nationalIdPhotoFile = formData.get('nationalIdPhoto');
+            const drivingLicensePhotoFile = formData.get('drivingLicensePhoto');
+            const employeeCardPhotoFile = formData.get('employeeCardPhoto');
+            const salary = formData.get('salary');
+        
+            const uploadAndGetUrl = (file, path) => {
+                return new Promise((resolve, reject) => {
+                    if (file) {
+                        const fileName = `${path}_${Date.now()}_${file.name}`;
+                        const storageRefInstance = storageRef(storage, `Driver/images/${fileName}`);
+                        const uploadTask = uploadBytesResumable(storageRefInstance, file);
+        
+                        uploadTask.on('state_changed',
+                            (snapshot) => {
+                                // Handle upload progress if needed
+                            },
+                            (error) => {
+                                reject(error);
+                            },
+                            () => {
+                                getDownloadURL(uploadTask.snapshot.ref).then(resolve).catch(reject);
+                            }
+                        );
+                    } else {
+                        resolve(null);
+                    }
+                });
+            };
+        
+            Promise.all([
+                uploadAndGetUrl(driverPhotoFile, 'driverPhoto'),
+                uploadAndGetUrl(nationalIdPhotoFile, 'nationalIdPhoto'),
+                uploadAndGetUrl(drivingLicensePhotoFile, 'drivingLicensePhoto'),
+                uploadAndGetUrl(employeeCardPhotoFile, 'employeeCardPhoto')
+            ]).then(([driverPhotoUrl, nationalIdPhotoUrl, drivingLicensePhotoUrl, employeeCardPhotoUrl]) => {
+                const newDriverRef = push(dbRef(db, 'Drivers'));
+                const driverData = {
+                    fullName,
+                    address: formData.get('address'),
+                    email: formData.get('email'),
+                    phoneNumber: formData.get('phoneNumber'),
+                    dateOfBirth: formData.get('dateOfBirth'),
+                    emergencyContact: formData.get('emergencyContact') || null,
+                    nationalIdNumber: formData.get('nationalIdNumber') || null,
+                    employmentType: formData.get('employmentType'),
+                    vehicleUsed: vehicleDocId,
+                    salary: formData.get('salary') || null,
+                    driverPhotoUrl,
+                    nationalIdPhotoUrl,
+                    drivingLicensePhotoUrl,
+                    employeeCardPhotoUrl
+                };
+                return set(newDriverRef, driverData);
+            }).then(() => {
+                showPopup('Driver data submitted successfully!', 'success');
+                closeCustomForm();
+            }).catch((error) => {
+                console.error('Error submitting form: ', error);
+                showPopup('Failed to submit driver data. Please try again.', 'error');
+            }).finally(() => {
+                resetFileInput('driver-photo-input', 'input-icon', 'file-chosen', 'Driver Photo (Optional)');
+                resetFileInput('national-id-input', 'national-id-icon', 'national-id-file-chosen', 'National ID Photo (Optional)');
+                resetFileInput('driving-license-input', 'driving-license-icon', 'driving-license-file-chosen', 'Driving License Photo (Optional)');
+                resetFileInput('employee-card-input', 'employee-card-icon', 'employee-card-file-chosen', 'Employee Card Photo (Optional)');
+            });
+        });
         </script>
+        
+        <!-- Popup Notification HTML -->
+        <div id="popup" class="popup" style="display:none;"></div>
+        
+        <!-- Popup Notification CSS -->
+        <style>
+        .popup {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: white;
+            background-color: #333;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .popup.info {
+            background-color: #007bff;
+        }
+        
+        .popup.success {
+            background-color: #28a745;
+        }
+        
+        .popup.error {
+            background-color: #dc3545;
+        }
+        </style>
+        
         
         
         
