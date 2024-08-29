@@ -1094,10 +1094,16 @@
             }).catch((error) => {
                 console.error('Error submitting form: ', error);
                 alert('Failed to submit driver data. Please try again.');
+            }).finally(() => {
+                // Reset file inputs to their default state
+                resetFileInput('driver-photo-input', 'input-icon', 'file-chosen', 'Driver Photo (Optional)');
+                resetFileInput('national-id-input', 'national-id-icon', 'national-id-file-chosen', 'National ID Photo (Optional)');
+                resetFileInput('driving-license-input', 'driving-license-icon', 'driving-license-file-chosen', 'Driving License Photo (Optional)');
+                resetFileInput('employee-card-input', 'employee-card-icon', 'employee-card-file-chosen', 'Employee Card Photo (Optional)');
             });
         });
         
-        // Handle file input and image preview
+        // Function to handle file input and image preview
         function handleFileInput(inputElement, iconElement, fileChosenElement) {
             const file = inputElement.files[0];
         
@@ -1117,6 +1123,22 @@
                 iconElement.style.width = '';
                 iconElement.style.height = '';
             }
+        }
+        
+        // Function to reset file input to its default state
+        function resetFileInput(inputId, iconId, fileChosenId, defaultText) {
+            const inputElement = document.getElementById(inputId);
+            const iconElement = document.getElementById(iconId);
+            const fileChosenElement = document.getElementById(fileChosenId);
+        
+            // Reset input value
+            inputElement.value = '';
+        
+            // Reset icon and text
+            iconElement.src = 'assets/images/Input-vehpic.svg';
+            iconElement.style.width = '';
+            iconElement.style.height = '';
+            fileChosenElement.textContent = defaultText;
         }
         
         // Attach event listeners to file inputs
@@ -1162,11 +1184,25 @@
             document.querySelector('.custom-form-container').style.display = 'none';
             document.querySelector('.custom-dim-bg').style.display = 'none';
             document.querySelector('.add-driver-btn').style.display = 'block';
+        
+            // Clear form values after closing
             document.getElementById('driver-form').reset();
-            document.querySelector('.custom-form-page-2').style.display = 'none';
-            document.querySelector('.custom-form-page-1').style.display = 'block';
+            resetFileInput('driver-photo-input', 'input-icon', 'file-chosen', 'Driver Photo (Optional)');
+            resetFileInput('national-id-input', 'national-id-icon', 'national-id-file-chosen', 'National ID Photo (Optional)');
+            resetFileInput('driving-license-input', 'driving-license-icon', 'driving-license-file-chosen', 'Driving License Photo (Optional)');
+            resetFileInput('employee-card-input', 'employee-card-icon', 'employee-card-file-chosen', 'Employee Card Photo (Optional)');
+        
+            prevCustomForm();
         }
+        
+        document.getElementById('next-form-btn').addEventListener('click', nextCustomForm);
+        document.getElementById('prev-form-btn').addEventListener('click', prevCustomForm);
+        
+        document.getElementById('add-driver-btn').addEventListener('click', openCustomForm);
+        document.getElementById('close-form-btn').addEventListener('click', closeCustomForm);
         </script>
+        
+        
         
     
 
@@ -1181,30 +1217,33 @@
     <script>
 
 
-
-function openCustomForm() {
-    document.querySelector('.custom-form-container').style.display = 'block';
-    document.querySelector('.custom-form-page-1').classList.add('active');
-    document.querySelector('.custom-dim-bg').style.display = 'block';
-}
-
-function closeCustomForm() {
-    document.querySelector('.custom-form-container').style.display = 'none';
-    document.querySelector('.custom-form-page-1').classList.remove('active');
-    document.querySelector('.custom-form-page-2').classList.remove('active');
-    document.querySelector('.custom-dim-bg').style.display = 'none';
-}
-
+// Navigation functions
 function nextCustomForm() {
-    document.querySelector('.custom-form-page-1').classList.remove('active');
-    document.querySelector('.custom-form-page-2').classList.add('active');
-}
-
-function prevCustomForm() {
-    document.querySelector('.custom-form-page-2').classList.remove('active');
-    document.querySelector('.custom-form-page-1').classList.add('active');
-}
-
+            document.querySelector('.custom-form-page-1').style.display = 'none';
+            document.querySelector('.custom-form-page-2').style.display = 'block';
+        }
+        
+        function prevCustomForm() {
+            document.querySelector('.custom-form-page-2').style.display = 'none';
+            document.querySelector('.custom-form-page-1').style.display = 'block';
+        }
+        
+        // Custom form display
+        function openCustomForm() {
+            document.querySelector('.custom-form-container').style.display = 'block';
+            document.querySelector('.custom-dim-bg').style.display = 'block';
+            document.querySelector('.add-driver-btn').style.display = 'none';
+            document.querySelector('.custom-form-page-1').style.display = 'block';
+        }
+        
+        function closeCustomForm() {
+            document.querySelector('.custom-form-container').style.display = 'none';
+            document.querySelector('.custom-dim-bg').style.display = 'none';
+            document.querySelector('.add-driver-btn').style.display = 'block';
+            document.getElementById('driver-form').reset();
+            document.querySelector('.custom-form-page-2').style.display = 'none';
+            document.querySelector('.custom-form-page-1').style.display = 'none';
+        }
 
 
 // Tutup form jika area di luar form diklik
