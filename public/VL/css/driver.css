@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Manrope:wght@200..800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-
 .table-header-container {
     background-color: white;
     padding: 20px;
@@ -35,7 +34,6 @@
     text-align: center;
     vertical-align: middle;
     color: #7F8489;
-
 }
 
 .driver-photo {
@@ -46,13 +44,26 @@
     vertical-align: middle;
 }
 
-
 .username {
     color: #09244B;
     font-size: large;
     font-weight: bold;
+    align-items: center;
+    text-align: left; /* Align text to the left */
+    overflow: hidden;
 }
 
+.username img {
+    margin-right: 10px; /* Space between image and text */
+}
+
+.username span {
+    display: inline-block;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Show ellipsis if text is too long */
+    font-size: small; /* Adjust font size as needed */
+}
 .online {
     color: #46EF4D;
 }
