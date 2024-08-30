@@ -158,7 +158,6 @@
    <!-- Overlay Div -->
    <div id="overlay" class="overlay" onclick="closeOverlay()">
     <div class="overlay-content" onclick="event.stopPropagation()">
-
         <div class="userdat">
             <img src="assets/images/UserDataPic.svg" alt="User Image" class="user-image">
             <div class="usernamedat h4-bold">
@@ -183,7 +182,6 @@
                             <p class="text"><a style="color: #7F8489;" href="mailto:Hellyoshaqiqie9@gmail.com">Hellyoshaqiqie9@gmail.com</a></p>
                         </div>
                     </td>
-                    
                 </tr>
                 <tr>
                     <td>
@@ -198,12 +196,10 @@
                             <p class="text">Polestar A1 is <span class="online">online</span></p>
                         </div>
                     </td>
-                    
                 </tr>
                 <!-- Add more rows as needed -->
             </table>
         </div>
-
         <!-- Navbar Section -->
         <div class="navbar">
             <ul class="navbar-list">
@@ -212,12 +208,13 @@
                 <li class="navbar-item" data-target="expenses"><a href="#expenses">Expenses</a></li>
                 <li class="navbar-item" data-target="vehicle"><a href="#vehicle">Vehicle</a></li>
                 <li class="navbar-item" data-target="documents"><a href="#documents">Documents</a></li>
-
             </ul>
         </div>
-
         <!-- Content Section -->
         <div class="navbar-content">
+
+
+
             <div id="personal" class="content-section">
                 <div class="head-content">
                     <h5>General Information</h5>
@@ -916,18 +913,18 @@
             }, 5000);
         }
         
-
 // Function to fetch driver and vehicle data
 function fetchData(uid) {
     const driversRef = dbRef(db, 'Drivers');
     onValue(driversRef, (snapshot) => {
         const data = snapshot.val();
-        const drivers = Object.values(data).filter(driver => driver.userId === uid);
+        const drivers = Object.entries(data) // Use Object.entries to get both key and value
+            .filter(([key, driver]) => driver.userId === uid);
 
         const table = document.getElementById('driver-table');
         table.innerHTML = ''; // Clear existing data
         
-        drivers.forEach((driver, index) => {
+        drivers.forEach(([driverId, driver], index) => {
             const vehicleRef = dbRef(db, `Vehicle/${driver.vehicleUsed}`);
             
             onValue(vehicleRef, (vehicleSnapshot) => {
@@ -939,6 +936,11 @@ function fetchData(uid) {
 
                 const row = document.createElement('tr');
                 row.className = rowClass;
+                row.onclick = () => {
+                    // Update URL hash with driverId
+                    window.location.hash = `driverId=${driverId}`;
+                    openOverlay(driverId);
+                };
                 row.innerHTML = `
                     <td class="table-data username" style="width: 20%;">
                         <img src="${driverPhotoUrl}" alt="Driver Photo" class="driver-photo">
@@ -969,6 +971,36 @@ onAuthStateChanged(auth, (user) => {
 
 
 
+
+function openOverlay(driverId) {
+    document.getElementById('overlay').style.display = 'block';
+    document.querySelector('.add-driver-btn').style.display = 'none';
+
+    // Fetch driver data to populate the overlay
+    const driverRef = dbRef(db, `Drivers/${driverId}`);
+    onValue(driverRef, (snapshot) => {
+        const driverData = snapshot.val();
+        if (driverData) {
+            // Set driver photo and name
+            document.querySelector('.user-image').src = driverData.driverPhotoUrl || 'assets/images/userDummyExpanse.svg';
+            document.querySelector('.usernamedat h4').textContent = driverData.fullName;
+
+            // Fetch vehicle data to get the nickname and name
+            const vehicleRef = dbRef(db, `Vehicle/${driverData.vehicleUsed}`);
+            onValue(vehicleRef, (vehicleSnapshot) => {
+                const vehicleData = vehicleSnapshot.val();
+                if (vehicleData) {
+                    document.querySelector('.usernamedat p').textContent = vehicleData.nickname;
+                    document.querySelector('.userdat p:nth-of-type(2)').textContent = vehicleData.name; // Update the second <p> element with the field 'name'
+                } else {
+                    console.error('Vehicle data not found');
+                }
+            });
+        } else {
+            console.error('Driver data not found');
+        }
+    });
+}
 
 
 
@@ -1306,7 +1338,7 @@ onAuthStateChanged(auth, (user) => {
 // Tutup form jika area di luar form diklik
 document.querySelector('.custom-dim-bg').addEventListener('click', closeCustomForm);
 
-        document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
     const items = document.querySelectorAll('.navbar-item');
     const sections = document.querySelectorAll('.content-section');
 
@@ -1356,10 +1388,7 @@ document.querySelector('.custom-dim-bg').addEventListener('click', closeCustomFo
 
 
 
-function openOverlay() {
-    document.getElementById('overlay').style.display = 'block';
-    document.querySelector('.add-driver-btn').style.display = 'none';
-}
+
 
 function closeOverlay() {
     document.getElementById('overlay').style.display = 'none';
