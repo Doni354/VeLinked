@@ -1112,7 +1112,7 @@
                 return set(newDriverRef, driverData);
             }).then(() => {
                 showPopup('Driver data submitted successfully!', 'success');
-                closeCustomForm();
+                closeCustomFormIfDataTrue();
             }).catch((error) => {
                 console.error('Error submitting form: ', error);
                 showPopup('Failed to submit driver data. Please try again.', 'error');
@@ -1230,29 +1230,13 @@
         const employeeCardFileChosen = document.getElementById('employee-card-file-chosen');
         employeeCardInput.addEventListener('change', () => handleFileInput(employeeCardInput, employeeCardIcon, employeeCardFileChosen));
         
-        // Navigation functions
-        function nextCustomForm() {
-            document.querySelector('.custom-form-page-1').style.display = 'none';
-            document.querySelector('.custom-form-page-2').style.display = 'block';
-        }
         
-        function prevCustomForm() {
-            document.querySelector('.custom-form-page-2').style.display = 'none';
-            document.querySelector('.custom-form-page-1').style.display = 'block';
-        }
         
-        // Custom form display
-        function openCustomForm() {
-            document.querySelector('.custom-form-container').style.display = 'block';
-            document.querySelector('.custom-dim-bg').style.display = 'block';
-            document.querySelector('.add-driver-btn').style.display = 'none';
-        }
-        
-        function closeCustomForm() {
+        function closeCustomFormIfDataTrue() {
             document.querySelector('.custom-form-container').style.display = 'none';
             document.querySelector('.custom-dim-bg').style.display = 'none';
             document.querySelector('.add-driver-btn').style.display = 'block';
-        
+            
             // Clear form values after closing
             document.getElementById('driver-form').reset();
             resetFileInput('driver-photo-input', 'input-icon', 'file-chosen', 'Driver Photo (Optional)');
@@ -1265,8 +1249,8 @@
         
 
 
-// Navigation functions
-function nextCustomForm() {
+        // Navigation functions
+            function nextCustomForm() {
             document.querySelector('.custom-form-page-1').style.display = 'none';
             document.querySelector('.custom-form-page-2').style.display = 'block';
         }
@@ -1288,7 +1272,6 @@ function nextCustomForm() {
             document.querySelector('.custom-form-container').style.display = 'none';
             document.querySelector('.custom-dim-bg').style.display = 'none';
             document.querySelector('.add-driver-btn').style.display = 'block';
-            document.getElementById('driver-form').reset();
             document.querySelector('.custom-form-page-2').style.display = 'none';
             document.querySelector('.custom-form-page-1').style.display = 'none';
         }
