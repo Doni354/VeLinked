@@ -220,10 +220,7 @@
                     <h5>General Information</h5>
                     <button style="border: none; background: none; padding: 0; cursor: pointer; outline: none;">
                         <img src="assets/images/BtnEditContent.svg" alt="Edit">
-                      </button>
-                      
-                      
-                    
+                    </button>
                 </div> 
                 <div class="content-personal">
                     <div class="personal-content">
@@ -231,63 +228,62 @@
                             <div class="content-personal-data">
                                 <div class="content-personal-data-Nama">
                                     <h5>Nama</h5>
-                                    <p>Hellyos Haqiqie</p>
+                                    <p>-</p> <!-- Akan diupdate dengan data dari Firebase -->
                                 </div>
                                 <div class="content-personal-data-Joining_Date">
                                     <h5>Joining Date</h5>
-                                    <p>3 Jan, 2022</p>
+                                    <p>-</p> <!-- Akan diupdate dengan data dari Firebase -->
                                 </div>
                                 <div class="content-personal-data-Address">
                                     <h5>Address</h5>
-                                    <p>Bago, Tulungagung</p>
+                                    <p>-</p> <!-- Akan diupdate dengan data dari Firebase -->
                                 </div>
-                                <div class="content-personal-data-Working Hours">
+                                <div class="content-personal-data-Working_Hours">
                                     <h5>Working Hours</h5>
-                                    <p>8 Hours </p>
+                                    <p>8 Hours</p> <!-- Dummy data -->
                                 </div>
                                 <div class="content-personal-data-Email">
                                     <h5>Email</h5>
-                                    <p>hellyos@gmail.com</p>
+                                    <p>-</p> <!-- Akan diupdate dengan data dari Firebase -->
                                 </div>
                                 <div class="content-personal-data-Phone_Number">
                                     <h5>Phone Number</h5>
-                                    <p>082334314902</p>
+                                    <p>-</p> <!-- Akan diupdate dengan data dari Firebase -->
                                 </div>
-
                             </div>
                         </div>
                         <div class="right-personal-content">
                             <div class="content-personal-data">
-                            <div class="content-personal-data-Contract_type">
-                                <h5>Contract type</h5>
-                                <p>Fixed Term</p>
+                                <div class="content-personal-data-Contract_type">
+                                    <h5>Contract Type</h5>
+                                    <p>-</p> <!-- Akan diupdate dengan data dari Firebase -->
+                                </div>
+                                <div class="content-personal-data-salary">
+                                    <h5>Salary</h5>
+                                    <p>-</p> <!-- Akan diupdate dengan data dari Firebase -->
+                                </div>
+                                <div class="content-personal-data-Start_Date">
+                                    <h5>Start Date</h5>
+                                    <p>3 July, 2023</p> <!-- Dummy data -->
+                                </div>
+                                <div class="content-personal-data-End_Date">
+                                    <h5>End Date</h5>
+                                    <p>8 July, 2025</p> <!-- Dummy data -->
+                                </div>
+                                <div class="content-personal-data-Performance_Ratings">
+                                    <h5>Performance Ratings</h5>
+                                    <p>Good</p> <!-- Dummy data -->
+                                </div>
+                                <div class="content-personal-data-Driving_Experience">
+                                    <h5>Driving Experience</h5>
+                                    <p>5 years</p> <!-- Dummy data -->
+                                </div>
                             </div>
-                            <div class="content-personal-data-salary">
-                                <h5>salary</h5>
-                                <p>Rp.4.050.000</p>
-                            </div>
-                            <div class="content-personal-data-Start_Date">
-                                <h5>Start Date</h5>
-                                <p>3 July , 2023</p>
-                            </div>
-                            <div class="content-personal-data-End_Date">
-                                <h5>End Date</h5>
-                                <p>8 July , 2025</p>
-                            </div>
-                            <div class="content-personal-data-Performance_Ratings">
-                                <h5>Performance Ratings</h5>
-                                <p>Good</p>
-                            </div>
-                            <div class="content-personal-data-Driving_Experience">
-                                <h5>Driving Experience</h5>
-                                <p>5 years</p>
-                            </div>
-                        </div>
                         </div>
                     </div>
                 </div>
-                
             </div>
+            
             <div id="log-behavior" class="content-section">
                 <div class="head-content">
                     <h5>Log Behavior</h5>    
@@ -912,6 +908,58 @@
                 popup.style.display = 'none';
             }, 5000);
         }
+
+
+        function loadPersonalData(driverId) {
+    const driverRef = dbRef(db, `Drivers/${driverId}`);
+    onValue(driverRef, (snapshot) => {
+        const driverData = snapshot.val();
+        if (driverData) {
+            // Format and set data
+            document.querySelector('.content-personal-data-Nama p').textContent = driverData.fullName || '-';
+            document.querySelector('.content-personal-data-Joining_Date p').textContent = formatDate(driverData.joinDate) || '-';
+            document.querySelector('.content-personal-data-Address p').textContent = driverData.address || '-';
+            document.querySelector('.content-personal-data-Email p').textContent = driverData.email || '-';
+            document.querySelector('.content-personal-data-Phone_Number p').textContent = driverData.phoneNumber || '-';
+            document.querySelector('.content-personal-data-Contract_type p').textContent = driverData.employmentType || '-';
+            document.querySelector('.content-personal-data-salary p').textContent = formatCurrency(driverData.salary) || '-';
+
+            // Dummy data for the rest
+            document.querySelector('.content-personal-data-Working_Hours p').textContent = '8 Hours';
+            document.querySelector('.content-personal-data-Start_Date p').textContent = '3 July, 2023';
+            document.querySelector('.content-personal-data-End_Date p').textContent = '8 July, 2025';
+            document.querySelector('.content-personal-data-Performance_Ratings p').textContent = 'Good';
+            document.querySelector('.content-personal-data-Driving_Experience p').textContent = '5 years';
+        } else {
+            console.error('Driver data not found');
+        }
+    });
+}
+
+
+function formatDate(dateString) {
+    if (!dateString) return '-';
+    const date = new Date(dateString);
+    const options = { day: 'numeric', month: 'short', year: 'numeric' };
+    return date.toLocaleDateString('en-GB', options); // e.g., "3 Jan, 2022"
+}
+
+function formatCurrency(amount) {
+    if (!amount) return '-';
+    return `Rp.${parseInt(amount).toLocaleString('id-ID')}`; // e.g., "Rp.4.050.000"
+}
+
+
+
+
+
+
+
+
+
+
+
+
         
 // Function to fetch driver and vehicle data
 function fetchData(uid) {
@@ -990,6 +1038,7 @@ function openOverlay(driverId) {
             onValue(vehicleRef, (vehicleSnapshot) => {
                 const vehicleData = vehicleSnapshot.val();
                 if (vehicleData) {
+                    loadPersonalData(driverId);
                     document.querySelector('.usernamedat p').textContent = vehicleData.nickname;
                     document.querySelector('.userdat p:nth-of-type(2)').textContent = vehicleData.name; // Update the second <p> element with the field 'name'
                 } else {
