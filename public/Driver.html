@@ -917,53 +917,56 @@
         }
         
 
- // Function to fetch driver and vehicle data
- function fetchData(uid) {
-            const driversRef = dbRef(db, 'Drivers');
-            onValue(driversRef, (snapshot) => {
-                const data = snapshot.val();
-                const drivers = Object.values(data).filter(driver => driver.userId === uid);
+// Function to fetch driver and vehicle data
+function fetchData(uid) {
+    const driversRef = dbRef(db, 'Drivers');
+    onValue(driversRef, (snapshot) => {
+        const data = snapshot.val();
+        const drivers = Object.values(data).filter(driver => driver.userId === uid);
 
-                const table = document.getElementById('driver-table');
-                table.innerHTML = ''; // Clear existing data
-                
-                drivers.forEach((driver, index) => {
-                    const vehicleRef = dbRef(db, `Vehicle/${driver.vehicleUsed}`);
-                    
-                    onValue(vehicleRef, (vehicleSnapshot) => {
-                        const vehicleData = vehicleSnapshot.val();
-                        const isOdd = index % 2 === 0;
-                        const rowClass = isOdd ? 'table-row-odd' : 'table-row-even';
-                        const driverPhotoUrl = driver.driverPhotoUrl || 'assets/images/userDummyExpanse.svg';
-                        const vehicleStatus = vehicleData.status_device ? (vehicleData.status_device === true ? 'Online' : 'Offline') : 'Not Connected';
+        const table = document.getElementById('driver-table');
+        table.innerHTML = ''; // Clear existing data
+        
+        drivers.forEach((driver, index) => {
+            const vehicleRef = dbRef(db, `Vehicle/${driver.vehicleUsed}`);
+            
+            onValue(vehicleRef, (vehicleSnapshot) => {
+                const vehicleData = vehicleSnapshot.val();
+                const isOdd = index % 2 === 0;
+                const rowClass = isOdd ? 'table-row-odd' : 'table-row-even';
+                const driverPhotoUrl = driver.driverPhotoUrl || 'assets/images/userDummyExpanse.svg';
+                const vehicleStatus = vehicleData.status_device ? (vehicleData.status_device === true ? 'Online' : 'Offline') : 'Not Connected';
 
-                        const row = document.createElement('tr');
-                        row.className = rowClass;
-                        row.innerHTML = `
-                        <td class="table-data username" style="width: 20%;">
-                                <img src="${driverPhotoUrl}" alt="Driver Photo" class="driver-photo">
-                                <span>${driver.fullName}</span>
-                            </td>
-                            <td class="table-data" style="width: 15%;">${vehicleData.nickname}</td>
-                            <td class="table-data" style="width: 20%;">${driver.employmentType}</td>
-                            <td class="table-data" style="width: 15%;">Safe</td> <!-- Dummy Data -->
-                            <td class="table-data" style="width: 15%;">Rp. 243 K</td> <!-- Dummy Data -->
-                            <td class="table-data" style="width: 15%;">${vehicleStatus}</td>
-                        `;
-                        table.appendChild(row);
-                    });
-                });
+                const row = document.createElement('tr');
+                row.className = rowClass;
+                row.innerHTML = `
+                    <td class="table-data username" style="width: 20%;">
+                        <img src="${driverPhotoUrl}" alt="Driver Photo" class="driver-photo">
+                        <span>${driver.fullName}</span>
+                    </td>
+                    <td class="table-data" style="width: 15%;">${vehicleData.nickname}</td>
+                    <td class="table-data" style="width: 20%;">${driver.employmentType}</td>
+                    <td class="table-data" style="width: 15%;">Safe</td> <!-- Dummy Data -->
+                    <td class="table-data" style="width: 15%;">Rp. 243 K</td> <!-- Dummy Data -->
+                    <td class="table-data ${vehicleData.status_device === true ? 'online' : ''}" style="width: 15%;">
+                        ${vehicleStatus}
+                    </td>
+                `;
+                table.appendChild(row);
             });
-        }
-
-        // Check user authentication and fetch data
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                fetchData(user.uid);
-            } else {
-                console.log('User is not logged in');
-            }
         });
+    });
+}
+
+// Check user authentication and fetch data
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        fetchData(user.uid);
+    } else {
+        console.log('User is not logged in');
+    }
+});
+
 
 
 
