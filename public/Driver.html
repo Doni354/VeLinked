@@ -921,7 +921,7 @@
                     </label>
                     <span id="file-chosen">Driver Photo (Optional)</span>
                 </div>
-                <button type="button" class="custom-next-button" onclick="nextCustomForm()">Next</button>
+                <button type="button" id="nextFormBtn" class="custom-next-button" >Next</button>
                 <div class="formStats">
                     <img src="assets/images/DriverForm1.svg" alt="">
                 </div>
@@ -1243,17 +1243,47 @@
             resetFileInput('national-id-input', 'national-id-icon', 'national-id-file-chosen', 'National ID Picture (Optional)');
             resetFileInput('driving-license-input', 'driving-license-icon', 'driving-license-file-chosen', 'Driving License (Optional)');
             resetFileInput('employee-card-input', 'employee-card-icon', 'employee-card-file-chosen', 'Employee Card (Optional)');
-        
             prevCustomForm();
         }
         
+        document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('nextFormBtn').addEventListener('click', function() {
+        // Seleksi hanya input di dalam custom-form-page-1
+        const formPage1 = document.querySelector('.custom-form-page-1');
+        const inputs = formPage1.querySelectorAll('input[required]');
+        let allFilled = true;
 
+        inputs.forEach(input => {
+            if (input.value.trim() === '') {
+                allFilled = false;
+                input.style.borderColor = 'red'; // Opsional: Memberi warna merah pada border input yang kosong
+            } else {
+                input.style.borderColor = ''; // Mengembalikan warna border jika input tidak kosong
+            }
+        });
 
-        // Navigation functions
-            function nextCustomForm() {
+        if (allFilled) {
+            // Jika semua input sudah diisi, lanjut ke form berikutnya
             document.querySelector('.custom-form-page-1').style.display = 'none';
-            document.querySelector('.custom-form-page-2').style.display = 'block';
+            document.querySelector('.custom-form-page-2').style.display = 'block'; // Pastikan elemen form-page-2 ada di HTML
+        } else {
+            // Jika ada input yang belum diisi, tampilkan notifikasi
+            showPopup('Please fill out all required fields before proceeding.');
         }
+    });
+
+    function showPopup(message) {
+        const popup = document.getElementById('popup');
+        popup.innerText = message;
+        popup.style.display = 'block';
+
+        // Sembunyikan popup setelah beberapa detik
+        setTimeout(function() {
+            popup.style.display = 'none';
+        }, 3000); // Popup akan muncul selama 3 detik
+    }
+});
+
         
         function prevCustomForm() {
             document.querySelector('.custom-form-page-2').style.display = 'none';
