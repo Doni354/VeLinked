@@ -908,11 +908,13 @@
                 <input type="text" id="full-name" name="fullName" placeholder="Full Name" required>
                 <input type="text" name="address" placeholder="Address" required>
                 <input type="email" name="email" placeholder="Email" required>
-                <input type="text" name="phoneNumber" placeholder="Phone Number" required>
+                <input type="number" name="phoneNumber" placeholder="Phone Number" pattern="\d*" title="Please enter a valid phone number" required>
+            
                 <div class="custom-date-input">
                     <input type="text" id="date-of-birth" name="dateOfBirth" placeholder="Date Of Birth" onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}" required>
                 </div>
-                <input type="text" name="emergencyContact" placeholder="Emergency Contact (Optional)">
+
+                <input type="number" name="emergencyContact" placeholder="Emergency Contact (Optional)" pattern="\d*">
                 <!-- Driver Photo -->
                 <div class="custom-input-file">
                     <input type="file" id="driver-photo-input" name="driverPhoto" hidden>
@@ -929,7 +931,7 @@
     
             <div class="custom-form-page custom-form-page-2">
                 <h2>Your Driver Data</h2>
-                <input type="text" name="nationalIdNumber" placeholder="National ID Number (Optional)">
+                <input type="text" name="nationalIdNumber" placeholder="National ID Number (Optional)" pattern="\d*">
                 <!-- National ID Picture -->
                 <div class="custom-input-file">
                     <input type="file" id="national-id-input" name="nationalIdPhoto" hidden>
@@ -948,7 +950,8 @@
                     <!-- Options will be populated here -->
                 </datalist>
                 <!-- Driving License -->
-                <input type="text" name="salary" placeholder="Salary (Optional)">
+                <!-- Salary -->
+            <input type="number" name="salary" placeholder="Salary (Optional)" pattern="\d*">
                 <div class="custom-input-file">
                     <input type="file" id="driving-license-input" name="drivingLicensePhoto" hidden>
                     <label for="driving-license-input">

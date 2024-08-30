@@ -292,6 +292,7 @@
 .custom-form-page input[type="date"],
 .custom-form-page input[type="file"],
 .custom-form-page input[type="search"],
+.custom-form-page input[type="number"],
 .custom-form-page select,
 .custom-form-page .custom-file-upload {
     width: 100%;
@@ -454,4 +455,21 @@
 
 .popup.error {
     border: 2px solid #F44336; /* Warna border untuk error */
+}
+
+
+/* Hilangkan spinner (tombol tambah/kurang) di input number */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield; /* Untuk Firefox */
+}
+
+/* Input angka hanya (tanpa spinner) dengan validasi */
+input[type=text][pattern="\d*"] {
+    ime-mode: disabled; /* Untuk mencegah input selain angka */
 }
