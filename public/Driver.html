@@ -751,7 +751,8 @@
                 
                 
                 <script>
-                   function showOverlay(title, content) {
+                    // Menampilkan overlay
+                    function showOverlay(title, content) {
                         const overlay = document.getElementById('cardDocOverlay');
                         const overlayContent = document.getElementById('overlayContent');
                         overlayContent.innerHTML = `
@@ -761,14 +762,15 @@
                         overlay.classList.add('show');
                     }
 
+                    // Menyembunyikan overlay
                     function hideOverlay(event) {
                         const overlay = document.getElementById('cardDocOverlay');
-                        const overlayContent = document.getElementById('overlayContent');
                         if (event.target === overlay || event.target.classList.contains('close-btn')) {
                             overlay.classList.remove('show');
                         }
                     }
 
+                    
                 </script>
                 
 
@@ -907,6 +909,54 @@
                 popup.style.display = 'none';
             }, 5000);
         }
+
+         // Ambil driverId dari URL
+    function getDriverIdFromUrl() {
+        const hash = window.location.hash;
+        const params = new URLSearchParams(hash.slice(1)); // Remove the leading '#' and parse
+        return params.get('driverId');
+    }
+
+    // Fungsi untuk load data dari Firebase dan menampilkan overlay
+    function loadDocData(driverId, docType) {
+        const driverRef = dbRef(db, `Drivers/${driverId}`);
+        onValue(driverRef, (snapshot) => {
+            const data = snapshot.val();
+            let imageUrl;
+
+            switch (docType) {
+                case 'Driver License':
+                    imageUrl = data.drivingLicensePhotoUrl;
+                    break;
+                case 'VeCard':
+                    imageUrl = data.employeeCardPhotoUrl;
+                    break;
+                case 'Indonesia Identity Card':
+                    imageUrl = data.nationalIdPhotoUrl;
+                    break;
+                default:
+                    imageUrl = '';
+                    break;
+            }
+
+            if (imageUrl) {
+                showOverlay(docType, `<img src="${imageUrl}" alt="${docType}" style="width: 100%; max-width: 500px;">`);
+            } else {
+                showOverlay(docType, `Gambar tidak tersedia untuk ${docType}`);
+            }
+        }, {
+            onlyOnce: true
+        });
+    }
+
+    // Event listener untuk masing-masing card
+    document.querySelectorAll('.card-doc').forEach(card => {
+                        card.addEventListener('click', () => {
+                            const driverId = getDriverIdFromUrl();
+                            const docType = card.querySelector('.card-doc-title').textContent;
+                            loadDocData(driverId, docType);
+                        });
+                    });
 
 
         function loadPersonalData(driverId) {
