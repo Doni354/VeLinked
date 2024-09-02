@@ -751,16 +751,22 @@
                 
                 
                 <script>
-                    // Menampilkan overlay
-                    function showOverlay(title, content) {
-                        const overlay = document.getElementById('cardDocOverlay');
-                        const overlayContent = document.getElementById('overlayContent');
-                        overlayContent.innerHTML = `
-                            <button class="close-btn" onclick="hideOverlay(event)">✖</button>
+                   function showOverlay(title, content, imageUrl) {
+                    const overlay = document.getElementById('cardDocOverlay');
+                    const overlayContent = document.getElementById('overlayContent');
+                    
+                    overlayContent.innerHTML = `
+                        <button class="close-btn" onclick="hideOverlay(event)">✖</button>
+                        <div class="overlay-text">
                             <h2>${title}</h2>
-                            <p>${content}</p>`;
-                        overlay.classList.add('show');
-                    }
+                            <p>${content}</p>
+                        </div>
+                        <div class="overlay-image-container">
+                            <img src="${imageUrl}" alt="${title}">
+                        </div>`;
+                        
+                    overlay.classList.add('show');
+                }
 
                     // Menyembunyikan overlay
                     function hideOverlay(event) {
@@ -874,7 +880,7 @@
         </div>
         <div class="custom-dim-bg"></div>
     </form>
-    
+
     <script type="module">
         import { getDatabase, ref as dbRef, set, onValue, push } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
         import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
@@ -911,44 +917,43 @@
         }
 
          // Ambil driverId dari URL
-    function getDriverIdFromUrl() {
-        const hash = window.location.hash;
-        const params = new URLSearchParams(hash.slice(1)); // Remove the leading '#' and parse
-        return params.get('driverId');
-    }
+         function getDriverIdFromUrl() {
+    const urlParams = new URLSearchParams(window.location.hash.substring(1));
+    return urlParams.get('driverId');
+}
 
-    // Fungsi untuk load data dari Firebase dan menampilkan overlay
+
+
     function loadDocData(driverId, docType) {
-        const driverRef = dbRef(db, `Drivers/${driverId}`);
-        onValue(driverRef, (snapshot) => {
-            const data = snapshot.val();
-            let imageUrl;
+    const driverRef = dbRef(db, `Drivers/${driverId}`);
+    onValue(driverRef, (snapshot) => {
+        const data = snapshot.val();
+        let imageUrl;
 
-            switch (docType) {
-                case 'Driver License':
-                    imageUrl = data.drivingLicensePhotoUrl;
-                    break;
-                case 'VeCard':
-                    imageUrl = data.employeeCardPhotoUrl;
-                    break;
-                case 'Indonesia Identity Card':
-                    imageUrl = data.nationalIdPhotoUrl;
-                    break;
-                default:
-                    imageUrl = '';
-                    break;
-            }
+        switch (docType) {
+            case 'Driver License':
+                imageUrl = data.drivingLicensePhotoUrl;
+                break;
+            case 'VeCard':
+                imageUrl = data.employeeCardPhotoUrl;
+                break;
+            case 'Indonesia Identity Card':
+                imageUrl = data.nationalIdPhotoUrl;
+                break;
+            default:
+                imageUrl = '';
+                break;
+        }
 
-            if (imageUrl) {
-                showOverlay(docType, `<img src="${imageUrl}" alt="${docType}" style="width: 100%; max-width: 500px;">`);
-            } else {
-                showOverlay(docType, `Gambar tidak tersedia untuk ${docType}`);
-            }
-        }, {
-            onlyOnce: true
-        });
-    }
-
+        if (imageUrl) {
+            showOverlay(docType, `Detail dari ${docType}`, imageUrl);
+        } else {
+            showOverlay(docType, `Gambar tidak tersedia untuk ${docType}`, '');
+        }
+    }, {
+        onlyOnce: true
+    });
+}
     // Event listener untuk masing-masing card
     document.querySelectorAll('.card-doc').forEach(card => {
                         card.addEventListener('click', () => {
