@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+}
+
+.header h2 {
+    font-family: 'Lato';
+    font-weight: 800;
+}
+
+.header img {
+    width: 15%;
+    height: auto;
+}
+
+.DriverInfo {
+    position: relative;
+    background-color: #142D5D;
+    border-radius: 35px;
+    padding: 1em;
+    margin-top: 3em;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    height: 150px;
+    
+}
+
+.CarImage {
+    position: absolute;
+    top: -65px;
+    right: 120px;
+    transform: translateX(30%);
+}
+
+.CarImage img {
+    width: 300px;
+    height: auto;
+}
+
+.InfoDriver {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 35px; /* memberikan ruang untuk gambar mobil */
+}
+
+.Driver-Profile {
+    display: flex;
+    align-items: center;
+}
+
+.Driver-Profile img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+
+.User-Profile {
+    margin-left: 10px;
+}
+
+.User-Profile h4 {
+    color: #FFFFFF;
+    font-weight: 800;
+    font-family: 'Lato';
+    margin: 0;
+}
+
+.User-Profile p {
+    color: #7F8489;
+    font-family: 'Lato';
+    margin: 0;
+}
+
+.Driver-Detail img {
+    width: 30px;
+    height: 30px;
+}
+
+.VehicleStatus {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    border-top: #253B68 solid 1px;
+}
+
+.status-vehicle {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    margin-right: 10px;
+}
+
+.VehicleStatus p {
+    font-family: 'Montserrat';
+    color: #FFFFFF;
+    font-weight: 300;
+    font-size: small;
+}
+
+.online {
+    background-color: #30BB4E;
+}

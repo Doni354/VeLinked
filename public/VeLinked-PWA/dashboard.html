@@ -97,7 +97,7 @@ onAuthStateChanged(auth, user => {
         displayUserData(user);
     } else {
         console.log("No user is signed in.");
-        window.location.href = "login.html"; // Redirect to login if no user is signed in
+        window.location.href = "index.html"; // Redirect to login if no user is signed in
     }
 });
 
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", event => {
             welcomeMessage.textContent += user.displayName;
         } else {
             // If user is not logged in, redirect to login page
-            window.location.href = "login.html";
+            window.location.href = "index.html";
         }
     });
 });
