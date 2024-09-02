@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VeLinked Driver</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="manifest" href="manifest.json">
+    <title>VeLinked Dashboard</title>
     <script defer src="/__/firebase/10.9.0/firebase-app-compat.js"></script>
     <!-- include only the Firebase features as you need -->
     <script defer src="/__/firebase/10.9.0/firebase-auth-compat.js"></script>
@@ -22,38 +20,10 @@
       to avoid connecting the SDK to running emulators.
     -->
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-    
 </head>
 <body>
-    <div class="mid-content">
-        <img src="assets/images/HomeContent.svg" alt="Car Image">
-    </div>
-    <div class="login-content">
-        <div class="head-content">
-            <div class="circle-head"></div>
-        </div>
-        <div class="desc-content">
-            <div class="content-desc">
-                <div>
-                    <h1>Login as a driver here!</h1>
-                </div>
-                <div>
-                    <p>Login using the email that has been added by the company</p>
-                </div>
-
-                
-            </div>
-        </div>
-        
-        <div class="login">
-            <div class="login-google">
-                <button onclick="googleLogin()">
-                    <img src="assets/images/Googl-Logo.svg" alt="Google Logo">
-                    <p>Sign In with Google</p>
-                </button>
-            </div>
-        </div>
-    </div>
+    <h1>HALAMAN Dashboard</h1>
+    <button onclick="logout()">LOGOUT</button>
     <script src="app.js"></script>
     <script src="js/auth.js"></script>
     <script type="module" src="js/config.js"></script>
