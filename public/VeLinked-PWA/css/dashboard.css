@@ -194,3 +194,71 @@
     margin: 10px 0;
     padding-bottom: 10px;
 }
+
+.Vehicle {
+    margin-top: 1.5em;
+    padding: 1em;
+    align-items: center;
+    background-color: #142D5D;
+    border-radius: 39px;
+    display: flex;
+    width: 310px;
+    height: 80px;
+    justify-content: space-between;
+}
+
+.Vehicle-Status {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.Vehicle-Status h5 {
+    font-family: 'Lato';
+    color: #FFFFFF;
+    margin-top: 0;
+    margin-bottom: 3px;
+    font-weight: 650;
+    font-size: 19px;
+}
+
+.Vehicle-Status p {
+    font-weight: 500;
+    font-size: 14px;
+    margin-top: 3px;
+    margin-bottom: 0;
+    font-family: 'Lato';
+    color: #7F8489;
+}
+
+
+
+.toggle-button {
+    margin-right: 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    outline: none; /* Menghilangkan efek outline saat tombol diklik */
+}
+
+.toggle-button button:active {
+    outline: none;
+    border: none;
+}
+
+.toggle-button button::before {
+    outline: none;
+    border: none;
+}
+
+
+.toggle-button img {
+    width: 60px;
+    height: auto;
+    transition: opacity 0.3s ease-in-out; /* Menambahkan transisi untuk opacity */
+}
+
+.hidden {
+    opacity: 0; /* Menyembunyikan elemen dengan opacity */
+}

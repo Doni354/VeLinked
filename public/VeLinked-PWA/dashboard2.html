@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VeLinked Dashboard</title>
+    <script defer src="/__/firebase/10.9.0/firebase-app-compat.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/10.9.0/firebase-auth-compat.js"></script>
+    <script defer src="/__/firebase/10.9.0/firebase-database-compat.js"></script>
+    <script defer src="/__/firebase/10.9.0/firebase-firestore-compat.js"></script>
+    <script defer src="/__/firebase/10.9.0/firebase-functions-compat.js"></script>
+    <script defer src="/__/firebase/10.9.0/firebase-messaging-compat.js"></script>
+    <script defer src="/__/firebase/10.9.0/firebase-storage-compat.js"></script>
+    <script defer src="/__/firebase/10.9.0/firebase-analytics-compat.js"></script>
+    <script defer src="/__/firebase/10.9.0/firebase-remote-config-compat.js"></script>
+    <script defer src="/__/firebase/10.9.0/firebase-performance-compat.js"></script>
+    <!-- 
+      initialize the SDK after all desired features are loaded, set useEmulator to false
+      to avoid connecting the SDK to running emulators.
+    -->
+    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+</head>
+<body>
+    <h1>HALAMAN Dashboard</h1>
+    <div id="profile-picture"></div>
+    <div id="user-name"></div>
+    <div id="user-profile">
+        <h2 id="fullName">Full Name: </h2>
+        <p id="joinDate">Join Date: </p>
+        <p id="phoneNumber">Phone Number: </p>
+        <img id="driverPhoto" alt="Driver Photo" width="100" height="100">
+    </div>
+    <button onclick="logout()">LOGOUT</button>
+    
+    <script src="app.js"></script>
+    <script src="js/auth.js"></script>
+
+    <script type="module">
+        
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { getDatabase, ref, query, get, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
+    authDomain: "velinked-web.firebaseapp.com",
+    databaseURL: "https://velinked-web-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "velinked-web",
+    storageBucket: "velinked-web.appspot.com",
+    messagingSenderId: "844821073092",
+    appId: "1:844821073092:web:f243c25668079240ec0d91",
+    measurementId: "G-CLGQ4RWWTX"
+};
+
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const database = getDatabase(app);
+
+// Function to format the timestamp to readable date
+function formatDate(timestamp) {
+    const date = new Date(parseInt(timestamp));
+    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+}
+
+// Function to display user data
+function displayUserData(user) {
+    const driverRef = ref(database, 'Drivers');
+    const userQuery = query(driverRef, orderByChild('email'), equalTo(user.email));
+
+    get(userQuery).then(snapshot => {
+        if (snapshot.exists()) {
+            snapshot.forEach(childSnapshot => {
+                const data = childSnapshot.val();
+                document.getElementById("fullName").innerText = `Full Name: ${data.fullName}`;
+                document.getElementById("joinDate").innerText = `Join Date: ${formatDate(data.joinDate)}`;
+                document.getElementById("phoneNumber").innerText = `Phone Number: ${data.phoneNumber}`;
+                
+                const photoElement = document.getElementById("driverPhoto");
+                photoElement.src = data.driverPhotoUrl;
+                photoElement.alt = "Driver Photo";
+            });
+        } else {
+            console.log("No data available for this email.");
+        }
+    }).catch(error => {
+        console.error("Error fetching data:", error);
+    });
+}
+
+// Event listener for user authentication state change
+onAuthStateChanged(auth, user => {
+    if (user) {
+        displayUserData(user);
+    } else {
+        console.log("No user is signed in.");
+        window.location.href = "index.html"; // Redirect to login if no user is signed in
+    }
+});
+
+function displayUserProfilePic(user) {
+    const profilePicDiv = document.getElementById("profile-picture");
+    const userNameDiv = document.getElementById("user-name");
+
+    // Cek apakah pengguna sudah login
+    if (user) {
+        // Buat elemen gambar untuk foto profil pengguna
+        const profilePic = document.createElement("img");
+        profilePic.src = user.photoURL;
+        profilePic.classList.add("profile-pic"); // Tambahkan kelas khusus untuk styling
+
+        // Tambahkan event listener untuk memeriksa apakah gambar berhasil dimuat
+        profilePic.addEventListener("error", function() {
+            // Jika gambar gagal dimuat, atur sumbernya ke gambar profil default
+            profilePic.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuEiaDNDqRo6K0Zn_NlRJjAde-B1zommEhIg&usqp=CAU"; // Sesuaikan path jika perlu
+        });
+
+        // Tambahkan gambar profil ke dalam placeholder
+        profilePicDiv.appendChild(profilePic);
+        // Tampilkan nama pengguna
+        userNameDiv.innerText = "Hi, " + user.displayName;
+    } else {
+        // Jika pengguna belum login, atur gambar profil default dan kosongkan nama pengguna
+        profilePicDiv.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuEiaDNDqRo6K0Zn_NlRJjAde-B1zommEhIg&usqp=CAU" alt="Default Profile Picture" class="profile-pic">';
+        userNameDiv.innerText = "";
+    }
+}
+
+// Event listener untuk memastikan kode dijalankan setelah konten dimuat
+document.addEventListener("DOMContentLoaded", event => {
+    onAuthStateChanged(auth, user => {
+        if (user) {
+            // If user is logged in, display user information
+            displayUserProfilePic(user);
+
+            const welcomeMessage = document.getElementById("welcome-message");
+            welcomeMessage.textContent += user.displayName;
+        } else {
+            // If user is not logged in, redirect to login page
+            window.location.href = "index.html";
+        }
+    });
+});
+    </script>
+</body>
+</html>
