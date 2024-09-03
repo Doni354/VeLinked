@@ -234,6 +234,7 @@
 
 
 .toggle-button {
+    margin-right: 10px;
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -244,7 +245,7 @@
 }
 
 .toggle-button img {
-    width: 50px;
+    width: 60px;
     height: auto;
     transition: opacity 0.3s ease-in-out; /* Menambahkan transisi untuk opacity */
 }
