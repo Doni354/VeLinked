@@ -118,11 +118,12 @@
 .Expanse {
     display: flex;
     flex-direction: column;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
+
 }
 
 .Expanse-Header {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
     display: flex;
     justify-content: space-between;
     font-family: 'Lato';
@@ -147,4 +148,49 @@
     margin-left: 8px;
     width: 6px;
     height: auto;
+}
+
+
+.card-container {
+    display: flex;
+    overflow-x: auto;
+    padding: 10px;
+    scrollbar-width: none; /* Firefox */
+}
+
+.card-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.card {
+    flex: 0 0 85px; /* Set the width of each card */
+    background-color: #F1F2F5;
+    border-radius: 28px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25); /* Drop shadow sesuai dengan pengaturan pada gambar */
+    margin-right: 15px;
+    padding: 10px;
+    text-align: center;
+}
+
+.card img {
+    width: 50px;
+    margin-top: 10px;
+    height: auto;
+    margin-bottom: 0px;
+}
+
+.card h3 {
+    font-size: 17px;
+    font-family: 'Lato';
+    margin: 10px 0;
+    font-weight: 750;
+}
+
+.card p {
+    font-size: 13px;
+    font-family: 'Lato';
+    font-weight: 400;
+    color: #7F8489;
+    margin: 10px 0;
+    padding-bottom: 10px;
 }
