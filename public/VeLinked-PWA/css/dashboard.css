@@ -202,7 +202,7 @@
     background-color: #142D5D;
     border-radius: 39px;
     display: flex;
-    width: 310px;
+
     height: 80px;
     justify-content: space-between;
 }
@@ -234,31 +234,31 @@
 
 
 .toggle-button {
-    margin-right: 10px;
     background-color: transparent;
     border: none;
     cursor: pointer;
     padding: 0;
-    outline: none; /* Menghilangkan efek outline saat tombol diklik */
+    outline: none; /* Menghilangkan outline */
+    user-select: none; /* Mencegah pemilihan elemen */
+    -webkit-tap-highlight-color: transparent; /* Menghilangkan efek highlight biru di mobile/webkit */
 }
-
-.toggle-button button:active {
-    outline: none;
-    border: none;
-}
-
-.toggle-button button::before {
-    outline: none;
-    border: none;
-}
-
 
 .toggle-button img {
-    width: 60px;
+    width: 50px;
     height: auto;
     transition: opacity 0.3s ease-in-out; /* Menambahkan transisi untuk opacity */
 }
 
 .hidden {
     opacity: 0; /* Menyembunyikan elemen dengan opacity */
+}
+
+/* Menghilangkan efek block saat ditekan atau difokuskan */
+.toggle-button:focus {
+    outline: none;
+}
+
+.toggle-button:active {
+    background-color: transparent;
+    outline: none;
 }
