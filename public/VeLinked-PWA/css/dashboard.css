@@ -64,25 +64,29 @@
 }
 
 .User-Profile {
-    margin-left: 10px;
+    margin-left: 8px;
+    display: flex;
+    flex-direction: column;
 }
 
 .User-Profile h4 {
     color: #FFFFFF;
-    font-weight: 800;
+    font-weight: 700;
     font-family: 'Lato';
-    margin: 0;
+    margin: 1px;
+    font-size: 15px;
 }
 
 .User-Profile p {
     color: #7F8489;
     font-family: 'Lato';
-    margin: 0;
+    margin: 1px;
+    font-size: 12px;
 }
 
 .Driver-Detail img {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
 }
 
 .VehicleStatus {
@@ -102,10 +106,37 @@
 .VehicleStatus p {
     font-family: 'Montserrat';
     color: #FFFFFF;
-    font-weight: 300;
+    font-weight: 200;
     font-size: small;
 }
 
 .online {
     background-color: #30BB4E;
+}
+
+
+.Expanse {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+.Expanse-Header {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Lato';
+    font-weight: 800;
+}
+
+.Expanse-SeeAll {
+    display: flex;
+    align-items: center;
+
+}
+
+.Expanse-SeeAll img {
+    margin-left: 8px;
+    width: 6px;
+    height: auto;
 }
