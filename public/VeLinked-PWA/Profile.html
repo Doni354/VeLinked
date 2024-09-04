@@ -111,30 +111,7 @@
     </div>
 
 
-    <script>
-        document.getElementById('toggleButton').addEventListener('click', function() {
-    var engineImage = document.getElementById('engineImage');
 
-    // Menambahkan class 'hidden' untuk memulai fade out
-    engineImage.classList.add('hidden');
-
-    // Menunggu sampai animasi fade out selesai sebelum mengganti gambar
-    setTimeout(function() {
-        if (engineImage.getAttribute('src') === 'assets/images/Engine-On.svg') {
-            engineImage.setAttribute('src', 'assets/images/Engine-Off.svg');
-            engineImage.setAttribute('alt', 'Engine Off');
-        } else {
-            engineImage.setAttribute('src', 'assets/images/Engine-On.svg');
-            engineImage.setAttribute('alt', 'Engine On');
-        }
-
-        // Menghapus class 'hidden' untuk memulai fade in
-        engineImage.classList.remove('hidden');
-    }, 300); // Waktu sesuai dengan durasi transisi opacity di CSS
-});
-
-
-    </script>
 
 
 
