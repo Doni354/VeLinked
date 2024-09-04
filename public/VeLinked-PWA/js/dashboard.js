@@ -117,3 +117,61 @@ function displayUserData(user) {
         console.error("Error fetching data:", error);
     });
 }
+
+
+
+
+
+
+
+
+
+
+
+// Fungsi untuk menampilkan data Vehicle berdasarkan vehicleUsed pada koleksi Drivers
+function displayVehicleData(user) {
+    const driverRef = ref(database, 'Drivers');
+    const driverQuery = query(driverRef, orderByChild('email'), equalTo(user.email));
+
+    get(driverQuery)
+        .then(snapshot => {
+            if (snapshot.exists()) {
+                snapshot.forEach(childSnapshot => {
+                    const driverData = childSnapshot.val();
+                    const vehicleUsed = driverData.vehicleUsed;
+
+                    // Query untuk mencari nickname di koleksi Vehicle
+                    const vehicleRef = ref(database, `Vehicle/${vehicleUsed}`);
+                    get(vehicleRef)
+                        .then(vehicleSnapshot => {
+                            if (vehicleSnapshot.exists()) {
+                                const vehicleData = vehicleSnapshot.val();
+                                const nickname = vehicleData.nickname;
+                                // Menampilkan data di elemen HTML
+                                document.getElementById("vehicle-nickname").innerText = `Using ${nickname}`;
+                            } else {
+                                console.log("No vehicle data found for the given vehicleUsed.");
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error fetching vehicle data:", error);
+                        });
+                });
+            } else {
+                console.log("No driver data available for this email.");
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching driver data:", error);
+        });
+}
+
+// Memastikan fungsi dipanggil setelah user login
+onAuthStateChanged(auth, user => {
+    if (user) {
+        displayVehicleData(user);
+    } else {
+        console.log("No user is signed in.");
+        window.location.href = "index.html"; // Redirect ke halaman login jika user belum login
+    }
+});
