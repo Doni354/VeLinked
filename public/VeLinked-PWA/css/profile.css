@@ -13,6 +13,12 @@
 
 }
 
+.Logout-btn button {
+    outline: none;
+    border: none;
+    background: transparent;
+}
+
 .Driver-Profile {
 
     display: flex;
