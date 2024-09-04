@@ -95,8 +95,8 @@
     
     <div class="Vehicle">
         <div class="Vehicle-Status">
-            <h5>TURN OFF ENGINE</h5>
-            <p>Your Vehicle is active now</p>
+            <h5 id="statusTitle">TURN OFF ENGINE</h5>
+            <p id="statusMessage">Your Vehicle is active now</p>
         </div>
         <button id="toggleButton" class="toggle-button">
             <img src="assets/images/Engine-On.svg" alt="Engine On" id="engineImage">
@@ -119,30 +119,7 @@
     </div>
 
 
-    <script>
-        document.getElementById('toggleButton').addEventListener('click', function() {
-    var engineImage = document.getElementById('engineImage');
-
-    // Menambahkan class 'hidden' untuk memulai fade out
-    engineImage.classList.add('hidden');
-
-    // Menunggu sampai animasi fade out selesai sebelum mengganti gambar
-    setTimeout(function() {
-        if (engineImage.getAttribute('src') === 'assets/images/Engine-On.svg') {
-            engineImage.setAttribute('src', 'assets/images/Engine-Off.svg');
-            engineImage.setAttribute('alt', 'Engine Off');
-        } else {
-            engineImage.setAttribute('src', 'assets/images/Engine-On.svg');
-            engineImage.setAttribute('alt', 'Engine On');
-        }
-
-        // Menghapus class 'hidden' untuk memulai fade in
-        engineImage.classList.remove('hidden');
-    }, 300); // Waktu sesuai dengan durasi transisi opacity di CSS
-});
-
-
-    </script>
+=
 
 
     <script src="js/auth.js"></script>
