@@ -12,3 +12,27 @@
     height: 25px;
 
 }
+
+.Driver-Profile {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.Driver-Profile img {
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 120px;
+    height: 120px;
+}
+
+.Driver-Profile h2 {
+    font-weight: 800;
+    font-family: 'Lato';
+    margin-top: 2px;
+    margin-bottom:0px;
+}
