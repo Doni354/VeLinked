@@ -11,3 +11,11 @@ body {
     padding: 0.5em;
 }
 
+
+.main-content {
+    width: auto;
+    border-radius: 60px 60px 0 0;
+    height: 900px;
+    display: flex;
+    background-color: #FFFFFF;
+}
