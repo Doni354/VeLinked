@@ -7,6 +7,7 @@
     display: flex;
     justify-content: space-between;
     padding: 1em;
+    padding-top: 0em;
 }
 
 .header h2 {
@@ -24,7 +25,7 @@
     background-color: #142D5D;
     border-radius: 35px;
     padding: 1em;
-    margin-top: 3em;
+    margin-top: 1.5em;
     display: flex;
     flex-direction: column;
     color: white;
@@ -200,14 +201,14 @@
     padding: 1em;
     align-items: center;
     background-color: #142D5D;
-    border-radius: 39px;
+    border-radius: 35px;
     display: flex;
-
-    height: 80px;
+    height: 75px;
     justify-content: space-between;
 }
 
 .Vehicle-Status {
+    margin-bottom: 5px;
     margin-left: 10px;
     display: flex;
     flex-direction: column;
@@ -219,12 +220,12 @@
     margin-top: 0;
     margin-bottom: 3px;
     font-weight: 650;
-    font-size: 19px;
+    font-size: 17px;
 }
 
 .Vehicle-Status p {
     font-weight: 500;
-    font-size: 14px;
+    font-size: 12px;
     margin-top: 3px;
     margin-bottom: 0;
     font-family: 'Lato';
@@ -263,3 +264,51 @@
     background-color: transparent;
     outline: none;
 }
+
+
+/* Menghilangkan efek block saat ditekan atau difokuskan */
+.navbar a:focus {
+    outline: none;
+}
+
+.navbar a:active {
+    background-color: transparent;
+    outline: none;
+}
+
+
+
+.navbar {
+    padding-left: 15px;
+    padding-right: 15px;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #142c54;
+    width: 70%;
+    max-width: 500px;
+    height: 60px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar a {
+    user-select: none; /* Mencegah pemilihan elemen */
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+}
+

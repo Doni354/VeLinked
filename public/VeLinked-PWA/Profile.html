@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VeLinked Dashboard</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    
+
+
+    <div class="navbar">
+        <a href="dashboard.html">
+            <img src="assets/images/Nav-Dashboard.svg" alt="Dashboard" width="24" height="24">
+        </a>
+        <a href="#">
+            <img src="assets/images/Nav-Expanse.svg" alt="Wallet" width="24" height="24">
+        </a>
+        <a href="#">
+            <img src="assets/images/Nav-Attendance.svg" alt="Chat" width="24" height="24">
+        </a>
+        <a href="Profile.html">
+            <img src="assets/images/Nav-Profile-Active.svg" alt="Profile" width="24" height="24">
+        </a>
+    </div>
+
+
+    <script>
+        document.getElementById('toggleButton').addEventListener('click', function() {
+    var engineImage = document.getElementById('engineImage');
+
+    // Menambahkan class 'hidden' untuk memulai fade out
+    engineImage.classList.add('hidden');
+
+    // Menunggu sampai animasi fade out selesai sebelum mengganti gambar
+    setTimeout(function() {
+        if (engineImage.getAttribute('src') === 'assets/images/Engine-On.svg') {
+            engineImage.setAttribute('src', 'assets/images/Engine-Off.svg');
+            engineImage.setAttribute('alt', 'Engine Off');
+        } else {
+            engineImage.setAttribute('src', 'assets/images/Engine-On.svg');
+            engineImage.setAttribute('alt', 'Engine On');
+        }
+
+        // Menghapus class 'hidden' untuk memulai fade in
+        engineImage.classList.remove('hidden');
+    }, 300); // Waktu sesuai dengan durasi transisi opacity di CSS
+});
+
+
+    </script>
+</body>
+</html>
