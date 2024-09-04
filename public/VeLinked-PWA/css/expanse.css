@@ -1,3 +1,13 @@
 body {
     background-color: #041124;
 }
+
+.header {
+    color: #ffff;
+    font-family: 'Lato';
+    font-weight: 800;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5em;
+}
+
