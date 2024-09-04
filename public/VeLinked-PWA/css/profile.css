@@ -36,3 +36,94 @@
     margin-top: 2px;
     margin-bottom:0px;
 }
+
+.Profile-Info {
+    margin-top: 2em;
+    border-top: #CCCCCC solid 1px;
+}
+
+.head-profile-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.left-head-profile-info {
+    display: flex;
+    align-items: center;
+    font-family: 'Lato';
+    font-weight: 800;
+}
+
+
+.head-profile-info h2 {
+    font-family: 'Manrope';
+    font-weight: 700;
+    margin-left: 10px;
+}
+
+
+
+
+
+.card-doc {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 340px;
+    height: 100px;
+    background-color: #F2F2F2;
+    border-radius: 25px;
+    padding: 20px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.card-doc-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.card-doc-title {
+    font-family: "Lato";
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.card-doc-description {
+    font-family: "Lato";
+    font-size: 14px;
+    color: #7F8489;
+}
+
+
+
+
+
+
+.Driver-stats {
+    margin-top: 1em;
+}
+
+.head-driver-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.left-head-stats {
+    display: flex;
+    align-items: center;
+    font-family: 'Lato';
+    font-weight: 800;
+}
+
+
+.head-driver-stats h3 {
+    font-family: 'Manrope';
+    font-weight: 700;
+    margin-left: 10px;
+}
