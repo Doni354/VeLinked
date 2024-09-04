@@ -1,6 +1,9 @@
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
- firebaseConfig = {
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { getDatabase, ref, query, get, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+
+const firebaseConfig = {
     apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
     authDomain: "velinked-web.firebaseapp.com",
     databaseURL: "https://velinked-web-default-rtdb.asia-southeast1.firebasedatabase.app",
