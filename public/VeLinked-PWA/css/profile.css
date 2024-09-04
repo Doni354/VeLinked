@@ -127,3 +127,62 @@
     font-weight: 700;
     margin-left: 10px;
 }
+
+
+
+
+
+.card-container {
+    display: flex;
+    overflow-x: auto;
+    padding: 10px;
+    scrollbar-width: none; /* Firefox */
+}
+
+.card-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.card {
+    flex: 0 0 85px; /* Set the width of each card */
+    background-color: #F1F2F5;
+    border-radius: 28px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25); /* Drop shadow sesuai dengan pengaturan pada gambar */
+    margin-right: 15px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+
+.card h3 {
+
+    width: 80px;
+
+    font-family: 'Lato';
+
+    font-weight: 800;
+}
+
+
+.card h5 {
+
+    width: 50px;
+    color: #7F8489;
+    font-size: 13px;
+    font-family: 'Lato';
+    margin: 10px 0;
+    font-weight: 400;
+}
+
+.card p {
+    font-size: 12px;
+    font-family: 'Lato';
+    font-weight: 400;
+    color: #7F8489;
+    margin: 10px 0;
+
+}
