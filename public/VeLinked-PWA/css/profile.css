@@ -1,0 +1,14 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5em;
+    font-weight: 800;
+    font-family: 'Lato';
+    align-items: center;
+}
+
+.header img {
+    width: 25px;
+    height: 25px;
+
+}
