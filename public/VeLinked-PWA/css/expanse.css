@@ -96,17 +96,18 @@ body {
 
 .Expanse-Header {
     display: flex;
+    align-items: center;
     justify-content: center;
     text-align: center;
     flex-direction: column;
-    
+    margin-top: 20px;
 }
 
 .Expanse-Header p {
     font-weight: 700;
     color: #7F8489;
     font-size: 14px;
-    margin-top: 1.3em;
+    margin-top: 0.05em;
     margin-bottom: 0;
 }
 
@@ -121,35 +122,38 @@ body {
 
 
 
-.AddVeh {
-    width: 115px;
+.AddExpanse {
+    margin-top: 1em;
+    width: 125px;
     height: 30px;
     display: flex;
     align-items: center;
+    justify-content: center;
+    flex-direction: row;
     gap: 5px;
     background-color: #5243E6;
     border-radius: 40px;
-    padding: 4px 7px;
+
     border: none; /* Menghapus border */
     cursor: pointer; /* Mengubah kursor saat diarahkan ke tombol */
   }
   
-  .AddVeh:hover {
+  .AddExpanse:hover {
     background-color: #1b107e; /* Efek hover */
   }
   
-  .AddVeh:active {
+  .AddExpanse:active {
     background-color: #1b107e; /* Efek on click */
   }
-  .vehicleImage {
-    width: 13px;
-    height: 13px;
+  .addButton {
+    width: 12px;
+    height: 12px;
   }
   
-  .vehicleNameLabel {
+  .addButtonLabel {
     font: "Poppins", Helvetica, Arial, serif;
-    font-size: small;
+    font-size: 11px;
     color: white;
-    font-weight: bold;
+    font-weight: 00;
   }
   
