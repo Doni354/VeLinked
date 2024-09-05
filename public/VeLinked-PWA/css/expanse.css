@@ -27,7 +27,7 @@ body {
 
 
 .request-option {
-    padding-top: 2em;
+    padding-top: 0.5em;
 
     display: flex;
     align-items: center;
@@ -46,7 +46,8 @@ body {
 .tab {
     background-color: #EEEEEE; /* Warna tombol yang tidak aktif */
     border: none;
-    padding: 0.4em 0.5em; /* Memperkecil padding untuk kotak */
+    font-size: 12px;
+    padding: 0.35em 0.85em; /* Memperkecil padding untuk kotak */
     font-family: 'Manrope';
     font-weight: 600;
     color: #B0B3B8;
