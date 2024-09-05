@@ -117,3 +117,39 @@ body {
     margin-top: 0.30em;
     margin-bottom: 0px;
 }
+
+
+
+
+.AddVeh {
+    width: 115px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background-color: #5243E6;
+    border-radius: 40px;
+    padding: 4px 7px;
+    border: none; /* Menghapus border */
+    cursor: pointer; /* Mengubah kursor saat diarahkan ke tombol */
+  }
+  
+  .AddVeh:hover {
+    background-color: #1b107e; /* Efek hover */
+  }
+  
+  .AddVeh:active {
+    background-color: #1b107e; /* Efek on click */
+  }
+  .vehicleImage {
+    width: 13px;
+    height: 13px;
+  }
+  
+  .vehicleNameLabel {
+    font: "Poppins", Helvetica, Arial, serif;
+    font-size: small;
+    color: white;
+    font-weight: bold;
+  }
+  
