@@ -7,12 +7,21 @@ body {
 }
 
 .header {
-    color: #ffffff;
-    font-family: 'Lato';
-    font-weight: 800;
     display: flex;
     justify-content: space-between;
-    padding: 0.5em;
+    padding: 1em;
+    padding-top: 0em;
+}
+
+.header h3 {
+    font-family: 'Lato';
+    font-weight: 700;
+    color: #FFFFFF;
+}
+
+.header img {
+    width: 15%;
+    height: auto;
 }
 
 .main-content {
