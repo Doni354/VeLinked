@@ -32,7 +32,15 @@
 </div>
 
 <div class="main-content">
-    
+    <div class="request">
+        <div class="request-option">
+            <div class="request-tabs">
+                <button class="tab pending ">Pending</button>
+                <button class="tab approved active">Approved</button>
+                <button class="tab rejected">Rejected</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -54,5 +62,36 @@
 
     <script src="js/auth.js"></script>
     <script type="module" src="js/config.js"></script>
+
+    <script>
+        const tabs = document.querySelectorAll('.tab');
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+        });
+    });
+    
+    document.querySelectorAll('.navbar-option > div').forEach(function(option) {
+        option.addEventListener('click', function() {
+            // Menghapus class aktif dari semua opsi
+            document.querySelectorAll('.navbar-option > div').forEach(function(opt) {
+                opt.classList.remove('option-active');
+                let img = opt.querySelector('img');
+                let imgSrc = img.getAttribute('src').replace('-Active', '');
+                img.setAttribute('src', imgSrc);
+            });
+    
+            // Menambahkan class aktif pada opsi yang ditekan
+            this.classList.add('option-active');
+            let img = this.querySelector('img');
+            let imgSrc = img.getAttribute('src').replace('.svg', '-Active.svg');
+            img.setAttribute('src', imgSrc);
+        });
+    });
+    
+    
+    </script>
 </body>
 </html>
