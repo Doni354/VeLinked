@@ -36,7 +36,13 @@
         
         
 
-
+    <!-- Container kamera -->
+    <div class="camera-container">
+        <video id="camera-stream" autoplay playsinline></video>
+        <div class="camera-overlay">
+            <div class="capture-button"></div>
+        </div>
+    </div>
 
 
 
@@ -65,34 +71,28 @@
     <script type="module" src="js/config.js"></script>
     <script type="module" src="js/dashboard.js"></script>
     <script>
-        const tabs = document.querySelectorAll('.tab');
-    
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            tabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
+        // Akses Kamera
+        const video = document.getElementById('camera-stream');
+
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function(stream) {
+                    // Arahkan stream ke elemen video
+                    video.srcObject = stream;
+                    video.play();
+                })
+                .catch(function(err) {
+                    console.log("Terjadi kesalahan saat mengakses kamera: " + err);
+                });
+        } else {
+            alert("Browser tidak mendukung penggunaan kamera.");
+        }
+
+        // Event listener untuk tombol capture (jika nanti ada fungsi tambahan)
+        document.querySelector('.capture-button').addEventListener('click', function() {
+            console.log('Capture button clicked');
+            // Fungsi capture akan ditambahkan jika diperlukan
         });
-    });
-    
-    document.querySelectorAll('.navbar-option > div').forEach(function(option) {
-        option.addEventListener('click', function() {
-            // Menghapus class aktif dari semua opsi
-            document.querySelectorAll('.navbar-option > div').forEach(function(opt) {
-                opt.classList.remove('option-active');
-                let img = opt.querySelector('img');
-                let imgSrc = img.getAttribute('src').replace('-Active', '');
-                img.setAttribute('src', imgSrc);
-            });
-    
-            // Menambahkan class aktif pada opsi yang ditekan
-            this.classList.add('option-active');
-            let img = this.querySelector('img');
-            let imgSrc = img.getAttribute('src').replace('.svg', '-Active.svg');
-            img.setAttribute('src', imgSrc);
-        });
-    });
-    
-    
     </script>
 </body>
 </html>
