@@ -264,3 +264,37 @@ let vehicleUsedId;
                 }
             });
         });
+
+
+
+ // Fungsi untuk memverifikasi apakah email pengguna yang login ada di Realtime Database
+function verifyUserEmail(user) {
+    const driverRef = ref(database, 'Drivers'); // Referensi ke koleksi Drivers
+    const userQuery = query(driverRef, orderByChild('email'), equalTo(user.email)); // Query untuk mencocokkan email pengguna
+
+    get(userQuery).then(snapshot => {
+        if (!snapshot.exists()) {
+            // Jika tidak ada email yang cocok, alihkan ke halaman 406.html
+            window.location.href = "406.html";
+        } else {
+            console.log("User email is valid, access granted.");
+        }
+    }).catch(error => {
+        console.error("Error checking user email:", error);
+    });
+}
+
+// Fungsi untuk memeriksa autentikasi pengguna
+onAuthStateChanged(auth, user => {
+    if (user) {
+        // Verifikasi email pengguna setelah login
+        verifyUserEmail(user);
+    } else {
+        // Jika tidak ada pengguna yang login, arahkan ke halaman login
+        window.location.href = "index.html";
+    }
+});
+
+
+
+        
