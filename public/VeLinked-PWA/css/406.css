@@ -34,15 +34,14 @@ body {
 }
 
 .login-content {
-    background-color: #fff;
-    border-radius: 40px 40px 0 0;
-    padding: 1em 1em;
+    height: 300px;
+    padding: 12em 1em;
     position: absolute; /* Menempel pada bagian bawah layar */
     bottom: 0;
     left: 0;
     right: 0;
     z-index: 2;
-    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+    
 }
 
 .head-content {
@@ -62,6 +61,8 @@ body {
 .desc-content {
     display: flex;
     justify-content: center;
+    margin-bottom: 0em;
+    margin-top: 10em;
 }
 
 .content-desc {
@@ -74,9 +75,9 @@ body {
 }
 
 
-.content-desc h1 {
-    font-family: 'Manrope';
-    font-size: 29px;
+.content-desc h2 {
+    font-family: 'Lato';
+    
     font-weight: 900;
     width: 260px;
     margin-top: 0px;
@@ -98,30 +99,11 @@ body {
     align-items: center;
 }
 
-.login-google button {
-    background-color: #fff;
-    display: flex;
-    align-items: center;
-    outline: none;
-    border: none;
-    border-radius: 8px;
-    width: 85%;
-    max-width: 280px;
-    height: 40px;
-    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
-}
 
-.login-google img {
-    margin-right: 8px;
-    width: 8%;
-}
 
-.login-google p {
-    opacity: 54%;
-    font-size: 13px;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 500;
-}
+
+
+
 
 
 @media (max-width: 480px) {
@@ -135,7 +117,8 @@ body {
 
 
 .login {
-    padding-bottom: 2em;
+    padding-top: 10em;
+    padding-bottom: 0em;
 }
 
 
