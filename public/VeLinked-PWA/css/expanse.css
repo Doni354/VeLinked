@@ -1,9 +1,12 @@
 body {
     background-color: #041124;
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato', sans-serif;
 }
 
 .header {
-    color: #ffff;
+    color: #ffffff;
     font-family: 'Lato';
     font-weight: 800;
     display: flex;
@@ -11,11 +14,12 @@ body {
     padding: 0.5em;
 }
 
-
 .main-content {
-    width: auto;
-    border-radius: 60px 60px 0 0;
+    width: 100%;
+    border-radius: 40px 40px 0 0;
     height: 900px;
-    display: flex;
     background-color: #FFFFFF;
+    padding-bottom: 0px; /* Tambahkan padding untuk memberikan ruang bagi navbar */
 }
+
+
