@@ -28,16 +28,13 @@ body {
 
 .request-option {
     padding-top: 2em;
-    padding-left: 2em;
+
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
-.request-option h3 {
-    font-family: 'Manrope';
-    font-weight: 800;
-    margin-right: 1em;
-}
+
 
 .request-tabs {
     display: flex;
