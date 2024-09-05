@@ -3,6 +3,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Lato', sans-serif;
+    
 }
 
 .header {
@@ -82,4 +83,37 @@ body {
 
 .tab:focus {
     outline: none; /* Menghilangkan border hitam saat tombol ditekan */
+}
+
+
+
+
+
+
+
+
+
+
+.Expanse-Header {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    
+}
+
+.Expanse-Header p {
+    font-weight: 700;
+    color: #7F8489;
+    font-size: 14px;
+    margin-top: 1.3em;
+    margin-bottom: 0;
+}
+
+.Expanse-Header h3 {
+    font-weight: 900;
+    font-family: 'Manrope';
+    font-size: 35px;
+    margin-top: 0.30em;
+    margin-bottom: 0px;
 }
