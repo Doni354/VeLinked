@@ -34,6 +34,7 @@ header h2 {
     align-items: center;
     padding: 20px;
     background-color: #fff;
+    border-radius: 2.5em 2.5em 0 0;
 }
 
 .camera-container {
