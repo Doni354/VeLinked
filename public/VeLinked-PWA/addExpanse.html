@@ -34,17 +34,43 @@
 
     <div class="main-content">
         <div class="camera-container">
-          <video id="camera-stream" autoplay playsinline></video>
-          <canvas id="snapshot"></canvas>
-          <img id="photo-preview" src="" alt="Photo preview" style="display:none;"/>
-          <input type="file" id="image-file" accept="image/*" style="display:none;">
+            <video id="camera-stream" autoplay playsinline></video>
+            <canvas id="snapshot"></canvas>
+            <img id="photo-preview" src="" alt="Photo preview" style="display:none;"/>
+            <input type="file" id="image-file" accept="image/*" style="display:none;">
           
-          <div class="controls">
-            <img id="take-photo" src="assets/images/Photo.svg" alt="Take Photo">
-            <img id="retake-photo" src="assets/images/Retake.svg" alt="Retake" style="display:none;">
-          </div>
+            <div class="controls">
+                <img id="take-photo" src="assets/images/Photo.svg" alt="Take Photo">
+                <img id="retake-photo" src="assets/images/Retake.svg" alt="Retake" style="display:none;">
+            </div>
         </div>
-      </div>
+
+        <!-- Form input expense -->
+        <form class="expense-form" id="expense-form">
+            <div class="form-group">
+                <label for="expense-amount">Input your expense</label>
+                <input type="number" id="expense-amount" name="expense-amount" placeholder="0.00" required>
+            </div>
+
+            <div class="form-group">
+                <label for="expense-type">Expense type</label>
+                <select id="expense-type" name="expense-type" required>
+                    <option value="" disabled selected>Select type</option>
+                    <option value="Gas">Gas</option>
+                    <option value="Maintenance">Maintenance</option>
+                    <option value="Toll">Toll</option>
+                    <option value="Parking">Parking</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description" placeholder="description..." required>
+            </div>
+
+            <button type="submit" class="submit-button">Add New Expense</button>
+        </form>
+    </div>
       
       
 
@@ -67,16 +93,12 @@
     </div>
 
 
-    <script src="js/auth.js"></script>
-    <script type="module" src="js/config.js"></script>
-    <script type="module" src="js/dashboard.js"></script>
     <script>
         const cameraStream = document.getElementById('camera-stream');
         const photoPreview = document.getElementById('photo-preview');
         const takePhotoBtn = document.getElementById('take-photo');
         const retakePhotoBtn = document.getElementById('retake-photo');
         const snapshotCanvas = document.getElementById('snapshot');
-        const imageFileInput = document.getElementById('image-file');
 
         let stream;
 
@@ -125,6 +147,27 @@
         // Jalankan kamera saat halaman dimuat
         startCamera();
 
+        // Fungsi untuk submit form
+        const form = document.getElementById('expense-form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const expenseAmount = document.getElementById('expense-amount').value;
+            const expenseType = document.getElementById('expense-type').value;
+            const description = document.getElementById('description').value;
+
+            console.log('Expense Submitted:', {
+                amount: expenseAmount,
+                type: expenseType,
+                description: description,
+            });
+
+            // Reset form after submit
+            form.reset();
+            photoPreview.src = '';
+            photoPreview.style.display = 'none';
+            cameraStream.style.display = 'block';
+            retakePhoto();
+        });
     </script>
 </body>
 </html>
