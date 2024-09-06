@@ -32,21 +32,21 @@
 
     </div>
 
-<div class="main-content">
-        
-        
-
-    <!-- Container kamera -->
-    <div class="camera-container">
-        <video id="camera-stream" autoplay playsinline></video>
-        <div class="camera-overlay">
-            <div class="capture-button"></div>
+    <div class="main-content">
+        <div class="camera-container">
+          <video id="camera-stream" autoplay playsinline></video>
+          <canvas id="snapshot"></canvas>
+          <img id="photo-preview" src="" alt="Photo preview" style="display:none;"/>
+          <input type="file" id="image-file" accept="image/*" style="display:none;">
+          
+          <div class="controls">
+            <img id="take-photo" src="assets/images/Photo.svg" alt="Take Photo">
+            <img id="retake-photo" src="assets/images/Retake.svg" alt="Retake" style="display:none;">
+          </div>
         </div>
-    </div>
-
-
-
-</div>
+      </div>
+      
+      
 
     
 
@@ -71,28 +71,60 @@
     <script type="module" src="js/config.js"></script>
     <script type="module" src="js/dashboard.js"></script>
     <script>
-        // Akses Kamera
-        const video = document.getElementById('camera-stream');
+        const cameraStream = document.getElementById('camera-stream');
+        const photoPreview = document.getElementById('photo-preview');
+        const takePhotoBtn = document.getElementById('take-photo');
+        const retakePhotoBtn = document.getElementById('retake-photo');
+        const snapshotCanvas = document.getElementById('snapshot');
+        const imageFileInput = document.getElementById('image-file');
 
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({ video: true })
-                .then(function(stream) {
-                    // Arahkan stream ke elemen video
-                    video.srcObject = stream;
-                    video.play();
-                })
-                .catch(function(err) {
-                    console.log("Terjadi kesalahan saat mengakses kamera: " + err);
-                });
-        } else {
-            alert("Browser tidak mendukung penggunaan kamera.");
+        let stream;
+
+        // Fungsi untuk memulai kamera belakang
+        function startCamera() {
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+            .then(function(mediaStream) {
+                stream = mediaStream;
+                cameraStream.srcObject = stream;
+            })
+            .catch(function(err) {
+                console.error('Error accessing camera: ', err);
+            });
         }
 
-        // Event listener untuk tombol capture (jika nanti ada fungsi tambahan)
-        document.querySelector('.capture-button').addEventListener('click', function() {
-            console.log('Capture button clicked');
-            // Fungsi capture akan ditambahkan jika diperlukan
-        });
+        // Fungsi untuk mengambil foto
+        function takePhoto() {
+            const context = snapshotCanvas.getContext('2d');
+            snapshotCanvas.width = cameraStream.videoWidth;
+            snapshotCanvas.height = cameraStream.videoHeight;
+            context.drawImage(cameraStream, 0, 0);
+            
+            const dataUrl = snapshotCanvas.toDataURL('image/png');
+            photoPreview.src = dataUrl;
+            photoPreview.style.display = 'block';
+            cameraStream.style.display = 'none';
+            
+            retakePhotoBtn.style.display = 'inline';
+            takePhotoBtn.style.display = 'none';
+        }
+
+        // Fungsi untuk foto ulang
+        function retakePhoto() {
+            photoPreview.src = '';
+            photoPreview.style.display = 'none';
+            cameraStream.style.display = 'block';
+            
+            retakePhotoBtn.style.display = 'none';
+            takePhotoBtn.style.display = 'inline';
+        }
+
+        // Event listener
+        takePhotoBtn.addEventListener('click', takePhoto);
+        retakePhotoBtn.addEventListener('click', retakePhoto);
+
+        // Jalankan kamera saat halaman dimuat
+        startCamera();
+
     </script>
 </body>
 </html>

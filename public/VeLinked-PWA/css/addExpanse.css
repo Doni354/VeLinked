@@ -26,55 +26,61 @@ body {
     border-radius: 40px 40px 0 0;
     height: 900px;
     background-color: #FFFFFF;
-    padding-bottom: 0px; /* Tambahkan padding untuk memberikan ruang bagi navbar */
+    display: flex;
+    justify-content: center;
+
 }
 
-
- /* CSS untuk kamera */
- .camera-container {
+.camera-container {
+    padding-top: 1em;
+    width: 90%;
+    height: 40%;
     position: relative;
-    width: 100%;
-    height: 300px;
-    background-color: #000;
-    border-radius: 10px;
     overflow: hidden;
-}
-
-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.camera-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.capture-button {
-    width: 60px;
-    height: 60px;
-    border: 5px solid #fff;
-    border-radius: 50%;
-    background-color: transparent;
+#camera-stream, #photo-preview {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    display: block;
+    object-fit: cover;
+}
+
+#snapshot {
+    display: none;
+}
+
+.controls {
     position: absolute;
     bottom: 20px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    width: 100%;
+}
+
+.controls img {
+    width: 60px;
+    height: 60px;
+    margin: 0 10px;
     cursor: pointer;
 }
 
-.capture-button::before {
-    content: '';
-    width: 40px;
-    height: 40px;
-    background-color: #fff;
-    border-radius: 50%;
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #142D5D;
+    color: white;
+    cursor: pointer;
 }
+
+button#retake-photo {
+    background-color: #C22626;
+}
+
