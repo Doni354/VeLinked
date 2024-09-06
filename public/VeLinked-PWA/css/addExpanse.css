@@ -40,6 +40,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    border: none;
+    outline: none;
 }
 
 #camera-stream, #photo-preview {
@@ -48,10 +50,14 @@ body {
     border-radius: 5px;
     display: block;
     object-fit: cover;
+    border: none;
+    outline: none;
 }
 
 #snapshot {
     display: none;
+    border: none;
+    outline: none;
 }
 
 .controls {
@@ -60,6 +66,8 @@ body {
     display: flex;
     justify-content: center;
     width: 100%;
+    border: none;
+    outline: none;
 }
 
 .controls img {
