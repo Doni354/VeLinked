@@ -73,7 +73,7 @@
     </div>
       
       
-
+<div class="popup" id="popup"></div>
     
 
 
@@ -91,11 +91,33 @@
             <img src="assets/images/Nav-Profile.svg" alt="Profile" width="24" height="24">
         </a>
     </div>
-
-
-    <script>
-        const cameraStream = document.getElementById('camera-stream');
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+        import { getStorage, ref as storageRef, uploadString, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
+    
+        const firebaseConfig = {
+            apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
+            authDomain: "velinked-web.firebaseapp.com",
+            databaseURL: "https://velinked-web-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "velinked-web",
+            storageBucket: "velinked-web.appspot.com",
+            messagingSenderId: "844821073092",
+            appId: "1:844821073092:web:f243c25668079240ec0d91",
+            measurementId: "G-CLGQ4RWWTX"
+        };
+    
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const storage = getStorage(app);
+    
+        const form = document.getElementById('expense-form');
         const photoPreview = document.getElementById('photo-preview');
+        const popup = document.getElementById('popup');  // Elemen popup notifikasi
+        const cameraStream = document.getElementById('camera-stream');
+
         const takePhotoBtn = document.getElementById('take-photo');
         const retakePhotoBtn = document.getElementById('retake-photo');
         const snapshotCanvas = document.getElementById('snapshot');
@@ -147,27 +169,80 @@
         // Jalankan kamera saat halaman dimuat
         startCamera();
 
+        // Fungsi untuk menampilkan notifikasi popup
+        function showPopup(message, type = 'info') {
+            popup.textContent = message;
+            popup.className = `popup ${type}`;
+            popup.style.display = 'block';
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 8000);
+        }
+    
         // Fungsi untuk submit form
-        const form = document.getElementById('expense-form');
-        form.addEventListener('submit', function(event) {
+        form.addEventListener('submit', async function(event) {
             event.preventDefault();
+            
+            // Ambil nilai input form
             const expenseAmount = document.getElementById('expense-amount').value;
             const expenseType = document.getElementById('expense-type').value;
             const description = document.getElementById('description').value;
-
-            console.log('Expense Submitted:', {
-                amount: expenseAmount,
-                type: expenseType,
-                description: description,
-            });
-
-            // Reset form after submit
-            form.reset();
-            photoPreview.src = '';
-            photoPreview.style.display = 'none';
-            cameraStream.style.display = 'block';
-            retakePhoto();
+            const photo = photoPreview.src;
+    
+            // Validasi input
+            if (!expenseAmount || !expenseType || !description || !photo) {
+                showPopup('All fields including photo are required!', 'error');
+                return;
+            }
+    
+            // Tampilkan popup "sedang dikirim"
+            showPopup('Sending data...', 'info');
+    
+            try {
+                // Generate nama file untuk foto
+                const photoFileName = `expense_${Date.now()}.png`;
+    
+                // Upload foto ke Firebase Storage
+                const photoStorageRef = storageRef(storage, `Expenses/Image/${photoFileName}`);
+                await uploadString(photoStorageRef, photo, 'data_url');
+    
+                // Dapatkan URL download untuk foto yang diupload
+                const photoUrl = await getDownloadURL(photoStorageRef);
+    
+                // Persiapkan data untuk Realtime Database
+                const expenseData = {
+                    price: expenseAmount,
+                    type: expenseType,
+                    desc: description,
+                    photo: photoUrl
+                };
+    
+                // Kirim data ke Realtime Database
+                const expenseRef = ref(database, 'Expenses');
+                await push(expenseRef, expenseData);
+    
+                // Tampilkan popup "berhasil dikirim"
+                showPopup('Expense successfully added!', 'success');
+                form.reset();
+                photoPreview.src = '';
+                photoPreview.style.display = 'none';
+                cameraStream.style.display = 'block';
+                retakePhoto();
+                // Redirect ke halaman Expanse.html
+                setTimeout(() => {
+                    window.location.href = 'Expanse.html';
+                }, 2000);
+            } catch (error) {
+                console.error('Error uploading data: ', error);
+                showPopup('Failed to send data. Please try again.', 'error');
+            }
         });
+    </script>
+    
+
+    <script>
+        
+        
     </script>
 </body>
 </html>
