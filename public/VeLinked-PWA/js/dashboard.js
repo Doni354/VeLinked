@@ -1,7 +1,7 @@
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-import { getDatabase, ref, query, get, update, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { getDatabase, ref, query, get, update, orderByChild, equalTo, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
@@ -182,88 +182,102 @@ onAuthStateChanged(auth, user => {
 
 let vehicleUsedId;
 
-        function updateButtonState(engineStatus) {
-            const engineImage = document.getElementById('engineImage');
-            const statusTitle = document.getElementById('statusTitle');
-            const statusMessage = document.getElementById('statusMessage');
+function updateButtonState(engineStatus) {
+    const engineImage = document.getElementById('engineImage');
+    const statusTitle = document.getElementById('statusTitle');
+    const statusMessage = document.getElementById('statusMessage');
 
-            if (engineStatus) {
-                engineImage.src = 'assets/images/Engine-On.svg';
-                engineImage.alt = 'Engine On';
-                statusTitle.innerText = 'TURN OFF ENGINE';
-                statusMessage.innerText = 'Your Vehicle is active now';
-            } else {
-                engineImage.src = 'assets/images/Engine-Off.svg';
-                engineImage.alt = 'Engine Off';
-                statusTitle.innerText = 'TURN ON ENGINE';
-                statusMessage.innerText = 'Your Vehicle is currently off';
-            }
+    // Animasi fade-out untuk menghilangkan gambar lama
+    engineImage.classList.add("hidden");
+
+    // Setelah animasi fade-out selesai, ubah gambar dan teks status
+    setTimeout(() => {
+        if (engineStatus) {
+            engineImage.src = 'assets/images/Engine-On.svg';
+            engineImage.alt = 'Engine On';
+            statusTitle.innerText = 'TURN OFF ENGINE';
+            statusMessage.innerText = 'Your Vehicle is active now';
+        } else {
+            engineImage.src = 'assets/images/Engine-Off.svg';
+            engineImage.alt = 'Engine Off';
+            statusTitle.innerText = 'TURN ON ENGINE';
+            statusMessage.innerText = 'Your Vehicle is currently off';
         }
 
-        function toggleEngineStatus() {
-            const engineImage = document.getElementById('engineImage');
-            const currentStatus = engineImage.getAttribute('src') === 'assets/images/Engine-On.svg';
-            const newStatus = !currentStatus;
+        // Tampilkan gambar dengan animasi fade-in
+        engineImage.classList.remove("hidden");
+    }, 300); // Sesuaikan waktu dengan durasi animasi (300ms)
+}
 
-            // Update status in Firebase
-            if (vehicleUsedId) {
-                const vehicleRef = ref(database, `Vehicle/${vehicleUsedId}`);
-                update(vehicleRef, { engine_status: newStatus })
-                    .then(() => {
-                        console.log("Engine status updated successfully.");
-                        updateButtonState(newStatus);
-                    })
-                    .catch(error => {
-                        console.error("Error updating engine status:", error);
-                    });
-            }
-        }
 
-        document.addEventListener("DOMContentLoaded", () => {
-            onAuthStateChanged(auth, user => {
-                if (user) {
-                    const driverRef = ref(database, 'Drivers');
-                    const driverQuery = query(driverRef, orderByChild('email'), equalTo(user.email));
+// Toggle engine status function
+function toggleEngineStatus() {
+    const engineImage = document.getElementById('engineImage');
+    const currentStatus = engineImage.getAttribute('src') === 'assets/images/Engine-On.svg';
+    const newStatus = !currentStatus;
 
-                    get(driverQuery)
-                        .then(snapshot => {
-                            if (snapshot.exists()) {
-                                snapshot.forEach(childSnapshot => {
-                                    const driverData = childSnapshot.val();
-                                    vehicleUsedId = driverData.vehicleUsed;
-
-                                    // Fetch engine status from Vehicle collection
-                                    const vehicleRef = ref(database, `Vehicle/${vehicleUsedId}`);
-                                    get(vehicleRef)
-                                        .then(vehicleSnapshot => {
-                                            if (vehicleSnapshot.exists()) {
-                                                const vehicleData = vehicleSnapshot.val();
-                                                updateButtonState(vehicleData.engine_status);
-
-                                                document.getElementById('toggleButton').addEventListener('click', () => {
-                                                    toggleEngineStatus();
-                                                });
-                                            } else {
-                                                console.log("No vehicle data found for the given vehicleUsed.");
-                                            }
-                                        })
-                                        .catch(error => {
-                                            console.error("Error fetching vehicle data:", error);
-                                        });
-                                });
-                            } else {
-                                console.log("No driver data available for this email.");
-                            }
-                        })
-                        .catch(error => {
-                            console.error("Error fetching driver data:", error);
-                        });
-                } else {
-                    console.log("No user is signed in.");
-                    window.location.href = "index.html"; // Redirect ke halaman login jika user belum login
-                }
+    // Update status in Firebase
+    if (vehicleUsedId) {
+        const vehicleRef = ref(database, `Vehicle/${vehicleUsedId}`);
+        update(vehicleRef, { engine_status: newStatus })
+            .then(() => {
+                console.log("Engine status updated successfully.");
+                updateButtonState(newStatus);
+            })
+            .catch(error => {
+                console.error("Error updating engine status:", error);
             });
+    }
+}
+
+// Real-time listener for engine status
+function listenForEngineStatus() {
+    if (vehicleUsedId) {
+        const vehicleRef = ref(database, `Vehicle/${vehicleUsedId}/engine_status`);
+        onValue(vehicleRef, snapshot => {
+            if (snapshot.exists()) {
+                const engineStatus = snapshot.val();
+                updateButtonState(engineStatus);
+            } else {
+                console.log("No engine status available.");
+            }
         });
+    }
+}
+
+// Ensure the DOM is fully loaded
+document.addEventListener("DOMContentLoaded", () => {
+    onAuthStateChanged(auth, user => {
+        if (user) {
+            const driverRef = ref(database, 'Drivers');
+            const driverQuery = query(driverRef, orderByChild('email'), equalTo(user.email));
+
+            get(driverQuery)
+                .then(snapshot => {
+                    if (snapshot.exists()) {
+                        snapshot.forEach(childSnapshot => {
+                            const driverData = childSnapshot.val();
+                            vehicleUsedId = driverData.vehicleUsed;
+
+                            // Listen for real-time engine status updates
+                            listenForEngineStatus();
+
+                            // Add event listener to toggle button
+                            document.getElementById('toggleButton').addEventListener('click', toggleEngineStatus);
+                        });
+                    } else {
+                        console.log("No driver data available for this email.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching driver data:", error);
+                });
+        } else {
+            console.log("No user is signed in.");
+            window.location.href = "index.html"; // Redirect to login if not signed in
+        }
+    });
+});
 
 
 
