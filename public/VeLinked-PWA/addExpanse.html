@@ -91,10 +91,11 @@
             <img src="assets/images/Nav-Profile.svg" alt="Profile" width="24" height="24">
         </a>
     </div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-        import { getAuth } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+        import { getDatabase, ref, push, get, query, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
         import { getStorage, ref as storageRef, uploadString, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
     
         const firebaseConfig = {
@@ -112,18 +113,20 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
         const storage = getStorage(app);
+        const auth = getAuth(app);
     
         const form = document.getElementById('expense-form');
         const photoPreview = document.getElementById('photo-preview');
-        const popup = document.getElementById('popup');  // Elemen popup notifikasi
+        const popup = document.getElementById('popup');
         const cameraStream = document.getElementById('camera-stream');
-
+    
         const takePhotoBtn = document.getElementById('take-photo');
         const retakePhotoBtn = document.getElementById('retake-photo');
         const snapshotCanvas = document.getElementById('snapshot');
-
+    
         let stream;
-
+        let driverId = null; // Variable untuk menyimpan driverId
+    
         // Fungsi untuk memulai kamera belakang
         function startCamera() {
             navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
@@ -135,7 +138,7 @@
                 console.error('Error accessing camera: ', err);
             });
         }
-
+    
         // Fungsi untuk mengambil foto
         function takePhoto() {
             const context = snapshotCanvas.getContext('2d');
@@ -151,7 +154,7 @@
             retakePhotoBtn.style.display = 'inline';
             takePhotoBtn.style.display = 'none';
         }
-
+    
         // Fungsi untuk foto ulang
         function retakePhoto() {
             photoPreview.src = '';
@@ -161,14 +164,14 @@
             retakePhotoBtn.style.display = 'none';
             takePhotoBtn.style.display = 'inline';
         }
-
+    
         // Event listener
         takePhotoBtn.addEventListener('click', takePhoto);
         retakePhotoBtn.addEventListener('click', retakePhoto);
-
+    
         // Jalankan kamera saat halaman dimuat
         startCamera();
-
+    
         // Fungsi untuk menampilkan notifikasi popup
         function showPopup(message, type = 'info') {
             popup.textContent = message;
@@ -178,6 +181,37 @@
                 popup.style.display = 'none';
             }, 8000);
         }
+    
+        // Fungsi untuk mendapatkan driverId berdasarkan email user
+        async function fetchDriverId(userEmail) {
+            try {
+                const driversRef = ref(database, 'Drivers');
+                const q = query(driversRef, orderByChild('email'), equalTo(userEmail));
+                const snapshot = await get(q);
+                
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    const driverKey = Object.keys(data)[0]; // Mengambil key pertama sebagai driverId
+                    return driverKey;  // Mengembalikan key (driverId) dari dokumen yang sesuai
+                } else {
+                    console.log("No driver found for the current email.");
+                    return null;
+                }
+            } catch (error) {
+                console.error('Error fetching driver ID: ', error);
+                return null;
+            }
+        }
+    
+        // Mendapatkan user login
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const userEmail = user.email;
+                driverId = await fetchDriverId(userEmail); // Mendapatkan driverId berdasarkan email user
+            } else {
+                console.log('No user is signed in.');
+            }
+        });
     
         // Fungsi untuk submit form
         form.addEventListener('submit', async function(event) {
@@ -190,8 +224,8 @@
             const photo = photoPreview.src;
     
             // Validasi input
-            if (!expenseAmount || !expenseType || !description || !photo) {
-                showPopup('All fields including photo are required!', 'error');
+            if (!expenseAmount || !expenseType || !description || !photo || !driverId) {
+                showPopup('All fields including photo and driver ID are required!', 'error');
                 return;
             }
     
@@ -214,7 +248,8 @@
                     price: expenseAmount,
                     type: expenseType,
                     desc: description,
-                    photo: photoUrl
+                    photo: photoUrl,
+                    driverId: driverId // Menyertakan driverId ke dalam data yang dikirim
                 };
     
                 // Kirim data ke Realtime Database
@@ -238,6 +273,7 @@
             }
         });
     </script>
+    
     
 
     <script>
