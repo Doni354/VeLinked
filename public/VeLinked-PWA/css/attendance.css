@@ -123,7 +123,7 @@ body {
 .Attendance-Card {
     display: flex;
     flex-direction: column;
-    width: 320px; /* Disesuaikan dengan ukuran card yang terlihat pada gambar */
+    width: 340px; /* Disesuaikan dengan ukuran card yang terlihat pada gambar */
 }
 
 .Attendance-Card-header {
