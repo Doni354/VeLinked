@@ -112,4 +112,97 @@ body {
   
 
 
+
+
+
+
+
   
+  .attendance-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    padding: 1em;
+}
+
+.Attendance-Card {
+    display: flex;
+    flex-direction: column;
+    width: 320px; /* Disesuaikan dengan ukuran card yang terlihat pada gambar */
+}
+
+.Attendance-Card-header {
+    color: #7F8489;
+    font-weight: 900;
+    font-size: 10px;
+    margin-left: 15px;
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+.Card-Attendance {
+    display: flex;
+    justify-content: space-between;
+
+    border: 1px solid #EBEBEB;
+    border-radius: 0.8em;
+    padding: 1em;
+}
+
+.Info-Card-Content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em; /* Berikan jarak antar elemen */
+}
+
+.Info-Card-Content p {
+    color: #7F8489;
+    font-weight: 600;
+    font-size: 12px;
+    margin: 0;
+}
+
+.Info-Card-Content h4 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 20px;
+    font-weight: 900;
+    margin: 0;
+    color: #000;
+}
+
+.Info-Card-Content h5 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 650;
+    font-size: 13px;
+    color: #7F8489;
+    margin: 0;
+}
+
+.right-card-Content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.Stats-Card-Content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 3px 8px;
+    border-radius: 12px;
+    
+}
+
+.Stats-Card-Content p {
+    font-family: 'Manrope', sans-serif;
+    font-size: 8px;
+    font-weight: 900;
+    text-align: center;
+    margin: 0;
+}
+
+.Approved {
+    background-color: #BBF6EA;
+    color: #17E438; /* Warna teks hijau */
+}
