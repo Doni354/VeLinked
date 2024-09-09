@@ -1069,7 +1069,7 @@ const map = new mapboxgl.Map({
     style: 'mapbox://styles/mapbox/streets-v9',
     projection: 'globe',
     zoom: 15,
-    center: [112.072306, -8.129252] // Lokasi default jika data belum ada
+    center: [0, 0], // Set default center
 });
 
 map.addControl(new mapboxgl.NavigationControl());
@@ -1090,31 +1090,25 @@ let resetTimeout;
 // Mendengarkan perubahan data di Firebase Realtime Database
 onValue(vehicleRef, (snapshot) => {
     const data = snapshot.val();
-    console.log('Data received from Firebase:', data); // Log data yang diterima
-
     if (data && data.lat !== undefined && data.lng !== undefined) {
         const { lat, lng } = data;
-        console.log(`Updating vehicle position to: Latitude ${lat}, Longitude ${lng}`);
         updateMarker(lat, lng);
     } else {
-        console.error('Lat/Lng data is missing or undefined');
         initializeDefaultMap(); // Inisialisasi peta default jika lat/lng tidak ada
     }
 });
 
-// Fungsi untuk memperbarui posisi kendaraan dan marker pada peta
+// Memperbarui marker
 function updateMarker(lat, lng) {
     const newCoord = [lng, lat];
     polylineCoordinates.push(newCoord);
 
     snapToRoad(polylineCoordinates, (snappedCoordinates) => {
         if (!marker) {
-            // Membuat elemen custom untuk marker dengan dua layer gambar
             const el = document.createElement("div");
-            el.style.position = "relative";
             el.innerHTML = `
-                <img src="assets/marker/circle.gif" width="50" height="50" alt="Circle" style="position: absolute; top: 0; left: 0; z-index: 1;">
-                <img id="car-icon" src="assets/marker/car22.svg" width="50" height="50" alt="Car" style="position: absolute; top: 0; left: 0; z-index: 2;">
+              <img src="assets/marker/circle.gif" width="50" height="50" alt="Circle" style="position: absolute; top: 0; left: 0; z-index: 1;">
+              <img id="car-icon" src="assets/marker/car22.svg" width="50" height="50" alt="Car" style="position: absolute; top: 0; left: 0; z-index: 2;">
             `;
             el.style.width = "50px";
             el.style.height = "50px";
@@ -1126,7 +1120,7 @@ function updateMarker(lat, lng) {
 
             if (previousCoord) {
                 const bearing = calculateBearing(previousCoord, lastCoord);
-                const carIcon = marker.getElement().querySelector("#car-icon");
+                const carIcon = document.getElementById("car-icon");
                 if (carIcon) {
                     carIcon.style.transform = `rotate(${bearing}deg)`;
                 }
@@ -1135,15 +1129,15 @@ function updateMarker(lat, lng) {
             marker.setLngLat(newCoord);
         }
 
-        drawPolyline(snappedCoordinates); // Gambar polyline
+        drawPolyline(snappedCoordinates); // bagian polyline
 
-        // Reverse Geocoding dan simpan lokasi ke Firebase
+        // Simpan lokasi ke Firebase
         reverseGeocode(lat, lng, (desa, kota) => {
             addLocationToFirebase(lat, lng, desa, kota);
         });
 
-        // Update peta mengikuti marker jika tidak ada interaksi pengguna
         if (!isUserInteracting) {
+            // Jika pengguna tidak berinteraksi, center peta ke marker
             map.easeTo({
                 center: [lng, lat],
                 duration: 1000 // Animasi selama 1 detik
@@ -1152,7 +1146,45 @@ function updateMarker(lat, lng) {
     });
 }
 
+// Menangani interaksi pengguna
+map.on('mousedown', () => {
+    isUserInteracting = true;
+    clearTimeout(resetTimeout);
+});
+
+map.on('dragstart', () => {
+    isUserInteracting = true;
+    clearTimeout(resetTimeout);
+});
+
+// Ketika pengguna selesai berinteraksi dengan peta
+map.on('mouseup', () => {
+    resetTimeout = setTimeout(() => {
+        isUserInteracting = false;
+        if (marker) {
+            map.easeTo({
+                center: [marker.getLngLat().lng, marker.getLngLat().lat],
+                duration: 1000 // Animasi selama 1 detik
+            });
+        }
+    }, 5000); // Tunggu 5 detik sebelum kembali mengikuti kendaraan
+});
+
+map.on('dragend', () => {
+    resetTimeout = setTimeout(() => {
+        isUserInteracting = false;
+        if (marker) {
+            map.easeTo({
+                center: [marker.getLngLat().lng, marker.getLngLat().lat],
+                duration: 1000 // Animasi selama 1 detik
+            });
+        }
+    }, 5000); // Tunggu 5 detik sebelum map kembali ke marker
+});
+
 // Fungsi untuk menghitung bearing antara dua koordinat
+
+// bearing
 function calculateBearing(start, end) {
     const startLat = start[1] * (Math.PI / 180);
     const startLng = start[0] * (Math.PI / 180);
@@ -1169,32 +1201,38 @@ function calculateBearing(start, end) {
 }
 
 // Fungsi Snap to Road menggunakan MapBox Matching API
+// snap to road
 function snapToRoad(coordinates, callback) {
-    if (coordinates.length < 2) {
-        callback(coordinates);
-        return;
-    }
-
     const coordsStr = coordinates.map((c) => `${c[0]},${c[1]}`).join(";");
     const url = `https://api.mapbox.com/matching/v5/mapbox/driving/${coordsStr}?geometries=geojson&access_token=${mapboxgl.accessToken}`;
 
+    console.log("Sending coordinates to Mapbox:", url);
+
     fetch(url)
-        .then((response) => response.json())
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then((data) => {
+            console.log("Response from Mapbox:", data);
+
             if (data.matchings && data.matchings.length > 0) {
                 const snappedCoords = data.matchings[0].geometry.coordinates;
                 callback(snappedCoords);
             } else {
-                callback(coordinates); // Jika tidak ada snap, gunakan koordinat asli
+                console.warn("No matchings found, using original coordinates.");
+                callback(coordinates); // Jika tidak ada snap maka gunakan koordinat asli
             }
         })
         .catch((error) => {
-            console.error("Error in Snap to Road:", error);
-            callback(coordinates);
+            console.error("Error with Mapbox API:", error);
+            callback(coordinates); // Jika ada error, gunakan koordinat asli
         });
 }
 
-// Fungsi menggambar polyline di peta
+// Fungsi Gambar Polyline
 function drawPolyline(coordinates) {
     if (coordinates.length === 0) {
         console.warn("Tidak ada koordinat untuk digambar");
@@ -1237,7 +1275,7 @@ function drawPolyline(coordinates) {
     }
 }
 
-// Fungsi Reverse Geocoding untuk mendapatkan nama desa dan kota
+// get nama desa dan kota
 function reverseGeocode(lat, lng, callback) {
     const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${mapboxgl.accessToken}&types=place,locality`;
 
@@ -1268,117 +1306,40 @@ function reverseGeocode(lat, lng, callback) {
 }
 
 // Fungsi untuk menambahkan lokasi ke Firebase Realtime Database
+// Fungsi untuk menambahkan lokasi ke Firebase Realtime Database di koleksi 'LastTrip'
 function addLocationToFirebase(lat, lng, desa, kota) {
-    // Asumsikan struktur Firebase Anda memiliki child 'locations'
-    const newLocationRef = push(child(vehicleRef, 'locations'));
-    set(newLocationRef, {
-        lat,
-        lng,
-        desa,
-        kota,
-        timestamp: Date.now()
-    })
-    .then(() => {
-        console.log("Lokasi berhasil disimpan ke Firebase");
-    })
-    .catch((error) => {
-        console.error("Error menyimpan lokasi ke Firebase:", error);
-    });
+    const lastTripRef = dbRef(realtimeDB, 'LastTrip/' + docId);
+    const newLocation = {
+        VehicleID: docId, // Menyimpan VehicleID dari parameter docId di URL
+        latitude: lat,
+        longitude: lng,
+        desa: desa,
+        kota: kota,
+        timestamp: new Date().toISOString()
+    };
+
+    // Menambahkan data ke Firebase (push untuk menambahkan record baru)
+    push(lastTripRef, newLocation)
+        .then(() => {
+            console.log("Lokasi berhasil ditambahkan ke LastTrip.");
+        })
+        .catch((error) => {
+            console.error("Gagal menambahkan lokasi ke LastTrip:", error);
+        });
 }
 
-// Deteksi interaksi pengguna dengan peta
-map.on('mousedown', () => {
-    isUserInteracting = true;
-    clearTimeout(resetTimeout);
-});
 
-map.on('dragstart', () => {
-    isUserInteracting = true;
-    clearTimeout(resetTimeout);
-});
 
-// Ketika pengguna selesai berinteraksi dengan peta
-map.on('mouseup', () => {
-    resetTimeout = setTimeout(() => {
-        isUserInteracting = false;
-        if (marker) {
-            map.easeTo({
-                center: [marker.getLngLat().lng, marker.getLngLat().lat],
-                duration: 1000 // Animasi selama 1 detik
-            });
-        }
-    }, 5000); // Tunggu 5 detik sebelum kembali mengikuti kendaraan
-});
 
-map.on('dragend', () => {
-    resetTimeout = setTimeout(() => {
-        isUserInteracting = false;
-        if (marker) {
-            map.easeTo({
-                center: [marker.getLngLat().lng, marker.getLngLat().lat],
-                duration: 3000
-            });
-        }
-    }, 5000);
-});
 
-// Fungsi untuk menginisialisasi peta default dengan efek rotasi globe
-function initializeDefaultMap() {
-    // Hanya inisialisasi ulang peta jika belum diinisialisasi
-    if (map.loaded()) return;
 
-    const defaultMap = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v9',
-        projection: 'globe', // Tampilkan peta sebagai globe
-        zoom: 1,
-        center: [30, 15]
-    });
 
-    defaultMap.addControl(new mapboxgl.NavigationControl());
-    defaultMap.scrollZoom.disable();
 
-    defaultMap.on('style.load', () => {
-        defaultMap.setFog({}); // Atur gaya atmosfer default
-    });
 
-    // Kecepatan rotasi globe
-    const secondsPerRevolution = 240; // Waktu untuk satu putaran lengkap
-    const maxSpinZoom = 5; // Zoom level maksimum untuk rotasi
-    const slowSpinZoom = 3; // Zoom level untuk rotasi lambat
 
-    let userInteractingDefault = false;
-    const spinEnabled = true;
 
-    function spinGlobe() {
-        const zoom = defaultMap.getZoom();
-        if (spinEnabled && !userInteractingDefault && zoom < maxSpinZoom) {
-            let distancePerSecond = 360 / secondsPerRevolution;
-            if (zoom > slowSpinZoom) {
-                const zoomDif = (maxSpinZoom - zoom) / (maxSpinZoom - slowSpinZoom);
-                distancePerSecond *= zoomDif;
-            }
-            const center = defaultMap.getCenter();
-            center.lng -= distancePerSecond;
-            defaultMap.easeTo({ center, duration: 1000, easing: (n) => n });
-        }
-    }
 
-    // Hentikan rotasi saat ada interaksi pengguna
-    defaultMap.on('mousedown', () => {
-        userInteractingDefault = true;
-    });
-    defaultMap.on('dragstart', () => {
-        userInteractingDefault = true;
-    });
 
-    // Lanjutkan rotasi jika tidak ada interaksi pengguna
-    defaultMap.on('moveend', () => {
-        spinGlobe();
-    });
-
-    spinGlobe();
-}
 
 
 
