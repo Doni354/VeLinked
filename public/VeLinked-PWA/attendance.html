@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VeLinked Driver</title>
     <link rel="stylesheet" href="css/navbar.css">
-    <link rel="stylesheet" href="css/expanse.css">
+    <link rel="stylesheet" href="css/attendance.css">
     <script defer src="/__/firebase/10.9.0/firebase-app-compat.js"></script>
     <!-- include only the Firebase features as you need -->
     <script defer src="/__/firebase/10.9.0/firebase-auth-compat.js"></script>
@@ -32,13 +32,7 @@
     </div>
 
 <div class="main-content">
-        <div class="request-option">
-            <div class="request-tabs">
-                <button class="tab daily">Daily</button>
-                <button class="tab weekly active">Weekly</button>
-                <button class="tab yearly">Yearly</button>
-            </div>
-        </div>
+        
         <div class="Expanse-Header">
             <p>Total Expense, This week</p>
             <h3>Rp31.000</h3>
@@ -49,99 +43,6 @@
             </button>
         </div>
         
-        <div class="Expanse">
-            <div class="card-container">
-        <div class="card">
-            <img src="assets/images/ExpanseType-Gas.svg" alt="Fuel">
-            <h3>Rp.982 K</h3>
-            <p>91 Liters</p>
-        </div>
-        <div class="card">
-            <img src="assets/images/ExpanseType-Toll.svg" alt="Toll">
-            <h3>Rp.722 K</h3>
-            <p>321 Km Toll</p>
-        </div>
-        <div class="card">
-            <img src="assets/images/ExpanseType-Consumtion.svg" alt="Consumption">
-            <h3>Rp.123 K</h3>
-            <p>Consumption</p>
-        </div>
-        
-        
-    </div>
-    <div class="card-container">
-        <div class="card">
-            <img src="assets/images/ExpanseType-Gas.svg" alt="Fuel">
-            <h3>Rp.982 K</h3>
-            <p>91 Liters</p>
-        </div>
-        <div class="card">
-            <img src="assets/images/ExpanseType-Toll.svg" alt="Toll">
-            <h3>Rp.722 K</h3>
-            <p>321 Km Toll</p>
-        </div>
-        <div class="card">
-            <img src="assets/images/ExpanseType-Consumtion.svg" alt="Consumption">
-            <h3>Rp.123 K</h3>
-            <p>Consumption</p>
-        </div>
-        <div class="card">
-            <img src="assets/images/ExpanseType-Gas.svg" alt="Fuel">
-            <h3>Rp.982 K</h3>
-            <p>91 Liters</p>
-        </div>
-        <div class="card">
-            <img src="assets/images/ExpanseType-Toll.svg" alt="Toll">
-            <h3>Rp.722 K</h3>
-            <p>321 Km Toll</p>
-        </div>
-        <div class="card">
-            <img src="assets/images/ExpanseType-Consumtion.svg" alt="Consumption">
-            <h3>Rp.123 K</h3>
-            <p>Consumption</p>
-        </div>
-        
-        
-    </div>
-    <div class="card-container">
-        <div class="card">
-            <img src="assets/images/ExpanseType-Gas.svg" alt="Fuel">
-            <h3>Rp.982 K</h3>
-            <p>91 Liters</p>
-        </div>
-        <div class="card">
-            <img src="assets/images/ExpanseType-Toll.svg" alt="Toll">
-            <h3>Rp.722 K</h3>
-            <p>321 Km Toll</p>
-        </div>
-        <div class="card">
-            <img src="assets/images/ExpanseType-Consumtion.svg" alt="Consumption">
-            <h3>Rp.123 K</h3>
-            <p>Consumption</p>
-        </div>
-        
-        
-    </div>
-    <div class="card-container">
-        <div class="card">
-            <img src="assets/images/ExpanseType-Gas.svg" alt="Fuel">
-            <h3>Rp.982 K</h3>
-            <p>91 Liters</p>
-        </div>
-        <div class="card">
-            <img src="assets/images/ExpanseType-Toll.svg" alt="Toll">
-            <h3>Rp.722 K</h3>
-            <p>321 Km Toll</p>
-        </div>
-        <div class="card">
-            <img src="assets/images/ExpanseType-Consumtion.svg" alt="Consumption">
-            <h3>Rp.123 K</h3>
-            <p>Consumption</p>
-        </div>
-        
-        
-    </div>
-</div>
 
 
 
@@ -170,35 +71,6 @@
     <script src="js/auth.js"></script>
     <script type="module" src="js/config.js"></script>
     <script type="module" src="js/dashboard.js"></script>
-    <script>
-        const tabs = document.querySelectorAll('.tab');
-    
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            tabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-        });
-    });
-    
-    document.querySelectorAll('.navbar-option > div').forEach(function(option) {
-        option.addEventListener('click', function() {
-            // Menghapus class aktif dari semua opsi
-            document.querySelectorAll('.navbar-option > div').forEach(function(opt) {
-                opt.classList.remove('option-active');
-                let img = opt.querySelector('img');
-                let imgSrc = img.getAttribute('src').replace('-Active', '');
-                img.setAttribute('src', imgSrc);
-            });
-    
-            // Menambahkan class aktif pada opsi yang ditekan
-            this.classList.add('option-active');
-            let img = this.querySelector('img');
-            let imgSrc = img.getAttribute('src').replace('.svg', '-Active.svg');
-            img.setAttribute('src', imgSrc);
-        });
-    });
-    
-    
-    </script>
+
 </body>
 </html>
