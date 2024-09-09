@@ -116,20 +116,20 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1em;
-    padding: 1em;
+    gap: 0.5em;
+    padding: 0.5em;
 }
 
 .Attendance-Card {
     display: flex;
     flex-direction: column;
-    width: 340px; /* Disesuaikan dengan ukuran card yang terlihat pada gambar */
+    width: 350px; /* Disesuaikan dengan ukuran card yang terlihat pada gambar */
 }
 
 .Attendance-Card-header {
     color: #7F8489;
     font-weight: 900;
-    font-size: 10px;
+    font-size: 12px;
     margin-left: 15px;
     margin-top: 10px;
     margin-bottom: 0;
@@ -153,13 +153,13 @@ body {
 .Info-Card-Content p {
     color: #7F8489;
     font-weight: 600;
-    font-size: 12px;
+    font-size: 14px;
     margin: 0;
 }
 
 .Info-Card-Content h4 {
     font-family: 'Manrope', sans-serif;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 900;
     margin: 0;
     color: #000;
@@ -168,7 +168,7 @@ body {
 .Info-Card-Content h5 {
     font-family: 'Lato', sans-serif;
     font-weight: 650;
-    font-size: 13px;
+    font-size: 15px;
     color: #7F8489;
     margin: 0;
 }
@@ -190,7 +190,7 @@ body {
 
 .Stats-Card-Content p {
     font-family: 'Manrope', sans-serif;
-    font-size: 8px;
+    font-size: 10px;
     font-weight: 900;
     text-align: center;
     margin: 0;
