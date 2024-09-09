@@ -77,13 +77,11 @@ body {
 
 .AddAttendance {
     margin-top: 1em;
-    width: 125px;
+    width: 120px;
     height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: row;
-    gap: 5px;
     background-color: #5243E6;
     border-radius: 40px;
 
@@ -98,16 +96,12 @@ body {
   .AddAttendance:active {
     background-color: #1b107e; /* Efek on click */
   }
-  .addButton {
-    width: 12px;
-    height: 12px;
-  }
-  
+
   .addButtonLabel {
-    font: "Poppins", Helvetica, Arial, serif;
-    font-size: 11px;
+    font: "Lato", Helvetica, Arial, serif;
+    font-size: 13px;
     color: white;
-    font-weight: 00;
+    font-weight: 750;
   }
   
 
@@ -205,4 +199,14 @@ body {
 .Approved {
     background-color: #BBF6EA;
     color: #17E438; /* Warna teks hijau */
+}
+
+.Awaiting {
+  background-color: #EAF6BB;
+  color: #E4BE39; /* Warna teks hijau */
+}
+
+.Declined {
+  background-color: #F6BBBB;
+  color: #D74343; /* Warna teks hijau */
 }
