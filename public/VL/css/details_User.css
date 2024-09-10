@@ -64,7 +64,18 @@
 .userimg {
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center; /* Pastikan gambar berada di tengah vertikal */
     position: absolute;
-    top: -95px;
+    top: 145px; /* Jarak dari atas elemen kontainer */
+    left: 50%; /* Posisi horizontal tengah */
+    transform: translateX(-50%); /* Menggeser gambar ke kiri sebanyak 50% dari lebar gambar untuk memastikan berada di tengah */
+    width: 250px; /* Atur lebar sesuai kebutuhan */
+    height: auto; /* Atur tinggi otomatis mengikuti lebar gambar */
 }
+
+.userimg img {
+    width: 100%; /* Gambar mengikuti lebar kontainer .userimg */
+    height: auto; /* Tinggi gambar otomatis mengikuti rasio aslinya */
+}
+
+

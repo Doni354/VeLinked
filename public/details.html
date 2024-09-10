@@ -517,19 +517,22 @@
             </div>
             <div class="userdat">
                 <div class="nameveh">
-                    <div class="vehname"><p>Username</p></div>
-                    <div class="user" style=" margin-top: 22px; margin-right: 20px; "><img style="width: 50%;" src="assets/images/back.svg" alt=""></div>
-                    
+                    <div class="vehname">
+                        <p id="driverFullName">Username</p>
+                    </div>
+                    <div class="user" style="margin-top: 22px; margin-right: 20px;">
+                        <img style="width: 50%;" src="assets/images/back.svg" alt="">
+                    </div>
                 </div>
                 <div class="userdat-stats">
                     <div class="Ustats">
                         <div class="UData">
-                            <div class="UDat">IDR.4.200.00</div>
+                            <div class="UDat" id="driverSalary">IDR.4.200.00</div>
                             <div class="Ustat">Salary</div>
                             <div class="Uview">View</div>
                         </div>
                         <div class="UData">
-                            <div class="UDat">A</div>
+                            <div class="UDat" id="driverDrivingLicense">A</div>
                             <div class="Ustat">Driving License</div>
                             <div class="Uview">View</div>
                         </div>
@@ -539,10 +542,9 @@
                             <div class="Uview">View</div>
                         </div>
                     </div>
-                
                     <div class="Ustats right-align">
                         <div class="UData">
-                            <div class="UDat">+62882009031</div>
+                            <div class="UDat" id="driverPhoneNumber">+62882009031</div>
                             <div class="Ustat">Phone number</div>
                             <div class="Uview"></div>
                         </div>
@@ -557,11 +559,10 @@
                             <div class="Uview"></div>
                         </div>
                     </div>
-                
-                    <div class="userimg"><img src="assets/images/UserD.svg" alt=""></div>
+                    <div class="userimg">
+                        <img id="driverPhoto" src="assets/images/UserD.svg" alt="">
+                    </div>
                 </div>
-                
-                
             </div>
             
             <div class="vehdat">
@@ -842,42 +843,42 @@
 
     <script type="module">
 
-// Import Firebase dan Mapbox
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getDatabase, ref as dbRef, onValue, set, push, remove, update } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
+            // Import Firebase dan Mapbox
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+            import { getDatabase, ref as dbRef, onValue, set, push, remove, update } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+            import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
 
-// Firebase Config
-const firebaseConfig = {
-    apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
-    authDomain: "velinked-web.firebaseapp.com",
-    databaseURL: "https://velinked-web-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "velinked-web",
-    storageBucket: "velinked-web.appspot.com",
-    messagingSenderId: "844821073092",
-    appId: "1:844821073092:web:f243c25668079240ec0d91",
-    measurementId: "G-CLGQ4RWWTX"
-};
+            // Firebase Config
+            const firebaseConfig = {
+                apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
+                authDomain: "velinked-web.firebaseapp.com",
+                databaseURL: "https://velinked-web-default-rtdb.asia-southeast1.firebasedatabase.app",
+                projectId: "velinked-web",
+                storageBucket: "velinked-web.appspot.com",
+                messagingSenderId: "844821073092",
+                appId: "1:844821073092:web:f243c25668079240ec0d91",
+                measurementId: "G-CLGQ4RWWTX"
+            };
 
-// Inisialisasi Firebase
-const app = initializeApp(firebaseConfig);
-const realtimeDB = getDatabase(app);
-const storage = getStorage(app);
-const storageRef = ref(storage);
-// Ambil parameter dari URL
-function getParameterByName(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[[\]]/g, '\\$&');
-    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
-}
-const deleteButton = document.getElementById('confirmDelete');
-const docId = getParameterByName('docId');
-const vehicleRef = dbRef(realtimeDB, 'Vehicle/' + docId);
-
+            // Inisialisasi Firebase
+            const app = initializeApp(firebaseConfig);
+            const realtimeDB = getDatabase(app);
+            const storage = getStorage(app);
+            const storageRef = ref(storage);
+            // Ambil parameter dari URL
+            function getParameterByName(name, url) {
+                if (!url) url = window.location.href;
+                name = name.replace(/[[\]]/g, '\\$&');
+                var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, ' '));
+            }
+            const deleteButton = document.getElementById('confirmDelete');
+            const docId = getParameterByName('docId');
+            const vehicleRef = dbRef(realtimeDB, 'Vehicle/' + docId);
+            
             const form = document.getElementById('vehicleForm');
             const nicknameInput = document.getElementById('nickname');
             const typeSelect = document.getElementById('type');
@@ -890,7 +891,37 @@ const vehicleRef = dbRef(realtimeDB, 'Vehicle/' + docId);
             const fileName = document.getElementById('file-name');
             const popup = document.getElementById('popup');
 
+             // Referensi ke database Drivers
+        const driverRef = dbRef(realtimeDB, 'Drivers');
 
+
+            // Ambil data berdasarkan vehicleUsed yang sama dengan docId
+        onValue(driverRef, (snapshot) => {
+            const data = snapshot.val();
+            for (const key in data) {
+                if (data[key].vehicleUsed === docId) {
+                    const driverData = data[key];
+
+                    // Format salary dengan pemisah ribuan
+                    const formattedSalary = `IDR ${Number(driverData.salary).toLocaleString()}`;
+
+                    // Update elemen HTML dengan data dari Firebase
+                    document.getElementById('driverFullName').textContent = driverData.fullName;
+                    document.getElementById('driverSalary').textContent = formattedSalary;
+                    document.getElementById('driverPhoneNumber').textContent = driverData.phoneNumber;
+
+                    // Ambil URL gambar dari Firebase Storage
+                    const imgRef = ref(storage, driverData.driverPhotoUrl);
+                    getDownloadURL(imgRef).then((url) => {
+                        document.getElementById('driverPhoto').src = url;
+                    }).catch((error) => {
+                        console.error('Error getting image URL:', error);
+                    });
+
+                    break; // Hentikan iterasi setelah data ditemukan
+                }
+            }
+        });
 
 
 
