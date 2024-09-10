@@ -31,6 +31,129 @@ const database = getDatabase(app);
 
 
 
+// Function to load driverId based on user email
+async function loadDriverIdByEmail(userEmail) {
+    try {
+        console.log("Fetching driverId for user email:", userEmail);
+        const driversRef = ref(database, 'Drivers');
+        const driversSnapshot = await get(driversRef);
+
+        let driverId = null;
+
+        // Loop through drivers to find matching email
+        driversSnapshot.forEach((doc) => {
+            const driverData = doc.val();
+            if (driverData.email === userEmail) {
+                driverId = doc.key; // doc.key is the driverId
+                console.log("DriverId found:", driverId);
+            }
+        });
+
+        if (!driverId) {
+            console.log("No matching driverId found for this email.");
+            return;
+        }
+
+        // Use driverId to fetch expanses
+        loadDriverExpansesByDriverId(driverId);
+
+    } catch (error) {
+        console.error("Error fetching driverId:", error);
+    }
+}
+
+// Function to load expanses using driverId
+async function loadDriverExpansesByDriverId(driverId) {
+    try {
+        console.log("Loading expanses for driverId:", driverId);
+        const expansesRef = ref(database, 'Expanses');
+        const expansesSnapshot = await get(expansesRef);
+
+        let expansesData = [];
+
+        // Loop through expanses and find those matching driverId
+        expansesSnapshot.forEach((doc) => {
+            const expanse = doc.val();
+            console.log("Checking expanse: ", expanse); // Log each expanse
+
+            if (expanse.driverId === driverId) {
+                console.log("Matched expanse: ", expanse); // Log matched expanse
+                expansesData.push(expanse);
+            }
+        });
+
+        if (expansesData.length === 0) {
+            console.log("No expanses found for this driver.");
+        }
+
+        displayExpanses(expansesData);
+
+    } catch (error) {
+        console.error("Error loading expanses:", error);
+    }
+}
+
+// Function to display expanses in the card container
+function displayExpanses(expansesData) {
+    const cardContainer = document.getElementById("card-container");
+    cardContainer.innerHTML = ""; // Clear previous content
+
+    expansesData.forEach(expanse => {
+        const { type, price, desc } = expanse;
+        
+        // Format price to currency format (e.g., Rp. 982 K)
+        const formattedPrice = formatCurrency(price);
+
+        // Shorten description if too long
+        const shortDesc = desc.length > 20 ? desc.substring(0, 20) + '...' : desc;
+
+        // Create card element
+        const card = document.createElement('div');
+        card.classList.add('card');
+
+        // Create image element
+        const img = document.createElement('img');
+        img.src = `assets/expanse/${type}.svg`; // Load image based on type
+        img.alt = type;
+
+        // Create h3 element for price
+        const h3 = document.createElement('h3');
+        h3.textContent = formattedPrice;
+
+        // Create p element for description
+        const p = document.createElement('p');
+        p.textContent = shortDesc;
+
+        // Append elements to card
+        card.appendChild(img);
+        card.appendChild(h3);
+        card.appendChild(p);
+
+        // Append card to container
+        cardContainer.appendChild(card);
+    });
+}
+
+// Function to format price as currency (e.g., Rp. 982 K)
+function formatCurrency(price) {
+    const formattedPrice = Number(price).toLocaleString('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0
+    });
+    return formattedPrice.replace("Rp", "Rp.");
+}
+
+// Event listener for user authentication state change
+onAuthStateChanged(auth, user => {
+    if (user) {
+        console.log("User logged in:", user.email);
+        loadDriverIdByEmail(user.email); // Fetch driverId by user email
+    } else {
+        console.log("No user is signed in.");
+        window.location.href = "index.html"; // Redirect to login if no user is signed in
+    }
+});
 
 
 
