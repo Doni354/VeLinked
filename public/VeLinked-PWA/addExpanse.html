@@ -23,13 +23,48 @@
       to avoid connecting the SDK to running emulators.
     -->
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+
+    <style>
+        .popup {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 16px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.popup.show {
+    display: block;
+    opacity: 1;
+}
+
+.popup.success {
+    background-color: green;
+}
+
+.popup.error {
+    background-color: red;
+}
+
+.popup.info {
+    background-color: blue;
+}
+
+    </style>
     
 </head>
 <body>
 
     <div class="header">
         <h2>Input your expenses</h2>
-
     </div>
 
     <div class="main-content">
@@ -67,14 +102,14 @@
                 <label for="description">Description</label>
                 <input type="text" id="description" name="description" placeholder="description..." required>
             </div>
-
+            <div class="popup" id="popup"></div>
+ 
             <button type="submit" class="submit-button">Add New Expense</button>
         </form>
     </div>
       
       
-<div class="popup" id="popup"></div>
-    
+   
 
 
     <div class="navbar">
@@ -109,7 +144,6 @@
             measurementId: "G-CLGQ4RWWTX"
         };
     
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
         const storage = getStorage(app);
@@ -125,9 +159,8 @@
         const snapshotCanvas = document.getElementById('snapshot');
     
         let stream;
-        let driverId = null; // Variable untuk menyimpan driverId
+        let driverId = null;
     
-        // Fungsi untuk memulai kamera belakang
         function startCamera() {
             navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
             .then(function(mediaStream) {
@@ -139,50 +172,51 @@
             });
         }
     
-        // Fungsi untuk mengambil foto
         function takePhoto() {
             const context = snapshotCanvas.getContext('2d');
             snapshotCanvas.width = cameraStream.videoWidth;
             snapshotCanvas.height = cameraStream.videoHeight;
             context.drawImage(cameraStream, 0, 0);
-            
+    
             const dataUrl = snapshotCanvas.toDataURL('image/png');
             photoPreview.src = dataUrl;
             photoPreview.style.display = 'block';
             cameraStream.style.display = 'none';
-            
+    
             retakePhotoBtn.style.display = 'inline';
             takePhotoBtn.style.display = 'none';
         }
     
-        // Fungsi untuk foto ulang
         function retakePhoto() {
             photoPreview.src = '';
             photoPreview.style.display = 'none';
             cameraStream.style.display = 'block';
-            
+    
             retakePhotoBtn.style.display = 'none';
             takePhotoBtn.style.display = 'inline';
         }
     
-        // Event listener
         takePhotoBtn.addEventListener('click', takePhoto);
         retakePhotoBtn.addEventListener('click', retakePhoto);
     
-        // Jalankan kamera saat halaman dimuat
         startCamera();
     
-        // Fungsi untuk menampilkan notifikasi popup
         function showPopup(message, type = 'info') {
+            const popup = document.getElementById('popup');
             popup.textContent = message;
-            popup.className = `popup ${type}`;
+            popup.className = `popup ${type} show`;
             popup.style.display = 'block';
+
             setTimeout(() => {
-                popup.style.display = 'none';
-            }, 8000);
+                popup.style.opacity = 0; // Mulai menghilang setelah beberapa detik
+                setTimeout(() => {
+                    popup.style.display = 'none';
+                    popup.style.opacity = 1; // Kembalikan opacity setelah sembunyi
+                }, 300); // Sesuaikan dengan durasi transisi
+            }, 3000); // Durasi popup muncul di layar
         }
+
     
-        // Fungsi untuk mendapatkan driverId berdasarkan email user
         async function fetchDriverId(userEmail) {
             try {
                 const driversRef = ref(database, 'Drivers');
@@ -191,8 +225,8 @@
                 
                 if (snapshot.exists()) {
                     const data = snapshot.val();
-                    const driverKey = Object.keys(data)[0]; // Mengambil key pertama sebagai driverId
-                    return driverKey;  // Mengembalikan key (driverId) dari dokumen yang sesuai
+                    const driverKey = Object.keys(data)[0];
+                    return driverKey;
                 } else {
                     console.log("No driver found for the current email.");
                     return null;
@@ -203,76 +237,71 @@
             }
         }
     
-        // Mendapatkan user login
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 const userEmail = user.email;
-                driverId = await fetchDriverId(userEmail); // Mendapatkan driverId berdasarkan email user
+                driverId = await fetchDriverId(userEmail);
             } else {
                 console.log('No user is signed in.');
             }
         });
     
-        // Fungsi untuk submit form
         form.addEventListener('submit', async function(event) {
             event.preventDefault();
-            
-            // Ambil nilai input form
+    
+            // Disable tombol submit
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+    
             const expenseAmount = document.getElementById('expense-amount').value;
             const expenseType = document.getElementById('expense-type').value;
             const description = document.getElementById('description').value;
             const photo = photoPreview.src;
     
-            // Validasi input
             if (!expenseAmount || !expenseType || !description || !photo || !driverId) {
                 showPopup('All fields including photo and driver ID are required!', 'error');
+                submitBtn.disabled = false; // Re-enable tombol submit
                 return;
             }
     
-            // Tampilkan popup "sedang dikirim"
             showPopup('Sending data...', 'info');
     
             try {
-                // Generate nama file untuk foto
                 const photoFileName = `expense_${Date.now()}.png`;
-    
-                // Upload foto ke Firebase Storage
                 const photoStorageRef = storageRef(storage, `Expenses/Image/${photoFileName}`);
                 await uploadString(photoStorageRef, photo, 'data_url');
-    
-                // Dapatkan URL download untuk foto yang diupload
                 const photoUrl = await getDownloadURL(photoStorageRef);
     
-                // Persiapkan data untuk Realtime Database
                 const expenseData = {
                     price: expenseAmount,
                     type: expenseType,
                     desc: description,
                     photo: photoUrl,
-                    driverId: driverId // Menyertakan driverId ke dalam data yang dikirim
+                    driverId: driverId,
+                    date: Date.now() // Tambahkan field date di sini
                 };
     
-                // Kirim data ke Realtime Database
                 const expenseRef = ref(database, 'Expenses');
                 await push(expenseRef, expenseData);
     
-                // Tampilkan popup "berhasil dikirim"
                 showPopup('Expense successfully added!', 'success');
                 form.reset();
                 photoPreview.src = '';
                 photoPreview.style.display = 'none';
                 cameraStream.style.display = 'block';
                 retakePhoto();
-                // Redirect ke halaman Expanse.html
+    
                 setTimeout(() => {
                     window.location.href = 'Expanse.html';
                 }, 2000);
             } catch (error) {
                 console.error('Error uploading data: ', error);
                 showPopup('Failed to send data. Please try again.', 'error');
+                submitBtn.disabled = false; // Re-enable tombol submit jika gagal
             }
         });
     </script>
+    
     
     
 
