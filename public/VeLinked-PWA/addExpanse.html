@@ -291,9 +291,7 @@
                 cameraStream.style.display = 'block';
                 retakePhoto();
     
-                setTimeout(() => {
-                    window.location.href = 'Expanse.html';
-                }, 2000);
+                
             } catch (error) {
                 console.error('Error uploading data: ', error);
                 showPopup('Failed to send data. Please try again.', 'error');
