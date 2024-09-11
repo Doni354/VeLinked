@@ -56,5 +56,18 @@
     <script src="app.js"></script>
     <script src="js/auth.js"></script>
     <script type="module" src="js/config.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Mendeteksi perubahan status autentikasi saat halaman dimuat
+            firebase.auth().onAuthStateChanged(function(user) {
+                if (user) {
+                    // Pengguna sudah login, arahkan ke halaman dashboard
+                    window.location.href = "./dashboard.html";
+                } 
+            });
+        });
+        
+        </script>
+</body>
 </body>
 </html>
