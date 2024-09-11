@@ -170,13 +170,14 @@
 }
 
 .card img {
-    width: 50px;
+    width: 40px;
     margin-top: 10px;
     height: auto;
     margin-bottom: 0px;
 }
 
-.card h3 {
+.card h3 { 
+    
     font-size: 17px;
     font-family: 'Lato';
     margin: 10px 0;
