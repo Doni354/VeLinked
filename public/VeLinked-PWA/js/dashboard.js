@@ -66,7 +66,7 @@ async function loadDriverIdByEmail(userEmail) {
 async function loadDriverExpansesByDriverId(driverId) {
     try {
         console.log("Loading expanses for driverId:", driverId);
-        const expansesRef = ref(database, 'Expanses');
+        const expansesRef = ref(database, 'Expenses');
         const expansesSnapshot = await get(expansesRef);
 
         let expansesData = [];
