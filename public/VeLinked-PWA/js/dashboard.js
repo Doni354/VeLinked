@@ -61,8 +61,7 @@ async function loadDriverIdByEmail(userEmail) {
         console.error("Error fetching driverId:", error);
     }
 }
-
-// Function to load expanses using driverId
+// Function to load expanses using driverId and calculate total price for each type
 async function loadDriverExpansesByDriverId(driverId) {
     try {
         console.log("Loading expanses for driverId:", driverId);
@@ -70,6 +69,7 @@ async function loadDriverExpansesByDriverId(driverId) {
         const expansesSnapshot = await get(expansesRef);
 
         let expansesData = [];
+        let totalCostByType = {}; // Object to hold the total cost for each type
 
         // Loop through expanses and find those matching driverId
         expansesSnapshot.forEach((doc) => {
@@ -77,8 +77,20 @@ async function loadDriverExpansesByDriverId(driverId) {
             console.log("Checking expanse: ", expanse); // Log each expanse
 
             if (expanse.driverId === driverId) {
-                console.log("Matched expanse: ", expanse); // Log matched expanse
                 expansesData.push(expanse);
+
+                // Calculate total price for each type
+                const { type, price } = expanse;
+
+                // Ensure price is a number
+                const numericPrice = Number(price);
+
+                if (!totalCostByType[type]) {
+                    totalCostByType[type] = 0;
+                }
+
+                // Sum up the total cost for each type
+                totalCostByType[type] += numericPrice;
             }
         });
 
@@ -86,7 +98,8 @@ async function loadDriverExpansesByDriverId(driverId) {
             console.log("No expanses found for this driver.");
         }
 
-        displayExpanses(expansesData);
+        // Display expanses and total cost for each type
+        displayExpanses(expansesData, totalCostByType);
 
     } catch (error) {
         console.error("Error loading expanses:", error);
@@ -94,7 +107,7 @@ async function loadDriverExpansesByDriverId(driverId) {
 }
 
 // Function to display expanses in the card container
-function displayExpanses(expansesData) {
+function displayExpanses(expansesData, totalCostByType) {
     const cardContainer = document.getElementById("card-container");
     cardContainer.innerHTML = ""; // Clear previous content
 
@@ -131,18 +144,65 @@ function displayExpanses(expansesData) {
 
         // Append card to container
         cardContainer.appendChild(card);
+
+        // Add click event listener to show details in overlay
+        card.addEventListener('click', () => {
+            showExpenseDetails(expanse, totalCostByType[expanse.type]);  // Pass the total cost of the same type
+        });
     });
 }
 
-// Function to format price as currency (e.g., Rp. 982 K)
+// Function to show expense details in overlay, including total cost for the type
+function showExpenseDetails(expanse, totalCostForType) {
+    const { type, price, desc, date, photo } = expanse;
+
+    // Format date and price
+    const formattedDate = formatDate(new Date(date));
+    const formattedPrice = formatCurrency(price);
+    const formattedTotalCost = formatCurrency(totalCostForType); // Format total cost to IDR
+
+    // Set overlay data
+    document.getElementById('overlay-title').innerText = `${type} Cost Detail`;
+    document.getElementById('overlay-icon').src = `assets/expanse/${type}.svg`;
+    document.getElementById('overlay-cost').innerText = formattedPrice;
+    document.getElementById('overlay-total-cost').innerText = `Total Cost ${type}: ${formattedTotalCost}`; // Display total cost for the type
+    document.getElementById('overlay-date').innerText = formattedDate;
+    document.getElementById('overlay-description').innerText = desc;
+
+    // Show overlay
+    document.getElementById('expense-overlay').classList.remove('hidden');
+
+    // Add close button functionality
+    document.getElementById('close-overlay').addEventListener('click', () => {
+        document.getElementById('expense-overlay').classList.add('hidden');
+    });
+
+    // Add image preview functionality (if applicable)
+    if (photo) {
+        document.getElementById('view-image').setAttribute('href', photo);
+        document.getElementById('view-image').innerText = "View Attached Photo";
+    } else {
+        document.getElementById('view-image').innerText = "No Photo Available";
+    }
+}
+
+// Helper function to format currency
 function formatCurrency(price) {
-    const formattedPrice = Number(price).toLocaleString('id-ID', {
+    return Number(price).toLocaleString('id-ID', {
         style: 'currency',
         currency: 'IDR',
         minimumFractionDigits: 0
-    });
-    return formattedPrice.replace("Rp", "Rp.");
+    }).replace('Rp', 'Rp.');
 }
+
+// Helper function to format date
+function formatDate(date) {
+    const month = date.getMonth() + 1; // Months start from 0 in JavaScript
+    const day = date.getDate();
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+}
+
 
 // Event listener for user authentication state change
 onAuthStateChanged(auth, user => {
