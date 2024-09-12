@@ -382,7 +382,7 @@
     color: #7F8489;
     font-weight: 500;
     font-family: 'Lato';
-    font-size: 14px;
+    font-size: 16px;
 }
 
 
@@ -390,14 +390,14 @@
     font-family: 'Manrope';
     font-weight: 800;
     color: #373636;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 #view-image {
     color: #5243E6;
     font-family: 'Manrope';
     font-weight: 800;
-    font-size: 12px;
+    font-size: 14px;
     
 }
 .total-cost {
@@ -411,7 +411,7 @@
 .total-cost p {
     font-family: 'Lato';
     color: #7F8489;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
     margin: 0; /* Remove default margin */
 }
@@ -420,7 +420,7 @@
     font-family: 'Lato';
     color: #09244B;
     font-weight: 800;
-    font-size: 12px;
+    font-size: 14px;
     margin-left: 5px; /* Add space between label and value */
 }
 
