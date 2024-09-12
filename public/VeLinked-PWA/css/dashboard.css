@@ -355,7 +355,7 @@
 }
 
 .detail-row {
-    
+
     margin-bottom: 15px;
 }
 
@@ -375,10 +375,10 @@
 
 .total-cost {
     margin-top: 20px;
-    font-size: 1.2em;
+    font-size: 0.2em;
     font-weight: bold;
     color: #12274e;
-    text-align: center;
+    
 }
 
 .hidden {
