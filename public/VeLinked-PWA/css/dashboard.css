@@ -296,8 +296,6 @@
 }
 
 
-
-
 .overlay {
     position: fixed;
     top: 0;
@@ -314,10 +312,59 @@
 .overlay-content {
     background-color: white;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 20px;
     width: 90%;
     max-width: 500px;
+    text-align: left;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.expense-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.expense-header h2 {
+    margin-left: 10px;
+    font-size: 1.5em;
+    color: #2d2d2d;
+}
+
+.expense-icon {
+    width: 50px;
+    height: 50px;
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.expense-details {
+    margin: 15px 0;
+}
+
+.details-expanse {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.total-cost {
+    margin-top: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #12274e;
     text-align: center;
+}
+
+#view-image {
+    color: #655dbb;
 }
 
 .hidden {

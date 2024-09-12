@@ -32,19 +32,34 @@
 </head>
 <body>
 
-    <!-- Overlay div structure -->
+<!-- Overlay div structure -->
 <div id="expense-overlay" class="overlay hidden">
     <div class="overlay-content">
-        <h2 id="overlay-title"></h2>
-        <img id="overlay-icon" src="" alt="Expense Icon" class="expense-icon" />
-        <p><strong>Cost:</strong> <span id="overlay-cost"></span></p>
-        <p><strong>Total Cost:</strong> <span id="overlay-total-cost"></span></p> <!-- New total cost field -->
-        <p><strong>Date:</strong> <span id="overlay-date"></span></p>
-        <p><strong>Description:</strong> <span id="overlay-description"></span></p>
-        <p><strong>Expense Picture:</strong> <a href="#" id="view-image">View Attached Photo</a></p>
-        <button id="close-overlay">Close</button>
+        <div class="expense-header">
+            <h2 id="overlay-title"></h2>
+        </div>
+        <div class="expense-details">
+            <div class="details-expanse">
+                <img id="overlay-icon" src="" alt="Expense Icon" class="expense-icon" />
+                <div class="expanse-data">
+                    <div class="detail-row">
+                        <div><strong>Cost:</strong> <span id="overlay-cost"></span></div>
+                        <div><strong>Date:</strong> <span id="overlay-date"></span></div>
+                    </div>
+                    <div class="detail-row">
+                        <div><strong>Description:</strong> <span id="overlay-description"></span></div>
+                        <div><strong>Expense Picture:</strong> <a href="#" id="view-image">Attached</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="total-cost">
+            <strong>Total Cost Maintenance:</strong> <span id="overlay-total-cost"></span>
+        </div>
     </div>
 </div>
+
+
 
    
 

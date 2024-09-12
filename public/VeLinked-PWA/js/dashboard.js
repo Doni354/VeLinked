@@ -170,11 +170,14 @@ function showExpenseDetails(expanse, totalCostForType) {
     document.getElementById('overlay-description').innerText = desc;
 
     // Show overlay
-    document.getElementById('expense-overlay').classList.remove('hidden');
+    const overlayElement = document.getElementById('expense-overlay');
+    overlayElement.classList.remove('hidden');
 
-    // Add close button functionality
-    document.getElementById('close-overlay').addEventListener('click', () => {
-        document.getElementById('expense-overlay').classList.add('hidden');
+    // Close the overlay when clicking outside of the content
+    overlayElement.addEventListener('click', function(event) {
+        if (event.target === overlayElement) { // Close if the click is outside overlay-content
+            overlayElement.classList.add('hidden');
+        }
     });
 
     // Add image preview functionality (if applicable)
