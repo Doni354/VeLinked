@@ -162,7 +162,7 @@ function showExpenseDetails(expanse, totalCostForType) {
     const formattedTotalCost = formatCurrency(totalCostForType); // Format total cost to IDR
 
     // Set overlay data
-    document.getElementById('overlay-title').innerText = `${type} Cost Detail`;
+    document.getElementById('overlay-title').innerText = `${type} cost detail`;
     document.getElementById('overlay-icon').src = `assets/expanse/${type}.svg`;
     document.getElementById('overlay-cost').innerText = formattedPrice;
     document.getElementById('overlay-total-cost').innerText = `Total Cost ${type}: ${formattedTotalCost}`; // Display total cost for the type
@@ -195,7 +195,7 @@ function formatCurrency(price) {
         style: 'currency',
         currency: 'IDR',
         minimumFractionDigits: 0
-    }).replace('Rp', 'Rp.');
+    }).replace('Rp', 'Rp');
 }
 
 // Helper function to format date
