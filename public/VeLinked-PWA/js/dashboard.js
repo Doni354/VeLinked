@@ -183,9 +183,9 @@ function showExpenseDetails(expanse, totalCostForType) {
     // Add image preview functionality (if applicable)
     if (photo) {
         document.getElementById('view-image').setAttribute('href', photo);
-        document.getElementById('view-image').innerText = "View Attached Photo";
+        document.getElementById('view-image').innerText = "Attached";
     } else {
-        document.getElementById('view-image').innerText = "No Photo Available";
+        document.getElementById('view-image').innerText = "Not Attached";
     }
 }
 

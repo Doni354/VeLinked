@@ -295,7 +295,6 @@
     background-color: blue;
 }
 
-
 .overlay {
     position: fixed;
     top: 0;
@@ -345,14 +344,33 @@
 
 .details-expanse {
     display: flex;
+    align-items: flex-start;
+}
+
+.expanse-data {
+    margin-left: 15px;
+    width: 100%;
+    display: flex;
     justify-content: space-between;
 }
 
-
 .detail-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
+    
+    margin-bottom: 15px;
+}
+
+.detail-row div {
+    display: block; /* Makes the label and data appear vertically */
+    margin-bottom: 5px; /* Add some spacing between label and data */
+}
+
+.detail-row strong {
+    display: block; /* Keep the label on its own line */
+    margin-bottom: 5px; /* Space between label and data */
+}
+
+#view-image {
+    color: #655dbb;
 }
 
 .total-cost {
@@ -363,13 +381,6 @@
     text-align: center;
 }
 
-#view-image {
-    color: #655dbb;
-}
-
 .hidden {
     display: none;
 }
-
-
-
