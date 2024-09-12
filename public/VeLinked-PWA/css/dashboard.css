@@ -393,17 +393,33 @@
     color: #5243E6;
     font-family: 'Manrope';
     font-weight: 800;
-    font-size: 10px;
+    font-size: 12px;
     
+}
+.total-cost {
+    display: flex; /* Align elements side by side */
+    justify-content: flex-start; /* Center the content horizontally */
+    align-items: center; /* Align content vertically */
+    padding-bottom: 15px;
+    margin-left: 10px;
 }
 
-.total-cost {
-    margin-top: 20px;
-    font-size: 0.2em;
-    font-weight: bold;
-    color: #12274e;
-    
+.total-cost p {
+    font-family: 'Lato';
+    color: #7F8489;
+    font-size: 12px;
+    font-weight: 500;
+    margin: 0; /* Remove default margin */
 }
+
+.total-cost span {
+    font-family: 'Lato';
+    color: #09244B;
+    font-weight: 800;
+    font-size: 12px;
+    margin-left: 5px; /* Add space between label and value */
+}
+
 
 .hidden {
     display: none;

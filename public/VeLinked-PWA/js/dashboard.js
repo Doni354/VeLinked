@@ -165,7 +165,8 @@ function showExpenseDetails(expanse, totalCostForType) {
     document.getElementById('overlay-title').innerText = `${type} cost detail`;
     document.getElementById('overlay-icon').src = `assets/expanse/${type}.svg`;
     document.getElementById('overlay-cost').innerText = formattedPrice;
-    document.getElementById('overlay-total-cost').innerText = `Total Cost ${type}: ${formattedTotalCost}`; // Display total cost for the type
+    document.getElementById('overlay-total-cost').innerHTML = `<p>Total Cost ${type} :</p> <span>${formattedTotalCost}</span>`; // Display total cost for the type
+
     document.getElementById('overlay-date').innerText = formattedDate;
     document.getElementById('overlay-description').innerText = desc;
 
