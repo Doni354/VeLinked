@@ -49,6 +49,10 @@
     padding-top: 35px; /* memberikan ruang untuk gambar mobil */
 }
 
+
+.rightm {
+    margin-right: 10px;
+}
 .Driver-Profile {
     display: flex;
     align-items: center;
@@ -312,7 +316,7 @@
     background-color: white;
     padding: 5px;
     border-radius: 50px;
-    width: 90%;
+    width: 95%;
     max-width: 500px;
     text-align: left;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
