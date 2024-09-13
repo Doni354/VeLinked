@@ -62,18 +62,21 @@
 }
 
 .userimg {
+    border-radius: 2em;
+    object-fit: cover;
     display: flex;
     justify-content: center;
     align-items: center; /* Pastikan gambar berada di tengah vertikal */
     position: absolute;
-    top: 145px; /* Jarak dari atas elemen kontainer */
+    top: 80px; /* Jarak dari atas elemen kontainer */
     left: 50%; /* Posisi horizontal tengah */
     transform: translateX(-50%); /* Menggeser gambar ke kiri sebanyak 50% dari lebar gambar untuk memastikan berada di tengah */
-    width: 250px; /* Atur lebar sesuai kebutuhan */
+    width: 190px; /* Atur lebar sesuai kebutuhan */
     height: auto; /* Atur tinggi otomatis mengikuti lebar gambar */
 }
 
 .userimg img {
+    border-radius: 2em;
     width: 100%; /* Gambar mengikuti lebar kontainer .userimg */
     height: auto; /* Tinggi gambar otomatis mengikuti rasio aslinya */
 }

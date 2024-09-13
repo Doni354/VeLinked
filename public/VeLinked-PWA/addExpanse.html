@@ -292,7 +292,9 @@
                 photoPreview.style.display = 'none';
                 cameraStream.style.display = 'block';
                 retakePhoto();
-    
+                setTimeout(() => {
+                    window.location.href = 'Expanse.html';
+                }, 3500);
                 
             } catch (error) {
                 console.error('Error uploading data: ', error);
