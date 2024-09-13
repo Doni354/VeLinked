@@ -486,46 +486,8 @@
                                 <p>Driver Expenses Detail</p>
                             </div>
                             <div class="expanse-detail-content">
-                                <div class="expense-item left">
-                                    <span class="expense-type consumption">Consumption</span>
-                                    <span class="expense-value">Rp512.000</span>
-                                </div>
-                                <div class="expense-item right">
-                                    <span class="expense-type consumption">Consumption</span>
-                                    <span class="expense-value">Rp512.000</span>
-                                </div>
-                                <div class="expense-item left">
-                                    <span class="expense-type gas-station">Gas Station</span>
-                                    <span class="expense-value">Rp1.412.000</span>
-                                </div>
-                                <div class="expense-item right">
-                                    <span class="expense-type consumption">Consumption</span>
-                                    <span class="expense-value">Rp1.412.000</span>
-                                </div>
-                                <div class="expense-item left">
-                                    <span class="expense-type parking">Parking</span>
-                                    <span class="expense-value">Rp20.000</span>
-                                </div>
-                                <div class="expense-item right">
-                                    <span class="expense-type consumption">Consumption</span>
-                                    <span class="expense-value">Rp20.000</span>
-                                </div>
-                                <div class="expense-item left">
-                                    <span class="expense-type erp">ERP</span>
-                                    <span class="expense-value">Rp512.000</span>
-                                </div>
-                                <div class="expense-item right">
-                                    <span class="expense-type consumption">Consumption</span>
-                                    <span class="expense-value">Rp512.000</span>
-                                </div>
-                                <div class="expense-item left">
-                                    <span class="expense-type tol">Tol</span>
-                                    <span class="expense-value">Rp772.000</span>
-                                </div>
-                                <div class="expense-item right">
-                                    <span class="expense-type tol">Tol</span>
-                                    <span class="expense-value">Rp772.000</span>
-                                </div>
+                                
+                                
                             </div>
                         </div>
                         
@@ -1114,6 +1076,59 @@ function fetchDriverExpenses(driverId) {
 }
 
 
+
+
+
+// Function to fetch and calculate expenses by type for a specific driver
+function fetchExpensesByType(driverId) {
+    const expensesRef = dbRef(db, 'Expenses');
+    
+    onValue(expensesRef, (snapshot) => {
+        const data = snapshot.val();
+        const expensesByType = {};
+
+        // Group expenses by type and calculate total price for each type
+        Object.values(data).forEach(expense => {
+            if (expense.driverId === driverId) {
+                if (!expensesByType[expense.type]) {
+                    expensesByType[expense.type] = 0;
+                }
+                expensesByType[expense.type] += Number(expense.price) || 0; // Convert price to number and sum it up
+            }
+        });
+
+        // Insert grouped data into HTML
+        const expanseDetailContent = document.querySelector('.expanse-detail-content');
+        expanseDetailContent.innerHTML = ''; // Clear previous content
+
+        let index = 0;
+
+        // Loop through each expense type and total price
+        Object.keys(expensesByType).forEach((type) => {
+            const total = expensesByType[type];
+            const itemClass = index % 2 === 0 ? 'left' : 'right'; // Alternate between left and right
+            
+            // Create the expense item element
+            const expenseItem = document.createElement('div');
+            expenseItem.className = `expense-item ${itemClass}`;
+            expenseItem.innerHTML = `
+                <span class="expense-type ${type.toLowerCase()}">${type}</span>
+                <span class="expense-value">${formatCurrency(total)}</span>
+            `;
+
+            // Append the expense item to the container
+            expanseDetailContent.appendChild(expenseItem);
+            index++;
+        });
+    });
+}
+
+
+
+
+
+
+
 function openOverlay(driverId) {
     document.getElementById('overlay').style.display = 'block';
     document.querySelector('.add-driver-btn').style.display = 'none';
@@ -1134,6 +1149,7 @@ function openOverlay(driverId) {
                 if (vehicleData) {
                     loadPersonalData(driverId);
                     fetchDriverExpenses(driverId);
+                    fetchExpensesByType(driverId);
                     document.querySelector('.usernamedat p').textContent = vehicleData.nickname;
                     document.querySelector('.userdat p:nth-of-type(2)').textContent = vehicleData.name; // Update the second <p> element with the field 'name'
                 } else {
