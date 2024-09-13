@@ -478,7 +478,7 @@
                         <div class="total-expanse">
                             <h5>Total Expanse</h5>
                             <p>Driver Expenses Total Record</p>
-                            <h4>Rp240.000</h4>
+                            <h4></h4>
                         </div>
                         <div class="expanse-detail">
                             <div class="expanse-detail-head">
@@ -1092,7 +1092,26 @@ onAuthStateChanged(auth, (user) => {
 });
 
 
+// Function to fetch and calculate total expanse based on driverId
+function fetchDriverExpenses(driverId) {
+    const expensesRef = dbRef(db, 'Expenses');
+    
+    onValue(expensesRef, (snapshot) => {
+        const data = snapshot.val();
+        let totalExpanse = 0;
 
+        // Filter and calculate total price for expenses with matching driverId
+        Object.values(data).forEach(expense => {
+            if (expense.driverId === driverId) {
+                totalExpanse += Number(expense.price) || 0; // Convert price to number and add to total
+            }
+        });
+
+        // Update the total expanse in the HTML
+        const totalExpanseElement = document.querySelector('.total-expanse h4');
+        totalExpanseElement.textContent = formatCurrency(totalExpanse);
+    });
+}
 
 
 function openOverlay(driverId) {
@@ -1114,6 +1133,7 @@ function openOverlay(driverId) {
                 const vehicleData = vehicleSnapshot.val();
                 if (vehicleData) {
                     loadPersonalData(driverId);
+                    fetchDriverExpenses(driverId);
                     document.querySelector('.usernamedat p').textContent = vehicleData.nickname;
                     document.querySelector('.userdat p:nth-of-type(2)').textContent = vehicleData.name; // Update the second <p> element with the field 'name'
                 } else {
