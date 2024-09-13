@@ -970,6 +970,7 @@
         const driverData = snapshot.val();
         if (driverData) {
             // Format and set data
+            
             document.querySelector('.content-personal-data-Nama p').textContent = driverData.fullName || '-';
             document.querySelector('.content-personal-data-Joining_Date p').textContent = formatDate(driverData.joinDate) || '-';
             document.querySelector('.content-personal-data-Address p').textContent = driverData.address || '-';
@@ -1000,7 +1001,7 @@ function formatDate(dateString) {
 
 function formatCurrency(amount) {
     if (!amount) return '-';
-    return `Rp.${parseInt(amount).toLocaleString('id-ID')}`; // e.g., "Rp.4.050.000"
+    return `Rp${parseInt(amount).toLocaleString('id-ID')}`; // e.g., "Rp.4.050.000"
 }
 
 
@@ -1052,8 +1053,9 @@ function fetchData(uid) {
                     row.setAttribute('data-driver-id', driverId);
                     row.onclick = () => {
                         // Update URL hash with driverId
-                        window.location.hash = `driverId=${driverId}`;
+                        window.history.pushState({}, '', `#driverId=${driverId}`);
                         openOverlay(driverId);
+
                     };
                     table.appendChild(row);
                 } else {
