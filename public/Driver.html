@@ -418,55 +418,8 @@
                         </table>
                         <div class="expanse-table-body-wrapper">
                             <table class="expanse-table">
-                                <tbody>
-                                    <tr>
-                                        <td>Fried Rice</td>
-                                        <td class="type-expanse">Consumption</td>
-                                        <td>21, Oct, 2023<br><span class="time-expanse">10.42 PM</span></td>
-                                        <td>Rp32.000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Fried Rice</td>
-                                        <td class="type-expanse">Consumption</td>
-                                        <td>21, Oct, 2023<br><span class="time-expanse">10.42 PM</span></td>
-                                        <td>Rp32.000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Fried Rice</td>
-                                        <td class="type-expanse">Consumption</td>
-                                        <td>21, Oct, 2023<br><span class="time-expanse">10.42 PM</span></td>
-                                        <td>Rp32.000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Fried Rice</td>
-                                        <td class="type-expanse">Consumption</td>
-                                        <td>21, Oct, 2023<br><span class="time-expanse">10.42 PM</span></td>
-                                        <td>Rp32.000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Fried Rice</td>
-                                        <td class="type-expanse">Consumption</td>
-                                        <td>21, Oct, 2023<br><span class="time-expanse">10.42 PM</span></td>
-                                        <td>Rp32.000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Fried Rice</td>
-                                        <td class="type-expanse">Consumption</td>
-                                        <td>21, Oct, 2023<br><span class="time-expanse">10.42 PM</span></td>
-                                        <td>Rp32.000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Fried Rice</td>
-                                        <td class="type-expanse">Consumption</td>
-                                        <td>21, Oct, 2023<br><span class="time-expanse">10.42 PM</span></td>
-                                        <td>Rp32.000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Fried Rice</td>
-                                        <td class="type-expanse">Consumption</td>
-                                        <td>21, Oct, 2023<br><span class="time-expanse">10.42 PM</span></td>
-                                        <td>Rp32.000</td>
-                                    </tr>
+                                <tbody class="expanse-table-body">
+                                    
                                     <!-- Tambahkan baris data lainnya seperti di atas -->
                                 </tbody>
                             </table>
@@ -972,8 +925,46 @@ function formatCurrency(amount) {
 
 
 
+// Fungsi untuk format tanggal dan waktu
+function formatDateExpanse(timestamp) {
+    const dateOptions = { day: '2-digit', month: 'short', year: 'numeric' };
+    const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
+    const date = new Date(timestamp);
+    const formattedDate = date.toLocaleDateString('en-GB', dateOptions); // Format "21, Oct, 2023"
+    const formattedTime = date.toLocaleTimeString('en-GB', timeOptions); // Format "10:42 PM"
+    return { date: formattedDate, time: formattedTime };
+}
 
+function fetchExpensesByDocId(driverId) {
+    const expensesRef = dbRef(db, 'Expenses');
+    
+    onValue(expensesRef, (snapshot) => {
+        const data = snapshot.val();
+        const expanseTableBody = document.querySelector('.expanse-table-body');
+        expanseTableBody.innerHTML = ''; // Bersihkan isi tabel sebelumnya
 
+        // Iterasi melalui data dan filter berdasarkan docId
+        Object.values(data).forEach(expense => {
+            if (expense.driverId === driverId) {
+                const { date, time } = formatDateExpanse(expense.date);
+                
+                // Buat baris tabel untuk setiap expense yang cocok
+                const tableRow = document.createElement('tr');
+                
+                // Format amount, date, dan tampilkan ke tabel
+                tableRow.innerHTML = `
+                    <td>${expense.desc}</td>
+                    <td class="type-expanse">${expense.type}</td>
+                    <td>${date}<br><span class="time-expanse">${time}</span></td>
+                    <td>${formatCurrency(expense.price)}</td>
+                `;
+                
+                // Tambahkan baris ke dalam tabel
+                expanseTableBody.appendChild(tableRow);
+            }
+        });
+    });
+}
 
 
 
@@ -1150,6 +1141,7 @@ function openOverlay(driverId) {
                     loadPersonalData(driverId);
                     fetchDriverExpenses(driverId);
                     fetchExpensesByType(driverId);
+                    fetchExpensesByDocId(driverId);
                     document.querySelector('.usernamedat p').textContent = vehicleData.nickname;
                     document.querySelector('.userdat p:nth-of-type(2)').textContent = vehicleData.name; // Update the second <p> element with the field 'name'
                 } else {
