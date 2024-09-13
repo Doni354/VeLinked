@@ -1,0 +1,113 @@
+/* Reset basic styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+    background-color: #041124;
+}
+
+.header {
+    text-align: center;
+    padding: 20px;
+    background-color: #041124;
+    color: white;
+
+}
+header h2 {
+    font-family: 'Lato';
+    font-weight: 700;
+    color: #FFFFFF;
+}
+
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 2.5em 2.5em 0 0;
+}
+
+
+/* Expense Form */
+.expense-form {
+    width: 100%;
+    max-width: 500px;
+    background-color: white;
+    padding: 20px;
+    border: 2px solid #E6EDFF;
+    border-radius: 10px;
+    margin-top: 30px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 8em;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    color: #142D5D;
+    margin-bottom: 10px;
+}
+
+input[type="number"],
+input[type="text"],
+select {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #E6EDFF;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #142D5D;
+    background-color: #F6FAFF;
+    outline: none;
+}
+
+input[type="number"]:focus,
+input[type="text"]:focus,
+select:focus {
+    border-color: #142D5D;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 15px;
+    background-color: #142D5D;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #1B386F;
+}
+
+
+
+/* Responsive Design */
+@media only screen and (max-width: 768px) {
+    .camera-container {
+        width: 100%;
+        height: auto;
+    }
+
+    .expense-form {
+        width: 100%;
+    }
+}
