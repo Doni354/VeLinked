@@ -940,19 +940,19 @@ function fetchExpensesByDocId(driverId) {
         const data = snapshot.val();
         const expanseTableBody = document.querySelector('.expanse-table-body');
         expanseTableBody.innerHTML = ''; // Bersihkan isi tabel sebelumnya
-
+        
         // Iterasi melalui data dan filter berdasarkan docId
         Object.values(data).forEach(expense => {
             if (expense.driverId === driverId) {
                 const { date, time } = formatDateExpanse(expense.date);
-                
+                const typeClass = expense.type.toLowerCase();
                 // Buat baris tabel untuk setiap expense yang cocok
                 const tableRow = document.createElement('tr');
                 
                 // Format amount, date, dan tampilkan ke tabel
                 tableRow.innerHTML = `
                     <td>${expense.desc}</td>
-                    <td class="type-expanse">${expense.type}</td>
+                    <td class="type-expanse ${typeClass}">${expense.type}</td>
                     <td>${date}<br><span class="time-expanse">${time}</span></td>
                     <td>${formatCurrency(expense.price)}</td>
                 `;
