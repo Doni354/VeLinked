@@ -104,6 +104,7 @@
     <button type="submit" class="submit-button">Add New Leave</button>
 </form>
         
+<div id="popup" class="popup"></div>
 
     </div>
       
@@ -174,12 +175,29 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 
+const form = document.getElementById('leave-form');
+const popup = document.getElementById('popup');
+
+function showPopup(message, type) {
+    popup.textContent = message;
+    popup.className = `popup ${type} show`;
+    setTimeout(() => {
+        popup.classList.remove('show');
+    }, 3000); // Popup akan menghilang setelah 3 detik
+}
+
 function submitForm(driverId) {
     const type = document.getElementById('leave-cause').value;
     const from = document.getElementById('leave-from').value;
     const to = document.getElementById('leave-to').value;
     const desc = document.getElementById('leave-description').value;
-    const status = 'pending';  // Status default
+    const status = 'pending'; // Status default
+
+    // Validasi input
+    if (!type || !from || !to || !desc) {
+        showPopup('Please fill in all fields.', 'error');
+        return;
+    }
 
     // Menyiapkan data untuk dikirim
     const formData = {
@@ -191,18 +209,37 @@ function submitForm(driverId) {
         driverId: driverId
     };
 
+    // Menyembunyikan tombol submit agar tidak bisa di klik dua kali
+    document.querySelector('.submit-button').disabled = true;
+
     // Mengirim data ke node 'Attendances'
     const attendancesRef = ref(getDatabase(), 'Attendances');
     push(attendancesRef, formData)
         .then(() => {
-            console.log('Data successfully sent to Attendances');
-            // Anda bisa menambahkan logika setelah data berhasil dikirim
+            showPopup('Data successfully sent!', 'success');
+            setTimeout(() => {
+                // Clear form
+                form.reset();
+                // Redirect ke halaman attendance.html
+                window.location.href = 'attendance.html';
+            }, 3000); // Redirect setelah popup menghilang
         })
         .catch((error) => {
+            showPopup('Error sending data to Attendances.', 'error');
             console.error('Error sending data to Attendances:', error);
+        })
+        .finally(() => {
+            // Enable tombol submit kembali
+            document.querySelector('.submit-button').disabled = false;
         });
 }
 
+// Menangani submit form
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const driverId = document.getElementById('driverId').value; // Pastikan driverId sudah tersedia
+    submitForm(driverId);
+});
 
     </script>
     
