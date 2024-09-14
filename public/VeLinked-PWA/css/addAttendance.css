@@ -37,9 +37,8 @@ header h2 {
     border-radius: 2.5em 2.5em 0 0;
 }
 
-
-/* Expense Form */
-.expense-form {
+/* Leave Form */
+.leave-form {
     width: 100%;
     max-width: 500px;
     background-color: white;
@@ -49,25 +48,18 @@ header h2 {
     margin-top: 30px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 8em;
+    font-family: Arial, sans-serif;
 }
 
 .form-group {
     margin-bottom: 20px;
 }
 
-label {
-    display: block;
-    font-size: 14px;
-    font-weight: bold;
-    color: #142D5D;
-    margin-bottom: 10px;
-}
-
-input[type="number"],
-input[type="text"],
-select {
+input[type="date"],
+select,
+textarea {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     border: 2px solid #E6EDFF;
     border-radius: 5px;
     font-size: 16px;
@@ -76,10 +68,32 @@ select {
     outline: none;
 }
 
-input[type="number"]:focus,
-input[type="text"]:focus,
-select:focus {
+textarea {
+    height: 80px;
+}
+
+/* Placeholder untuk teks "From" dan "To" */
+.date-placeholder {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #E6EDFF;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #9B9B9B;
+    background-color: #F6FAFF;
+    cursor: pointer;
+    text-align: left;
+}
+
+.date-placeholder:hover {
     border-color: #142D5D;
+}
+
+/* Style untuk Placeholder dalam input atau textarea */
+input::placeholder,
+textarea::placeholder {
+    color: #9B9B9B;
+    font-size: 14px;
 }
 
 .submit-button {
@@ -98,16 +112,39 @@ select:focus {
     background-color: #1B386F;
 }
 
-
-
 /* Responsive Design */
 @media only screen and (max-width: 768px) {
-    .camera-container {
-        width: 100%;
-        height: auto;
+    .leave-form {
+        padding: 15px;
     }
 
-    .expense-form {
-        width: 100%;
+    input[type="date"],
+    select,
+    textarea {
+        padding: 10px;
+        font-size: 15px;
+    }
+
+    .submit-button {
+        padding: 12px;
+        font-size: 15px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .leave-form {
+        padding: 10px;
+    }
+
+    input[type="date"],
+    select,
+    textarea {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .submit-button {
+        padding: 10px;
+        font-size: 14px;
     }
 }
