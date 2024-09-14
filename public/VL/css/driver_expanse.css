@@ -138,6 +138,42 @@
     color: #FFBFAB;
 }
 
+
+.expanse-table .type-expanse.consumption {
+    color: #C2431F;
+}
+
+.expanse-table .type-expanse.gas {
+    color: #6AA5B5;
+}
+
+.expanse-table .type-expanse.parking {
+    color: #A085C2;
+}
+
+.expanse-table .type-expanse.erp {
+    color: #6DB24A;
+}
+
+.expanse-table .type-expanse.toll {
+    color: #6DB24A;
+}
+
+.expanse-table .type-expanse.maintenance {
+    color: #FFBFAB;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 .expanse-table-wrapper {
     width: 100%;
     border-collapse: collapse;
@@ -171,7 +207,7 @@
 
 .expanse-table .type-expanse {
     font-weight: 800;
-    color: #BC452A; /* Warna merah untuk teks "Consumption" */
+    
 }
 
 .expanse-table .time-expanse {
