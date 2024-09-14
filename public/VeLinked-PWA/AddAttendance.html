@@ -127,7 +127,84 @@
     </div>
 
 
+    <script type="module" >
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+        import { getDatabase, ref, push, get, query, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+        import { getStorage, ref as storageRef, uploadString, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
     
+        const firebaseConfig = {
+            apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
+            authDomain: "velinked-web.firebaseapp.com",
+            databaseURL: "https://velinked-web-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "velinked-web",
+            storageBucket: "velinked-web.appspot.com",
+            messagingSenderId: "844821073092",
+            appId: "1:844821073092:web:f243c25668079240ec0d91",
+            measurementId: "G-CLGQ4RWWTX"
+        };
+    
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const storage = getStorage(app);
+        const auth = getAuth(app);
+
+        // Mendapatkan email pengguna yang sedang login
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        const email = user.email;
+
+        // Query untuk mendapatkan driverId dari email pengguna
+        const driverQuery = query(ref(database, 'Drivers'), orderByChild('email'), equalTo(email));
+        const snapshot = await get(driverQuery);
+        
+        if (snapshot.exists()) {
+            const driverData = snapshot.val();
+            const driverId = Object.keys(driverData)[0]; // Mengambil ID driver dari dokumen pertama
+
+            // Simpan driverId untuk digunakan saat mengirim data form
+            document.getElementById('leave-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                submitForm(driverId);
+            });
+        } else {
+            console.error('Driver not found for email:', email);
+        }
+    }
+});
+
+
+function submitForm(driverId) {
+    const type = document.getElementById('leave-cause').value;
+    const from = document.getElementById('leave-from').value;
+    const to = document.getElementById('leave-to').value;
+    const desc = document.getElementById('leave-description').value;
+    const status = 'pending';  // Status default
+
+    // Menyiapkan data untuk dikirim
+    const formData = {
+        type: type,
+        from: from,
+        to: to,
+        desc: desc,
+        status: status,
+        driverId: driverId
+    };
+
+    // Mengirim data ke node 'Attendances'
+    const attendancesRef = ref(getDatabase(), 'Attendances');
+    push(attendancesRef, formData)
+        .then(() => {
+            console.log('Data successfully sent to Attendances');
+            // Anda bisa menambahkan logika setelah data berhasil dikirim
+        })
+        .catch((error) => {
+            console.error('Error sending data to Attendances:', error);
+        });
+}
+
+
+    </script>
     
     
 
