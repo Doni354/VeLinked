@@ -32,22 +32,23 @@
     </div>
 
 <div class="main-content">
-        <div class="request-option">
-            <div class="request-tabs">
-                <button class="tab daily">Daily</button>
-                <button class="tab weekly active">Weekly</button>
-                <button class="tab yearly">Yearly</button>
-            </div>
+    <div class="request-option">
+        <div class="request-tabs">
+            <button class="tab daily">Daily</button>
+            <button class="tab weekly active">Weekly</button>
+            <button class="tab yearly">Yearly</button>
         </div>
-        <div class="Expanse-Header">
-            <p>Total Expense, This week</p>
-            <h3>Rp31.000</h3>
+    </div>
+    
+    <div class="Expanse-Header">
+        <p>Total Expense, This week</p>
+        <h3>Rp0</h3>
             <button class="AddExpanse" onclick="window.location.href='addExpanse.html';">
                 <div class="addButtonLabel">Add New expense</div>
                 <img class="addButton" src="../../VL/assets/Add-Buton.svg" alt="Add Vehicle" />
-                
             </button>
         </div>
+        
         
         <div class="Expanse">
             <div class="card-container">
@@ -168,36 +169,228 @@
 
     
     <script src="js/auth.js"></script>
-    <script type="module" src="js/config.js"></script>
-    <script type="module" src="js/dashboard.js"></script>
-    <script>
-        const tabs = document.querySelectorAll('.tab');
-    
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            tabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-        });
+    <script type="module">
+        
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { getDatabase, ref, query, get, update, orderByChild, equalTo, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
+    authDomain: "velinked-web.firebaseapp.com",
+    databaseURL: "https://velinked-web-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "velinked-web",
+    storageBucket: "velinked-web.appspot.com",
+    messagingSenderId: "844821073092",
+    appId: "1:844821073092:web:f243c25668079240ec0d91",
+    measurementId: "G-CLGQ4RWWTX"
+};
+
+
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const database = getDatabase(app);
+
+
+
+// Fungsi untuk memformat angka ke dalam format mata uang IDR
+function formatToIDR(value) {
+    return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(value);
+}
+
+
+
+
+const tabs = document.querySelectorAll('.tab');
+const expenseText = document.querySelector('.Expanse-Header p');
+const expenseTotal = document.querySelector('.Expanse-Header h3');
+
+tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        let period = tab.classList.contains('daily') ? 'day' :
+                     tab.classList.contains('weekly') ? 'week' : 'year';
+
+        // Ubah teks di <p> sesuai dengan periode yang dipilih
+        let periodText = period.charAt(0).toUpperCase() + period.slice(1); // Mengubah "day" menjadi "Day", "week" menjadi "Week", dst.
+        expenseText.textContent = `Total Expense, This ${periodText}`;
+
+        // Panggil fungsi untuk menghitung total berdasarkan periode yang dipilih
+        calculateTotalExpense(period);
     });
+});
+
+// Fungsi untuk menghitung total expense berdasarkan periode
+function calculateTotalExpense(period) {
+    const expensesRef = ref(database, 'Expenses');
     
-    document.querySelectorAll('.navbar-option > div').forEach(function(option) {
-        option.addEventListener('click', function() {
-            // Menghapus class aktif dari semua opsi
-            document.querySelectorAll('.navbar-option > div').forEach(function(opt) {
-                opt.classList.remove('option-active');
-                let img = opt.querySelector('img');
-                let imgSrc = img.getAttribute('src').replace('-Active', '');
-                img.setAttribute('src', imgSrc);
+    // Ambil semua data expenses
+    get(expensesRef).then(snapshot => {
+        if (snapshot.exists()) {
+            let totalExpense = 0;
+            const currentDate = new Date(); // Ambil tanggal saat ini
+
+            snapshot.forEach(childSnapshot => {
+                const expenseData = childSnapshot.val();
+                const expenseDate = new Date(expenseData.date); // Asumsikan format date yang benar (yyyy-mm-dd)
+
+                // Cek berdasarkan periode yang dipilih (day, week, year)
+                if (period === 'day') {
+                    // Cek apakah expense terjadi hari ini
+                    if (isSameDay(expenseDate, currentDate)) {
+                        totalExpense += Number(expenseData.price);
+                    }
+                } else if (period === 'week') {
+                    // Cek apakah expense terjadi dalam minggu ini
+                    if (isSameWeek(expenseDate, currentDate)) {
+                        totalExpense += Number(expenseData.price);
+                    }
+                } else if (period === 'year') {
+                    // Cek apakah expense terjadi dalam tahun ini
+                    if (expenseDate.getFullYear() === currentDate.getFullYear()) {
+                        totalExpense += Number(expenseData.price);
+                    }
+                }
             });
-    
-            // Menambahkan class aktif pada opsi yang ditekan
-            this.classList.add('option-active');
-            let img = this.querySelector('img');
-            let imgSrc = img.getAttribute('src').replace('.svg', '-Active.svg');
-            img.setAttribute('src', imgSrc);
-        });
+
+            // Tampilkan total yang sudah dikonversi ke format mata uang IDR
+            expenseTotal.textContent = formatCurrency(totalExpense);
+        } else {
+            // Jika tidak ada data expense, set total menjadi Rp0
+            expenseTotal.textContent = 'Rp0';
+        }
+    }).catch(error => {
+        console.error("Error fetching expenses:", error);
     });
+}
+
+// Fungsi untuk memeriksa apakah dua tanggal ada pada hari yang sama
+function isSameDay(date1, date2) {
+    return date1.getDate() === date2.getDate() &&
+           date1.getMonth() === date2.getMonth() &&
+           date1.getFullYear() === date2.getFullYear();
+}
+
+// Fungsi untuk memeriksa apakah dua tanggal ada pada minggu yang sama
+function isSameWeek(date1, date2) {
+    const startOfWeek = getStartOfWeek(date2);
+    const endOfWeek = getEndOfWeek(date2);
+
+    return date1 >= startOfWeek && date1 <= endOfWeek;
+}
+
+// Fungsi untuk mendapatkan tanggal awal minggu
+function getStartOfWeek(date) {
+    const dayOfWeek = date.getDay(); // Hari dalam minggu (0 = Minggu, 1 = Senin, ...)
+    const difference = date.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1); // Mengambil hari Senin minggu ini
+    return new Date(date.setDate(difference));
+}
+
+// Fungsi untuk mendapatkan tanggal akhir minggu
+function getEndOfWeek(date) {
+    const startOfWeek = getStartOfWeek(date);
+    return new Date(startOfWeek.setDate(startOfWeek.getDate() + 6)); // Tambahkan 6 hari untuk mendapatkan hari Minggu
+}
+
+// Fungsi untuk memformat angka menjadi format mata uang IDR
+function formatCurrency(amount) {
+    return 'Rp' + amount.toLocaleString('id-ID');
+}
+
+
+
+
+
+
+
+
+
+
+// Fungsi untuk mengambil dan menampilkan total expense
+function displayTotalExpense(driverId) {
+    const expenseRef = ref(database, 'Expenses'); // Referensi ke koleksi Expenses
+    const expenseQuery = query(expenseRef, orderByChild('driverId'), equalTo(driverId)); // Query untuk filter berdasarkan driverId
+
+    get(expenseQuery).then(snapshot => {
+        let totalExpense = 0;
+
+        if (snapshot.exists()) {
+            snapshot.forEach(childSnapshot => {
+                const price = Number(childSnapshot.val().price); // Konversi price ke number
+                totalExpense += price; // Tambahkan price ke total
+            });
+        }
+
+        // Tampilkan total dalam format IDR
+        const totalExpenseElement = document.querySelector(".Expanse-Header h3");
+        totalExpenseElement.textContent = formatToIDR(totalExpense);
+    }).catch(error => {
+        console.error("Error fetching expenses:", error);
+    });
+}
+
+// Fungsi untuk memverifikasi email pengguna dan mendapatkan driverId yang sesuai
+function verifyUserEmailAndFetchExpenses(user) {
+    const driverRef = ref(database, 'Drivers'); // Referensi ke koleksi Drivers
+    const userQuery = query(driverRef, orderByChild('email'), equalTo(user.email)); // Query untuk mencocokkan email pengguna
+
+    get(userQuery).then(snapshot => {
+        if (snapshot.exists()) {
+            snapshot.forEach(childSnapshot => {
+                const driverId = childSnapshot.key; // Ambil driverId dari dokumen yang cocok
+                displayTotalExpense(driverId); // Panggil fungsi untuk menampilkan total expense
+            });
+        } else {
+            // Jika tidak ada driver yang cocok, alihkan ke halaman 406.html
+            window.location.href = "406.html";
+        }
+    }).catch(error => {
+        console.error("Error verifying user email:", error);
+    });
+}
+
+
+function displayUserProfilePic(user) {
     
+    const userNameDiv = document.getElementById("user-name");
+
+    // Cek apakah pengguna sudah login
+    if (user) {
+        
+        userNameDiv.innerText = "Hi, " + user.displayName;
+    } else {
+        // Jika pengguna belum login, atur gambar profil default dan kosongkan nama pengguna
+        profilePicDiv.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuEiaDNDqRo6K0Zn_NlRJjAde-B1zommEhIg&usqp=CAU" alt="Default Profile Picture" class="profile-pic">';
+        userNameDiv.innerText = "";
+    }
+}
+
+
+// Fungsi untuk memeriksa autentikasi pengguna
+onAuthStateChanged(auth, user => {
+    if (user) {
+        // Verifikasi email pengguna setelah login
+        verifyUserEmailAndFetchExpenses(user);
+        displayUserProfilePic(user);
+    } else {
+        // Jika tidak ada pengguna yang login, arahkan ke halaman login
+        window.location.href = "index.html";
+    }
+});
+
+
+
+
+
+
+    </script>
+
+    <script>
+
     
     </script>
 </body>
