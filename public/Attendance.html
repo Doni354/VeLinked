@@ -327,8 +327,8 @@ document.querySelector('.table-row-odd').addEventListener('click', openOverlay);
                     let approvalImage = '';
 
                     if (status === 'pending') {
-                        approvalText = 'Pending';
-                        approvalImage = '<img src="assets/images/Pending.svg" alt="Pending">';
+                        approvalText = '';
+                        approvalImage = '<img style="margin-right: 8px;" src="assets/images/Approved_Option.svg" alt=""><img src="assets/images/Rejected_Option.svg" alt="">';
                     } else if (status === 'approved') {
                         approvalText = 'Approved';
                         approvalImage = '<img src="assets/images/Approved-img.svg" alt="Approved">';
@@ -343,10 +343,10 @@ document.querySelector('.table-row-odd').addEventListener('click', openOverlay);
                     // Menambah baris data ke tabel
                     let row = `
                         <tr class="${rowClass}">
-                          <td class="table-data username" style="width: 25%;">
+                          <td class="table-data username" style="width: 22%;">
                             <img src="${driverPhotoUrl}" alt="Driver Photo" class="driver-photo"> ${fullName}
                           </td>
-                          <td class="table-data" style="width: 15%;">${duration} Days</td>
+                          <td class="table-data" style="width: 10%;">${duration} Days</td>
                           <td class="table-data" style="width: 20%;">${from.toDateString()} - ${to.toDateString()}</td>
                           <td class="table-data" style="width: 15%;">${type}</td>
                           <td class="table-data" style="width: 15%;"><img src="assets/images/Reason.svg" alt="Reason"></td>
