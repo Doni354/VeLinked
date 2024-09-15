@@ -161,8 +161,8 @@ document.querySelectorAll('.navbar-option > div').forEach(function(option) {
 
 <div class="table-header-container">
     <div class="table-header">
-        <span class="header-item" style="width: 20%; text-align: left;">Name</span>
-        <span class="header-item" style="width: 15%;">Duration</span>
+        <span class="header-item" style="width: 22%; text-align: left; ;">Name</span>
+        <span class="header-item" style="width: 10%;">Duration</span>
         <span class="header-item" style="width: 20%;">Date</span>
         <span class="header-item" style="width: 15%;">Type</span>
         <span class="header-item" style="width: 15%;">Reason</span>
@@ -317,73 +317,100 @@ document.querySelector('.table-row-odd').addEventListener('click', openOverlay);
         return months[monthIndex];
     }
 
-    // Fungsi untuk mengambil data Attendances berdasarkan driverId
-    function getAttendanceData(driverId, fullName, driverPhotoUrl) {
-        const attendancesRef = dbRef(db, 'Attendances');
-        onValue(attendancesRef, (snapshot) => {
-            let tableBody = document.getElementById('table-body');
-            let rowIndex = 0;
-
-            snapshot.forEach((attendanceDoc) => {
-                const attendanceData = attendanceDoc.val();
-
-                if (attendanceData.driverId === driverId) {
-                    // Mengambil data dari Attendances
-                    const from = new Date(attendanceData.from);
-                    const to = new Date(attendanceData.to);
-                    const type = attendanceData.type;
-                    const status = attendanceData.status;
-
-                    // Format tanggal dengan suffix
-                    const fromFormatted = `${getDateWithSuffix(from)} ${getShortMonth(from.getMonth())} ${from.getFullYear()}`;
-                    const toFormatted = `${getDateWithSuffix(to)} ${getShortMonth(to.getMonth())} ${to.getFullYear()}`;
-                    
-                    // Format tanggal akhir
-                    const dateRange = `${fromFormatted} - ${toFormatted}`;
-
-                    // Menghitung durasi (dalam hari)
-                    const duration = Math.ceil((to - from) / (1000 * 60 * 60 * 24)) + 1;
-
-                    // Menentukan status persetujuan
-                    let approvalText = '';
-                    let approvalImage = '';
-
-                    if (status === 'pending') {
-                        approvalText = '';
-                        approvalImage = '<img style="margin-right: 8px;" src="assets/images/Approved_Option.svg" alt=""><img src="assets/images/Rejected_Option.svg" alt="">';
-                    } else if (status === 'approved') {
-                        approvalText = 'Approved';
-                        approvalImage = '<img src="assets/images/Approved-img.svg" alt="Approved">';
-                    } else if (status === 'rejected') {
-                        approvalText = 'Rejected';
-                        approvalImage = '<img src="assets/images/Rejected-img.svg" alt="Rejected">';
-                    }
-
-                    // Tentukan class berdasarkan urutan baris
-                    const rowClass = (rowIndex % 2 === 0) ? 'table-row-even' : 'table-row-odd';
-
-                    // Menambah baris data ke tabel
-                    let row = `
-                        <tr class="${rowClass}">
-                          <td class="table-data username" style="width: 22%;">
-                            <img src="${driverPhotoUrl}" alt="Driver Photo" class="driver-photo"> ${fullName}
-                          </td>
-                          <td class="table-data" style="width: 10%;">${duration} Days</td>
-                          <td class="table-data" style="width: 20%;">${dateRange}</td>
-                          <td class="table-data" style="width: 15%;">${type}</td>
-                          <td class="table-data" style="width: 15%;"><img src="assets/images/Reason.svg" alt="Reason"></td>
-                          <td class="table-data" style="width: 15%; color: #092448; font-weight: bold;">
-                            ${approvalImage} ${approvalText}
-                          </td>
-                        </tr>
-                    `;
-
-                    tableBody.innerHTML += row;
-                    rowIndex++;
-                }
-            });
-        });
+// Fungsi untuk menambahkan ordinal (st, nd, rd, th) pada tanggal
+function getOrdinalDate(date) {
+    const day = date.getDate();
+    if (day > 3 && day < 21) return day + 'th'; // Umum untuk 11-19
+    switch (day % 10) {
+        case 1: return day + 'st';
+        case 2: return day + 'nd';
+        case 3: return day + 'rd';
+        default: return day + 'th';
     }
+}
+
+// Fungsi untuk memformat rentang tanggal
+function formatDateRange(from, to) {
+    const fromDay = getOrdinalDate(from);
+    const toDay = getOrdinalDate(to);
+
+    const fromMonth = from.toLocaleString('default', { month: 'short' });
+    const toMonth = to.toLocaleString('default', { month: 'short' });
+
+    const year = from.getFullYear(); // Tahun ditampilkan hanya sekali
+
+    // Jika bulan sama, tampilkan bulan dan tahun hanya sekali
+    if (fromMonth === toMonth) {
+        return `${fromDay} - ${toDay} ${fromMonth} ${year}`;
+    } else {
+        return `${fromDay} ${fromMonth} - ${toDay} ${toMonth} ${year}`;
+    }
+}
+
+// Fungsi untuk mengambil data Attendances berdasarkan driverId
+function getAttendanceData(driverId, fullName, driverPhotoUrl) {
+    const attendancesRef = dbRef(db, 'Attendances');
+    onValue(attendancesRef, (snapshot) => {
+        let tableBody = document.getElementById('table-body');
+        let rowIndex = 0;
+
+        snapshot.forEach((attendanceDoc) => {
+            const attendanceData = attendanceDoc.val();
+
+            if (attendanceData.driverId === driverId) {
+                // Mengambil data dari Attendances
+                const from = new Date(attendanceData.from);
+                const to = new Date(attendanceData.to);
+                const type = attendanceData.type;
+                const status = attendanceData.status;
+
+                // Menghitung durasi (dalam hari)
+                const duration = Math.ceil((to - from) / (1000 * 60 * 60 * 24)) + 1;
+
+                // Format tanggal untuk output
+                const dateRange = formatDateRange(from, to);
+
+                // Menentukan status persetujuan
+                let approvalText = '';
+                let approvalImage = '';
+
+                if (status === 'pending') {
+                    approvalText = '';
+                    approvalImage = '<img style="margin-right: 8px;" src="assets/images/Approved_Option.svg" alt=""><img src="assets/images/Rejected_Option.svg" alt="">';
+                } else if (status === 'approved') {
+                    approvalText = 'Approved';
+                    approvalImage = '<img src="assets/images/Approved-img.svg" alt="Approved">';
+                } else if (status === 'rejected') {
+                    approvalText = 'Rejected';
+                    approvalImage = '<img src="assets/images/Rejected-img.svg" alt="Rejected">';
+                }
+
+                // Tentukan class berdasarkan urutan baris
+                const rowClass = (rowIndex % 2 === 0) ? 'table-row-even' : 'table-row-odd';
+
+                // Menambah baris data ke tabel
+                let row = `
+                    <tr class="${rowClass}">
+                      <td class="table-data username" style="width: 22%;">
+                        <img src="${driverPhotoUrl}" alt="Driver Photo" class="driver-photo"> ${fullName}
+                      </td>
+                      <td class="table-data" style="width: 10%;">${duration} Days</td>
+                      <td class="table-data" style="width: 20%;">${dateRange}</td>
+                      <td class="table-data" style="width: 15%;">${type}</td>
+                      <td class="table-data" style="width: 15%;"><img src="assets/images/Reason.svg" alt="Reason"></td>
+                      <td class="table-data" style="width: 15%; color: #092448; font-weight: bold;">
+                        ${approvalImage} ${approvalText}
+                      </td>
+                    </tr>
+                `;
+
+                tableBody.innerHTML += row;
+                rowIndex++;
+            }
+        });
+    });
+}
+    
 </script>
 
 
