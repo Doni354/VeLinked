@@ -302,6 +302,21 @@ document.querySelector('.table-row-odd').addEventListener('click', openOverlay);
         });
     }
 
+    // Fungsi untuk menambahkan suffix pada tanggal
+    function getDateWithSuffix(date) {
+        const day = date.getDate();
+        const suffix = (day === 1 || day === 21 || day === 31) ? 'st' :
+                       (day === 2 || day === 22) ? 'nd' :
+                       (day === 3 || day === 23) ? 'rd' : 'th';
+        return `${day}${suffix}`;
+    }
+
+    // Fungsi untuk format bulan dalam 3 huruf pertama
+    function getShortMonth(monthIndex) {
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        return months[monthIndex];
+    }
+
     // Fungsi untuk mengambil data Attendances berdasarkan driverId
     function getAttendanceData(driverId, fullName, driverPhotoUrl) {
         const attendancesRef = dbRef(db, 'Attendances');
@@ -318,6 +333,13 @@ document.querySelector('.table-row-odd').addEventListener('click', openOverlay);
                     const to = new Date(attendanceData.to);
                     const type = attendanceData.type;
                     const status = attendanceData.status;
+
+                    // Format tanggal dengan suffix
+                    const fromFormatted = `${getDateWithSuffix(from)} ${getShortMonth(from.getMonth())} ${from.getFullYear()}`;
+                    const toFormatted = `${getDateWithSuffix(to)} ${getShortMonth(to.getMonth())} ${to.getFullYear()}`;
+                    
+                    // Format tanggal akhir
+                    const dateRange = `${fromFormatted} - ${toFormatted}`;
 
                     // Menghitung durasi (dalam hari)
                     const duration = Math.ceil((to - from) / (1000 * 60 * 60 * 24)) + 1;
@@ -347,7 +369,7 @@ document.querySelector('.table-row-odd').addEventListener('click', openOverlay);
                             <img src="${driverPhotoUrl}" alt="Driver Photo" class="driver-photo"> ${fullName}
                           </td>
                           <td class="table-data" style="width: 10%;">${duration} Days</td>
-                          <td class="table-data" style="width: 20%;">${from.toDateString()} - ${to.toDateString()}</td>
+                          <td class="table-data" style="width: 20%;">${dateRange}</td>
                           <td class="table-data" style="width: 15%;">${type}</td>
                           <td class="table-data" style="width: 15%;"><img src="assets/images/Reason.svg" alt="Reason"></td>
                           <td class="table-data" style="width: 15%; color: #092448; font-weight: bold;">
@@ -363,6 +385,7 @@ document.querySelector('.table-row-odd').addEventListener('click', openOverlay);
         });
     }
 </script>
+
 
 
 
