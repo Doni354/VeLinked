@@ -159,99 +159,25 @@ document.querySelectorAll('.navbar-option > div').forEach(function(option) {
 
 
 
-                 <!-- HEADER TABEL -->
-    <div class="table-header-container">
-        <div class="table-header">
-            <span class="header-item" style="width: 20%;">Name</span>
-            <span class="header-item" style="width: 15%;">Duration</span>
-            <span class="header-item" style="width: 20%;">Date</span>
-            <span class="header-item" style="width: 15%;">Type</span>
-            <span class="header-item" style="width: 15%;">Reason</span>
-            <span class="header-item" style="width: 15%;">Approval</span>
-        </div>
-         <!-- TABEL DATA -->
-    <div class="mt-2" style="border: #E6EDFF ;" >
+<div class="table-header-container">
+    <div class="table-header">
+        <span class="header-item" style="width: 20%; text-align: left;">Name</span>
+        <span class="header-item" style="width: 15%;">Duration</span>
+        <span class="header-item" style="width: 20%;">Date</span>
+        <span class="header-item" style="width: 15%;">Type</span>
+        <span class="header-item" style="width: 15%;">Reason</span>
+        <span class="header-item" style="width: 15%;">Approval</span>
+    </div>
+    <!-- TABEL DATA -->
+    <div id="attendance-table" class="mt-2" style="border: #E6EDFF;">
         <div style="overflow-x:auto;">
-            <table style="width: 100%; border-collapse: separate; border-spacing: 0; background-color: #fff; border-top: 2px solid #E6EDFF; border-bottom: 2px solid #E6EDFF; border-radius: 12px;">
-                <tbody>
-                    <tr class="table-row-odd" onclick="openOverlay()">
-                        <td class="table-data username" style="width: 20%;"><img src="assets/images/userDummyExpanse.svg" alt="Driver Photo" class="driver-photo">Hellyos Haqiqie</td>
-                        <td class="table-data" style="width: 15%;">4 Days</td>
-                        <td class="table-data" style="width: 20%;">1st - 4th Jul 2024</td>
-                        <td class="table-data" style="width: 15%;">Sick Leave</td>
-                        <td class="table-data" style="width: 15%;"><img src="assets/images/Reason.svg" alt=""></td>
-                        <td class="table-data" style="width: 15%; color: #092448; font-weight: bold;"><img style="margin-right: 8px;" src="assets/images/Approved-img.svg" alt="">Approved</td>
-                    </tr>
-                    <tr class="table-row-even">
-                        <td class="table-data username" style="width: 20%;"><img src="assets/images/userDummyExpanse.svg" alt="Driver Photo" class="driver-photo">Hellyos Haqiqie</td>
-                        <td class="table-data" style="width: 15%;">3 Days</td>
-                        <td class="table-data" style="width: 20%;">1st - 3th Jul 2024</td>
-                        <td class="table-data" style="width: 15%;">Sick Leave</td>
-                        <td class="table-data" style="width: 15%;"><img src="assets/images/Reason.svg" alt=""></td>
-                        <td class="table-data" style="width: 15%; color: #092448; font-weight: bold;"><img style="margin-right: 8px;" src="assets/images/Approved_Option.svg" alt=""><img src="assets/images/Rejected_Option.svg" alt=""></td>
-                    </tr>
-                    <tr class="table-row-odd">
-                        <td class="table-data username" style="width: 20%;"><img src="assets/images/userDummyExpanse.svg" alt="Driver Photo" class="driver-photo">Hellyos Haqiqie</td>
-                        <td class="table-data" style="width: 15%;">2 Days</td>
-                        <td class="table-data" style="width: 20%;">1st - 3th Jul 2024</td>
-                        <td class="table-data" style="width: 15%;">Parent duty</td>
-                        <td class="table-data" style="width: 15%;"><img src="assets/images/Reason.svg" alt=""></td>
-                        <td class="table-data" style="width: 15%; color: #092448; font-weight: bold;"><img style="margin-right: 8px;" src="assets/images/Approved_Option.svg" alt=""><img src="assets/images/Rejected_Option.svg" alt=""></td>
-                    </tr>
-                    <tr class="table-row-even">
-                        <td class="table-data username" style="width: 20%;"><img src="assets/images/userDummyExpanse.svg" alt="Driver Photo" class="driver-photo">Hellyos Haqiqie</td>
-                        <td class="table-data" style="width: 15%;">2 Days</td>
-                        <td class="table-data" style="width: 20%;">1st - 3th Jul 2024</td>
-                        <td class="table-data" style="width: 15%;">Vacation</td>
-                        <td class="table-data" style="width: 15%;"><img src="assets/images/Reason.svg" alt=""></td>
-                        <td class="table-data" style="width: 15%; color: #092448; font-weight: bold;"><img style="margin-right: 8px;" src="assets/images/Approved_Option.svg" alt=""><img src="assets/images/Rejected_Option.svg" alt=""></td>
-                    </tr>
-                    <tr class="table-row-odd" onclick="openOverlay()">
-                        <td class="table-data username" style="width: 20%;"><img src="assets/images/userDummyExpanse.svg" alt="Driver Photo" class="driver-photo">Hellyos Haqiqie</td>
-                        <td class="table-data" style="width: 15%;">6 Days</td>
-                        <td class="table-data" style="width: 20%;">1st - 3th Jul 2024</td>
-                        <td class="table-data" style="width: 15%;">Personal Leave</td>
-                        <td class="table-data" style="width: 15%;"><img src="assets/images/Reason.svg" alt=""></td>
-                        <td class="table-data" style="width: 15%; color: #092448; font-weight: bold;"><img style="margin-right: 8px;" src="assets/images/Approved-img.svg" alt="">Approved</td>
-                    </tr>
-                    <tr class="table-row-even" onclick="openOverlay()">
-                        <td class="table-data username" style="width: 20%;"><img src="assets/images/userDummyExpanse.svg" alt="Driver Photo" class="driver-photo">Hellyos Haqiqie</td>
-                        <td class="table-data" style="width: 15%;">7 Days</td>
-                        <td class="table-data" style="width: 20%;">1st - 3th Jul 2024</td>
-                        <td class="table-data" style="width: 15%;">Vacation/td>
-                        <td class="table-data" style="width: 15%;"><img src="assets/images/Reason.svg" alt=""></td>
-                        <td class="table-data" style="width: 15%; color: #092448; font-weight: bold;"><img style="margin-right: 8px;" src="assets/images/Approved-img.svg" alt="">Approved</td>
-                    </tr>
-                    <tr class="table-row-odd" onclick="openOverlay()">
-                        <td class="table-data username" style="width: 20%;"><img src="assets/images/userDummyExpanse.svg" alt="Driver Photo" class="driver-photo">Hellyos Haqiqie</td>
-                        <td class="table-data" style="width: 15%;">1 Days</td>
-                        <td class="table-data" style="width: 20%;">1st - 3th Jul 2024</td>
-                        <td class="table-data" style="width: 15%;">Vacation</td>
-                        <td class="table-data" style="width: 15%;"><img src="assets/images/Reason.svg" alt=""></td>
-                        <td class="table-data" style="width: 15%; color: #092448; font-weight: bold;"><img style="margin-right: 8px;" src="assets/images/Rejected-img.svg" alt="">Rejceted</td>
-                    </tr>
-                    <tr class="table-row-even" onclick="openOverlay()">
-                        <td class="table-data username" style="width: 20%;"><img src="assets/images/userDummyExpanse.svg" alt="Driver Photo" class="driver-photo">Hellyos Haqiqie</td>
-                        <td class="table-data" style="width: 15%;">2 Days</td>
-                        <td class="table-data" style="width: 20%;">1st - 3th Jul 2024</td>
-                        <td class="table-data" style="width: 15%;">Vacation</td>
-                        <td class="table-data" style="width: 15%;"><img src="assets/images/Reason.svg" alt=""></td>
-                        <td class="table-data" style="width: 15%; color: #092448; font-weight: bold;"><img style="margin-right: 8px;" src="assets/images/Rejected-img.svg" alt="">Rejceted</td>
-                    </tr>
-                    <tr class="table-row-odd" onclick="openOverlay()">
-                        <td class="table-data username" style="width: 20%;"><img src="assets/images/userDummyExpanse.svg" alt="Driver Photo" class="driver-photo">Hellyos Haqiqie</td>
-                        <td class="table-data" style="width: 15%;">3 Days</td>
-                        <td class="table-data" style="width: 20%;">1st - 3th Jul 2024</td>
-                        <td class="table-data" style="width: 15%;">Vacation</td>
-                        <td class="table-data" style="width: 15%;"><img src="assets/images/Reason.svg" alt=""></td>
-                        <td class="table-data" style="width: 15%; color: #092448; font-weight: bold;"><img style="margin-right: 8px;" src="assets/images/Rejected-img.svg" alt="">Rejceted</td>
-                    </tr>
-                    
-                </tbody>
+            <table id="table-body" style="width: 100%; border-collapse: separate; border-spacing: 0; background-color: #fff; border-top: 2px solid #E6EDFF; border-bottom: 2px solid #E6EDFF; border-radius: 12px;">
+                <tbody></tbody>
             </table>
         </div>
     </div>
-    </div>
+</div>
+
     <div id="overlay" class="overlay">
         <div class="overlay-content">
             <div class="head-overlay">
@@ -325,6 +251,124 @@ function closeOverlay() {
 document.querySelector('.table-row-odd').addEventListener('click', openOverlay);
 </script>
     
+<script type="module">
+    // Import Firebase SDK
+    import { getDatabase, ref as dbRef, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
+        authDomain: "velinked-web.firebaseapp.com",
+        databaseURL: "https://velinked-web-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "velinked-web",
+        storageBucket: "velinked-web.appspot.com",
+        messagingSenderId: "844821073092",
+        appId: "1:844821073092:web:f243c25668079240ec0d91",
+        measurementId: "G-CLGQ4RWWTX"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const auth = getAuth();
+
+    // Fungsi untuk mengambil ID user yang sedang login
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            const userId = user.uid;
+            getDriverData(userId);
+        } else {
+            console.log('User not logged in');
+        }
+    });
+
+    // Fungsi untuk mengambil data driver dari node Drivers berdasarkan userId
+    function getDriverData(userId) {
+        const driversRef = dbRef(db, 'Drivers');
+        onValue(driversRef, (snapshot) => {
+            snapshot.forEach((driverDoc) => {
+                const driverData = driverDoc.val();
+                if (driverData.userId === userId) {
+                    const driverId = driverDoc.key;
+                    const fullName = driverData.fullName;
+                    const driverPhotoUrl = driverData.driverPhotoUrl;
+
+                    // Setelah mendapatkan driverId, ambil data Attendances
+                    getAttendanceData(driverId, fullName, driverPhotoUrl);
+                }
+            });
+        });
+    }
+
+    // Fungsi untuk mengambil data Attendances berdasarkan driverId
+    function getAttendanceData(driverId, fullName, driverPhotoUrl) {
+        const attendancesRef = dbRef(db, 'Attendances');
+        onValue(attendancesRef, (snapshot) => {
+            let tableBody = document.getElementById('table-body');
+            let rowIndex = 0;
+
+            snapshot.forEach((attendanceDoc) => {
+                const attendanceData = attendanceDoc.val();
+
+                if (attendanceData.driverId === driverId) {
+                    // Mengambil data dari Attendances
+                    const from = new Date(attendanceData.from);
+                    const to = new Date(attendanceData.to);
+                    const type = attendanceData.type;
+                    const status = attendanceData.status;
+
+                    // Menghitung durasi (dalam hari)
+                    const duration = Math.ceil((to - from) / (1000 * 60 * 60 * 24)) + 1;
+
+                    // Menentukan status persetujuan
+                    let approvalText = '';
+                    let approvalImage = '';
+
+                    if (status === 'pending') {
+                        approvalText = 'Pending';
+                        approvalImage = '<img src="assets/images/Pending.svg" alt="Pending">';
+                    } else if (status === 'approved') {
+                        approvalText = 'Approved';
+                        approvalImage = '<img src="assets/images/Approved-img.svg" alt="Approved">';
+                    } else if (status === 'rejected') {
+                        approvalText = 'Rejected';
+                        approvalImage = '<img src="assets/images/Rejected-img.svg" alt="Rejected">';
+                    }
+
+                    // Tentukan class berdasarkan urutan baris
+                    const rowClass = (rowIndex % 2 === 0) ? 'table-row-even' : 'table-row-odd';
+
+                    // Menambah baris data ke tabel
+                    let row = `
+                        <tr class="${rowClass}">
+                          <td class="table-data username" style="width: 25%;">
+                            <img src="${driverPhotoUrl}" alt="Driver Photo" class="driver-photo"> ${fullName}
+                          </td>
+                          <td class="table-data" style="width: 15%;">${duration} Days</td>
+                          <td class="table-data" style="width: 20%;">${from.toDateString()} - ${to.toDateString()}</td>
+                          <td class="table-data" style="width: 15%;">${type}</td>
+                          <td class="table-data" style="width: 15%;"><img src="assets/images/Reason.svg" alt="Reason"></td>
+                          <td class="table-data" style="width: 15%; color: #092448; font-weight: bold;">
+                            ${approvalImage} ${approvalText}
+                          </td>
+                        </tr>
+                    `;
+
+                    tableBody.innerHTML += row;
+                    rowIndex++;
+                }
+            });
+        });
+    }
+</script>
+
+
+
+
+
+
     
     <script src="js/UserAndStatus_check.js"></script>
 

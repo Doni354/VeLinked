@@ -51,6 +51,9 @@
     color: #09244B;
     font-size: large;
     font-weight: bold;
+    align-items: center;
+    text-align: left; /* Align text to the left */
+    overflow: hidden;
 }
 
 .online {
