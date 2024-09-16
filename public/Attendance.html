@@ -250,7 +250,7 @@ function closeOverlay() {
     
 <script type="module">
     // Import Firebase SDK
-    import { getDatabase, ref as dbRef, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+    import { getDatabase, ref as dbRef, onValue, update } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 
@@ -344,8 +344,8 @@ function formatDateRange(from, to) {
     }
 }
 
-// Fungsi untuk membuka overlay
-function openOverlay(attendanceData, fullName, driverPhotoUrl) {
+// Fungsi untuk membuka overlay dan mengisi data dari Firebase
+function openOverlay(attendanceData, fullName, driverPhotoUrl, attendanceId) {
     document.getElementById("overlay").classList.add("open");
 
     // Isi data di overlay dengan data dari Firebase
@@ -371,19 +371,55 @@ function openOverlay(attendanceData, fullName, driverPhotoUrl) {
         statusImage = 'assets/images/Rejected-img.svg';
     }
     document.getElementById("status-overlay").src = statusImage;
+
+    // Tambahkan event listener ke tombol "Reject" dan "Approve"
+    document.querySelector('.reject').addEventListener('click', () => {
+        updateAttendanceStatus(attendanceId, 'rejected');
+    });
+
+    document.querySelector('.approve').addEventListener('click', () => {
+        updateAttendanceStatus(attendanceId, 'approved');
+    });
+}
+
+// Fungsi untuk memperbarui status di Firebase
+function updateAttendanceStatus(attendanceId, newStatus) {
+    const attendanceRef = dbRef(db, `Attendances/${attendanceId}`);
+    
+    // Perbarui status di Firebase
+    update(attendanceRef, { status: newStatus })
+        .then(() => {
+            console.log(`Status updated to ${newStatus}`);
+            closeOverlay();  // Tutup overlay setelah berhasil
+        })
+        .catch((error) => {
+            console.error("Error updating status: ", error);
+        });
+}
+
+// Fungsi untuk menutup overlay
+function closeOverlay() {
+    document.getElementById("overlay").classList.remove("open");
 }
 
 
 
-// Fungsi untuk mengambil data Attendances berdasarkan driverId dan menambahkan event listener untuk membuka overlay
+// Fungsi untuk mengambil data Attendances dan menambahkan event listener untuk membuka overlay
 function getAttendanceData(driverId, fullName, driverPhotoUrl) {
     const attendancesRef = dbRef(db, 'Attendances');
+    
+    // Gunakan onValue untuk memantau perubahan secara real-time
     onValue(attendancesRef, (snapshot) => {
         let tableBody = document.getElementById('table-body');
+        
+        // Bersihkan isi tabel sebelum menambahkan data baru
+        tableBody.innerHTML = ''; 
+        
         let rowIndex = 0;
 
         snapshot.forEach((attendanceDoc) => {
             const attendanceData = attendanceDoc.val();
+            const attendanceId = attendanceDoc.key; // Dapatkan ID dari dokumen attendance
 
             if (attendanceData.driverId === driverId) {
                 const from = new Date(attendanceData.from);
@@ -392,9 +428,6 @@ function getAttendanceData(driverId, fullName, driverPhotoUrl) {
                 const dateRange = formatDateRange(from, to);
                 const type = attendanceData.type;
                 const status = attendanceData.status;
-
-                let row = document.createElement('tr');
-                row.classList.add((rowIndex % 2 === 0) ? 'table-row-even' : 'table-row-odd');
 
                 let approvalText = '';
                 let approvalImage = '';
@@ -409,6 +442,10 @@ function getAttendanceData(driverId, fullName, driverPhotoUrl) {
                     approvalText = 'Rejected';
                     approvalImage = '<img src="assets/images/Rejected-img.svg" alt="Rejected">';
                 }
+
+
+                let row = document.createElement('tr');
+                row.classList.add((rowIndex % 2 === 0) ? 'table-row-even' : 'table-row-odd');
 
                 row.innerHTML = `
                 <td class="table-data username" style="width: 23%;">
@@ -425,7 +462,7 @@ function getAttendanceData(driverId, fullName, driverPhotoUrl) {
 
                 // Tambahkan event listener pada setiap baris tabel untuk membuka overlay
                 row.addEventListener('click', () => {
-                    openOverlay(attendanceData, fullName, driverPhotoUrl);
+                    openOverlay(attendanceData, fullName, driverPhotoUrl, attendanceId);
                 });
 
                 tableBody.appendChild(row);
@@ -434,6 +471,11 @@ function getAttendanceData(driverId, fullName, driverPhotoUrl) {
         });
     });
 }
+
+
+
+
+
 
 
 
