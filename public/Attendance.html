@@ -178,78 +178,75 @@ document.querySelectorAll('.navbar-option > div').forEach(function(option) {
     </div>
 </div>
 
-    <div id="overlay" class="overlay">
-        <div class="overlay-content">
-            <div class="head-overlay">
-                <div>Time off details</div>
-                <div>                <button class="close-button" onclick="closeOverlay()">
+<div id="overlay" class="overlay">
+    <div class="overlay-content">
+        <div class="head-overlay">
+            <div>Time off details</div>
+            <div>
+                <button class="close-button" onclick="closeOverlay()">
                     <img src="assets/images/X-button.svg" alt="Close">
-                </button></div>
-
+                </button>
             </div>
+        </div>
 
-            
-            <div class="user-info">
-                <div class="left-user-info">
-                    <img src="assets/images/User_imgOverlay.svg" alt="User Image">
-                    <div class="user-details">
-                        <h5>Hellyos Haqiqie</h5>
-                        <p>Using VOLVO Polestar 1</p>
-                    </div>
-                </div>
-                <div class="user-status">
-                    <img src="assets/images/PendingApproval.svg" alt="User Status">
+        <div class="user-info">
+            <div class="left-user-info">
+                <img id="user-photo-overlay" src="assets/images/User_imgOverlay.svg" alt="User Image">
+                <div class="user-details">
+                    <h5 id="user-name-overlay">Hellyos Haqiqie</h5>
+                    <p id="user-car-overlay">Using VOLVO Polestar 1</p>
                 </div>
             </div>
-            
-            <div class="time-off-details">
-                <div class="time-off-data">
-                    <div class="time-off">
-                        <img src="assets/images/Line-TimeOffHead.svg" alt="">
-                        <h5>Time off type</h5>
-                        <span>Sick Leave</span>
-                    </div>
-                    <div class="time-off">
-                        <img src="assets/images/Line-TimeOffHead.svg" alt="">
-                        <h5>Time off date</h5>
-                        <span>1st - 4th Jul 2024</span>
-                    </div>
-                    <div class="time-off">
-                        <img src="assets/images/Line-TimeOffHead.svg" alt="">
-                        <h5>Duration</h5>
-                        <span>4 day</span>
-                    </div>
+            <div class="user-status">
+                <img id="status-overlay" src="assets/images/PendingApproval.svg" alt="User Status">
+            </div>
+        </div>
+
+        <div class="time-off-details">
+            <div class="time-off-data">
+                <div class="time-off">
+                    <img src="assets/images/Line-TimeOffHead.svg" alt="">
+                    <h5>Time off type</h5>
+                    <span id="time-off-type-overlay">Sick Leave</span>
                 </div>
-                
-                
-                <div class="time-off-reason">
-                    <h5>Time off reason</h5>
-                    <div class="time-off-reason-dat">
-                        <p>I have a fever today....</p>
-                    </div>
-                   
+                <div class="time-off">
+                    <img src="assets/images/Line-TimeOffHead.svg" alt="">
+                    <h5>Time off date</h5>
+                    <span id="time-off-date-overlay">1st - 4th Jul 2024</span>
                 </div>
-                <div class="actions">
-                    <button class="reject">Reject</button>
-                    <button class="approve">Approve</button>
+                <div class="time-off">
+                    <img src="assets/images/Line-TimeOffHead.svg" alt="">
+                    <h5>Duration</h5>
+                    <span id="duration-overlay">4 days</span>
                 </div>
+            </div>
+
+            <div class="time-off-reason">
+                <h5>Time off reason</h5>
+                <div class="time-off-reason-dat">
+                    <p id="reason-overlay">I have a fever today....</p>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="reject">Reject</button>
+                <button class="approve">Approve</button>
             </div>
         </div>
     </div>
-    
-    </div>
+</div>
 
 
-<script>function openOverlay() {
-    document.getElementById("overlay").classList.add("open");
-}
 
+<script>
+    // Fungsi untuk menutup overlay
 function closeOverlay() {
     document.getElementById("overlay").classList.remove("open");
 }
-
-document.querySelector('.table-row-odd').addEventListener('click', openOverlay);
 </script>
+
+
+
     
 <script type="module">
     // Import Firebase SDK
@@ -347,7 +344,38 @@ function formatDateRange(from, to) {
     }
 }
 
-// Fungsi untuk mengambil data Attendances berdasarkan driverId
+// Fungsi untuk membuka overlay
+function openOverlay(attendanceData, fullName, driverPhotoUrl) {
+    document.getElementById("overlay").classList.add("open");
+
+    // Isi data di overlay dengan data dari Firebase
+    document.getElementById("user-name-overlay").textContent = fullName;
+    document.getElementById("user-photo-overlay").src = driverPhotoUrl;
+    document.getElementById("time-off-type-overlay").textContent = attendanceData.type;
+
+    const from = new Date(attendanceData.from);
+    const to = new Date(attendanceData.to);
+    const dateRange = formatDateRange(from, to);
+    document.getElementById("time-off-date-overlay").textContent = dateRange;
+
+    const duration = Math.ceil((to - from) / (1000 * 60 * 60 * 24)) + 1;
+    document.getElementById("duration-overlay").textContent = `${duration} days`;
+
+    document.getElementById("reason-overlay").textContent = attendanceData.desc || "No reason provided";
+
+    // Ubah status gambar sesuai status
+    let statusImage = 'assets/images/PendingApproval.svg'; // Default pending
+    if (attendanceData.status === 'approved') {
+        statusImage = 'assets/images/Approved-img.svg';
+    } else if (attendanceData.status === 'rejected') {
+        statusImage = 'assets/images/Rejected-img.svg';
+    }
+    document.getElementById("status-overlay").src = statusImage;
+}
+
+
+
+// Fungsi untuk mengambil data Attendances berdasarkan driverId dan menambahkan event listener untuk membuka overlay
 function getAttendanceData(driverId, fullName, driverPhotoUrl) {
     const attendancesRef = dbRef(db, 'Attendances');
     onValue(attendancesRef, (snapshot) => {
@@ -358,19 +386,16 @@ function getAttendanceData(driverId, fullName, driverPhotoUrl) {
             const attendanceData = attendanceDoc.val();
 
             if (attendanceData.driverId === driverId) {
-                // Mengambil data dari Attendances
                 const from = new Date(attendanceData.from);
                 const to = new Date(attendanceData.to);
+                const duration = Math.ceil((to - from) / (1000 * 60 * 60 * 24)) + 1;
+                const dateRange = formatDateRange(from, to);
                 const type = attendanceData.type;
                 const status = attendanceData.status;
 
-                // Menghitung durasi (dalam hari)
-                const duration = Math.ceil((to - from) / (1000 * 60 * 60 * 24)) + 1;
+                let row = document.createElement('tr');
+                row.classList.add((rowIndex % 2 === 0) ? 'table-row-even' : 'table-row-odd');
 
-                // Format tanggal untuk output
-                const dateRange = formatDateRange(from, to);
-
-                // Menentukan status persetujuan
                 let approvalText = '';
                 let approvalImage = '';
 
@@ -385,13 +410,8 @@ function getAttendanceData(driverId, fullName, driverPhotoUrl) {
                     approvalImage = '<img src="assets/images/Rejected-img.svg" alt="Rejected">';
                 }
 
-                // Tentukan class berdasarkan urutan baris
-                const rowClass = (rowIndex % 2 === 0) ? 'table-row-even' : 'table-row-odd';
-
-                // Menambah baris data ke tabel
-                let row = `
-                    <tr class="${rowClass}">
-                      <td class="table-data username" style="width: 23%;">
+                row.innerHTML = `
+                <td class="table-data username" style="width: 23%;">
                         <img src="${driverPhotoUrl}" alt="Driver Photo" class="driver-photo"> ${fullName}
                       </td>
                       <td class="table-data" style="width: 9%;">${duration} Days</td>
@@ -401,15 +421,22 @@ function getAttendanceData(driverId, fullName, driverPhotoUrl) {
                       <td class="table-data" style="width: 15%; color: #092448; font-weight: bold;">
                         ${approvalImage} ${approvalText}
                       </td>
-                    </tr>
                 `;
 
-                tableBody.innerHTML += row;
+                // Tambahkan event listener pada setiap baris tabel untuk membuka overlay
+                row.addEventListener('click', () => {
+                    openOverlay(attendanceData, fullName, driverPhotoUrl);
+                });
+
+                tableBody.appendChild(row);
                 rowIndex++;
             }
         });
     });
 }
+
+
+
     
 </script>
 
