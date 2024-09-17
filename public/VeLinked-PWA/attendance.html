@@ -76,7 +76,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-import { getDatabase, ref, query, get, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { getDatabase, ref, query, get, onValue, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
@@ -106,22 +106,23 @@ onAuthStateChanged(auth, user => {
     }
 });
 
+// Fungsi untuk mendapatkan driverId berdasarkan email
 function getDriverIdByEmail(email) {
     const driversRef = ref(database, 'Drivers');
     const q = query(driversRef, orderByChild('email'), equalTo(email));
 
-    get(q).then(snapshot => {
+    // Ambil data driver berdasarkan email
+    onValue(q, snapshot => {
         if (snapshot.exists()) {
             const driverData = snapshot.val();
-            const driverId = Object.keys(driverData)[0]; // Mengambil driverId
+            const driverId = Object.keys(driverData)[0]; // Ambil driverId
 
-            // Setelah dapat driverId, hitung izin minggu ini
+            // Ambil data absensi secara realtime
             calculateWeeklyLeaves(driverId);
+            watchAttendanceData(driverId);
         } else {
             console.error("Driver dengan email ini tidak ditemukan.");
         }
-    }).catch(error => {
-        console.error(error);
     });
 }
 
@@ -187,93 +188,54 @@ function displayUserProfilePic(user) {
 
 
 
-function formatDate(dateStr) {
-    const date = new Date(dateStr);
-    const options = { weekday: 'short', day: '2-digit', month: 'short' };
-    return date.toLocaleDateString('en-US', options);
-}
 
-function getMonthYear(dateStr) {
-    const date = new Date(dateStr);
-    const options = { month: 'long', year: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
-}
 
-function getAttendanceDuration(from, to) {
-    const startDate = new Date(from);
-    const endDate = new Date(to);
 
-    const timeDiff = Math.abs(endDate - startDate);
-    const diffDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)); // Perhitungan hari
+// Fungsi untuk memantau perubahan data absensi secara realtime
+function watchAttendanceData(driverId) {
+    const attendanceRef = ref(database, 'Attendances');
+    const q = query(attendanceRef, orderByChild('driverId'), equalTo(driverId));
 
-    if (diffDays === 0) {
-        return 'Fullday Application';
-    } else {
-        return `${diffDays} Days Application`;
-    }
-}
+    // Gunakan onValue untuk mendapatkan perubahan data secara realtime
+    onValue(q, snapshot => {
+        if (snapshot.exists()) {
+            const attendances = snapshot.val();
 
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        const userEmail = user.email;
+            // Kelompokkan data per bulan dan tahun
+            const groupedData = {};
 
-        // Dapatkan driverId berdasarkan email user
-        const driversRef = ref(database, 'Drivers');
-        const driversQuery = query(driversRef, orderByChild('email'), equalTo(userEmail));
-        
-        get(driversQuery).then((snapshot) => {
-            if (snapshot.exists()) {
-                const driverData = snapshot.val();
-                const driverId = Object.keys(driverData)[0]; // Mengambil driverId
+            Object.values(attendances).forEach(attendance => {
+                const from = attendance.from;
+                const to = attendance.to;
+                const desc = attendance.desc;
+                const status = attendance.status;
 
-                // Mengambil data dari Attendances
-                const attendanceRef = ref(database, 'Attendances');
-                const attendanceQuery = query(attendanceRef, orderByChild('driverId'), equalTo(driverId));
+                const monthYear = getMonthYear(from);
 
-                get(attendanceQuery).then((attendanceSnapshot) => {
-                    if (attendanceSnapshot.exists()) {
-                        const attendances = attendanceSnapshot.val();
+                if (!groupedData[monthYear]) {
+                    groupedData[monthYear] = [];
+                }
 
-                        // Data yang dikelompokkan per bulan dan tahun
-                        const groupedData = {};
-
-                        Object.values(attendances).forEach((attendance) => {
-                            const from = attendance.from;
-                            const to = attendance.to;
-                            const desc = attendance.desc;
-                            const status = attendance.status;
-
-                            const monthYear = getMonthYear(from);
-
-                            if (!groupedData[monthYear]) {
-                                groupedData[monthYear] = [];
-                            }
-
-                            groupedData[monthYear].push({
-                                duration: getAttendanceDuration(from, to),
-                                date: formatDate(from),
-                                desc,
-                                status,
-                            });
-                        });
-
-                        // Render hasil ke dalam HTML
-                        renderAttendanceCards(groupedData);
-                    }
+                groupedData[monthYear].push({
+                    duration: getAttendanceDuration(from, to),
+                    date: formatDate(from),
+                    desc,
+                    status
                 });
-            }
-        });
-    } else {
-        // Jika tidak login, redirect ke halaman login
-        window.location.href = 'index.html';
-    }
-});
+            });
 
+            // Render kartu absensi ke dalam HTML
+            renderAttendanceCards(groupedData);
+        }
+    });
+}
+
+// Fungsi untuk merender kartu absensi ke dalam HTML
 function renderAttendanceCards(groupedData) {
     const container = document.querySelector('.attendance-container');
     container.innerHTML = ''; // Bersihkan kontainer
 
-    Object.keys(groupedData).forEach((monthYear) => {
+    Object.keys(groupedData).forEach(monthYear => {
         const attendances = groupedData[monthYear];
 
         // Buat elemen kartu header berdasarkan bulan dan tahun
@@ -284,12 +246,14 @@ function renderAttendanceCards(groupedData) {
                 <p>${monthYear}</p>
             </div>
         `;
-        
-        attendances.forEach((attendance) => {
+
+        // Tambahkan data absensi ke dalam kartu
+        attendances.forEach(attendance => {
             const { duration, date, desc, status } = attendance;
             let statusClass = '';
             let statusText = '';
 
+            // Atur status absensi
             switch (status) {
                 case 'approved':
                     statusClass = 'Approved';
@@ -324,12 +288,38 @@ function renderAttendanceCards(groupedData) {
                 </div>
             `;
 
+            // Tambahkan ke kartu bulan/tahun
             monthCard.appendChild(attendanceCard);
         });
 
+        // Tambahkan ke container utama
         container.appendChild(monthCard);
     });
 }
+
+// Fungsi tambahan untuk memformat data
+function formatDate(dateStr) {
+    const date = new Date(dateStr);
+    const options = { weekday: 'short', day: '2-digit', month: 'short' };
+    return date.toLocaleDateString('en-US', options);
+}
+
+function getMonthYear(dateStr) {
+    const date = new Date(dateStr);
+    const options = { month: 'long', year: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+}
+
+function getAttendanceDuration(from, to) {
+    const startDate = new Date(from);
+    const endDate = new Date(to);
+    const timeDiff = Math.abs(endDate - startDate);
+    const diffDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+    return diffDays === 0 ? 'Fullday Application' : `${diffDays} Days Application`;
+}
+
+
 
 
 
