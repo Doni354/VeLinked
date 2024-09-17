@@ -29,7 +29,7 @@ body {
     border-radius: 40px 40px 0 0;
     height: auto;
     background-color: #FFFFFF;
-    padding-bottom: 0px; /* Tambahkan padding untuk memberikan ruang bagi navbar */
+    padding-bottom: 5em; /* Tambahkan padding untuk memberikan ruang bagi navbar */
 }
 
 
@@ -118,6 +118,7 @@ body {
     align-items: center;
     gap: 0.5em;
     padding: 0.5em;
+    
 }
 
 .Attendance-Card {
