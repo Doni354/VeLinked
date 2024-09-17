@@ -366,9 +366,9 @@ function openOverlay(attendanceData, fullName, driverPhotoUrl, attendanceId) {
     // Ubah status gambar sesuai status
     let statusImage = 'assets/images/PendingApproval.svg'; // Default pending
     if (attendanceData.status === 'approved') {
-        statusImage = 'assets/images/Approved-img.svg';
+        statusImage = 'assets/images/Approved.svg';
     } else if (attendanceData.status === 'rejected') {
-        statusImage = 'assets/images/Rejected-img.svg';
+        statusImage = 'assets/images/Rejected.svg';
     }
     document.getElementById("status-overlay").src = statusImage;
 
