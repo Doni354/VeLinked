@@ -35,7 +35,7 @@
         
         <div class="Attendance-Header">
             <p>Total Leaves, This week</p>
-            <h3>2 times</h3>
+            <h3></h3>
             <button class="AddAttendance" onclick="window.location.href='AddAttendance.html';">
                 <div class="addButtonLabel">Add New Leave</div>
                 
@@ -142,8 +142,8 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-import { getDatabase, ref, query, get, update, orderByChild, equalTo, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { getDatabase, ref, query, get, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
@@ -156,60 +156,100 @@ const firebaseConfig = {
     measurementId: "G-CLGQ4RWWTX"
 };
 
-
-
-
-
-
-
-
-
-
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const database = getDatabase(app);
 
-
-
-
-
-
-
-
-
-
-
-
-
-function displayUserProfilePic(user) {
-    
-    const userNameDiv = document.getElementById("user-name");
-
-    // Cek apakah pengguna sudah login
-    if (user) {
-        
-        userNameDiv.innerText = "Hi, " + user.displayName;
-    } else {
-        // Jika pengguna belum login, atur gambar profil default dan kosongkan nama pengguna
-        profilePicDiv.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuEiaDNDqRo6K0Zn_NlRJjAde-B1zommEhIg&usqp=CAU" alt="Default Profile Picture" class="profile-pic">';
-        userNameDiv.innerText = "";
-    }
-}
-
-
-// Fungsi untuk memeriksa autentikasi pengguna
 onAuthStateChanged(auth, user => {
     if (user) {
-
+        const email = user.email; // Email pengguna yang login
         displayUserProfilePic(user);
+        
+        // Lanjutkan untuk mengambil driverId
+        getDriverIdByEmail(email);
     } else {
-        // Jika tidak ada pengguna yang login, arahkan ke halaman login
         window.location.href = "index.html";
     }
 });
 
+function getDriverIdByEmail(email) {
+    const driversRef = ref(database, 'Drivers');
+    const q = query(driversRef, orderByChild('email'), equalTo(email));
+
+    get(q).then(snapshot => {
+        if (snapshot.exists()) {
+            const driverData = snapshot.val();
+            const driverId = Object.keys(driverData)[0]; // Mengambil driverId
+
+            // Setelah dapat driverId, hitung izin minggu ini
+            calculateWeeklyLeaves(driverId);
+        } else {
+            console.error("Driver dengan email ini tidak ditemukan.");
+        }
+    }).catch(error => {
+        console.error(error);
+    });
+}
+
+function calculateWeeklyLeaves(driverId) {
+    const currentWeekStart = getStartOfWeek(new Date());
+    const currentWeekEnd = getEndOfWeek(new Date());
+
+    const attendancesRef = ref(database, 'Attendances');
+    const q = query(attendancesRef, orderByChild('driverId'), equalTo(driverId));
+
+    get(q).then(snapshot => {
+        if (snapshot.exists()) {
+            let totalLeavesThisWeek = 0;
+            snapshot.forEach(childSnapshot => {
+                const attendance = childSnapshot.val();
+                const from = new Date(attendance.from);
+                const to = new Date(attendance.to);
+
+                // Cek apakah tanggal izin berada dalam minggu ini
+                if ((from >= currentWeekStart && from <= currentWeekEnd) ||
+                    (to >= currentWeekStart && to <= currentWeekEnd)) {
+                    totalLeavesThisWeek++;
+                }
+            });
+
+            // Update <h3> dengan total izin minggu ini
+            updateTotalLeavesUI(totalLeavesThisWeek);
+        } else {
+            console.error("Tidak ada data izin untuk driver ini.");
+        }
+    }).catch(error => {
+        console.error(error);
+    });
+}
+
+function getStartOfWeek(date) {
+    const day = date.getDay(); 
+    const diff = date.getDate() - day + (day === 0 ? -6 : 1);
+    return new Date(date.setDate(diff));
+}
+
+function getEndOfWeek(date) {
+    const startOfWeek = getStartOfWeek(date);
+    return new Date(startOfWeek.setDate(startOfWeek.getDate() + 6));
+}
+
+function updateTotalLeavesUI(totalLeaves) {
+    const totalLeavesElement = document.querySelector('.Attendance-Header h3');
+    totalLeavesElement.innerText = `${totalLeaves} times`;
+}
+
+function displayUserProfilePic(user) {
+    const userNameDiv = document.getElementById("user-name");
+
+    if (user) {
+        userNameDiv.innerText = "Hi, " + user.displayName;
+    } else {
+        profilePicDiv.innerHTML = '<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuEiaDNDqRo6K0Zn_NlRJjAde-B1zommEhIg&usqp=CAU" alt="Default Profile Picture" class="profile-pic">';
+        userNameDiv.innerText = "";
+    }
+}
 
     </script>
     
