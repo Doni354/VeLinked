@@ -27,7 +27,7 @@ body {
 .main-content {
     width: 100%;
     border-radius: 40px 40px 0 0;
-    height: 900px;
+    height: auto;
     background-color: #FFFFFF;
     padding-bottom: 0px; /* Tambahkan padding untuk memberikan ruang bagi navbar */
 }
@@ -138,7 +138,7 @@ body {
 .Card-Attendance {
     display: flex;
     justify-content: space-between;
-
+    margin: 0.2em 0;   
     border: 1px solid #EBEBEB;
     border-radius: 0.8em;
     padding: 1em;

@@ -45,74 +45,7 @@
         
 
         <div class="attendance-container">
-            <div class="Attendance-Card">
-                <div class="Attendance-Card-header">
-                    <p>Desember 2024</p>
-                </div>
-                <div class="Card-Attendance">
-                    <div class="Info-Card-Content">
-                        <p>Fullday Application</p>
-                        <h4>Wed, 16 Dec</h4>
-                        <h5>Have fever today</h5>
-                    </div>
-                    <div class="right-card-Content">
-                        <div class="Stats-Card-Content Approved">
-                            <p>Approved</p>
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-            <div class="Attendance-Card">
-                <div class="Attendance-Card-header">
-                    <p>November 2024</p>
-                </div>
-                <div class="Card-Attendance">
-                    <div class="Info-Card-Content">
-                        <p>3 Days Application</p>
-                        <h4>Wed, 16 Dec</h4>
-                        <h5>Have fever today</h5>
-                    </div>
-                    <div class="right-card-Content">
-                        <div class="Stats-Card-Content Awaiting">
-                            <p>Awaiting</p>
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-            <div class="Attendance-Card">
-               
-                <div class="Card-Attendance">
-                    <div class="Info-Card-Content">
-                        <p>4 Days Application</p>
-                        <h4>Wed, 16 Dec</h4>
-                        <h5>Have fever today</h5>
-                    </div>
-                    <div class="right-card-Content">
-                        <div class="Stats-Card-Content Declined">
-                            <p>Declined</p>
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-            <div class="Attendance-Card">
-                
-                <div class="Card-Attendance">
-                    <div class="Info-Card-Content">
-                        <p>Fullday Application</p>
-                        <h4>Wed, 16 Dec</h4>
-                        <h5>Have fever today</h5>
-                    </div>
-                    <div class="right-card-Content">
-                        <div class="Stats-Card-Content Awaiting">
-                            <p>Awaiting</p>
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
+            
         </div>
         
 
@@ -250,6 +183,162 @@ function displayUserProfilePic(user) {
         userNameDiv.innerText = "";
     }
 }
+
+
+
+
+function formatDate(dateStr) {
+    const date = new Date(dateStr);
+    const options = { weekday: 'short', day: '2-digit', month: 'short' };
+    return date.toLocaleDateString('en-US', options);
+}
+
+function getMonthYear(dateStr) {
+    const date = new Date(dateStr);
+    const options = { month: 'long', year: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+}
+
+function getAttendanceDuration(from, to) {
+    const startDate = new Date(from);
+    const endDate = new Date(to);
+
+    const timeDiff = Math.abs(endDate - startDate);
+    const diffDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)); // Perhitungan hari
+
+    if (diffDays === 0) {
+        return 'Fullday Application';
+    } else {
+        return `${diffDays} Days Application`;
+    }
+}
+
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        const userEmail = user.email;
+
+        // Dapatkan driverId berdasarkan email user
+        const driversRef = ref(database, 'Drivers');
+        const driversQuery = query(driversRef, orderByChild('email'), equalTo(userEmail));
+        
+        get(driversQuery).then((snapshot) => {
+            if (snapshot.exists()) {
+                const driverData = snapshot.val();
+                const driverId = Object.keys(driverData)[0]; // Mengambil driverId
+
+                // Mengambil data dari Attendances
+                const attendanceRef = ref(database, 'Attendances');
+                const attendanceQuery = query(attendanceRef, orderByChild('driverId'), equalTo(driverId));
+
+                get(attendanceQuery).then((attendanceSnapshot) => {
+                    if (attendanceSnapshot.exists()) {
+                        const attendances = attendanceSnapshot.val();
+
+                        // Data yang dikelompokkan per bulan dan tahun
+                        const groupedData = {};
+
+                        Object.values(attendances).forEach((attendance) => {
+                            const from = attendance.from;
+                            const to = attendance.to;
+                            const desc = attendance.desc;
+                            const status = attendance.status;
+
+                            const monthYear = getMonthYear(from);
+
+                            if (!groupedData[monthYear]) {
+                                groupedData[monthYear] = [];
+                            }
+
+                            groupedData[monthYear].push({
+                                duration: getAttendanceDuration(from, to),
+                                date: formatDate(from),
+                                desc,
+                                status,
+                            });
+                        });
+
+                        // Render hasil ke dalam HTML
+                        renderAttendanceCards(groupedData);
+                    }
+                });
+            }
+        });
+    } else {
+        // Jika tidak login, redirect ke halaman login
+        window.location.href = 'index.html';
+    }
+});
+
+function renderAttendanceCards(groupedData) {
+    const container = document.querySelector('.attendance-container');
+    container.innerHTML = ''; // Bersihkan kontainer
+
+    Object.keys(groupedData).forEach((monthYear) => {
+        const attendances = groupedData[monthYear];
+
+        // Buat elemen kartu header berdasarkan bulan dan tahun
+        const monthCard = document.createElement('div');
+        monthCard.classList.add('Attendance-Card');
+        monthCard.innerHTML = `
+            <div class="Attendance-Card-header">
+                <p>${monthYear}</p>
+            </div>
+        `;
+        
+        attendances.forEach((attendance) => {
+            const { duration, date, desc, status } = attendance;
+            let statusClass = '';
+            let statusText = '';
+
+            switch (status) {
+                case 'approved':
+                    statusClass = 'Approved';
+                    statusText = 'Approved';
+                    break;
+                case 'pending':
+                    statusClass = 'Awaiting';
+                    statusText = 'Awaiting';
+                    break;
+                case 'rejected':
+                    statusClass = 'Declined';
+                    statusText = 'Declined';
+                    break;
+                default:
+                    statusClass = 'Awaiting';
+                    statusText = 'Awaiting';
+            }
+
+            // Buat elemen kartu absensi
+            const attendanceCard = document.createElement('div');
+            attendanceCard.classList.add('Card-Attendance');
+            attendanceCard.innerHTML = `
+                <div class="Info-Card-Content">
+                    <p>${duration}</p>
+                    <h4>${date}</h4>
+                    <h5>${desc}</h5>
+                </div>
+                <div class="right-card-Content">
+                    <div class="Stats-Card-Content ${statusClass}">
+                        <p>${statusText}</p>
+                    </div>
+                </div>
+            `;
+
+            monthCard.appendChild(attendanceCard);
+        });
+
+        container.appendChild(monthCard);
+    });
+}
+
+
+
+
+
+
+
+
+
 
     </script>
     
