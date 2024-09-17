@@ -247,54 +247,145 @@ function closeOverlay() {
     
 <script type="module">
     // Import Firebase SDK
-    import { getDatabase, ref as dbRef, onValue, update } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+    import { getDatabase, ref as dbRef, onValue, query, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 
-    // Firebase configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
-        authDomain: "velinked-web.firebaseapp.com",
-        databaseURL: "https://velinked-web-default-rtdb.asia-southeast1.firebasedatabase.app",
-        projectId: "velinked-web",
-        storageBucket: "velinked-web.appspot.com",
-        messagingSenderId: "844821073092",
-        appId: "1:844821073092:web:f243c25668079240ec0d91",
-        measurementId: "G-CLGQ4RWWTX"
-    };
+// Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
+    authDomain: "velinked-web.firebaseapp.com",
+    databaseURL: "https://velinked-web-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "velinked-web",
+    storageBucket: "velinked-web.appspot.com",
+    messagingSenderId: "844821073092",
+    appId: "1:844821073092:web:f243c25668079240ec0d91",
+    measurementId: "G-CLGQ4RWWTX"
+};
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-    const auth = getAuth();
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const auth = getAuth();
 
-    // Fungsi untuk mengambil ID user yang sedang login
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            const userId = user.uid;
-            getDriverData(userId);
-        } else {
-            console.log('User not logged in');
-        }
-    });
-
-    // Fungsi untuk mengambil data driver dari node Drivers berdasarkan userId
-    function getDriverData(userId) {
-        const driversRef = dbRef(db, 'Drivers');
-        onValue(driversRef, (snapshot) => {
-            snapshot.forEach((driverDoc) => {
-                const driverData = driverDoc.val();
-                if (driverData.userId === userId) {
-                    const driverId = driverDoc.key;
-                    const fullName = driverData.fullName;
-                    const driverPhotoUrl = driverData.driverPhotoUrl;
-
-                    // Setelah mendapatkan driverId, ambil data Attendances
-                    getAttendanceData(driverId, fullName, driverPhotoUrl);
-                }
-            });
-        });
+// Fungsi untuk mengambil ID user yang sedang login
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        const userId = user.uid;
+        getDriverData(userId);
+    } else {
+        console.log('User not logged in');
     }
+});
+
+// Fungsi untuk mengambil data driver dari node Drivers berdasarkan userId
+function getDriverData(userId) {
+    const driversRef = dbRef(db, 'Drivers');
+    const driverQuery = query(driversRef, orderByChild('userId'), equalTo(userId));
+    
+    onValue(driverQuery, (snapshot) => {
+        const driverIds = [];
+        const driverDataMap = {}; // Menyimpan data driver untuk digunakan nanti
+
+        snapshot.forEach((driverDoc) => {
+            const driverId = driverDoc.key;
+            const driverData = driverDoc.val();
+            driverIds.push(driverId);
+
+            // Simpan data driver untuk digunakan saat menampilkan data absensi
+            driverDataMap[driverId] = {
+                fullName: driverData.fullName,
+                driverPhotoUrl: driverData.driverPhotoUrl
+            };
+        });
+
+        // Setelah mendapatkan semua driverId, ambil data attendances
+        getAttendanceData(driverIds, driverDataMap);
+    });
+}
+
+// Fungsi untuk mengambil data Attendances berdasarkan driverId
+function getAttendanceData(driverIds, driverDataMap) {
+    const attendancesRef = dbRef(db, 'Attendances');
+    
+    onValue(attendancesRef, (snapshot) => {
+        let tableBody = document.getElementById('table-body');
+        
+        // Bersihkan isi tabel sebelum menambahkan data baru
+        tableBody.innerHTML = ''; 
+        
+        let rowIndex = 0;
+
+        snapshot.forEach((attendanceDoc) => {
+            const attendanceData = attendanceDoc.val();
+            const driverId = attendanceData.driverId;
+
+            if (driverIds.includes(driverId)) {
+                const from = new Date(attendanceData.from);
+                const to = new Date(attendanceData.to);
+                const duration = Math.ceil((to - from) / (1000 * 60 * 60 * 24)) + 1;
+                const dateRange = formatDateRange(from, to);
+                const type = attendanceData.type;
+                const status = attendanceData.status;
+
+                const driverData = driverDataMap[driverId] || {}; // Ambil data driver yang relevan
+                const fullName = driverData.fullName || 'Unknown';
+                const driverPhotoUrl = driverData.driverPhotoUrl || 'assets/images/userDummyExpanse.svg';
+
+                let approvalText = '';
+                let approvalImage = '';
+
+                if (status === 'pending') {
+                    approvalText = 'Pending';
+                    approvalImage = '';
+                } else if (status === 'approved') {
+                    approvalText = 'Approved';
+                    approvalImage = '<img src="assets/images/Approved-img.svg" alt="Approved">';
+                } else if (status === 'rejected') {
+                    approvalText = 'Rejected';
+                    approvalImage = '<img src="assets/images/Rejected-img.svg" alt="Rejected">';
+                }
+
+                let row = document.createElement('tr');
+                row.classList.add((rowIndex % 2 === 0) ? 'table-row-even' : 'table-row-odd');
+
+                row.innerHTML = `
+                <td class="table-data username" style="width: 23%;">
+                    <img src="${driverPhotoUrl}" alt="Driver Photo" class="driver-photo"> ${fullName}
+                </td>
+                <td class="table-data" style="width: 9%;">${duration} Days</td>
+                <td class="table-data" style="width: 20%;">${dateRange}</td>
+                <td class="table-data" style="width: 15%;">${type}</td>
+                <td class="table-data" style="width: 15%;"><img src="assets/images/Reason.svg" alt="Reason"></td>
+                <td class="table-data" style="width: 15%; color: #092448; font-weight: bold;">
+                    ${approvalImage} ${approvalText}
+                </td>
+                `;
+
+                // Tambahkan event listener pada setiap baris tabel untuk membuka overlay
+                row.addEventListener('click', () => {
+                    openOverlay(attendanceData, fullName, driverPhotoUrl, attendanceDoc.key);
+                });
+
+                tableBody.appendChild(row);
+                rowIndex++;
+            }
+        });
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Fungsi untuk menambahkan suffix pada tanggal
     function getDateWithSuffix(date) {
@@ -418,72 +509,6 @@ function closeOverlay() {
 
 
 
-// Fungsi untuk mengambil data Attendances dan menambahkan event listener untuk membuka overlay
-function getAttendanceData(driverId, fullName, driverPhotoUrl) {
-    const attendancesRef = dbRef(db, 'Attendances');
-    
-    // Gunakan onValue untuk memantau perubahan secara real-time
-    onValue(attendancesRef, (snapshot) => {
-        let tableBody = document.getElementById('table-body');
-        
-        // Bersihkan isi tabel sebelum menambahkan data baru
-        tableBody.innerHTML = ''; 
-        
-        let rowIndex = 0;
-
-        snapshot.forEach((attendanceDoc) => {
-            const attendanceData = attendanceDoc.val();
-            const attendanceId = attendanceDoc.key; // Dapatkan ID dari dokumen attendance
-
-            if (attendanceData.driverId === driverId) {
-                const from = new Date(attendanceData.from);
-                const to = new Date(attendanceData.to);
-                const duration = Math.ceil((to - from) / (1000 * 60 * 60 * 24)) + 1;
-                const dateRange = formatDateRange(from, to);
-                const type = attendanceData.type;
-                const status = attendanceData.status;
-
-                let approvalText = '';
-                let approvalImage = '';
-
-                if (status === 'pending') {
-                    approvalText = 'Pending';
-                    approvalImage = '';
-                } else if (status === 'approved') {
-                    approvalText = 'Approved';
-                    approvalImage = '<img src="assets/images/Approved-img.svg" alt="Approved">';
-                } else if (status === 'rejected') {
-                    approvalText = 'Rejected';
-                    approvalImage = '<img src="assets/images/Rejected-img.svg" alt="Rejected">';
-                }
-
-                let row = document.createElement('tr');
-                row.classList.add((rowIndex % 2 === 0) ? 'table-row-even' : 'table-row-odd');
-
-                row.innerHTML = `
-                <td class="table-data username" style="width: 23%;">
-                    <img src="${driverPhotoUrl}" alt="Driver Photo" class="driver-photo"> ${fullName}
-                </td>
-                <td class="table-data" style="width: 9%;">${duration} Days</td>
-                <td class="table-data" style="width: 20%;">${dateRange}</td>
-                <td class="table-data" style="width: 15%;">${type}</td>
-                <td class="table-data" style="width: 15%;"><img src="assets/images/Reason.svg" alt="Reason"></td>
-                <td class="table-data" style="width: 15%; color: #092448; font-weight: bold;">
-                    ${approvalImage} ${approvalText}
-                </td>
-                `;
-
-                // Tambahkan event listener pada setiap baris tabel untuk membuka overlay
-                row.addEventListener('click', () => {
-                    openOverlay(attendanceData, fullName, driverPhotoUrl, attendanceId);
-                });
-
-                tableBody.appendChild(row);
-                rowIndex++;
-            }
-        });
-    });
-}
 
 
 
