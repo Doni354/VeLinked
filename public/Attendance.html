@@ -369,14 +369,28 @@ function openOverlay(attendanceData, fullName, driverPhotoUrl, attendanceId) {
     }
     document.getElementById("status-overlay").src = statusImage;
 
-    // Tambahkan event listener ke tombol "Reject" dan "Approve"
-    document.querySelector('.reject').addEventListener('click', () => {
-        updateAttendanceStatus(attendanceId, 'rejected');
-    });
+    // Simpan attendanceId di data atribut overlay untuk referensi
+    document.getElementById("overlay").dataset.attendanceId = attendanceId;
 
-    document.querySelector('.approve').addEventListener('click', () => {
-        updateAttendanceStatus(attendanceId, 'approved');
-    });
+    // Hapus event listener sebelumnya untuk mencegah multiple binding
+    document.querySelector('.reject').removeEventListener('click', rejectHandler);
+    document.querySelector('.approve').removeEventListener('click', approveHandler);
+
+    // Tambahkan event listener untuk tombol "Reject" dan "Approve"
+    document.querySelector('.reject').addEventListener('click', rejectHandler);
+    document.querySelector('.approve').addEventListener('click', approveHandler);
+}
+
+// Handler untuk tombol "Reject"
+function rejectHandler() {
+    const attendanceId = document.getElementById("overlay").dataset.attendanceId;
+    updateAttendanceStatus(attendanceId, 'rejected');
+}
+
+// Handler untuk tombol "Approve"
+function approveHandler() {
+    const attendanceId = document.getElementById("overlay").dataset.attendanceId;
+    updateAttendanceStatus(attendanceId, 'approved');
 }
 
 // Fungsi untuk memperbarui status di Firebase
@@ -393,6 +407,9 @@ function updateAttendanceStatus(attendanceId, newStatus) {
             console.error("Error updating status: ", error);
         });
 }
+
+
+
 
 // Fungsi untuk menutup overlay
 function closeOverlay() {
@@ -440,21 +457,20 @@ function getAttendanceData(driverId, fullName, driverPhotoUrl) {
                     approvalImage = '<img src="assets/images/Rejected-img.svg" alt="Rejected">';
                 }
 
-
                 let row = document.createElement('tr');
                 row.classList.add((rowIndex % 2 === 0) ? 'table-row-even' : 'table-row-odd');
 
                 row.innerHTML = `
                 <td class="table-data username" style="width: 23%;">
-                        <img src="${driverPhotoUrl}" alt="Driver Photo" class="driver-photo"> ${fullName}
-                      </td>
-                      <td class="table-data" style="width: 9%;">${duration} Days</td>
-                      <td class="table-data" style="width: 20%;">${dateRange}</td>
-                      <td class="table-data" style="width: 15%;">${type}</td>
-                      <td class="table-data" style="width: 15%;"><img src="assets/images/Reason.svg" alt="Reason"></td>
-                      <td class="table-data" style="width: 15%; color: #092448; font-weight: bold;">
-                        ${approvalImage} ${approvalText}
-                      </td>
+                    <img src="${driverPhotoUrl}" alt="Driver Photo" class="driver-photo"> ${fullName}
+                </td>
+                <td class="table-data" style="width: 9%;">${duration} Days</td>
+                <td class="table-data" style="width: 20%;">${dateRange}</td>
+                <td class="table-data" style="width: 15%;">${type}</td>
+                <td class="table-data" style="width: 15%;"><img src="assets/images/Reason.svg" alt="Reason"></td>
+                <td class="table-data" style="width: 15%; color: #092448; font-weight: bold;">
+                    ${approvalImage} ${approvalText}
+                </td>
                 `;
 
                 // Tambahkan event listener pada setiap baris tabel untuk membuka overlay
