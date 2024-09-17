@@ -28,6 +28,7 @@ body {
     width: 100%;
     border-radius: 40px 40px 0 0;
     height: auto;
+    min-height: 700px;
     background-color: #FFFFFF;
     padding-bottom: 5em; /* Tambahkan padding untuk memberikan ruang bagi navbar */
 }
