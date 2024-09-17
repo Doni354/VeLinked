@@ -447,8 +447,8 @@ function getAttendanceData(driverId, fullName, driverPhotoUrl) {
                 let approvalImage = '';
 
                 if (status === 'pending') {
-                    approvalText = '';
-                    approvalImage = '<img style="margin-right: 8px;" src="assets/images/Approved_Option.svg" alt=""><img src="assets/images/Rejected_Option.svg" alt="">';
+                    approvalText = 'Pending';
+                    approvalImage = '';
                 } else if (status === 'approved') {
                     approvalText = 'Approved';
                     approvalImage = '<img src="assets/images/Approved-img.svg" alt="Approved">';
