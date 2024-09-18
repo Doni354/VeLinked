@@ -38,8 +38,8 @@
     </div>
     
     <div class="Driver-Profile">
-        <img src="assets/images/Driver-Profile-Dummy.svg" alt="">
-        <h2>Hellyos Haqiqie</h2>
+        <img id="driverPhoto" alt="">
+        <h2 id="fullName"></h2>
     </div>
     
     <div class="Profile-Info">
@@ -117,7 +117,69 @@
 
 
 <script src="js/auth.js"></script>
-<script type="module" src="js/config.js"></script>
+<script type="module">
+    
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { getDatabase, ref, query, get, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
+    authDomain: "velinked-web.firebaseapp.com",
+    databaseURL: "https://velinked-web-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "velinked-web",
+    storageBucket: "velinked-web.appspot.com",
+    messagingSenderId: "844821073092",
+    appId: "1:844821073092:web:f243c25668079240ec0d91",
+    measurementId: "G-CLGQ4RWWTX"
+};
+
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const database = getDatabase(app);
+
+
+
+
+// Function to display user data
+function displayUserData(user) {
+    const driverRef = ref(database, 'Drivers');
+    const userQuery = query(driverRef, orderByChild('email'), equalTo(user.email));
+
+    get(userQuery).then(snapshot => {
+        if (snapshot.exists()) {
+            snapshot.forEach(childSnapshot => {
+                const data = childSnapshot.val();
+                document.getElementById("fullName").innerText = `${data.fullName}`;
+                
+                const photoElement = document.getElementById("driverPhoto");
+                photoElement.src = data.driverPhotoUrl;
+                photoElement.alt = "Driver Photo";
+            });
+        } else {
+            console.log("No data available for this email.");
+        }
+    }).catch(error => {
+        console.error("Error fetching data:", error);
+    });
+}
+
+// Memastikan fungsi dipanggil setelah user login
+onAuthStateChanged(auth, user => {
+    if (user) {
+        displayUserData(user);
+    } else {
+        console.log("No user is signed in.");
+        window.location.href = "index.html"; // Redirect ke halaman login jika user belum login
+    }
+});
+
+
+
+
+</script>
 
 
 
