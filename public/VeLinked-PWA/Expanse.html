@@ -225,7 +225,7 @@
         // Cek autentikasi pengguna dan tampilkan data expense
         onAuthStateChanged(auth, user => {
             if (user) {
-                verifyUserEmailAndFetchExpenses(user, 'day'); // Default hitung untuk daily saat login
+                verifyUserEmailAndFetchExpenses(user, 'week'); // Default hitung untuk daily saat login
                 displayUserProfilePic(user);
             } else {
                 window.location.href = "index.html";
