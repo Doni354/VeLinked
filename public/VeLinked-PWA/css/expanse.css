@@ -168,8 +168,7 @@ body {
   
 
 
-  
-.card-container {
+  .card-container {
     display: flex;
     overflow-x: auto;
     padding: 10px;
@@ -212,4 +211,170 @@ body {
     color: #7F8489;
     margin: 10px 0;
     padding-bottom: 10px;
+}
+
+
+
+
+.popup {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 16px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.popup.show {
+    display: block;
+    opacity: 1;
+}
+
+.popup.success {
+    background-color: green;
+}
+
+.popup.error {
+    background-color: red;
+}
+
+.popup.info {
+    background-color: blue;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.overlay-content {
+    background-color: white;
+    padding: 5px;
+    border-radius: 50px;
+    width: 95%;
+    max-width: 500px;
+    text-align: left;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.expense-header {
+    display: flex;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.expense-header h2 {
+    margin-left: 10px;
+    font-family: 'Lato';
+    font-weight: 800;
+
+}
+
+.expense-icon {
+    width: 47px;
+    height: 47px;
+    background-color: #F4F4F4;
+    border-radius: 28px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25); /* Drop shadow sesuai dengan pengaturan pada gambar */
+    margin-right: 5px;
+    padding: 24px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    border-radius: 20px;
+}
+
+.expense-details {
+
+}
+
+.details-expanse {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.expanse-data {
+    margin-left: 15px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.detail-row {
+
+    margin-bottom: 15px;
+}
+
+.detail-row div {
+    display: block; /* Makes the label and data appear vertically */
+    margin-bottom: 5px; /* Add some spacing between label and data */
+}
+
+
+.detail-row strong {
+    display: block; /* Keep the label on its own line */
+    margin-bottom: 5px; /* Space between label and data */
+    color: #7F8489;
+    font-weight: 500;
+    font-family: 'Lato';
+    font-size: 16px;
+}
+
+
+.detail-row span {
+    font-family: 'Manrope';
+    font-weight: 800;
+    color: #373636;
+    font-size: 14px;
+}
+
+#view-image {
+    color: #5243E6;
+    font-family: 'Manrope';
+    font-weight: 800;
+    font-size: 14px;
+    
+}
+.total-cost {
+    display: flex; /* Align elements side by side */
+    justify-content: flex-start; /* Center the content horizontally */
+    align-items: center; /* Align content vertically */
+    padding-bottom: 15px;
+    margin-left: 10px;
+}
+
+.total-cost p {
+    font-family: 'Lato';
+    color: #7F8489;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0; /* Remove default margin */
+}
+
+.total-cost span {
+    font-family: 'Lato';
+    color: #09244B;
+    font-weight: 800;
+    font-size: 14px;
+    margin-left: 5px; /* Add space between label and value */
+}
+
+
+.hidden {
+    display: none;
 }
