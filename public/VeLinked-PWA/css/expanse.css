@@ -27,7 +27,8 @@ body {
 .main-content {
     width: 100%;
     border-radius: 40px 40px 0 0;
-    height: 900px;
+    height: auto;
+    min-height: 750px;
     background-color: #FFFFFF;
     padding-bottom: 0px; /* Tambahkan padding untuk memberikan ruang bagi navbar */
 }
@@ -169,10 +170,10 @@ body {
 
 
   .card-container {
-    display: flex;
-    overflow-x: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 kolom */
+    gap: 10px 5px; /* Jarak antar card */
     padding: 10px;
-    scrollbar-width: none; /* Firefox */
 }
 
 .card-container::-webkit-scrollbar {
