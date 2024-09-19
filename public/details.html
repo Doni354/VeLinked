@@ -1651,6 +1651,19 @@ document.getElementById('cancelDelete').addEventListener('click', function() {
     popup.style.display = 'none';
 });
 
+
+
+
+
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    console.log("User UID: ", user.uid);
+  } else {
+    console.log("User not logged in");
+  }
+});
+
+
     </script>
 
 
