@@ -139,7 +139,15 @@
 }
 
 
-.expanse-table .type-expanse.consumption {
+.type-expanse {
+    width: 15px;
+}
+
+.td-time {
+    width: 120px;
+}
+
+.expanse-table .type-expanse.consumptions {
     color: #C2431F;
 }
 
@@ -186,15 +194,18 @@
 }
 
 .expanse-table th, .expanse-table td {
-    padding: 12px;
+    padding: 5px;
     text-align: left;
+    transform: scale(90%);
     border-bottom: 1px solid #ddd;
 }
+
+
 
 .expanse-table th {
     color: #888888;
     font-weight: 800;
-    background-color: #F9F9F9; /* Tambahkan background color untuk header */
+   padding-left: 15px;
     position: sticky;
     top: 0;
 }

@@ -953,8 +953,8 @@ function fetchExpensesByDocId(driverId) {
                 tableRow.innerHTML = `
                     <td>${expense.desc}</td>
                     <td class="type-expanse ${typeClass}">${expense.type}</td>
-                    <td>${date}<br><span class="time-expanse">${time}</span></td>
-                    <td>${formatCurrency(expense.price)}</td>
+                    <td class="td-time">${date}<br><span class="time-expanse">${time}</span></td>
+                    <td class="price-expense">${formatCurrency(expense.price)}</td>
                 `;
                 
                 // Tambahkan baris ke dalam tabel
