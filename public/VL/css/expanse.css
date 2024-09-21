@@ -81,12 +81,22 @@
 
 }
 
+
+.user-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 1em;
+  width: 300px;
+  height: 75px;
+  background-color: #E5EEFF;
+  border-radius: 18px;
+}
+
+
 .user {
-    margin-top: 1em;
     width: 300px;
     height: 75px;
-    background-color: #E5EEFF;
-    border-radius: 18px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -97,7 +107,9 @@
     flex-direction: column;
 }
 .username h2 {
-    font-size: small;
+    font-size: 15px;
+    margin-top: 5px;
+    margin-bottom: 0;
 }
   
 .custom-line {
