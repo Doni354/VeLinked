@@ -75,34 +75,24 @@
         </div>
         <div id="main" style="background: white;">
             
+            
 
+            
             <div class="main-content">
                 <div class="left-content">
                     <div class="title-name">
                         <div class="title-up">
-                            <div class="p-bold">
-                                <p>Polestar A1 <span><button class="toggle-button" id="toggleButton">weekly</button>
-
-                                    <script>
-                                        const toggleButton = document.getElementById('toggleButton');
-                                        const states = ['weekly', 'monthly', 'yearly'];
-                                        let currentIndex = 0;
-
-                                        toggleButton.addEventListener('click', () => {
-                                            currentIndex = (currentIndex + 1) % states.length;
-                                            toggleButton.textContent = states[currentIndex];
-                                        });
-                                    </script></span></p>
-                                
+                            <div class="p-bold nickname-daily">
+                                <p id="vehicleNickname">Polestar A1 </p>
+                                <button class="daily-button" id="dailyButton">weekly</button>
                             </div>
-
-                             <div class="title-stats">
-                                <p>In Transit</p>
+                            <div class="title-stats">
+                                <p id="vehicleStatus">In Transit</p>
                             </div>
-
                         </div>
-                        <div class="h2-bold">
-                            <h2>Volvo, Polestar 1</h2>
+                        <div class="h2-bold brand-name">
+                            <h2 id="vehicleBrand">Volvo, </h2>
+                            <h2 id="vehicleName">Polestar 1</h2>
                         </div>
                     </div>
                     
@@ -255,7 +245,6 @@
             </div>
         </div>
     </div>
-   
     <script type="module">
         import { getDatabase, ref as dbRef, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
@@ -289,48 +278,57 @@
         });
     
         // Fungsi untuk memuat data Drivers berdasarkan UID user yang login
-// Fungsi untuk memuat data Drivers berdasarkan UID user yang login
-function loadDrivers(uid) {
-    const driversRef = dbRef(db, 'Drivers');
-
-    onValue(driversRef, (snapshot) => {
-        const driversData = snapshot.val();
-        const driverList = [];
-
-        // Loop untuk memeriksa setiap doc di Drivers
-        for (const driverId in driversData) {
-            const driver = driversData[driverId];
-
-            // Cek apakah userId pada driver sama dengan UID user yang sedang login
-            if (driver.userId === uid) {
-                driver.id = driverId; // Menambahkan id ke driver
-                driverList.push(driver); // Tambahkan driver ke list
-            }
-        }
-
-        // Memuat data ke user1 dan dropdown untuk semua driver
-        if (driverList.length > 0) {
-            loadUser1(driverList[0]); // Memuat driver pertama
-            driverList.forEach(driver => {
-                loadDropdownDriver(driver);
+        function loadDrivers(uid) {
+            const driversRef = dbRef(db, 'Drivers');
+    
+            onValue(driversRef, (snapshot) => {
+                const driversData = snapshot.val();
+                const driverList = [];
+    
+                for (const driverId in driversData) {
+                    const driver = driversData[driverId];
+    
+                    if (driver.userId === uid) {
+                        driver.id = driverId; // Menambahkan id ke driver
+                        driverList.push(driver); // Tambahkan driver ke list
+                    }
+                }
+    
+                if (driverList.length > 0) {
+                    loadUser1(driverList[0]);
+                    driverList.forEach(driver => {
+                        loadDropdownDriver(driver);
+                    });
+                    loadVehicleData(driverList[0].vehicleUsed); // Memuat data kendaraan untuk driver pertama
+                }
             });
         }
-    });
-}
-
+    
         // Fungsi untuk memuat data ke user1
         function loadUser1(driver) {
             const vehicleRef = dbRef(db, `Vehicle/${driver.vehicleUsed}`);
             onValue(vehicleRef, (vehicleSnapshot) => {
                 const vehicleData = vehicleSnapshot.val();
     
-                // Update data di bagian user1
                 document.querySelector('.user1 img').src = driver.driverPhotoUrl || 'assets/images/userDummy.svg';
                 document.querySelector('.user1 h2').textContent = driver.fullName;
                 document.querySelector('.user1 p').textContent = `Using ${vehicleData.nickname}`;
                 
-                // Update URL parameter dengan driverId pertama
-                updateURL(driver.id); // Pastikan driver.id ada
+                updateURL(driver.id); // Update URL parameter
+                loadVehicleData(driver.vehicleUsed); // Memuat data kendaraan
+            });
+        }
+    
+        // Fungsi untuk memuat data kendaraan
+        function loadVehicleData(vehicleUsed) {
+            const vehicleRef = dbRef(db, `Vehicle/${vehicleUsed}`);
+            onValue(vehicleRef, (vehicleSnapshot) => {
+                const vehicleData = vehicleSnapshot.val();
+    
+                // Menampilkan data kendaraan
+                document.getElementById('vehicleNickname').textContent = vehicleData.nickname;
+                document.getElementById('vehicleBrand').textContent = vehicleData.brand + ', '; // Menambahkan koma
+                document.getElementById('vehicleName').textContent = vehicleData.name; // Mengisi nama kendaraan
             });
         }
     
@@ -341,8 +339,6 @@ function loadDrivers(uid) {
                 const vehicleData = vehicleSnapshot.val();
     
                 const dropdownContainer = document.querySelector('.additional-info');
-    
-                // Buat elemen baru untuk driver di dropdown
                 const dropdownItem = document.createElement('div');
                 dropdownItem.classList.add('user');
                 dropdownItem.innerHTML = `
@@ -353,13 +349,12 @@ function loadDrivers(uid) {
                     </div>
                 `;
     
-                // Tambahkan event listener untuk klik di dropdown
                 dropdownItem.addEventListener('click', () => {
-                    loadUser1(driver); // Ubah data di user1 sesuai yang dipilih
-                    closeDropdown(); // Tutup dropdown setelah memilih
+                    loadUser1(driver);
+                    closeDropdown();
+                    loadVehicleData(driver.vehicleUsed); // Memuat data kendaraan saat memilih driver dari dropdown
                 });
     
-                // Tambahkan ke container dropdown
                 dropdownContainer.appendChild(dropdownItem);
             });
         }
@@ -381,12 +376,20 @@ function loadDrivers(uid) {
             container.style.maxHeight = '75px'; // Kembali ke tinggi awal
         }
     
-        // Tambahkan event listener untuk toggle dropdown
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('.toggle-btn').addEventListener('click', function() {
                 const container = document.querySelector('.user-container');
                 const user1 = document.querySelector('.user1');
-    
+                const dailyButton = document.getElementById('dailyButton');
+                const states = ['weekly', 'monthly', 'yearly'];
+                let currentIndex = 0;
+
+                dailyButton.addEventListener('click', () => {
+                    currentIndex = (currentIndex + 1) % states.length;
+                    dailyButton.textContent = states[currentIndex];
+                });
+
+
                 if (container.classList.contains('expand')) {
                     closeDropdown();
                 } else {
@@ -397,6 +400,7 @@ function loadDrivers(uid) {
             });
         });
     </script>
+    
       
 
 

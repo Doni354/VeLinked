@@ -37,7 +37,8 @@
   align-items: center; /* Menyelaraskan teks dan tombol secara vertikal */
 }
 
-.toggle-button {
+.daily-button {
+  margin-top: 10px;
   margin-left: 10px;
   font-family: 'Manrope', sans-serif;
   font-weight: 800;
@@ -54,8 +55,8 @@
   transform: translateY(-5px); /* Menaikkan tombol sedikit ke atas */
 }
 
-.toggle-button:focus,
-.toggle-button:active {
+.daily-button:focus,
+.daily-button:active {
   outline: none; /* Menghilangkan outline saat tombol di-klik atau fokus */
   box-shadow: none; /* Menghilangkan bayangan bawaan yang mungkin ditambahkan oleh browser */
 }
@@ -76,9 +77,23 @@
 }
 
 .h2-bold h2 {
-
+    font-size: 28px;
     font-weight: 1000;
 
+}
+
+.nickname-daily {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.brand-name {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 5px;
 }
 
 .user-container {
