@@ -108,7 +108,7 @@
                     
                     <div class="user-container">
                         <div class="user1">
-                            <img src="assets/images/userDummy.svg" alt="">
+                            <img class="pp" src="assets/images/userDummy.svg" alt="">
                             <div class="username h2-bold mt-3">
                                 <h2>Hellyos Haqiqie</h2>
                                 <p>Using VOLVO Polestar 1</p>
@@ -116,52 +116,10 @@
                             <img class="mt-2 toggle-btn" src="assets/images/shapeOpen.svg" alt="">
                         </div>
                         <div class="additional-info">
-                            <div class="user">
-                                <img src="assets/images/userDummy.svg" alt="">
-                                <div class="username h2-bold mt-3 ml-4">
-                                    <h2>John Doe</h2>
-                                    <p>Using Tesla Model S</p>
-                                </div>
-                            </div>
-                            <div class="user">
-                                <img src="assets/images/userDummy.svg" alt="">
-                                <div class="username h2-bold mt-3 ml-4">
-                                    <h2>Jane Smith</h2>
-                                    <p>Using BMW i8</p>
-                                </div>
-                            </div>
-                            <div class="user">
-                                <img src="assets/images/userDummy.svg" alt="">
-                                <div class="username h2-bold mt-3 ml-4">
-                                    <h2>Doni 354</h2>
-                                    <p>Using Lamborgini</p>
-                                </div>
-                            </div>
                         </div>
                     </div>                 
                     
-                    <script>
-                        document.querySelector('.toggle-btn').addEventListener('click', function() {
-    const container = document.querySelector('.user-container');
-    const additionalInfo = document.querySelector('.additional-info');
-    const user1 = document.querySelector('.user1');
-    
-    if (container.classList.contains('expand')) {
-        container.classList.remove('expand');
-        user1.style.marginTop = '20px';
-        container.style.maxHeight = '75px'; // Mengembalikan tinggi asli
-    } else {
-        container.classList.add('expand');
-        user1.style.marginTop = '0px';
-        container.style.maxHeight = '300px'; // Tinggi baru setelah dibuka
-    }
-});
-
-
-
-
-                    </script>
-
+                    
 
 
 
@@ -298,8 +256,154 @@
         </div>
     </div>
    
+    <script type="module">
+        import { getDatabase, ref as dbRef, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 
-    <script src="js/UserAndStatus_check.js"></script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
+            authDomain: "velinked-web.firebaseapp.com",
+            databaseURL: "https://velinked-web-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "velinked-web",
+            storageBucket: "velinked-web.appspot.com",
+            messagingSenderId: "844821073092",
+            appId: "1:844821073092:web:f243c25668079240ec0d91",
+            measurementId: "G-CLGQ4RWWTX"
+        };
+
+
+
+        // Firebase Initialization
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const auth = getAuth(app);
+      
+        // Mengambil UID user yang sedang login
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            const uid = user.uid;
+            loadDrivers(uid);
+          } else {
+            console.error("User not logged in");
+          }
+        });
+      
+        // Fungsi untuk memuat data Drivers berdasarkan UID user yang login
+        function loadDrivers(uid) {
+          const driversRef = dbRef(db, 'Drivers');
+      
+          onValue(driversRef, (snapshot) => {
+            const driversData = snapshot.val();
+            const driverList = [];
+            let firstDriverLoaded = false;
+      
+            // Loop untuk memeriksa setiap doc di Drivers
+            for (const driverId in driversData) {
+              const driver = driversData[driverId];
+      
+              // Cek apakah userId pada driver sama dengan UID user yang sedang login
+              if (driver.userId === uid) {
+                // Memuat data pertama ke user1
+                if (!firstDriverLoaded) {
+                  loadUser1(driver, driverId);
+                  firstDriverLoaded = true;
+                } else {
+                  // Memuat sisa data ke dropdown
+                  loadDropdownDriver(driver, driverId);
+                }
+              }
+            }
+          });
+        }
+      
+        // Fungsi untuk memuat data ke user1
+        function loadUser1(driver, driverId) {
+          // Mengambil data Vehicle berdasarkan vehicleUsed
+          const vehicleRef = dbRef(db, `Vehicle/${driver.vehicleUsed}`);
+          onValue(vehicleRef, (vehicleSnapshot) => {
+            const vehicleData = vehicleSnapshot.val();
+      
+            // Update data di bagian user1
+            document.querySelector('.user1 img').src = driver.driverPhotoUrl || 'assets/images/userDummy.svg';
+            document.querySelector('.user1 h2').textContent = driver.fullName;
+            document.querySelector('.user1 p').textContent = `Using ${vehicleData.nickname}`;
+            
+            // Update URL parameter dengan driverId pertama
+            updateURL(driverId);
+          });
+        }
+      
+        // Fungsi untuk memuat data driver ke dropdown
+        function loadDropdownDriver(driver, driverId) {
+          const vehicleRef = dbRef(db, `Vehicle/${driver.vehicleUsed}`);
+          onValue(vehicleRef, (vehicleSnapshot) => {
+            const vehicleData = vehicleSnapshot.val();
+      
+            const dropdownContainer = document.querySelector('.additional-info');
+      
+            // Buat elemen baru untuk driver di dropdown
+            const dropdownItem = document.createElement('div');
+            dropdownItem.classList.add('user');
+            dropdownItem.innerHTML = `
+              <img src="${driver.driverPhotoUrl || 'assets/images/userDummy.svg'}" alt="">
+              <div class="username h2-bold mt-3 ml-4">
+                <h2>${driver.fullName}</h2>
+                <p>Using ${vehicleData.nickname}</p>
+              </div>
+            `;
+      
+            // Tambahkan event listener untuk klik di dropdown
+            dropdownItem.addEventListener('click', () => {
+              loadUser1(driver, driverId);  // Ubah data di user1 sesuai yang dipilih
+            });
+      
+            // Tambahkan ke container dropdown
+            dropdownContainer.appendChild(dropdownItem);
+          });
+        }
+      
+        // Fungsi untuk memperbarui URL parameter
+        function updateURL(driverId) {
+          const currentURL = new URL(window.location);
+          currentURL.searchParams.set('driverId', driverId);
+          window.history.pushState({}, '', currentURL);
+        }
+      
+        document.addEventListener('DOMContentLoaded', () => {
+  document.querySelector('.toggle-btn').addEventListener('click', function() {
+    const container = document.querySelector('.user-container');
+    const user1 = document.querySelector('.user1');
+    
+    if (container.classList.contains('expand')) {
+      container.classList.remove('expand');
+      user1.style.marginTop = '20px';
+      container.style.maxHeight = '75px';  // Kembali ke tinggi awal
+    } else {
+      container.classList.add('expand');
+      user1.style.marginTop = '0px';
+      container.style.maxHeight = '300px';  // Tinggi baru setelah dropdown dibuka
+    }
+  });
+});
+
+      </script>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     
     
