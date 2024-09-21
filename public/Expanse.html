@@ -260,7 +260,7 @@
         import { getDatabase, ref as dbRef, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-
+    
         // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyB9qUzLViR5uALw9Qf_xzJpd20acoV0FEs",
@@ -272,123 +272,131 @@
             appId: "1:844821073092:web:f243c25668079240ec0d91",
             measurementId: "G-CLGQ4RWWTX"
         };
-
-
-
+    
         // Firebase Initialization
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
         const auth = getAuth(app);
-      
+    
         // Mengambil UID user yang sedang login
         onAuthStateChanged(auth, (user) => {
-          if (user) {
-            const uid = user.uid;
-            loadDrivers(uid);
-          } else {
-            console.error("User not logged in");
-          }
-        });
-      
-        // Fungsi untuk memuat data Drivers berdasarkan UID user yang login
-        function loadDrivers(uid) {
-          const driversRef = dbRef(db, 'Drivers');
-      
-          onValue(driversRef, (snapshot) => {
-            const driversData = snapshot.val();
-            const driverList = [];
-            let firstDriverLoaded = false;
-      
-            // Loop untuk memeriksa setiap doc di Drivers
-            for (const driverId in driversData) {
-              const driver = driversData[driverId];
-      
-              // Cek apakah userId pada driver sama dengan UID user yang sedang login
-              if (driver.userId === uid) {
-                // Memuat data pertama ke user1
-                if (!firstDriverLoaded) {
-                  loadUser1(driver, driverId);
-                  firstDriverLoaded = true;
-                } else {
-                  // Memuat sisa data ke dropdown
-                  loadDropdownDriver(driver, driverId);
-                }
-              }
+            if (user) {
+                const uid = user.uid;
+                loadDrivers(uid);
+            } else {
+                console.error("User not logged in");
             }
-          });
+        });
+    
+        // Fungsi untuk memuat data Drivers berdasarkan UID user yang login
+// Fungsi untuk memuat data Drivers berdasarkan UID user yang login
+function loadDrivers(uid) {
+    const driversRef = dbRef(db, 'Drivers');
+
+    onValue(driversRef, (snapshot) => {
+        const driversData = snapshot.val();
+        const driverList = [];
+
+        // Loop untuk memeriksa setiap doc di Drivers
+        for (const driverId in driversData) {
+            const driver = driversData[driverId];
+
+            // Cek apakah userId pada driver sama dengan UID user yang sedang login
+            if (driver.userId === uid) {
+                driver.id = driverId; // Menambahkan id ke driver
+                driverList.push(driver); // Tambahkan driver ke list
+            }
         }
-      
-        // Fungsi untuk memuat data ke user1
-        function loadUser1(driver, driverId) {
-          // Mengambil data Vehicle berdasarkan vehicleUsed
-          const vehicleRef = dbRef(db, `Vehicle/${driver.vehicleUsed}`);
-          onValue(vehicleRef, (vehicleSnapshot) => {
-            const vehicleData = vehicleSnapshot.val();
-      
-            // Update data di bagian user1
-            document.querySelector('.user1 img').src = driver.driverPhotoUrl || 'assets/images/userDummy.svg';
-            document.querySelector('.user1 h2').textContent = driver.fullName;
-            document.querySelector('.user1 p').textContent = `Using ${vehicleData.nickname}`;
-            
-            // Update URL parameter dengan driverId pertama
-            updateURL(driverId);
-          });
-        }
-      
-        // Fungsi untuk memuat data driver ke dropdown
-        function loadDropdownDriver(driver, driverId) {
-          const vehicleRef = dbRef(db, `Vehicle/${driver.vehicleUsed}`);
-          onValue(vehicleRef, (vehicleSnapshot) => {
-            const vehicleData = vehicleSnapshot.val();
-      
-            const dropdownContainer = document.querySelector('.additional-info');
-      
-            // Buat elemen baru untuk driver di dropdown
-            const dropdownItem = document.createElement('div');
-            dropdownItem.classList.add('user');
-            dropdownItem.innerHTML = `
-              <img src="${driver.driverPhotoUrl || 'assets/images/userDummy.svg'}" alt="">
-              <div class="username h2-bold mt-3 ml-4">
-                <h2>${driver.fullName}</h2>
-                <p>Using ${vehicleData.nickname}</p>
-              </div>
-            `;
-      
-            // Tambahkan event listener untuk klik di dropdown
-            dropdownItem.addEventListener('click', () => {
-              loadUser1(driver, driverId);  // Ubah data di user1 sesuai yang dipilih
+
+        // Memuat data ke user1 dan dropdown untuk semua driver
+        if (driverList.length > 0) {
+            loadUser1(driverList[0]); // Memuat driver pertama
+            driverList.forEach(driver => {
+                loadDropdownDriver(driver);
             });
-      
-            // Tambahkan ke container dropdown
-            dropdownContainer.appendChild(dropdownItem);
-          });
         }
-      
+    });
+}
+
+        // Fungsi untuk memuat data ke user1
+        function loadUser1(driver) {
+            const vehicleRef = dbRef(db, `Vehicle/${driver.vehicleUsed}`);
+            onValue(vehicleRef, (vehicleSnapshot) => {
+                const vehicleData = vehicleSnapshot.val();
+    
+                // Update data di bagian user1
+                document.querySelector('.user1 img').src = driver.driverPhotoUrl || 'assets/images/userDummy.svg';
+                document.querySelector('.user1 h2').textContent = driver.fullName;
+                document.querySelector('.user1 p').textContent = `Using ${vehicleData.nickname}`;
+                
+                // Update URL parameter dengan driverId pertama
+                updateURL(driver.id); // Pastikan driver.id ada
+            });
+        }
+    
+        // Fungsi untuk memuat data driver ke dropdown
+        function loadDropdownDriver(driver) {
+            const vehicleRef = dbRef(db, `Vehicle/${driver.vehicleUsed}`);
+            onValue(vehicleRef, (vehicleSnapshot) => {
+                const vehicleData = vehicleSnapshot.val();
+    
+                const dropdownContainer = document.querySelector('.additional-info');
+    
+                // Buat elemen baru untuk driver di dropdown
+                const dropdownItem = document.createElement('div');
+                dropdownItem.classList.add('user');
+                dropdownItem.innerHTML = `
+                    <img src="${driver.driverPhotoUrl || 'assets/images/userDummy.svg'}" alt="">
+                    <div class="username h2-bold mt-3 ml-4">
+                        <h2>${driver.fullName}</h2>
+                        <p>Using ${vehicleData.nickname}</p>
+                    </div>
+                `;
+    
+                // Tambahkan event listener untuk klik di dropdown
+                dropdownItem.addEventListener('click', () => {
+                    loadUser1(driver); // Ubah data di user1 sesuai yang dipilih
+                    closeDropdown(); // Tutup dropdown setelah memilih
+                });
+    
+                // Tambahkan ke container dropdown
+                dropdownContainer.appendChild(dropdownItem);
+            });
+        }
+    
         // Fungsi untuk memperbarui URL parameter
         function updateURL(driverId) {
-          const currentURL = new URL(window.location);
-          currentURL.searchParams.set('driverId', driverId);
-          window.history.pushState({}, '', currentURL);
+            const currentURL = new URL(window.location);
+            currentURL.searchParams.set('driverId', driverId);
+            window.history.pushState({}, '', currentURL);
         }
-      
-        document.addEventListener('DOMContentLoaded', () => {
-  document.querySelector('.toggle-btn').addEventListener('click', function() {
-    const container = document.querySelector('.user-container');
-    const user1 = document.querySelector('.user1');
     
-    if (container.classList.contains('expand')) {
-      container.classList.remove('expand');
-      user1.style.marginTop = '20px';
-      container.style.maxHeight = '75px';  // Kembali ke tinggi awal
-    } else {
-      container.classList.add('expand');
-      user1.style.marginTop = '0px';
-      container.style.maxHeight = '300px';  // Tinggi baru setelah dropdown dibuka
-    }
-  });
-});
-
-      </script>
+        // Fungsi untuk menutup dropdown
+        function closeDropdown() {
+            const container = document.querySelector('.user-container');
+            const user1 = document.querySelector('.user1');
+            
+            container.classList.remove('expand');
+            user1.style.marginTop = '20px';
+            container.style.maxHeight = '75px'; // Kembali ke tinggi awal
+        }
+    
+        // Tambahkan event listener untuk toggle dropdown
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.toggle-btn').addEventListener('click', function() {
+                const container = document.querySelector('.user-container');
+                const user1 = document.querySelector('.user1');
+    
+                if (container.classList.contains('expand')) {
+                    closeDropdown();
+                } else {
+                    container.classList.add('expand');
+                    user1.style.marginTop = '0px';
+                    container.style.maxHeight = '300px'; // Tinggi baru setelah dropdown dibuka
+                }
+            });
+        });
+    </script>
       
 
 
