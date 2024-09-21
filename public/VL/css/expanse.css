@@ -81,36 +81,80 @@
 
 }
 
-
 .user-container {
   display: flex;
   justify-content: center;
   flex-direction: column;
   margin-top: 1em;
   width: 300px;
-  height: 75px;
   background-color: #E5EEFF;
   border-radius: 18px;
+  transition: max-height 0.5s ease-in-out; /* Animasi memanjang dan memendek */
+  max-height: 75px; /* Ketinggian awal */
+  overflow: hidden;
 }
 
+.user1 {
+  margin-top: 20px;
+  width: 300px;
+  height: 75px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
 
 .user {
-    width: 300px;
-    height: 75px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+  width: 300px;
+  height: 75px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: #d1d1d1 solid 1px;
+}
 
-}
 .username {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  margin-left: 0px;
+  margin-right: 0;
 }
+
 .username h2 {
-    font-size: 15px;
-    margin-top: 5px;
-    margin-bottom: 0;
+  font-size: 15px;
+  margin-top: 5px;
+  margin-bottom: 0;
 }
+
+.additional-info {
+  max-height: 350px; /* Batasi tinggi dropdown */
+  overflow-y: auto; /* Aktifkan scrolling */
+  padding: 10px;
+  background-color: #E5EEFF;
+  border-top: 1px solid #ccc;
+  transition: opacity 0.3s ease;
+  opacity: 0; /* Awal dropdown tersembunyi */
+}
+
+.user-container.expand .additional-info {
+  opacity: 1; /* Dropdown muncul dengan animasi */
+}
+
+.toggle-btn {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.user-container.expand .toggle-btn {
+  transform: rotate(180deg);
+}
+
+/* Custom Scrollbar dengan hide */
+.additional-info::-webkit-scrollbar {
+  width: 0; /* Sembunyikan scrollbar */
+}
+
+
+
   
 .custom-line {
     border: none; /* Menghilangkan border default */
