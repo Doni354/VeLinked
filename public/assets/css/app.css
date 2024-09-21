@@ -314,6 +314,11 @@
   width: 100%;
 }
 
+
+.vehicleTitle {
+  font-size: 1.4rem;
+}
+
 .vehicleThumbnail {
   display: flex;
   align-items: start;
