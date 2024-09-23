@@ -1170,6 +1170,7 @@ function updateMarker(lat, lng) {
         if (!isUserInteracting) {
             // Jika pengguna tidak berinteraksi, center peta ke marker
             map.easeTo({
+                zoom: 15,
                 center: [lng, lat],
                 duration: 1000 // Animasi selama 1 detik
             });
