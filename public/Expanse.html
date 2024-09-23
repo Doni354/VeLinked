@@ -158,7 +158,7 @@
                                 
                             </div>
                             <div class="vehicle-img">
-                                <img src="assets/images/carExpanse.svg" alt="">
+                                <img id="vehiclePictureExpenses" src="assets/images/carExpanse.svg" alt="Vehicle Picture">
                             </div>
                         </div>
                     </div>
@@ -337,15 +337,19 @@
         }
 
         function loadVehicleDataExpenses(vehicleUsed) {
-            const vehicleRef = dbRef(db, `Vehicle/${vehicleUsed}`);
-            onValue(vehicleRef, (vehicleSnapshot) => {
-                const vehicleData = vehicleSnapshot.val();
-    
-                // Menampilkan data kendaraan
-                document.getElementById('vehicleBrandExpenses').textContent = vehicleData.brand + ', '; // Menambahkan koma
-                document.getElementById('vehicleNameExpenses').textContent = vehicleData.name; // Mengisi nama kendaraan
-            });
-        }
+        const vehicleRef = dbRef(db, `Vehicle/${vehicleUsed}`);
+        onValue(vehicleRef, (vehicleSnapshot) => {
+            const vehicleData = vehicleSnapshot.val();
+            
+            // Menampilkan data kendaraan
+            document.getElementById('vehicleBrandExpenses').textContent = vehicleData.brand + ', '; // Menambahkan koma
+            document.getElementById('vehicleNameExpenses').textContent = vehicleData.name; // Mengisi nama kendaraan
+
+            // Menampilkan gambar kendaraan
+            const vehiclePicture = vehicleData.picture ? vehicleData.picture : 'assets/images/carExpanse.svg'; // Gambar default jika tidak ada
+            document.getElementById('vehiclePictureExpenses').src = vehiclePicture;
+        });
+    }
     
         // Fungsi untuk memuat data driver ke dropdown
         function loadDropdownDriver(driver) {

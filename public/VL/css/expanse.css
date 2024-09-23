@@ -266,7 +266,8 @@
 }
 
 .vehicle-img img {
-    max-width: 100%; /* Sesuaikan ukuran gambar */
+    width: max-content;
+    max-width: 200px;
     height: auto;
     display: block;
 }
