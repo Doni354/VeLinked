@@ -29,7 +29,8 @@
     flex: 1;
     height: 100%;
     display: flex;
-    margin: 15px 0;
+    margin: 0 0;
+    border-radius: 1.5em;
 }
 
 .map-container iframe {
@@ -62,6 +63,7 @@
 
     .map-container {
         height: auto;
+
     }
 }
 
