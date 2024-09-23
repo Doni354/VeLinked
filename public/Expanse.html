@@ -123,7 +123,10 @@
 
                     <div class="vehicle">
                         <div class="vehicle-title h2-bold p-bold">
-                            <h2>Volvo, Polestar 1 </h2>
+                            <div class="h2-bold brand-name">
+                                <h2 id="vehicleBrandExpenses">Volvo, </h2>
+                                <h2 id="vehicleNameExpenses">Polestar 1</h2>
+                            </div>
                             <p>Vehicle Expenses</p>
                         </div>
                         <div class="vehicle-detail">
@@ -309,13 +312,14 @@
             const vehicleRef = dbRef(db, `Vehicle/${driver.vehicleUsed}`);
             onValue(vehicleRef, (vehicleSnapshot) => {
                 const vehicleData = vehicleSnapshot.val();
-    
+                
                 document.querySelector('.user1 img').src = driver.driverPhotoUrl || 'assets/images/userDummy.svg';
                 document.querySelector('.user1 h2').textContent = driver.fullName;
                 document.querySelector('.user1 p').textContent = `Using ${vehicleData.nickname}`;
                 
                 updateURL(driver.id); // Update URL parameter
                 loadVehicleData(driver.vehicleUsed); // Memuat data kendaraan
+                loadVehicleDataExpenses(driver.vehicleUsed);
             });
         }
     
@@ -329,6 +333,17 @@
                 document.getElementById('vehicleNickname').textContent = vehicleData.nickname;
                 document.getElementById('vehicleBrand').textContent = vehicleData.brand + ', '; // Menambahkan koma
                 document.getElementById('vehicleName').textContent = vehicleData.name; // Mengisi nama kendaraan
+            });
+        }
+
+        function loadVehicleDataExpenses(vehicleUsed) {
+            const vehicleRef = dbRef(db, `Vehicle/${vehicleUsed}`);
+            onValue(vehicleRef, (vehicleSnapshot) => {
+                const vehicleData = vehicleSnapshot.val();
+    
+                // Menampilkan data kendaraan
+                document.getElementById('vehicleBrandExpenses').textContent = vehicleData.brand + ', '; // Menambahkan koma
+                document.getElementById('vehicleNameExpenses').textContent = vehicleData.name; // Mengisi nama kendaraan
             });
         }
     
@@ -352,7 +367,8 @@
                 dropdownItem.addEventListener('click', () => {
                     loadUser1(driver);
                     closeDropdown();
-                    loadVehicleData(driver.vehicleUsed); // Memuat data kendaraan saat memilih driver dari dropdown
+                    loadVehicleData(driver.vehicleUsed);
+                    loadVehicleDataExpenses(driver.vehicleUsed);
                 });
     
                 dropdownContainer.appendChild(dropdownItem);
