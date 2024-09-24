@@ -320,17 +320,28 @@
 
 
 .driver-doc {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px; /* Menambahkan jarak antara kolom */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: center;
+  column-gap: 15px;
+  row-gap: 15px;
+  padding: 0px;
+  max-width: 280px;
+  margin: 0 auto;
 }
 
 .doc {
-    display: flex;
-    align-items: center;
+  
+  display: flex;
     justify-content: space-between;
-    width: calc(50% - 5px); /* Mengatur lebar untuk membuat dua kolom */
-    height: 50px;
+    align-items: center;
+    width: 220px;
+    height: 70px;
+    background-color: #F2F2F2;
+    border-radius: 15px;
+    padding: 20px;
+    box-sizing: border-box;
+    padding-top: 35px;
 }
 
 
