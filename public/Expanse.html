@@ -170,7 +170,7 @@
                                 <p>Driver Expenses & Driving Behavior</p>
                             </div>
                             <div class="img-expanses">
-                                <img src="assets/images/userDummyExpanse.svg" alt="">
+                                <img class="pp" src="assets/images/userDummyExpanse.svg" alt="">
                             </div>
                         </div>
                         <div class="expanse-detail">
@@ -317,6 +317,11 @@
                 document.querySelector('.user1 h2').textContent = driver.fullName;
                 document.querySelector('.user1 p').textContent = `Using ${vehicleData.nickname}`;
                 
+                // Update data di elemen expanses-title
+                document.querySelector('.expanses-title .title-expanses h2').textContent = driver.fullName;
+                document.querySelector('.expanses-title .img-expanses img').src = driver.driverPhotoUrl || 'assets/images/userDummyExpanse.svg';
+        
+
                 updateURL(driver.id); // Update URL parameter
                 loadVehicleData(driver.vehicleUsed); // Memuat data kendaraan
                 loadVehicleDataExpenses(driver.vehicleUsed);
