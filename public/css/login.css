@@ -30,6 +30,7 @@
             flex-direction: row;
             align-items: center;
             gap: 10px;
+            font-weight: 550;
         }
 
         .nav-links a,
