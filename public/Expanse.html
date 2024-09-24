@@ -134,25 +134,25 @@
                                 <div class="left-data">
                                     <div class="data">
                                         <h5>Gas station</h5>
-                                        <p>Rp.900 K</p>
+                                        <p id="Gas">Rp 0,00</p>
                                     </div>
                                     <div class="data">
                                         <h5>Highway</h5>
-                                        <p>Rp.760 K</p>
+                                        <p id="Toll">Rp 0,00</p>
                                     </div>
                                     <div class="data">
                                         <h5>ERP</h5>
-                                        <p>Rp.210 K</p>
-                                    </div>
+                                        <p id="ERP">Rp 0,00</p>
+                                    </div> 
                                 </div>
                                 <div class="right-data">
                                     <div class="data">
                                         <h5>Car Wash</h5>
-                                        <p>Rp.54 K</p>
+                                        <p id="CarWash">Rp 0,00</p>
                                     </div>
                                     <div class="data">
                                         <h5>Parking</h5>
-                                        <p>Rp.75 K</p>
+                                        <p id="Parking">Rp 0,00</p>
                                     </div>
                                 </div>
                                 
@@ -178,15 +178,15 @@
                                 <div class="left-data">
                                     <div class="data">
                                         <h5>Consumption</h5>
-                                        <p>Rp.120 K</p>
+                                        <p id="Consumptions">Rp 0,00</p>
                                     </div>
                                     <div class="data">
                                         <h5>Insurance</h5>
-                                        <p>Rp.760 K</p>
+                                        <p id="Maintenance">Rp 0,00</p>
                                     </div>
                                     <div class="data">
-                                        <h5>Salary</h5>
-                                        <p>Rp.4.211 K</p>
+                                        <h5>Traffic Ticket</h5>
+                                        <p id="Ticket">Rp 0,00</p>
                                     </div>
                                 </div>
                                 <div class="right-data">
@@ -373,6 +373,7 @@
                     closeDropdown();
                     loadVehicleData(driver.vehicleUsed);
                     loadVehicleDataExpenses(driver.vehicleUsed);
+                    loadExpenses(driver.id);
                 });
     
                 dropdownContainer.appendChild(dropdownItem);
@@ -419,6 +420,64 @@
                 }
             });
         });
+
+
+
+
+
+        // Fungsi untuk memuat data Expenses berdasarkan driverId
+function loadExpenses(driverId) {
+
+
+    // Inisialisasi map untuk setiap tipe dengan nilai 0
+const expensesMap = {
+    Gas: 0,
+    Toll: 0,
+    ERP: 0,
+    Consumptions: 0,
+    Maintenance: 0,
+    CarWash: 0,
+    Parking: 0,
+    Ticket: 0
+};
+
+// Ambil data Expenses dari Firebase berdasarkan driverId
+const expensesRef = firebase.database().ref('Expenses').orderByChild('driverId').equalTo(driverId);
+
+expensesRef.once('value', (snapshot) => {
+    if (snapshot.exists()) {
+        snapshot.forEach((doc) => {
+            const data = doc.val();
+            const price = parseFloat(data.price) || 0;
+            const type = data.type;
+
+            // Tambahkan price ke dalam tipe yang sesuai di expensesMap
+            if (expensesMap.hasOwnProperty(type)) {
+                expensesMap[type] += price;
+            } else {
+                console.warn(`Unknown type: ${type}`);
+            }
+        });
+    }
+
+    // Tampilkan hasil di elemen <p> yang sesuai
+    for (const type in expensesMap) {
+        const totalPrice = expensesMap[type];
+        const element = document.getElementById(type);
+
+        // Pastikan elemen ada sebelum mengubah textContent
+        if (element) {
+            element.textContent = `${totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}`;
+        } else {
+            console.warn(`Element with ID "${type}" not found`);
+        }
+    }
+});
+
+}
+
+
+
     </script>
     
       
