@@ -1363,7 +1363,7 @@ footer {
 /** 2.14 Navbar **/
 .navbar {
   height: 70px;
-  padding: 1.5rem;
+  
 }
 .navbar .nav-link-user img {
   width: 30px;
