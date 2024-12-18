@@ -1173,7 +1173,7 @@ onValue(vehicleRef, (snapshot) => {
         const { lat, lng } = data;
         updateMarker(lat, lng);
     } else {
-        initializeDefaultMap(); // Inisialisasi peta default jika lat/lng tidak ada
+        console.log('data lat lng kosong')
     }
 });
 
