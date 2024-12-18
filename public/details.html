@@ -488,7 +488,55 @@
             
                     processChunk();
                 }
-            </script> -->
+            </script> 
+            
+            
+
+
+
+
+
+
+
+
+
+
+
+            
+            
+// get nama desa dan kota
+
+
+// Fungsi untuk menambahkan lokasi ke Firebase Realtime Database
+// Fungsi untuk menambahkan lokasi ke Firebase Realtime Database di koleksi 'LastTrip'
+function addLocationToFirebase(lat, lng, desa, kota) {
+    const lastTripRef = dbRef(realtimeDB, 'LastTrip/' + docId);
+    const newLocation = {
+        VehicleID: docId, // Menyimpan VehicleID dari parameter docId di URL
+        latitude: lat,
+        longitude: lng,
+        desa: desa,
+        kota: kota,
+        timestamp: new Date().toISOString()
+    };
+
+    // Menambahkan data ke Firebase (push untuk menambahkan record baru)
+    push(lastTripRef, newLocation)
+        .then(() => {
+            console.log("Lokasi berhasil ditambahkan ke LastTrip.");
+        })
+        .catch((error) => {
+            console.error("Gagal menambahkan lokasi ke LastTrip:", error);
+        });
+}
+
+            
+            
+            
+            
+            
+            
+            -->
             
             
 
@@ -1164,7 +1212,7 @@ function updateMarker(lat, lng) {
 
         // Simpan lokasi ke Firebase
         reverseGeocode(lat, lng, (desa, kota) => {
-            addLocationToFirebase(lat, lng, desa, kota);
+            // addLocationToFirebase(lat, lng, desa, kota);
         });
 
         if (!isUserInteracting) {
@@ -1176,6 +1224,35 @@ function updateMarker(lat, lng) {
             });
         }
     });
+}
+
+function reverseGeocode(lat, lng, callback) {
+    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${mapboxgl.accessToken}&types=place,locality`;
+
+    fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+            let desa = "Tidak diketahui";
+            let kota = "Tidak diketahui";
+
+            if (data.features && data.features.length > 0) {
+                const place = data.features.find((f) =>
+                    f.place_type.includes("place")
+                );
+                const locality = data.features.find((f) =>
+                    f.place_type.includes("locality")
+                );
+
+                desa = locality ? locality.text : desa;
+                kota = place ? place.text : kota;
+            }
+
+            callback(desa, kota);
+        })
+        .catch((error) => {
+            console.error("Error during reverse geocoding:", error);
+            callback("Tidak diketahui", "Tidak diketahui");
+        });
 }
 
 // Menangani interaksi pengguna
@@ -1305,59 +1382,6 @@ function drawPolyline(coordinates) {
             },
         });
     }
-}
-
-// get nama desa dan kota
-function reverseGeocode(lat, lng, callback) {
-    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${mapboxgl.accessToken}&types=place,locality`;
-
-    fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-            let desa = "Tidak diketahui";
-            let kota = "Tidak diketahui";
-
-            if (data.features && data.features.length > 0) {
-                const place = data.features.find((f) =>
-                    f.place_type.includes("place")
-                );
-                const locality = data.features.find((f) =>
-                    f.place_type.includes("locality")
-                );
-
-                desa = locality ? locality.text : desa;
-                kota = place ? place.text : kota;
-            }
-
-            callback(desa, kota);
-        })
-        .catch((error) => {
-            console.error("Error during reverse geocoding:", error);
-            callback("Tidak diketahui", "Tidak diketahui");
-        });
-}
-
-// Fungsi untuk menambahkan lokasi ke Firebase Realtime Database
-// Fungsi untuk menambahkan lokasi ke Firebase Realtime Database di koleksi 'LastTrip'
-function addLocationToFirebase(lat, lng, desa, kota) {
-    const lastTripRef = dbRef(realtimeDB, 'LastTrip/' + docId);
-    const newLocation = {
-        VehicleID: docId, // Menyimpan VehicleID dari parameter docId di URL
-        latitude: lat,
-        longitude: lng,
-        desa: desa,
-        kota: kota,
-        timestamp: new Date().toISOString()
-    };
-
-    // Menambahkan data ke Firebase (push untuk menambahkan record baru)
-    push(lastTripRef, newLocation)
-        .then(() => {
-            console.log("Lokasi berhasil ditambahkan ke LastTrip.");
-        })
-        .catch((error) => {
-            console.error("Gagal menambahkan lokasi ke LastTrip:", error);
-        });
 }
 
 
@@ -1656,13 +1680,13 @@ document.getElementById('cancelDelete').addEventListener('click', function() {
 
 
 
-firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    console.log("User UID: ", user.uid);
-  } else {
-    console.log("User not logged in");
-  }
-});
+// firebase.auth().onAuthStateChanged(function(user) {
+//   if (user) {
+//     console.log("User UID: ", user.uid);
+//   } else {
+//     console.log("User not logged in");
+//   }
+// });
 
 
     </script>
